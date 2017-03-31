@@ -142,10 +142,19 @@ namespace Tasual
         public Tasual_Main()
         {
             InitializeComponent();
-            if(FormBorderStyle == FormBorderStyle.None)
+            Tasual_SizeColumns();
+            if (FormBorderStyle == FormBorderStyle.None)
             {
                 Button_Exit.Visible = true;
             }
+        }
+
+        private void Tasual_SizeColumns()
+        {
+            Tasual_ListView.Columns[0].AutoResize(ColumnHeaderAutoResizeStyle.None);
+            Tasual_ListView.Columns[1].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
+
+            Tasual_ListView.Columns[0].Width = Math.Max(100, (Tasual_ListView.Width - Tasual_ListView.Columns[1].Width));
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
@@ -174,10 +183,29 @@ namespace Tasual
             {
                 Invalidate();
             }
-            listView1.Columns[0].AutoResize(ColumnHeaderAutoResizeStyle.None);
+            Tasual_SizeColumns();
+            /*listView1.Columns[0].AutoResize(ColumnHeaderAutoResizeStyle.None);
             listView1.Columns[1].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
 
             listView1.Columns[0].Width = Math.Max(100, (listView1.Width - listView1.Columns[1].Width));
+            */
+        }
+
+        private void keepOnTToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Tasual_Main_Paint(object sender, PaintEventArgs e)
+        {
+            
+        }
+
+        private void Tasual_ListView_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
+        {
+            //Tasual_SizeColumns();
+            e.NewWidth = this.Tasual_ListView.Columns[e.ColumnIndex].Width;
+            e.Cancel = true;
         }
     }
 }
