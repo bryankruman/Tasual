@@ -207,5 +207,11 @@ namespace Tasual
             e.NewWidth = this.Tasual_ListView.Columns[e.ColumnIndex].Width;
             e.Cancel = true;
         }
+
+        private void taskToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Tasual_Create_Task task_form = new Tasual_Create_Task();
+            task_form.Show();
+        }
     }
 }
