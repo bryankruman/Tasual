@@ -29,7 +29,7 @@ namespace Tasual
             const int htBottomRight = 17;
             int padding = 10;
 
-            if ((m.Msg == wmNcHitTest) && (FormBorderStyle == FormBorderStyle.None))
+            if (m.Msg == wmNcHitTest)
             {
                 int x = (int)(m.LParam.ToInt64() & 0xFFFF);
                 int y = (int)((m.LParam.ToInt64() & 0xFFFF0000) >> 16);
@@ -42,6 +42,7 @@ namespace Tasual
                     //Invalidate();
                     return;
                 }
+                /*
                 ///allow resize on the lower left corner
                 if (pt.X <= padding && pt.Y >= clientSize.Height - padding && clientSize.Height >= padding)
                 {
@@ -83,7 +84,7 @@ namespace Tasual
                 {
                     m.Result = (IntPtr)(htRight);
                     return;
-                }
+                }*/
             }
             base.WndProc(ref m);
         }
@@ -128,16 +129,22 @@ namespace Tasual
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            DrawGripper(e);
+            //DrawGripper(e);
+
+            //System.Drawing.Graphics graphics = this.CreateGraphics();
+            //Rectangle gripperbounds = new Rectangle((Width) - 18, (Height) - 20, 20, 20);
+            //ControlPaint.DrawSizeGrip(e.Graphics, BackColor,
+            //    (Width) - 18, (Height) - 20, 20, 20);
+            //MessageBox.Show("fuck you");
         }
         public void DrawGripper(PaintEventArgs e)
         {
-            if ((VisualStyleRenderer.IsElementDefined(VisualStyleElement.Status.Gripper.Normal)) && (FormBorderStyle == FormBorderStyle.None))
-            {
+            //if (VisualStyleRenderer.IsElementDefined(VisualStyleElement.Status.Gripper.Normal))
+            //{
                 VisualStyleRenderer renderer = new VisualStyleRenderer(VisualStyleElement.Status.Gripper.Normal);
-                Rectangle rectangle1 = new Rectangle((Width) - 18, (Height) - 20, 20, 20);
-                renderer.DrawBackground(e.Graphics, rectangle1);
-            }
+                Rectangle gripperbounds = new Rectangle((Width) - 22, (Height) - 22, 20, 20);
+                renderer.DrawBackground(e.Graphics, gripperbounds);
+            //}
         }
         public Tasual_Main()
         {
@@ -179,10 +186,7 @@ namespace Tasual
 
         private void Tasual_Main_Resize(object sender, EventArgs e)
         {
-            if (FormBorderStyle == FormBorderStyle.None)
-            {
-                Invalidate();
-            }
+            Invalidate();
             Tasual_SizeColumns();
             /*listView1.Columns[0].AutoResize(ColumnHeaderAutoResizeStyle.None);
             listView1.Columns[1].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
@@ -196,10 +200,11 @@ namespace Tasual
 
         }
 
-        private void Tasual_Main_Paint(object sender, PaintEventArgs e)
+        /*private void Tasual_Main_Paint(object sender, PaintEventArgs e)
         {
-            
-        }
+            //base.OnPaint(e);
+            DrawGripper(e);
+        }*/
 
         private void Tasual_ListView_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
         {
@@ -212,6 +217,11 @@ namespace Tasual
         {
             Tasual_Create_Task task_form = new Tasual_Create_Task();
             task_form.Show();
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Tasual_Main_Status_MenuStrip.Show(linkLabel1, new Point(0, linkLabel1.Height));
         }
     }
 }

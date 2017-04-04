@@ -67,15 +67,18 @@
             this.keepOnTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.minimizeToTrayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.launchOnStartupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Tasual_ListView = new System.Windows.Forms.ListView();
             this.Description = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Time = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Tasual_Notify = new System.Windows.Forms.NotifyIcon(this.components);
-            this.Tasual_StatusLabel = new System.Windows.Forms.Label();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.Tasual_Main_Status_MenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Tasual_Main_MenuStrip.SuspendLayout();
+            this.Tasual_Main_Status_MenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // Tasual_Main_MenuStrip
@@ -86,8 +89,7 @@
             this.Button_Exit,
             this.toolStripMenuItem2,
             this.toolStripMenuItem3,
-            this.settingsToolStripMenuItem,
-            this.toolStripMenuItem1});
+            this.settingsToolStripMenuItem});
             this.Tasual_Main_MenuStrip.Location = new System.Drawing.Point(0, 0);
             this.Tasual_Main_MenuStrip.Name = "Tasual_Main_MenuStrip";
             this.Tasual_Main_MenuStrip.Size = new System.Drawing.Size(405, 24);
@@ -123,7 +125,7 @@
             // taskToolStripMenuItem
             // 
             this.taskToolStripMenuItem.Name = "taskToolStripMenuItem";
-            this.taskToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.taskToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.taskToolStripMenuItem.Text = "Task";
             this.taskToolStripMenuItem.Click += new System.EventHandler(this.taskToolStripMenuItem_Click);
             // 
@@ -144,6 +146,7 @@
             // 
             // settingsToolStripMenuItem
             // 
+            this.settingsToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sortingToolStripMenuItem,
             this.keepOnTToolStripMenuItem,
@@ -196,30 +199,6 @@
             this.launchOnStartupToolStripMenuItem.Name = "launchOnStartupToolStripMenuItem";
             this.launchOnStartupToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.launchOnStartupToolStripMenuItem.Text = "Launch on startup";
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripMenuItem1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(232)))), ((int)(((byte)(246)))));
-            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.printToolStripMenuItem,
-            this.exportToolStripMenuItem});
-            this.toolStripMenuItem1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(92, 20);
-            this.toolStripMenuItem1.Text = "All tasks done";
-            // 
-            // printToolStripMenuItem
-            // 
-            this.printToolStripMenuItem.Name = "printToolStripMenuItem";
-            this.printToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.printToolStripMenuItem.Text = "Print";
-            // 
-            // exportToolStripMenuItem
-            // 
-            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.exportToolStripMenuItem.Text = "Export";
             // 
             // Tasual_ListView
             // 
@@ -290,19 +269,67 @@
             this.Tasual_Notify.Text = "Tasual_Notify";
             this.Tasual_Notify.Visible = true;
             // 
-            // Tasual_StatusLabel
+            // linkLabel1
             // 
-            this.Tasual_StatusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Tasual_StatusLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Tasual_StatusLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
-            this.Tasual_StatusLabel.Location = new System.Drawing.Point(-3, 393);
-            this.Tasual_StatusLabel.Name = "Tasual_StatusLabel";
-            this.Tasual_StatusLabel.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
-            this.Tasual_StatusLabel.Size = new System.Drawing.Size(408, 22);
-            this.Tasual_StatusLabel.TabIndex = 2;
-            this.Tasual_StatusLabel.Text = "All tasks done";
-            this.Tasual_StatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.linkLabel1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.linkLabel1.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
+            this.linkLabel1.Location = new System.Drawing.Point(0, 393);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.linkLabel1.Size = new System.Drawing.Size(336, 21);
+            this.linkLabel1.TabIndex = 2;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "All tasks complete";
+            this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.linkLabel1.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // linkLabel2
+            // 
+            this.linkLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkLabel2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
+            this.linkLabel2.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.linkLabel2.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
+            this.linkLabel2.Location = new System.Drawing.Point(342, 393);
+            this.linkLabel2.Name = "linkLabel2";
+            this.linkLabel2.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.linkLabel2.Size = new System.Drawing.Size(51, 21);
+            this.linkLabel2.TabIndex = 3;
+            this.linkLabel2.TabStop = true;
+            this.linkLabel2.Text = "About";
+            this.linkLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.linkLabel2.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
+            // 
+            // Tasual_Main_Status_MenuStrip
+            // 
+            this.Tasual_Main_Status_MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.printToolStripMenuItem,
+            this.exportToolStripMenuItem,
+            this.clearToolStripMenuItem});
+            this.Tasual_Main_Status_MenuStrip.Name = "Tasual_Main_Status_MenuStrip";
+            this.Tasual_Main_Status_MenuStrip.Size = new System.Drawing.Size(108, 70);
+            // 
+            // printToolStripMenuItem
+            // 
+            this.printToolStripMenuItem.Name = "printToolStripMenuItem";
+            this.printToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.printToolStripMenuItem.Text = "Print";
+            // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.exportToolStripMenuItem.Text = "Export";
+            // 
+            // clearToolStripMenuItem
+            // 
+            this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.clearToolStripMenuItem.Text = "Clear";
             // 
             // Tasual_Main
             // 
@@ -310,19 +337,21 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(232)))), ((int)(((byte)(246)))));
             this.ClientSize = new System.Drawing.Size(405, 414);
-            this.Controls.Add(this.Tasual_StatusLabel);
+            this.Controls.Add(this.linkLabel2);
+            this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.Tasual_ListView);
             this.Controls.Add(this.Tasual_Main_MenuStrip);
             this.ForeColor = System.Drawing.Color.Black;
             this.MainMenuStrip = this.Tasual_Main_MenuStrip;
             this.Name = "Tasual_Main";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Text = "Tasual";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Tasual_Main_Paint);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Tasual_Main_MouseDown);
             this.Resize += new System.EventHandler(this.Tasual_Main_Resize);
             this.Tasual_Main_MenuStrip.ResumeLayout(false);
             this.Tasual_Main_MenuStrip.PerformLayout();
+            this.Tasual_Main_Status_MenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -338,7 +367,6 @@
         private System.Windows.Forms.ToolStripMenuItem taskToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem categoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ColumnHeader Description;
         private System.Windows.Forms.ColumnHeader Time;
         private System.Windows.Forms.ToolStripMenuItem sortingToolStripMenuItem;
@@ -348,9 +376,12 @@
         private System.Windows.Forms.ToolStripMenuItem minimizeToTrayToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem keepOnTToolStripMenuItem;
         private System.Windows.Forms.NotifyIcon Tasual_Notify;
+        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.LinkLabel linkLabel2;
+        private System.Windows.Forms.ContextMenuStrip Tasual_Main_Status_MenuStrip;
         private System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
-        private System.Windows.Forms.Label Tasual_StatusLabel;
+        private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
     }
 }
 
