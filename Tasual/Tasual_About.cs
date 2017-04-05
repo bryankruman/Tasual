@@ -102,14 +102,23 @@ namespace Tasual
         }
         #endregion
 
-        private void labelProductName_Click(object sender, EventArgs e)
+        private void Tasual_About_Button_Close_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Tasual_About_Button_Donate_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void okButton_Click(object sender, EventArgs e)
+        private void Tasual_About_LinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            this.Close();
+            try
+            {
+                System.Diagnostics.Process.Start("http://www.bryankruman.com/");
+            }
+            catch { }
         }
     }
 }

@@ -601,4 +601,7 @@
         AAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Tasual is built as a solution to wasting time with traditional todo-list applications. My goal is to keep it simple, but bake in features that provide quality of life enhancements. Tasual is free to use, however I ask that you please support it with a donation if you have found this app to be useful!</value>
+  </data>
 </root>
