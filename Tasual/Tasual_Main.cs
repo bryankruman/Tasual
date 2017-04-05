@@ -223,5 +223,11 @@ namespace Tasual
         {
             Tasual_Main_Status_MenuStrip.Show(linkLabel1, new Point(0, linkLabel1.Height));
         }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Tasual_About about_form = new Tasual_About();
+            about_form.Show();
+        }
     }
 }

@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tasual_About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tasual_About.Designer.cs">
+      <DependentUpon>Tasual_About.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tasual_Create_Task.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,6 +66,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Tasual_About.resx">
+      <DependentUpon>Tasual_About.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Tasual_Create_Task.resx">
       <DependentUpon>Tasual_Create_Task.cs</DependentUpon>
     </EmbeddedResource>
