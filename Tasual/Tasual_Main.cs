@@ -19,15 +19,15 @@ namespace Tasual
         protected override void WndProc(ref Message m)
         {
             const int wmNcHitTest = 0x84;
-            const int htLeft = 10;
-            const int htRight = 11;
-            const int htTop = 12;
-            const int htTopLeft = 13;
-            const int htTopRight = 14;
-            const int htBottom = 15;
+            //const int htLeft = 10;
+            //const int htRight = 11;
+            //const int htTop = 12;
+            //const int htTopLeft = 13;
+            //const int htTopRight = 14;
+            //const int htBottom = 15;
             const int htBottomLeft = 16;
             const int htBottomRight = 17;
-            int padding = 10;
+            int padding = 15;
 
             if (m.Msg == wmNcHitTest)
             {
