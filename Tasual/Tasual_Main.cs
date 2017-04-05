@@ -12,6 +12,92 @@ using System.Windows.Forms.VisualStyles;
 
 namespace Tasual
 {
+    public class TaskItem_C
+    {
+        public struct xyztime
+        {
+            double start;
+            double end;
+            double next;
+        }
+
+        public enum protocol_text_arg_t
+        {
+            ARG_TYPE,
+            ARG_PRIO,
+            ARG_STAT,
+            ARG_CATE,
+            ARG_DESC,
+            ARG_START,
+            ARG_END,
+            ARG_NEXT,
+            ARG_COUNT
+        }
+
+        public enum tasktype_t
+        {
+            TYPE_USER_SINGLE,
+            TYPE_USER_RECURRING,
+            TYPE_USER_DEBT_OWED,
+            TYPE_USER_DEBT_LENT,
+            TYPE_SYNDICATION_SINGLE,
+            TYPE_SYNDICATION_RECURRING
+        }
+
+        public enum taskpriority_t
+        {
+            PRIO_LOW,
+            PRIO_MED,
+            PRIO_HIGH
+        }
+
+        public enum taskstatus_t
+        {
+            STAT_NEW,
+            STAT_COMPLETED
+        }
+
+        // todo: make custom categories possible with an array/configuration adjustment
+        public enum taskcategory_t
+        {
+            CATE_HOME,
+            CATE_WORK,
+            CATE_SCHOOL,
+            CATE_HOBBY
+        }
+
+        public enum protocol_t
+        {
+            PRO_TEXT,
+            PRO_XML,
+            PRO_RTM,
+            PRO_TASUAL
+        }
+
+        public enum loader_t
+        {
+            TASUAL_INIT,   // called upon first initialization
+            TASUAL_RELOAD  // called when a user prompts the application to reload configurations
+        }
+
+        public int ti_type;
+        public int ti_prio;
+        public int ti_stat;
+        public int ti_cate;
+        public string ti_desc;
+        public xyztime ti_time;
+
+	    // constructors
+	    //taskitem_c();
+        //taskitem_c(int, int, int, int, string, xyztime);
+
+        // deconstructor
+        //~taskitem_c();
+    };
+
+    //vector<taskitem_c> tasklist;
+
+
     public partial class Tasual_Main : Form
     {
         //***********************************************************
@@ -149,11 +235,18 @@ namespace Tasual
         public Tasual_Main()
         {
             InitializeComponent();
-            Tasual_SizeColumns();
             if (FormBorderStyle == FormBorderStyle.None)
             {
                 Button_Exit.Visible = true;
             }
+
+            // init array of items
+            TaskItem_C taskitem = new TaskItem_C();
+
+            taskitem.ti_type = (int)TaskItem_C.tasktype_t.TYPE_USER_SINGLE;
+
+            // finally now that the listview is loaded, resize its columns
+            Tasual_SizeColumns();
         }
 
         private void Tasual_SizeColumns()
