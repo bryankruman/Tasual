@@ -281,7 +281,8 @@ namespace Tasual
 
         private void clearToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            Tasual_Confirm_Clear confirm_form = new Tasual_Confirm_Clear();
+            confirm_form.Show();
         }
     }
     public class TaskItem_C
