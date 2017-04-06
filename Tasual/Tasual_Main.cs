@@ -265,7 +265,7 @@ namespace Tasual
         private void taskToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Tasual_Create_Task task_form = new Tasual_Create_Task();
-            task_form.Show();
+            task_form.Show(this);
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -276,13 +276,13 @@ namespace Tasual
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Tasual_About about_form = new Tasual_About();
-            about_form.Show();
+            about_form.ShowDialog(this);
         }
 
         private void clearToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Tasual_Confirm_Clear confirm_form = new Tasual_Confirm_Clear();
-            confirm_form.Show();
+            confirm_form.ShowDialog(this);
         }
     }
     public class TaskItem_C
