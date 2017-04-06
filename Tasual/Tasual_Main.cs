@@ -159,6 +159,43 @@ namespace Tasual
                 Button_Exit.Visible = true;
             }
 
+            // setup listview control
+            // todo: add ability to choose how to display categories -- in column, or in groups
+
+            // clear any existing items
+            // /*
+            Tasual_ListView.Columns.Clear();
+            Tasual_ListView.Groups.Clear();
+            Tasual_ListView.Items.Clear();
+            Tasual_ListView.Update();
+            Tasual_ListView.Refresh();
+            // */
+
+            // declarations
+            ListViewGroup[] ListView_Groups = new ListViewGroup[20];
+            ListViewItem[] ListView_Items = new ListViewItem[100];
+
+            // initialize columns
+            Tasual_ListView.Columns.Add("Description");
+            Tasual_ListView.Columns.Add("Time");
+
+            // initialize groups
+            ListView_Groups[0] = new ListViewGroup();
+            ListView_Groups[0].Name = "Work";
+            ListView_Groups[0].Header = "Work";
+            Tasual_ListView.Groups.Add(ListView_Groups[0]);
+
+            // initialize items
+            string[] ListView_Item_S = new string[2];
+            ListView_Item_S[0] = "Create some tasks";
+            ListView_Item_S[1] = DateTime.Now.ToLongDateString();
+            ListView_Items[0] = new ListViewItem(ListView_Item_S);
+            ListView_Items[0].Group = ListView_Groups[0];
+            ListView_Items[0].Checked = true;
+            ListView_Items[0].ForeColor = Color.FromArgb(255, 189, 208, 230); //Color.FromArgb(255, 36, 90, 150);
+            ListView_Items[0].BackColor = Color.FromArgb(255, 0, 0, 0);
+            Tasual_ListView.Items.Add(ListView_Items[0]);
+
             // init array of items
             TaskItem_C taskitem = new TaskItem_C();
 
@@ -240,6 +277,11 @@ namespace Tasual
         {
             Tasual_About about_form = new Tasual_About();
             about_form.Show();
+        }
+
+        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
     public class TaskItem_C

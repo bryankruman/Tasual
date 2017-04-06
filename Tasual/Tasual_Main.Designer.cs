@@ -211,6 +211,7 @@
             this.Tasual_ListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Description,
             this.Time});
+            this.Tasual_ListView.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Tasual_ListView.FullRowSelect = true;
             listViewGroup1.Header = "Work";
             listViewGroup1.Name = "Work";
@@ -312,25 +313,26 @@
             this.exportToolStripMenuItem,
             this.clearToolStripMenuItem});
             this.Tasual_Main_Status_MenuStrip.Name = "Tasual_Main_Status_MenuStrip";
-            this.Tasual_Main_Status_MenuStrip.Size = new System.Drawing.Size(108, 70);
+            this.Tasual_Main_Status_MenuStrip.Size = new System.Drawing.Size(153, 92);
             // 
             // printToolStripMenuItem
             // 
             this.printToolStripMenuItem.Name = "printToolStripMenuItem";
-            this.printToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.printToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.printToolStripMenuItem.Text = "Print";
             // 
             // exportToolStripMenuItem
             // 
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exportToolStripMenuItem.Text = "Export";
             // 
             // clearToolStripMenuItem
             // 
             this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.clearToolStripMenuItem.Text = "Clear";
+            this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
             // 
             // Tasual_Main
             // 
