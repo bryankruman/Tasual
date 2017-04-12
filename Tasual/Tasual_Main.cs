@@ -261,7 +261,15 @@ namespace Tasual
 
 			// initialize columns
 			Tasual_ListView.Columns.Add("Description");
-			Tasual_ListView.Columns.Add("Time");
+			var displaymode = 2;
+			if (displaymode == 1)
+			{
+				Tasual_ListView.Columns.Add("Time");
+			}
+			else if (displaymode == 2)
+			{
+				Tasual_ListView.Columns.Add("Category");
+			}
 
 			// load tasks into Tasual_ListView
 			foreach (TaskItem_C task in TaskArray)
@@ -269,13 +277,23 @@ namespace Tasual
 				if (task == null) { break; }
 				Tasual_PrintTaskToConsole(task);
 
+				// create listviewitem basic info
 				string[] Item_S = new string[2];
 				Item_S[0] = task.ti_desc;
-				var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-				epoch.AddSeconds(task.ti_time.xstart);
-				Item_S[1] = epoch.ToLongDateString();
+
+				if (displaymode == 1)
+				{
+					var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+					epoch.AddSeconds(task.ti_time.xstart);
+					Item_S[1] = epoch.ToLongDateString();
+				}
+				else if (displaymode == 2)
+				{
+					Item_S[1] = task.ti_grou.ToString();
+				}
 				ListViewItem Item = new ListViewItem(Item_S);
 
+				// create listviewgroup for item
 				ListViewGroup found = null;
 				foreach (ListViewGroup group in Tasual_ListView.Groups)
 				{
