@@ -15,8 +15,8 @@ namespace Tasual
 {
 	public partial class Tasual_Main : Form
 	{
-		public List<TaskItem> TaskArray = new List<TaskItem>(); // TODO: change this to data list later
-		bool timegroups = false;
+		public List<TaskItem> TaskArray = new List<TaskItem>();
+		bool Tasual_Setting_TimeGroups = false;
 
 		public enum protocol_text_arg_t
 		{
@@ -60,12 +60,6 @@ namespace Tasual
 			PRO_XML,
 			PRO_RTM,
 			PRO_TASUAL
-		}
-
-		public enum loader_t
-		{
-			TASUAL_INIT,   // called upon first initialization
-			TASUAL_RELOAD  // called when a user prompts the application to reload configurations
 		}
 
 		public void Tasual_PrintTaskToConsole(TaskItem TaskItem)
@@ -173,7 +167,7 @@ namespace Tasual
 			string[] Item_S = new string[2];
 			Item_S[0] = NewItem.Description;
 
-			if (timegroups)
+			if (Tasual_Setting_TimeGroups)
 			{
 				Item_S[1] = NewItem.Group.ToString();
 			}
@@ -367,31 +361,7 @@ namespace Tasual
 			Tasual_Array_Load_FromText(ref TaskArray);
 
 			// load tasks into Tasual_ListView
-			Tasual_ListView_PopulateFromArray(ref TaskArray, ref timegroups);
-
-			// initialize groups
-			//ListView_Groups[0] = new ListViewGroup();
-			//ListView_Groups[0].Name = "Work";
-			//ListView_Groups[0].Header = "Work";
-			//Tasual_ListView.Groups.Add(ListView_Groups[0]);
-
-			// initialize items
-			//string[] ListView_Item_S = new string[2];
-			//ListView_Item_S[0] = "Create some tasks";
-			//ListView_Item_S[1] = DateTime.Now.ToLongDateString();
-			//ListView_Items[0] = new ListViewItem(ListView_Item_S);
-			//ListView_Items[0].Group = ListView_Groups[0];
-			//ListView_Items[0].Checked = true;
-			//ListView_Items[0].ForeColor = Color.FromArgb(255, 189, 208, 230); //Color.FromArgb(255, 36, 90, 150);
-			//ListView_Items[0].BackColor = Color.FromArgb(255, 0, 0, 0);
-			//Tasual_ListView.Items.Add(ListView_Items[0]);
-
-			// init array of items
-			//TaskItem_C taskitem = new TaskItem_C();
-
-			//taskitem.ti_type = (int)tasktype_t.TYPE_USER_SINGLE;
-
-			// finally now that the listview is loaded, resize its columns
+			Tasual_ListView_PopulateFromArray(ref TaskArray, ref Tasual_Setting_TimeGroups);
 		}
 
 		private void listView1_SelectedIndexChanged(object sender, EventArgs e)
