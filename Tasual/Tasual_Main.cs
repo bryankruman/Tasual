@@ -57,10 +57,10 @@ namespace Tasual
 
 		public enum protocol_t
 		{
-			PRO_TEXT,
-			PRO_XML,
-			PRO_RTM,
-			PRO_TASUAL
+			PRO_TEXT//,
+					//PRO_XML,
+					//PRO_RTM,
+					//PRO_TASUAL
 		}
 
 		public void Tasual_PrintTaskToConsole(TaskItem TaskItem)
@@ -143,7 +143,7 @@ namespace Tasual
 		//***********************************************************
 
 		public void Tasual_Array_AddTask(
-			ref List<TaskItem> Array, 
+			ref List<TaskItem> Array,
 			int Type,
 			int Priority,
 			int Status,
@@ -161,6 +161,7 @@ namespace Tasual
 			NewItem.Time = Time;
 
 			Array.Add(NewItem);
+			Tasual_Array_Save_Text(ref Array);
 
 			//Tasual_PrintTaskToConsole(NewItem);
 
@@ -199,10 +200,39 @@ namespace Tasual
 			Tasual_ListView.Items.Add(Item);
 		}
 
-		private void Tasual_Array_Load_FromText(ref List<TaskItem> Array)
+		private void Tasual_Array_Save_Text(ref List<TaskItem> Array)
 		{
 			try
 			{
+				using (StreamWriter OutputFile = new StreamWriter(Tasual_Setting_TextFile))
+				{
+					foreach (TaskItem Task in Array)
+					{
+						string Line;
+						Line = Task.Type.ToString();
+						Line = Line + (char)29 + Task.Priority.ToString();
+						Line = Line + (char)29 + Task.Status.ToString();
+						Line = Line + (char)29 + Task.Group;
+						Line = Line + (char)29 + Task.Description;
+						Line = Line + (char)29 + Task.Time.Start.ToString();
+						Line = Line + (char)29 + Task.Time.End.ToString();
+						Line = Line + (char)29 + Task.Time.Next.ToString();
+						OutputFile.WriteLine(Line);
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.Message);
+			}
+		}
+
+		private void Tasual_Array_Load_Text(ref List<TaskItem> Array)
+		{
+			try
+			{
+				TaskArray.Clear();
+
 				using (StreamReader InputFile = new StreamReader(Tasual_Setting_TextFile))
 				{
 					int counter = 0;
@@ -298,6 +328,8 @@ namespace Tasual
 
 		private void Tasual_ListView_PopulateFromArray(ref List<TaskItem> TaskArray, ref bool timegroups)
 		{
+			Tasual_ListView_ClearAll();
+
 			Tasual_ListView.Columns.Add("Description");
 			if (timegroups) { Tasual_ListView.Columns.Add("Category"); }
 			else { Tasual_ListView.Columns.Add("Time"); }
@@ -356,10 +388,10 @@ namespace Tasual
 			}
 
 			// clear any existing items
-			Tasual_ListView_ClearAll();
+			//Tasual_ListView_ClearAll();
 
 			// load task array
-			Tasual_Array_Load_FromText(ref TaskArray);
+			Tasual_Array_Load_Text(ref TaskArray);
 
 			// load tasks into Tasual_ListView
 			Tasual_ListView_PopulateFromArray(ref TaskArray, ref Tasual_Setting_TimeGroups);
@@ -393,7 +425,9 @@ namespace Tasual
 
 		private void keepOnTToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-
+			Tasual_Array_Save_Text(ref TaskArray);
+			Tasual_Array_Load_Text(ref TaskArray);
+			Tasual_ListView_PopulateFromArray(ref TaskArray, ref Tasual_Setting_TimeGroups);
 		}
 
 		private void Tasual_ListView_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
