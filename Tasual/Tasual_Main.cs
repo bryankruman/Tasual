@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,6 +18,31 @@ namespace Tasual
 
 	public partial class Tasual_Main : Form
 	{
+		public void Tasual_PrintTaskToConsole(TaskItem_C TaskItem)
+		{
+			/*cout
+					<< "tasqing_item: {'" << taskitem.ti_type << "', '"
+					<< taskitem.ti_prio << "', '"
+					<< taskitem.ti_stat << "', '"
+					<< taskitem.ti_cate << "', '"
+					<< taskitem.ti_desc << "', '"
+					<< taskitem.ti_time.start << "', '"
+					<< taskitem.ti_time.end << "', '"
+					<< taskitem.ti_time.next << "'}\n";
+					*/
+
+			Console.WriteLine("TaskItem: '{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}'",
+			TaskItem.ti_type,
+			TaskItem.ti_prio,
+			TaskItem.ti_stat,
+			TaskItem.ti_grou,
+			TaskItem.ti_desc,
+			TaskItem.ti_time.xstart,
+			TaskItem.ti_time.yend,
+			TaskItem.ti_time.znext
+			);
+		}
+
 		//***********************************************************
 		//This gives us the ability to resize the borderless from any borders instead of just the lower right corner
 		protected override void WndProc(ref Message m)
@@ -149,6 +175,61 @@ namespace Tasual
 			renderer.DrawBackground(e.Graphics, gripperbounds);
 			//}
 		}
+
+		public void Tasual_LoadArray(TaskItem_C[] Array)
+		{
+			try
+			{
+				using (StreamReader inputfile = new StreamReader("localdb.txt"))
+				{
+					int counter = 0;
+					string line;
+
+					while ((line = inputfile.ReadLine()) != null)
+					{
+						TaskItem_C temp_item = new TaskItem_C();
+						int argtype = 0;
+						string[] segments = line.Split((char)29);
+
+						foreach (string token in segments)
+						{
+							// lets do something with this data now
+							switch (argtype)
+							{
+								case (int)TaskItem_C.protocol_text_arg_t.ARG_TYPE: { Int32.TryParse(token, out temp_item.ti_type); break; }
+								case (int)TaskItem_C.protocol_text_arg_t.ARG_PRIO: { Int32.TryParse(token, out temp_item.ti_prio); break; }
+								case (int)TaskItem_C.protocol_text_arg_t.ARG_STAT: { Int32.TryParse(token, out temp_item.ti_stat); break; }
+								case (int)TaskItem_C.protocol_text_arg_t.ARG_CATE: { temp_item.ti_grou = token; break; }
+								case (int)TaskItem_C.protocol_text_arg_t.ARG_DESC: { temp_item.ti_desc = token; break; }
+								case (int)TaskItem_C.protocol_text_arg_t.ARG_START: { Double.TryParse(token, out temp_item.ti_time.xstart); break; }
+								case (int)TaskItem_C.protocol_text_arg_t.ARG_END: { Double.TryParse(token, out temp_item.ti_time.yend); break; }
+								case (int)TaskItem_C.protocol_text_arg_t.ARG_NEXT: { Double.TryParse(token, out temp_item.ti_time.znext); break; }
+								default:
+									{
+										Console.WriteLine("TOO MANY ARGUMENTS IN FILE !!!!!!");
+										break;
+									}
+							}
+
+							++argtype;
+							//Console.WriteLine(token);
+						}
+
+						if (argtype == (int)TaskItem_C.protocol_text_arg_t.ARG_COUNT)
+							Array[counter] = temp_item;
+
+						//Console.WriteLine(line);
+						counter++;
+					}
+				}
+
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.Message);
+			}
+		}
+
 		public Tasual_Main()
 		{
 			InitializeComponent();
@@ -172,29 +253,74 @@ namespace Tasual
 			// */
 
 			// declarations
-			ListViewGroup[] ListView_Groups = new ListViewGroup[20];
-			ListViewItem[] ListView_Items = new ListViewItem[100];
+			//ListViewGroup[] ListView_Groups = new ListViewGroup[20];
+			TaskItem_C[] TaskArray = new TaskItem_C[100]; // TODO: change this to data list later
+
+			// load task array
+			Tasual_LoadArray(TaskArray);
 
 			// initialize columns
 			Tasual_ListView.Columns.Add("Description");
 			Tasual_ListView.Columns.Add("Time");
 
+			// load tasks into Tasual_ListView
+			foreach (TaskItem_C task in TaskArray)
+			{
+				if (task == null) { break; }
+				Tasual_PrintTaskToConsole(task);
+
+				string[] Item_S = new string[2];
+				Item_S[0] = task.ti_desc;
+				var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+				epoch.AddSeconds(task.ti_time.xstart);
+				Item_S[1] = epoch.ToLongDateString();
+				ListViewItem Item = new ListViewItem(Item_S);
+
+				ListViewGroup found = null;
+				foreach (ListViewGroup group in Tasual_ListView.Groups)
+				{
+					if (group.Name == task.ti_grou.ToString())
+					{
+						found = group;
+						break;
+					}
+				}
+
+				if (found == null)
+				{
+					ListViewGroup NewGroup = new ListViewGroup();
+					NewGroup.Name = task.ti_grou.ToString();
+					NewGroup.Header = NewGroup.Name;
+					Tasual_ListView.Groups.Add(NewGroup);
+					Item.Group = NewGroup;
+				}
+				else
+				{
+					Item.Group = found;
+				}
+
+				Item.Checked = true;
+				Item.ForeColor = Color.FromArgb(255, 189, 208, 230); //Color.FromArgb(255, 36, 90, 150);
+				//Item.BackColor = Color.FromArgb(255, 0, 0, 0);
+				Tasual_ListView.Items.Add(Item);
+			}
+
 			// initialize groups
-			ListView_Groups[0] = new ListViewGroup();
-			ListView_Groups[0].Name = "Work";
-			ListView_Groups[0].Header = "Work";
-			Tasual_ListView.Groups.Add(ListView_Groups[0]);
+			//ListView_Groups[0] = new ListViewGroup();
+			//ListView_Groups[0].Name = "Work";
+			//ListView_Groups[0].Header = "Work";
+			//Tasual_ListView.Groups.Add(ListView_Groups[0]);
 
 			// initialize items
-			string[] ListView_Item_S = new string[2];
-			ListView_Item_S[0] = "Create some tasks";
-			ListView_Item_S[1] = DateTime.Now.ToLongDateString();
-			ListView_Items[0] = new ListViewItem(ListView_Item_S);
-			ListView_Items[0].Group = ListView_Groups[0];
-			ListView_Items[0].Checked = true;
-			ListView_Items[0].ForeColor = Color.FromArgb(255, 189, 208, 230); //Color.FromArgb(255, 36, 90, 150);
-			ListView_Items[0].BackColor = Color.FromArgb(255, 0, 0, 0);
-			Tasual_ListView.Items.Add(ListView_Items[0]);
+			//string[] ListView_Item_S = new string[2];
+			//ListView_Item_S[0] = "Create some tasks";
+			//ListView_Item_S[1] = DateTime.Now.ToLongDateString();
+			//ListView_Items[0] = new ListViewItem(ListView_Item_S);
+			//ListView_Items[0].Group = ListView_Groups[0];
+			//ListView_Items[0].Checked = true;
+			//ListView_Items[0].ForeColor = Color.FromArgb(255, 189, 208, 230); //Color.FromArgb(255, 36, 90, 150);
+			//ListView_Items[0].BackColor = Color.FromArgb(255, 0, 0, 0);
+			//Tasual_ListView.Items.Add(ListView_Items[0]);
 
 			// init array of items
 			TaskItem_C taskitem = new TaskItem_C();
@@ -289,9 +415,9 @@ namespace Tasual
 	{
 		public struct xyztime
 		{
-			double start;
-			double end;
-			double next;
+			public double xstart;
+			public double yend;
+			public double znext;
 		}
 
 		public enum protocol_text_arg_t
@@ -330,15 +456,6 @@ namespace Tasual
 			STAT_COMPLETED
 		}
 
-		// todo: make custom categories possible with an array/configuration adjustment
-		public enum taskcategory_t
-		{
-			CATE_HOME,
-			CATE_WORK,
-			CATE_SCHOOL,
-			CATE_HOBBY
-		}
-
 		public enum protocol_t
 		{
 			PRO_TEXT,
@@ -356,9 +473,10 @@ namespace Tasual
 		public int ti_type;
 		public int ti_prio;
 		public int ti_stat;
-		public int ti_cate;
+		public string ti_grou;
 		public string ti_desc;
 		public xyztime ti_time;
+
 
 		// constructors
 		//taskitem_c();
