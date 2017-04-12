@@ -17,6 +17,7 @@ namespace Tasual
 	{
 		public List<TaskItem> TaskArray = new List<TaskItem>();
 		bool Tasual_Setting_TimeGroups = false;
+		string Tasual_Setting_TextFile = "localdb.txt";
 
 		public enum protocol_text_arg_t
 		{
@@ -141,14 +142,14 @@ namespace Tasual
 		}
 		//***********************************************************
 
-		private void Tasual_Array_AddTask(
+		public void Tasual_Array_AddTask(
 			ref List<TaskItem> Array, 
 			int Type,
 			int Priority,
 			int Status,
 			string Group,
 			string Description,
-			TaskItem.xyztime Time)
+			TaskItem.TaskTime Time)
 		{
 			TaskItem NewItem = new TaskItem();
 
@@ -175,7 +176,7 @@ namespace Tasual
 			{
 				var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 				epoch.AddSeconds(NewItem.Time.Start);
-				Item_S[1] = epoch.ToLongDateString();
+				Item_S[1] = epoch.ToLongTimeString();
 			}
 			ListViewItem Item = new ListViewItem(Item_S);
 
@@ -186,12 +187,12 @@ namespace Tasual
 			if (NewItem.Status == (int)taskstatus_t.STAT_COMPLETED)
 			{
 				Item.Checked = true;
-				Item.ForeColor = Color.FromArgb(255, 189, 208, 230);
+				//Item.ForeColor = Color.FromArgb(255, 189, 208, 230);
 			}
 			else
 			{
 				Item.Checked = false;
-				Item.ForeColor = Color.FromArgb(255, 36, 90, 150);
+				//Item.ForeColor = Color.FromArgb(255, 36, 90, 150);
 			}
 
 			//Item.BackColor = Color.FromArgb(255, 0, 0, 0);
@@ -202,7 +203,7 @@ namespace Tasual
 		{
 			try
 			{
-				using (StreamReader InputFile = new StreamReader("localdb.txt"))
+				using (StreamReader InputFile = new StreamReader(Tasual_Setting_TextFile))
 				{
 					int counter = 0;
 					string Line;
@@ -429,16 +430,28 @@ namespace Tasual
 		{
 			//Tasual_ListView_ClearAll();
 			//Tasual_ListView_PopulateFromArray(ref TaskArray, ref timegroups);
-			TaskItem.xyztime foobar = new TaskItem.xyztime();
+			TaskItem.TaskTime foobar = new TaskItem.TaskTime();
 			foobar.Start = 1;
 			foobar.End = 2;
 			foobar.Next = 3;
 			Tasual_Array_AddTask(ref TaskArray, 0, 0, 0, "Cows", "Testing 123", foobar);
 		}
+
+		private void Tasual_ListView_ItemChecked(object sender, ItemCheckedEventArgs e)
+		{
+			if (e.Item.Checked)
+			{
+				e.Item.ForeColor = Color.FromArgb(255, 189, 208, 230);
+			}
+			else
+			{
+				e.Item.ForeColor = Color.FromArgb(255, 36, 90, 150);
+			}
+		}
 	}
 	public class TaskItem
 	{
-		public struct xyztime
+		public struct TaskTime
 		{
 			public double Start;
 			public double End;
@@ -450,7 +463,7 @@ namespace Tasual
 		public int Status;
 		public string Group;
 		public string Description;
-		public xyztime Time;
+		public TaskTime Time;
 
 
 		// constructors
