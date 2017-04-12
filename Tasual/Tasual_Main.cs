@@ -15,7 +15,7 @@ namespace Tasual
 {
 	public partial class Tasual_Main : Form
 	{
-		public TaskItem[] TaskArray = new TaskItem[100]; // TODO: change this to data list later
+		public List<TaskItem> TaskArray = new List<TaskItem>(); // TODO: change this to data list later
 		bool timegroups = false;
 
 		public enum protocol_text_arg_t
@@ -148,7 +148,7 @@ namespace Tasual
 		//***********************************************************
 
 		private void Tasual_Array_AddTask(
-			ref TaskItem[] Array, 
+			ref List<TaskItem> Array, 
 			int Type,
 			int Priority,
 			int Status,
@@ -165,8 +165,7 @@ namespace Tasual
 			NewItem.Description = Description;
 			NewItem.Time = Time;
 
-			Console.WriteLine("Array.Length = {0}", Array.Length);
-
+			Array.Add(NewItem);
 			//Array[Array.] = NewItem;
 #if false
 			Tasual_ListView_ClearAll();
@@ -210,7 +209,7 @@ namespace Tasual
 #endif
 		}
 
-		private void Tasual_Array_Load_FromText(ref TaskItem[] Array)
+		private void Tasual_Array_Load_FromText(ref List<TaskItem> Array)
 		{
 			try
 			{
@@ -250,7 +249,7 @@ namespace Tasual
 						}
 
 						if (argtype == (int)protocol_text_arg_t.ARG_COUNT)
-							Array[counter] = NewItem;
+							TaskArray.Add(NewItem);
 
 						//Console.WriteLine(line);
 						counter++;
@@ -307,7 +306,7 @@ namespace Tasual
 			}
 		}
 
-		private void Tasual_ListView_PopulateFromArray(ref TaskItem[] TaskArray, ref bool timegroups)
+		private void Tasual_ListView_PopulateFromArray(ref List<TaskItem> TaskArray, ref bool timegroups)
 		{
 			Tasual_ListView.Columns.Add("Description");
 			if (timegroups) { Tasual_ListView.Columns.Add("Category"); }
