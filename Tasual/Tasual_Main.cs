@@ -166,11 +166,7 @@ namespace Tasual
 			NewItem.Time = Time;
 
 			Array.Add(NewItem);
-			//Array[Array.] = NewItem;
-#if false
-			Tasual_ListView_ClearAll();
-			Tasual_ListView_PopulateFromArray(ref Array, ref timegroups);
-#else
+
 			//Tasual_PrintTaskToConsole(NewItem);
 
 			// create listviewitem basic info
@@ -206,7 +202,6 @@ namespace Tasual
 
 			//Item.BackColor = Color.FromArgb(255, 0, 0, 0);
 			Tasual_ListView.Items.Add(Item);
-#endif
 		}
 
 		private void Tasual_Array_Load_FromText(ref List<TaskItem> Array)
@@ -430,12 +425,6 @@ namespace Tasual
 
 		}
 
-		/*private void Tasual_Main_Paint(object sender, PaintEventArgs e)
-        {
-            //base.OnPaint(e);
-            DrawGripper(e);
-        }*/
-
 		private void Tasual_ListView_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
 		{
 			//Tasual_SizeColumns();
@@ -445,25 +434,25 @@ namespace Tasual
 
 		private void taskToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			Tasual_Create_Task task_form = new Tasual_Create_Task();
-			task_form.Show(this);
+			Tasual_Create_Task TaskForm = new Tasual_Create_Task();
+			TaskForm.Show(this);
 		}
 
-		private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		private void Tasual_StatusLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			Tasual_Main_Status_MenuStrip.Show(linkLabel1, new Point(0, linkLabel1.Height));
+			Tasual_StatusLabel_MenuStrip.Show(Tasual_StatusLabel, new Point(0, Tasual_StatusLabel.Height));
 		}
 
-		private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		private void Tasual_AboutLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			Tasual_About about_form = new Tasual_About();
-			about_form.ShowDialog(this);
+			Tasual_About AboutForm = new Tasual_About();
+			AboutForm.ShowDialog(this);
 		}
 
 		private void clearToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			Tasual_Confirm_Clear confirm_form = new Tasual_Confirm_Clear();
-			confirm_form.ShowDialog(this);
+			Tasual_Confirm_Clear ConfirmForm = new Tasual_Confirm_Clear();
+			ConfirmForm.ShowDialog(this);
 		}
 
 		private void categoryToolStripMenuItem_Click(object sender, EventArgs e)
@@ -474,7 +463,7 @@ namespace Tasual
 			foobar.Start = 1;
 			foobar.End = 2;
 			foobar.Next = 3;
-			Tasual_Array_AddTask(ref TaskArray, 0, 0, 0, "Work", "Testing 123", foobar);
+			Tasual_Array_AddTask(ref TaskArray, 0, 0, 0, "Cows", "Testing 123", foobar);
 		}
 	}
 	public class TaskItem

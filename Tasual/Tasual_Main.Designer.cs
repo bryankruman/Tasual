@@ -29,29 +29,29 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Work", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Personal", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Misc", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("Work", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("Personal", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("Misc", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
             "",
             "Fuck Bitches, Get Money",
             "Fly motherfucker"}, -1);
-			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
             "Boat to the island"}, -1, System.Drawing.Color.Empty, System.Drawing.Color.Transparent, null);
-			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
             "Drive to the mall",
             "Sunday, Apr 12th - 9pm"}, -1);
-			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem(new string[] {
             "Jump to the sky",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem(new string[] {
             "Run up the hill",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem(new string[] {
             "Teleport to the store",
             "Sunday, Apr 13th - 8pm"}, -1);
 			this.Tasual_Main_MenuStrip = new System.Windows.Forms.MenuStrip();
@@ -71,14 +71,14 @@
 			this.Description = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.Time = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.Tasual_Notify = new System.Windows.Forms.NotifyIcon(this.components);
-			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-			this.linkLabel2 = new System.Windows.Forms.LinkLabel();
-			this.Tasual_Main_Status_MenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.Tasual_StatusLabel = new System.Windows.Forms.LinkLabel();
+			this.Tasual_AboutLabel = new System.Windows.Forms.LinkLabel();
+			this.Tasual_StatusLabel_MenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_Main_MenuStrip.SuspendLayout();
-			this.Tasual_Main_Status_MenuStrip.SuspendLayout();
+			this.Tasual_StatusLabel_MenuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// Tasual_Main_MenuStrip
@@ -125,14 +125,14 @@
 			// taskToolStripMenuItem
 			// 
 			this.taskToolStripMenuItem.Name = "taskToolStripMenuItem";
-			this.taskToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.taskToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
 			this.taskToolStripMenuItem.Text = "Task";
 			this.taskToolStripMenuItem.Click += new System.EventHandler(this.taskToolStripMenuItem_Click);
 			// 
 			// categoryToolStripMenuItem
 			// 
 			this.categoryToolStripMenuItem.Name = "categoryToolStripMenuItem";
-			this.categoryToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.categoryToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
 			this.categoryToolStripMenuItem.Text = "Category";
 			this.categoryToolStripMenuItem.Click += new System.EventHandler(this.categoryToolStripMenuItem_Click);
 			// 
@@ -214,35 +214,35 @@
             this.Time});
 			this.Tasual_ListView.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Tasual_ListView.FullRowSelect = true;
-			listViewGroup1.Header = "Work";
-			listViewGroup1.Name = "Work";
-			listViewGroup2.Header = "Personal";
-			listViewGroup2.Name = "Personal";
-			listViewGroup3.Header = "Misc";
-			listViewGroup3.Name = "Misc";
+			listViewGroup4.Header = "Work";
+			listViewGroup4.Name = "Work";
+			listViewGroup5.Header = "Personal";
+			listViewGroup5.Name = "Personal";
+			listViewGroup6.Header = "Misc";
+			listViewGroup6.Name = "Misc";
 			this.Tasual_ListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup1,
-            listViewGroup2,
-            listViewGroup3});
+            listViewGroup4,
+            listViewGroup5,
+            listViewGroup6});
 			this.Tasual_ListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-			listViewItem1.StateImageIndex = 0;
-			listViewItem2.Group = listViewGroup3;
-			listViewItem2.StateImageIndex = 0;
-			listViewItem3.Group = listViewGroup1;
-			listViewItem3.StateImageIndex = 0;
-			listViewItem4.Group = listViewGroup2;
-			listViewItem4.StateImageIndex = 0;
-			listViewItem5.Group = listViewGroup3;
-			listViewItem5.StateImageIndex = 0;
-			listViewItem6.Group = listViewGroup2;
-			listViewItem6.StateImageIndex = 0;
+			listViewItem7.StateImageIndex = 0;
+			listViewItem8.Group = listViewGroup6;
+			listViewItem8.StateImageIndex = 0;
+			listViewItem9.Group = listViewGroup4;
+			listViewItem9.StateImageIndex = 0;
+			listViewItem10.Group = listViewGroup5;
+			listViewItem10.StateImageIndex = 0;
+			listViewItem11.Group = listViewGroup6;
+			listViewItem11.StateImageIndex = 0;
+			listViewItem12.Group = listViewGroup5;
+			listViewItem12.StateImageIndex = 0;
 			this.Tasual_ListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4,
-            listViewItem5,
-            listViewItem6});
+            listViewItem7,
+            listViewItem8,
+            listViewItem9,
+            listViewItem10,
+            listViewItem11,
+            listViewItem12});
 			this.Tasual_ListView.LabelEdit = true;
 			this.Tasual_ListView.Location = new System.Drawing.Point(0, 24);
 			this.Tasual_ListView.Margin = new System.Windows.Forms.Padding(0);
@@ -271,67 +271,67 @@
 			this.Tasual_Notify.Text = "Tasual_Notify";
 			this.Tasual_Notify.Visible = true;
 			// 
-			// linkLabel1
+			// Tasual_StatusLabel
 			// 
-			this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+			this.Tasual_StatusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.linkLabel1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.linkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-			this.linkLabel1.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
-			this.linkLabel1.Location = new System.Drawing.Point(0, 393);
-			this.linkLabel1.Name = "linkLabel1";
-			this.linkLabel1.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-			this.linkLabel1.Size = new System.Drawing.Size(336, 21);
-			this.linkLabel1.TabIndex = 2;
-			this.linkLabel1.TabStop = true;
-			this.linkLabel1.Text = "All tasks complete";
-			this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.linkLabel1.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
-			this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+			this.Tasual_StatusLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Tasual_StatusLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+			this.Tasual_StatusLabel.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
+			this.Tasual_StatusLabel.Location = new System.Drawing.Point(0, 393);
+			this.Tasual_StatusLabel.Name = "Tasual_StatusLabel";
+			this.Tasual_StatusLabel.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+			this.Tasual_StatusLabel.Size = new System.Drawing.Size(336, 21);
+			this.Tasual_StatusLabel.TabIndex = 2;
+			this.Tasual_StatusLabel.TabStop = true;
+			this.Tasual_StatusLabel.Text = "All tasks complete";
+			this.Tasual_StatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.Tasual_StatusLabel.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
+			this.Tasual_StatusLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Tasual_StatusLabel_LinkClicked);
 			// 
-			// linkLabel2
+			// Tasual_AboutLabel
 			// 
-			this.linkLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.linkLabel2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.linkLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
-			this.linkLabel2.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-			this.linkLabel2.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
-			this.linkLabel2.Location = new System.Drawing.Point(342, 393);
-			this.linkLabel2.Name = "linkLabel2";
-			this.linkLabel2.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.linkLabel2.Size = new System.Drawing.Size(51, 21);
-			this.linkLabel2.TabIndex = 3;
-			this.linkLabel2.TabStop = true;
-			this.linkLabel2.Text = "About";
-			this.linkLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.linkLabel2.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
-			this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
+			this.Tasual_AboutLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.Tasual_AboutLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Tasual_AboutLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
+			this.Tasual_AboutLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+			this.Tasual_AboutLabel.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
+			this.Tasual_AboutLabel.Location = new System.Drawing.Point(342, 393);
+			this.Tasual_AboutLabel.Name = "Tasual_AboutLabel";
+			this.Tasual_AboutLabel.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.Tasual_AboutLabel.Size = new System.Drawing.Size(51, 21);
+			this.Tasual_AboutLabel.TabIndex = 3;
+			this.Tasual_AboutLabel.TabStop = true;
+			this.Tasual_AboutLabel.Text = "About";
+			this.Tasual_AboutLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.Tasual_AboutLabel.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
+			this.Tasual_AboutLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Tasual_AboutLabel_LinkClicked);
 			// 
-			// Tasual_Main_Status_MenuStrip
+			// Tasual_StatusLabel_MenuStrip
 			// 
-			this.Tasual_Main_Status_MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.Tasual_StatusLabel_MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.printToolStripMenuItem,
             this.exportToolStripMenuItem,
             this.clearToolStripMenuItem});
-			this.Tasual_Main_Status_MenuStrip.Name = "Tasual_Main_Status_MenuStrip";
-			this.Tasual_Main_Status_MenuStrip.Size = new System.Drawing.Size(108, 70);
+			this.Tasual_StatusLabel_MenuStrip.Name = "Tasual_Main_Status_MenuStrip";
+			this.Tasual_StatusLabel_MenuStrip.Size = new System.Drawing.Size(108, 70);
 			// 
 			// printToolStripMenuItem
 			// 
 			this.printToolStripMenuItem.Name = "printToolStripMenuItem";
-			this.printToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+			this.printToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.printToolStripMenuItem.Text = "Print";
 			// 
 			// exportToolStripMenuItem
 			// 
 			this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-			this.exportToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+			this.exportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.exportToolStripMenuItem.Text = "Export";
 			// 
 			// clearToolStripMenuItem
 			// 
 			this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-			this.clearToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+			this.clearToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.clearToolStripMenuItem.Text = "Clear";
 			this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
 			// 
@@ -341,8 +341,8 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(232)))), ((int)(((byte)(246)))));
 			this.ClientSize = new System.Drawing.Size(405, 414);
-			this.Controls.Add(this.linkLabel2);
-			this.Controls.Add(this.linkLabel1);
+			this.Controls.Add(this.Tasual_AboutLabel);
+			this.Controls.Add(this.Tasual_StatusLabel);
 			this.Controls.Add(this.Tasual_ListView);
 			this.Controls.Add(this.Tasual_Main_MenuStrip);
 			this.ForeColor = System.Drawing.Color.Black;
@@ -355,7 +355,7 @@
 			this.Resize += new System.EventHandler(this.Tasual_Main_Resize);
 			this.Tasual_Main_MenuStrip.ResumeLayout(false);
 			this.Tasual_Main_MenuStrip.PerformLayout();
-			this.Tasual_Main_Status_MenuStrip.ResumeLayout(false);
+			this.Tasual_StatusLabel_MenuStrip.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -380,9 +380,9 @@
 		private System.Windows.Forms.ToolStripMenuItem minimizeToTrayToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem keepOnTToolStripMenuItem;
 		private System.Windows.Forms.NotifyIcon Tasual_Notify;
-		private System.Windows.Forms.LinkLabel linkLabel1;
-		private System.Windows.Forms.LinkLabel linkLabel2;
-		private System.Windows.Forms.ContextMenuStrip Tasual_Main_Status_MenuStrip;
+		private System.Windows.Forms.LinkLabel Tasual_StatusLabel;
+		private System.Windows.Forms.LinkLabel Tasual_AboutLabel;
+		private System.Windows.Forms.ContextMenuStrip Tasual_StatusLabel_MenuStrip;
 		private System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
