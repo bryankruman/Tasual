@@ -205,7 +205,7 @@ namespace Tasual
 			Tasual_ListView_SizeColumns();
 		}
 
-		private void Tasual_Array_Save_Text(ref List<TaskItem> Array)
+		public void Tasual_Array_Save_Text(ref List<TaskItem> Array)
 		{
 			try
 			{
@@ -232,7 +232,7 @@ namespace Tasual
 			}
 		}
 
-		private void Tasual_Array_Load_Text(ref List<TaskItem> Array)
+		public void Tasual_Array_Load_Text(ref List<TaskItem> Array)
 		{
 			try
 			{
@@ -343,7 +343,7 @@ namespace Tasual
 			}
 		}
 
-		private void Tasual_ListView_PopulateFromArray(ref List<TaskItem> TaskArray)
+		public void Tasual_ListView_PopulateFromArray(ref List<TaskItem> TaskArray)
 		{
 			Tasual_ListView_ClearAll();
 
@@ -427,11 +427,6 @@ namespace Tasual
 
 		}
 
-		private void Form1_Load(object sender, EventArgs e)
-		{
-
-		}
-
 		private void Button_Exit_Click(object sender, EventArgs e)
 		{
 			this.Close();
@@ -476,7 +471,7 @@ namespace Tasual
 
 		private void clearToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			Tasual_Confirm_Clear ConfirmForm = new Tasual_Confirm_Clear();
+			Tasual_Confirm_Clear ConfirmForm = new Tasual_Confirm_Clear(this);
 			ConfirmForm.ShowDialog(this);
 		}
 
@@ -502,6 +497,7 @@ namespace Tasual
 				{
 					++Tasual_Tasks_Complete;
 					Task.Status = (int)taskstatus_t.STAT_COMPLETED;
+					Tasual_Array_Save_Text(ref TaskArray);
 				}
 
 			}
@@ -512,6 +508,7 @@ namespace Tasual
 				{
 					--Tasual_Tasks_Complete;
 					Task.Status = (int)taskstatus_t.STAT_NEW;
+					Tasual_Array_Save_Text(ref TaskArray);
 				}
 			}
 

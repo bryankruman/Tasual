@@ -29,8 +29,8 @@
 		private void InitializeComponent()
 		{
 			this.panel1 = new System.Windows.Forms.Panel();
-			this.Tasual_Confirm_Clear_Button_Cancel = new System.Windows.Forms.Button();
 			this.Tasual_Confirm_Clear_Button_Confirm = new System.Windows.Forms.Button();
+			this.Tasual_Confirm_Clear_Button_Cancel = new System.Windows.Forms.Button();
 			this.label1 = new System.Windows.Forms.Label();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.panel1.SuspendLayout();
@@ -47,6 +47,16 @@
 			this.panel1.Size = new System.Drawing.Size(328, 30);
 			this.panel1.TabIndex = 3;
 			// 
+			// Tasual_Confirm_Clear_Button_Confirm
+			// 
+			this.Tasual_Confirm_Clear_Button_Confirm.Location = new System.Drawing.Point(166, 3);
+			this.Tasual_Confirm_Clear_Button_Confirm.Name = "Tasual_Confirm_Clear_Button_Confirm";
+			this.Tasual_Confirm_Clear_Button_Confirm.Size = new System.Drawing.Size(75, 23);
+			this.Tasual_Confirm_Clear_Button_Confirm.TabIndex = 1;
+			this.Tasual_Confirm_Clear_Button_Confirm.Text = "Confirm";
+			this.Tasual_Confirm_Clear_Button_Confirm.UseVisualStyleBackColor = true;
+			this.Tasual_Confirm_Clear_Button_Confirm.Click += new System.EventHandler(this.Tasual_Confirm_Clear_Button_Confirm_Click);
+			// 
 			// Tasual_Confirm_Clear_Button_Cancel
 			// 
 			this.Tasual_Confirm_Clear_Button_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -56,15 +66,6 @@
 			this.Tasual_Confirm_Clear_Button_Cancel.TabIndex = 0;
 			this.Tasual_Confirm_Clear_Button_Cancel.Text = "Cancel";
 			this.Tasual_Confirm_Clear_Button_Cancel.Click += new System.EventHandler(this.Tasual_Confirm_Clear_Button_Cancel_Click);
-			// 
-			// Tasual_Confirm_Clear_Button_Confirm
-			// 
-			this.Tasual_Confirm_Clear_Button_Confirm.Location = new System.Drawing.Point(166, 3);
-			this.Tasual_Confirm_Clear_Button_Confirm.Name = "Tasual_Confirm_Clear_Button_Confirm";
-			this.Tasual_Confirm_Clear_Button_Confirm.Size = new System.Drawing.Size(75, 23);
-			this.Tasual_Confirm_Clear_Button_Confirm.TabIndex = 1;
-			this.Tasual_Confirm_Clear_Button_Confirm.Text = "Confirm";
-			this.Tasual_Confirm_Clear_Button_Confirm.UseVisualStyleBackColor = true;
 			// 
 			// label1
 			// 
