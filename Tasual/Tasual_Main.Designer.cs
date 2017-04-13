@@ -29,29 +29,29 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Work", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Personal", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Misc", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewGroup listViewGroup10 = new System.Windows.Forms.ListViewGroup("Work", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup11 = new System.Windows.Forms.ListViewGroup("Personal", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup12 = new System.Windows.Forms.ListViewGroup("Misc", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem(new string[] {
             "",
             "Fuck Bitches, Get Money",
             "Fly motherfucker"}, -1);
-			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem(new string[] {
             "Boat to the island"}, -1, System.Drawing.Color.Empty, System.Drawing.Color.Transparent, null);
-			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem21 = new System.Windows.Forms.ListViewItem(new string[] {
             "Drive to the mall",
             "Sunday, Apr 12th - 9pm"}, -1);
-			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem22 = new System.Windows.Forms.ListViewItem(new string[] {
             "Jump to the sky",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem23 = new System.Windows.Forms.ListViewItem(new string[] {
             "Run up the hill",
             "",
             "",
             ""}, -1);
-			System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem24 = new System.Windows.Forms.ListViewItem(new string[] {
             "Teleport to the store",
             "Sunday, Apr 13th - 8pm"}, -1);
 			this.Tasual_Main_MenuStrip = new System.Windows.Forms.MenuStrip();
@@ -214,35 +214,35 @@
             this.Time});
 			this.Tasual_ListView.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Tasual_ListView.FullRowSelect = true;
-			listViewGroup1.Header = "Work";
-			listViewGroup1.Name = "Work";
-			listViewGroup2.Header = "Personal";
-			listViewGroup2.Name = "Personal";
-			listViewGroup3.Header = "Misc";
-			listViewGroup3.Name = "Misc";
+			listViewGroup10.Header = "Work";
+			listViewGroup10.Name = "Work";
+			listViewGroup11.Header = "Personal";
+			listViewGroup11.Name = "Personal";
+			listViewGroup12.Header = "Misc";
+			listViewGroup12.Name = "Misc";
 			this.Tasual_ListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup1,
-            listViewGroup2,
-            listViewGroup3});
+            listViewGroup10,
+            listViewGroup11,
+            listViewGroup12});
 			this.Tasual_ListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-			listViewItem1.StateImageIndex = 0;
-			listViewItem2.Group = listViewGroup3;
-			listViewItem2.StateImageIndex = 0;
-			listViewItem3.Group = listViewGroup1;
-			listViewItem3.StateImageIndex = 0;
-			listViewItem4.Group = listViewGroup2;
-			listViewItem4.StateImageIndex = 0;
-			listViewItem5.Group = listViewGroup3;
-			listViewItem5.StateImageIndex = 0;
-			listViewItem6.Group = listViewGroup2;
-			listViewItem6.StateImageIndex = 0;
+			listViewItem19.StateImageIndex = 0;
+			listViewItem20.Group = listViewGroup12;
+			listViewItem20.StateImageIndex = 0;
+			listViewItem21.Group = listViewGroup10;
+			listViewItem21.StateImageIndex = 0;
+			listViewItem22.Group = listViewGroup11;
+			listViewItem22.StateImageIndex = 0;
+			listViewItem23.Group = listViewGroup12;
+			listViewItem23.StateImageIndex = 0;
+			listViewItem24.Group = listViewGroup11;
+			listViewItem24.StateImageIndex = 0;
 			this.Tasual_ListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4,
-            listViewItem5,
-            listViewItem6});
+            listViewItem19,
+            listViewItem20,
+            listViewItem21,
+            listViewItem22,
+            listViewItem23,
+            listViewItem24});
 			this.Tasual_ListView.Location = new System.Drawing.Point(0, 24);
 			this.Tasual_ListView.Margin = new System.Windows.Forms.Padding(0);
 			this.Tasual_ListView.MultiSelect = false;
@@ -347,6 +347,7 @@
 			this.Controls.Add(this.Tasual_Main_MenuStrip);
 			this.ForeColor = System.Drawing.Color.Black;
 			this.MainMenuStrip = this.Tasual_Main_MenuStrip;
+			this.MinimumSize = new System.Drawing.Size(300, 200);
 			this.Name = "Tasual_Main";
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
 			this.Text = "Tasual";
