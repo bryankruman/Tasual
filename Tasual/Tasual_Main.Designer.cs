@@ -243,7 +243,6 @@
             listViewItem4,
             listViewItem5,
             listViewItem6});
-			this.Tasual_ListView.LabelEdit = true;
 			this.Tasual_ListView.Location = new System.Drawing.Point(0, 24);
 			this.Tasual_ListView.Margin = new System.Windows.Forms.Padding(0);
 			this.Tasual_ListView.MultiSelect = false;
@@ -351,7 +350,7 @@
 			this.Name = "Tasual_Main";
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
 			this.Text = "Tasual";
-			this.Load += new System.EventHandler(this.Form1_Load);
+			this.Load += new System.EventHandler(this.Tasual_Main_Load);
 			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Tasual_Main_MouseDown);
 			this.Resize += new System.EventHandler(this.Tasual_Main_Resize);
 			this.Tasual_Main_MenuStrip.ResumeLayout(false);

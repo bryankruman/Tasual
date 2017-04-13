@@ -288,7 +288,7 @@ namespace Tasual
 			Tasual_ListView.Columns[0].AutoResize(ColumnHeaderAutoResizeStyle.None);
 			Tasual_ListView.Columns[1].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
 
-			Tasual_ListView.Columns[0].Width = Math.Max(100, (Tasual_ListView.Width - Tasual_ListView.Columns[1].Width));
+			Tasual_ListView.Columns[0].Width = Math.Max(100, (Tasual_ListView.Width - Tasual_ListView.Columns[1].Width) - 17);
 		}
 
 		private void Tasual_ListView_ClearAll()
@@ -386,10 +386,10 @@ namespace Tasual
 			{
 				Button_Exit.Visible = true;
 			}
+		}
 
-			// clear any existing items
-			//Tasual_ListView_ClearAll();
-
+		private void Tasual_Main_Load(object sender, EventArgs e)
+		{
 			// load task array
 			Tasual_Array_Load_Text(ref TaskArray);
 
