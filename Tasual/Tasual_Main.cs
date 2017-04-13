@@ -19,6 +19,9 @@ namespace Tasual
 		bool Tasual_Setting_TimeGroups = false;
 		string Tasual_Setting_TextFile = "localdb.txt";
 
+		int Tasual_Tasks_Complete = 0;
+		int Tasual_Tasks_Total = 0;
+
 		public enum protocol_text_arg_t
 		{
 			ARG_TYPE,
@@ -163,8 +166,6 @@ namespace Tasual
 			Array.Add(NewItem);
 			Tasual_Array_Save_Text(ref Array);
 
-			//Tasual_PrintTaskToConsole(NewItem);
-
 			// create listviewitem basic info
 			string[] Item_S = new string[2];
 			Item_S[0] = NewItem.Description;
@@ -180,6 +181,7 @@ namespace Tasual
 				Item_S[1] = epoch.ToLongTimeString();
 			}
 			ListViewItem Item = new ListViewItem(Item_S);
+			Item.Tag = NewItem;
 
 			// create listviewgroup for item
 			Tasual_ListView_AssignGroup(NewItem.Group.ToString(), ref Item);
@@ -187,17 +189,20 @@ namespace Tasual
 			// check status of task to see if it is checked or not
 			if (NewItem.Status == (int)taskstatus_t.STAT_COMPLETED)
 			{
+				++Tasual_Tasks_Complete;
 				Item.Checked = true;
-				//Item.ForeColor = Color.FromArgb(255, 189, 208, 230);
 			}
 			else
 			{
 				Item.Checked = false;
-				//Item.ForeColor = Color.FromArgb(255, 36, 90, 150);
 			}
 
 			//Item.BackColor = Color.FromArgb(255, 0, 0, 0);
 			Tasual_ListView.Items.Add(Item);
+
+			++Tasual_Tasks_Total;
+			Tasual_StatusLabel_UpdateCounts();
+			Tasual_ListView_SizeColumns();
 		}
 
 		private void Tasual_Array_Save_Text(ref List<TaskItem> Array)
@@ -283,6 +288,18 @@ namespace Tasual
 			}
 		}
 
+		private void Tasual_StatusLabel_UpdateCounts()
+		{
+			if (Tasual_Tasks_Complete == Tasual_Tasks_Total)
+			{
+				Tasual_StatusLabel.Text = "All tasks complete";
+			}
+			else
+			{
+				Tasual_StatusLabel.Text = string.Format("{0} of {1} tasks complete", Tasual_Tasks_Complete, Tasual_Tasks_Total);
+			}
+		}
+
 		private void Tasual_ListView_SizeColumns()
 		{
 			Tasual_ListView.Columns[0].AutoResize(ColumnHeaderAutoResizeStyle.None);
@@ -326,12 +343,14 @@ namespace Tasual
 			}
 		}
 
-		private void Tasual_ListView_PopulateFromArray(ref List<TaskItem> TaskArray, ref bool timegroups)
+		private void Tasual_ListView_PopulateFromArray(ref List<TaskItem> TaskArray)
 		{
 			Tasual_ListView_ClearAll();
 
+			Tasual_Tasks_Total = Tasual_Tasks_Complete = 0;
+
 			Tasual_ListView.Columns.Add("Description");
-			if (timegroups) { Tasual_ListView.Columns.Add("Category"); }
+			if (Tasual_Setting_TimeGroups) { Tasual_ListView.Columns.Add("Category"); }
 			else { Tasual_ListView.Columns.Add("Time"); }
 
 			foreach (TaskItem Task in TaskArray)
@@ -342,8 +361,7 @@ namespace Tasual
 				// create listviewitem basic info
 				string[] Item_S = new string[2];
 				Item_S[0] = Task.Description;
-
-				if (timegroups)
+				if (Tasual_Setting_TimeGroups)
 				{
 					Item_S[1] = Task.Group.ToString();
 				}
@@ -354,6 +372,7 @@ namespace Tasual
 					Item_S[1] = epoch.ToLongDateString();
 				}
 				ListViewItem Item = new ListViewItem(Item_S);
+				Item.Tag = Task;
 
 				// create listviewgroup for item
 				Tasual_ListView_AssignGroup(Task.Group.ToString(), ref Item);
@@ -361,19 +380,20 @@ namespace Tasual
 				// check status of task to see if it is checked or not
 				if (Task.Status == (int)taskstatus_t.STAT_COMPLETED)
 				{
+					++Tasual_Tasks_Complete;
 					Item.Checked = true;
-					Item.ForeColor = Color.FromArgb(255, 189, 208, 230);
 				}
 				else
 				{
 					Item.Checked = false;
-					Item.ForeColor = Color.FromArgb(255, 36, 90, 150);
 				}
 
+				++Tasual_Tasks_Total;
 				//Item.BackColor = Color.FromArgb(255, 0, 0, 0);
 				Tasual_ListView.Items.Add(Item);
 			}
 
+			Tasual_StatusLabel_UpdateCounts();
 			Tasual_ListView_SizeColumns();
 		}
 
@@ -394,7 +414,7 @@ namespace Tasual
 			Tasual_Array_Load_Text(ref TaskArray);
 
 			// load tasks into Tasual_ListView
-			Tasual_ListView_PopulateFromArray(ref TaskArray, ref Tasual_Setting_TimeGroups);
+			Tasual_ListView_PopulateFromArray(ref TaskArray);
 		}
 
 		private void listView1_SelectedIndexChanged(object sender, EventArgs e)
@@ -427,7 +447,7 @@ namespace Tasual
 		{
 			Tasual_Array_Save_Text(ref TaskArray);
 			Tasual_Array_Load_Text(ref TaskArray);
-			Tasual_ListView_PopulateFromArray(ref TaskArray, ref Tasual_Setting_TimeGroups);
+			Tasual_ListView_PopulateFromArray(ref TaskArray);
 		}
 
 		private void Tasual_ListView_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
@@ -473,14 +493,29 @@ namespace Tasual
 
 		private void Tasual_ListView_ItemChecked(object sender, ItemCheckedEventArgs e)
 		{
+			TaskItem Task = (TaskItem)e.Item.Tag;
+
 			if (e.Item.Checked)
 			{
 				e.Item.ForeColor = Color.FromArgb(255, 189, 208, 230);
+				if (Task.Status != (int)taskstatus_t.STAT_COMPLETED)
+				{
+					++Tasual_Tasks_Complete;
+					Task.Status = (int)taskstatus_t.STAT_COMPLETED;
+				}
+
 			}
 			else
 			{
 				e.Item.ForeColor = Color.FromArgb(255, 36, 90, 150);
+				if (Task.Status != (int)taskstatus_t.STAT_NEW)
+				{
+					--Tasual_Tasks_Complete;
+					Task.Status = (int)taskstatus_t.STAT_NEW;
+				}
 			}
+
+			Tasual_StatusLabel_UpdateCounts();
 		}
 	}
 	public class TaskItem
