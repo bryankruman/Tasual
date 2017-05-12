@@ -35,7 +35,7 @@
             System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "",
             "Fuck Bitches, Get Money",
-            "Fly motherfucker"}, -1);
+            "Fly motherfucker"}, "Add.png");
             System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "Boat to the island"}, -1, System.Drawing.Color.Empty, System.Drawing.Color.Transparent, null);
             System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
@@ -71,6 +71,7 @@
             this.Tasual_ListView = new System.Windows.Forms.ListView();
             this.Description = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Time = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Tasual_TaskIcons = new System.Windows.Forms.ImageList(this.components);
             this.Tasual_Notify = new System.Windows.Forms.NotifyIcon(this.components);
             this.Tasual_StatusLabel = new System.Windows.Forms.LinkLabel();
             this.Tasual_AboutLabel = new System.Windows.Forms.LinkLabel();
@@ -145,6 +146,7 @@
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
             this.toolStripMenuItem3.Size = new System.Drawing.Size(55, 20);
             this.toolStripMenuItem3.Text = "Edit";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -209,7 +211,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Tasual_ListView.BackColor = System.Drawing.Color.White;
             this.Tasual_ListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Tasual_ListView.CheckBoxes = true;
             this.Tasual_ListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Description,
             this.Time});
@@ -227,15 +228,10 @@
             listViewGroup3});
             this.Tasual_ListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             listViewItem1.StateImageIndex = 0;
-            listViewItem2.Group = listViewGroup3;
             listViewItem2.StateImageIndex = 0;
-            listViewItem3.Group = listViewGroup1;
             listViewItem3.StateImageIndex = 0;
-            listViewItem4.Group = listViewGroup2;
             listViewItem4.StateImageIndex = 0;
-            listViewItem5.Group = listViewGroup3;
             listViewItem5.StateImageIndex = 0;
-            listViewItem6.Group = listViewGroup2;
             listViewItem6.StateImageIndex = 0;
             this.Tasual_ListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1,
@@ -249,13 +245,16 @@
             this.Tasual_ListView.MultiSelect = false;
             this.Tasual_ListView.Name = "Tasual_ListView";
             this.Tasual_ListView.Size = new System.Drawing.Size(405, 369);
+            this.Tasual_ListView.SmallImageList = this.Tasual_TaskIcons;
             this.Tasual_ListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.Tasual_ListView.TabIndex = 0;
             this.Tasual_ListView.UseCompatibleStateImageBehavior = false;
             this.Tasual_ListView.View = System.Windows.Forms.View.Details;
+            this.Tasual_ListView.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.Tasual_ListView_AfterLabelEdit);
             this.Tasual_ListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.Tasual_ListView_ColumnWidthChanging);
-            this.Tasual_ListView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.Tasual_ListView_ItemChecked);
             this.Tasual_ListView.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            this.Tasual_ListView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Tasual_ListView_MouseClick);
+            this.Tasual_ListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Tasual_ListView_MouseDoubleClick);
             // 
             // Description
             // 
@@ -266,6 +265,12 @@
             // 
             this.Time.Text = "Time";
             this.Time.Width = 133;
+            // 
+            // Tasual_TaskIcons
+            // 
+            this.Tasual_TaskIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("Tasual_TaskIcons.ImageStream")));
+            this.Tasual_TaskIcons.TransparentColor = System.Drawing.Color.Transparent;
+            this.Tasual_TaskIcons.Images.SetKeyName(0, "Add.png");
             // 
             // Tasual_Notify
             // 
@@ -389,6 +394,7 @@
 		private System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
-	}
+        private System.Windows.Forms.ImageList Tasual_TaskIcons;
+    }
 }
 

@@ -186,16 +186,8 @@ namespace Tasual
 			// create listviewgroup for item
 			Tasual_ListView_AssignGroup(NewItem.Group.ToString(), ref Item);
 
-			// check status of task to see if it is checked or not
-			if (NewItem.Status == (int)taskstatus_t.STAT_COMPLETED)
-			{
-				++Tasual_Tasks_Complete;
-				Item.Checked = true;
-			}
-			else
-			{
-				Item.Checked = false;
-			}
+            // check status of task to see if it is checked or not
+            Tasual_ListView_ChangeStatus(ref Item, NewItem.Status);
 
 			//Item.BackColor = Color.FromArgb(255, 0, 0, 0);
 			Tasual_ListView.Items.Add(Item);
@@ -377,16 +369,8 @@ namespace Tasual
 				// create listviewgroup for item
 				Tasual_ListView_AssignGroup(Task.Group.ToString(), ref Item);
 
-				// check status of task to see if it is checked or not
-				if (Task.Status == (int)taskstatus_t.STAT_COMPLETED)
-				{
-					++Tasual_Tasks_Complete;
-					Item.Checked = true;
-				}
-				else
-				{
-					Item.Checked = false;
-				}
+                // check status of task to see if it is checked or not
+                Tasual_ListView_ChangeStatus(ref Item, Task.Status);
 
 				++Tasual_Tasks_Total;
 				//Item.BackColor = Color.FromArgb(255, 0, 0, 0);
@@ -486,14 +470,15 @@ namespace Tasual
 			Tasual_Array_AddTask(ref TaskArray, 0, 0, 0, "Cows", "Testing 123", foobar);
 		}
 
-		private void Tasual_ListView_ItemChecked(object sender, ItemCheckedEventArgs e)
+		private void Tasual_ListView_ChangeStatus(ref ListViewItem Item, int Status)
 		{
-			TaskItem Task = (TaskItem)e.Item.Tag;
+			TaskItem Task = (TaskItem)Item.Tag;
 
-			if (e.Item.Checked)
+			if (Status == (int)taskstatus_t.STAT_COMPLETED)
 			{
-				e.Item.ForeColor = Color.FromArgb(255, 189, 208, 230);
-				if (Task.Status != (int)taskstatus_t.STAT_COMPLETED)
+				Item.ForeColor = Color.FromArgb(255, 189, 208, 230);
+                Item.ImageIndex = 0;
+                if (Task.Status != (int)taskstatus_t.STAT_COMPLETED)
 				{
 					++Tasual_Tasks_Complete;
 					Task.Status = (int)taskstatus_t.STAT_COMPLETED;
@@ -501,9 +486,10 @@ namespace Tasual
 				}
 
 			}
-			else
+			else if (Status == (int)taskstatus_t.STAT_NEW)
 			{
-				e.Item.ForeColor = Color.FromArgb(255, 36, 90, 150);
+				Item.ForeColor = Color.FromArgb(255, 36, 90, 150);
+                Item.ImageIndex = 1;
 				if (Task.Status != (int)taskstatus_t.STAT_NEW)
 				{
 					--Tasual_Tasks_Complete;
@@ -514,8 +500,43 @@ namespace Tasual
 
 			Tasual_StatusLabel_UpdateCounts();
 		}
-	}
-	public class TaskItem
+
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            Tasual_ListView.LabelEdit = true;
+            Tasual_ListView.FocusedItem.BeginEdit();
+        }
+        ListViewItem Tasual_ListView_LastClicked;
+        private void Tasual_ListView_AfterLabelEdit(object sender, LabelEditEventArgs e)
+        {
+            Tasual_ListView.LabelEdit = false;
+            Tasual_ListView_LastClicked = null;
+        }
+
+        private void Tasual_ListView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Tasual_ListView.LabelEdit = true;
+            Tasual_ListView.FocusedItem.BeginEdit();
+            ListViewItem FocusedItem = Tasual_ListView.FocusedItem;
+            Tasual_ListView_ChangeStatus(ref FocusedItem, (int)taskstatus_t.STAT_COMPLETED);
+            Tasual_ListView.FocusedItem = FocusedItem;
+            // = true;
+        }
+
+        private void Tasual_ListView_MouseClick(object sender, MouseEventArgs e)
+        {
+            if(Tasual_ListView_LastClicked == Tasual_ListView.FocusedItem)
+            {
+                Tasual_ListView.LabelEdit = true;
+                Tasual_ListView.FocusedItem.BeginEdit();
+            }
+            else
+            {
+                Tasual_ListView_LastClicked = Tasual_ListView.FocusedItem;
+            }
+        }
+    }
+    public class TaskItem
 	{
 		public struct TaskTime
 		{
