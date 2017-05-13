@@ -517,6 +517,9 @@ namespace Tasual
         {
             Tasual_ListView.LabelEdit = false;
             Tasual_ListView_LastClicked = null;
+            TaskItem Task = (TaskItem)Tasual_ListView.Items[e.Item].Tag;
+            Task.Description = Tasual_ListView.Items[e.Item].Text;
+            Tasual_Array_Save_Text(ref TaskArray);
         }
 
         private void Tasual_ListView_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -528,6 +531,7 @@ namespace Tasual
             Tasual_ListView_ChangeStatus(ref FocusedItem, (int)StatusEnum.Toggle);
             Tasual_ListView.FocusedItem = FocusedItem;
             Tasual_StatusLabel_UpdateCounts();
+            Tasual_Array_Save_Text(ref TaskArray);
         }
 
         private void Tasual_ListView_MouseClick(object sender, MouseEventArgs e)
