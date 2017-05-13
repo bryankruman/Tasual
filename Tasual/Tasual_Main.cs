@@ -19,23 +19,20 @@ namespace Tasual
 		bool Tasual_Setting_TimeGroups = false;
 		string Tasual_Setting_TextFile = "localdb.txt";
 
-		int Tasual_Tasks_Complete = 0;
-		int Tasual_Tasks_Total = 0;
-
-		public enum protocol_text_arg_t
+		public enum ArgEnum
 		{
-			ARG_TYPE,
-			ARG_PRIO,
-			ARG_STAT,
-			ARG_GROU,
-			ARG_DESC,
-			ARG_START,
-			ARG_END,
-			ARG_NEXT,
-			ARG_COUNT
+			Type,
+			Priority,
+			Status,
+			Group,
+			Description,
+			Created,
+			Ending,
+			Next,
+			Count
 		}
 
-		public enum tasktype_t
+		public enum TypeEnum
 		{
 			TYPE_USER_SINGLE,
 			TYPE_USER_RECURRING,
@@ -45,20 +42,21 @@ namespace Tasual
 			TYPE_SYNDICATION_RECURRING
 		}
 
-		public enum taskpriority_t
+		public enum PrioEnum
 		{
 			PRIO_LOW,
 			PRIO_MED,
 			PRIO_HIGH
 		}
 
-		public enum taskstatus_t
+		public enum StatusEnum
 		{
-			STAT_NEW,
-			STAT_COMPLETED
+			New,
+			Complete,
+            Toggle
 		}
 
-		public enum protocol_t
+		public enum ProtocolEnum
 		{
 			PRO_TEXT//,
 					//PRO_XML,
@@ -75,8 +73,8 @@ namespace Tasual
 				TaskItem.Status,
 				TaskItem.Group,
 				TaskItem.Description,
-				TaskItem.Time.Start,
-				TaskItem.Time.End,
+				TaskItem.Time.Created,
+				TaskItem.Time.Ending,
 				TaskItem.Time.Next
 			);
 		}
@@ -154,45 +152,38 @@ namespace Tasual
 			string Description,
 			TaskItem.TaskTime Time)
 		{
-			TaskItem NewItem = new TaskItem();
+			TaskItem NewTask = new TaskItem();
 
-			NewItem.Type = Type;
-			NewItem.Priority = Priority;
-			NewItem.Status = Status;
-			NewItem.Group = Group;
-			NewItem.Description = Description;
-			NewItem.Time = Time;
+			NewTask.Type = Type;
+			NewTask.Priority = Priority;
+			NewTask.Status = Status;
+			NewTask.Group = Group;
+			NewTask.Description = Description;
+			NewTask.Time = Time;
 
-			Array.Add(NewItem);
+			Array.Add(NewTask);
 			Tasual_Array_Save_Text(ref Array);
 
 			// create listviewitem basic info
 			string[] Item_S = new string[2];
-			Item_S[0] = NewItem.Description;
+			Item_S[0] = NewTask.Description;
 
 			if (Tasual_Setting_TimeGroups)
 			{
-				Item_S[1] = NewItem.Group.ToString();
+				Item_S[1] = NewTask.Group.ToString();
 			}
 			else
 			{
 				var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-				epoch.AddSeconds(NewItem.Time.Start);
+				epoch.AddSeconds(NewTask.Time.Created);
 				Item_S[1] = epoch.ToLongTimeString();
 			}
 			ListViewItem Item = new ListViewItem(Item_S);
-			Item.Tag = NewItem;
+			Item.Tag = NewTask;
 
-			// create listviewgroup for item
-			Tasual_ListView_AssignGroup(NewItem.Group.ToString(), ref Item);
-
-            // check status of task to see if it is checked or not
-            Tasual_ListView_ChangeStatus(ref Item, NewItem.Status);
-
-			//Item.BackColor = Color.FromArgb(255, 0, 0, 0);
+			Tasual_ListView_AssignGroup(NewTask.Group.ToString(), ref Item);
+            Tasual_ListView_ChangeStatus(ref Item, NewTask.Status);
 			Tasual_ListView.Items.Add(Item);
-
-			++Tasual_Tasks_Total;
 			Tasual_StatusLabel_UpdateCounts();
 			Tasual_ListView_SizeColumns();
 		}
@@ -211,8 +202,8 @@ namespace Tasual
 						Line = Line + (char)29 + Task.Status.ToString();
 						Line = Line + (char)29 + Task.Group;
 						Line = Line + (char)29 + Task.Description;
-						Line = Line + (char)29 + Task.Time.Start.ToString();
-						Line = Line + (char)29 + Task.Time.End.ToString();
+						Line = Line + (char)29 + Task.Time.Created.ToString();
+						Line = Line + (char)29 + Task.Time.Ending.ToString();
 						Line = Line + (char)29 + Task.Time.Next.ToString();
 						OutputFile.WriteLine(Line);
 					}
@@ -246,14 +237,14 @@ namespace Tasual
 							// lets do something with this data now
 							switch (argtype)
 							{
-								case (int)protocol_text_arg_t.ARG_TYPE: { Int32.TryParse(token, out NewItem.Type); break; }
-								case (int)protocol_text_arg_t.ARG_PRIO: { Int32.TryParse(token, out NewItem.Priority); break; }
-								case (int)protocol_text_arg_t.ARG_STAT: { Int32.TryParse(token, out NewItem.Status); break; }
-								case (int)protocol_text_arg_t.ARG_GROU: { NewItem.Group = token; break; }
-								case (int)protocol_text_arg_t.ARG_DESC: { NewItem.Description = token; break; }
-								case (int)protocol_text_arg_t.ARG_START: { Double.TryParse(token, out NewItem.Time.Start); break; }
-								case (int)protocol_text_arg_t.ARG_END: { Double.TryParse(token, out NewItem.Time.End); break; }
-								case (int)protocol_text_arg_t.ARG_NEXT: { Double.TryParse(token, out NewItem.Time.Next); break; }
+								case (int)ArgEnum.Type:         { Int32.TryParse(token, out NewItem.Type); break; }
+								case (int)ArgEnum.Priority:     { Int32.TryParse(token, out NewItem.Priority); break; }
+								case (int)ArgEnum.Status:       { Int32.TryParse(token, out NewItem.Status); break; }
+								case (int)ArgEnum.Group:        { NewItem.Group = token; break; }
+								case (int)ArgEnum.Description:  { NewItem.Description = token; break; }
+								case (int)ArgEnum.Created:        { Double.TryParse(token, out NewItem.Time.Created); break; }
+								case (int)ArgEnum.Ending:          { Double.TryParse(token, out NewItem.Time.Ending); break; }
+								case (int)ArgEnum.Next:         { Double.TryParse(token, out NewItem.Time.Next); break; }
 								default:
 									{
 										Console.WriteLine("TOO MANY ARGUMENTS IN FILE !!!!!!");
@@ -265,7 +256,7 @@ namespace Tasual
 							//Console.WriteLine(token);
 						}
 
-						if (argtype == (int)protocol_text_arg_t.ARG_COUNT)
+						if (argtype == (int)ArgEnum.Count)
 							TaskArray.Add(NewItem);
 
 						//Console.WriteLine(line);
@@ -280,15 +271,70 @@ namespace Tasual
 			}
 		}
 
-		private void Tasual_StatusLabel_UpdateCounts()
+        private void Tasual_ListView_ChangeStatus(ref ListViewItem Item, int Status)
+        {
+            TaskItem Task = (TaskItem)Item.Tag;
+
+            switch (Status)
+            {
+                case (int)StatusEnum.Toggle:
+                    {
+                        if (Task.Status == (int)StatusEnum.Complete)
+                        {
+                            Status = (int)StatusEnum.New;
+                            goto case (int)StatusEnum.New;
+                        }
+                        else if (Task.Status == (int)StatusEnum.New)
+                        {
+                            Status = (int)StatusEnum.Complete;
+                            goto case (int)StatusEnum.Complete;
+                        }
+                        break;
+                    }
+
+                case (int)StatusEnum.Complete:
+                    {
+                        Item.ForeColor = Color.FromArgb(255, 189, 208, 230);
+                        Item.ImageIndex = 0;
+                        break;
+                    }
+
+                case (int)StatusEnum.New:
+                    {
+                        Item.ForeColor = Color.FromArgb(255, 36, 90, 150);
+                        Item.ImageIndex = 1;
+                        break;
+                    }
+                default:
+                    {
+                        Console.WriteLine("Tasual_ListView_ChangeStatus(): Invalid Status!");
+                        return;
+                    }
+            }
+
+            Task.Status = Status;
+        }
+
+        private void Tasual_StatusLabel_UpdateCounts()
 		{
-			if (Tasual_Tasks_Complete == Tasual_Tasks_Total)
+            int Complete = 0;
+            int Total = 0;
+
+            foreach (TaskItem Task in TaskArray)
+            {
+                if (Task == null) { break; }
+
+                ++Total;
+                if (Task.Status == (int)StatusEnum.Complete) { ++Complete; }
+            }
+
+            if (Complete == Total)
 			{
 				Tasual_StatusLabel.Text = "All tasks complete";
 			}
 			else
 			{
-				Tasual_StatusLabel.Text = string.Format("{0} of {1} tasks complete", Tasual_Tasks_Complete, Tasual_Tasks_Total);
+				Tasual_StatusLabel.Text = string.Format("{0} of {1} tasks complete", Complete, Total);
 			}
 		}
 
@@ -339,8 +385,6 @@ namespace Tasual
 		{
 			Tasual_ListView_ClearAll();
 
-			Tasual_Tasks_Total = Tasual_Tasks_Complete = 0;
-
 			Tasual_ListView.Columns.Add("Description");
 			if (Tasual_Setting_TimeGroups) { Tasual_ListView.Columns.Add("Category"); }
 			else { Tasual_ListView.Columns.Add("Time"); }
@@ -360,20 +404,14 @@ namespace Tasual
 				else
 				{
 					var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-					epoch.AddSeconds(Task.Time.Start);
+					epoch.AddSeconds(Task.Time.Created);
 					Item_S[1] = epoch.ToLongDateString();
 				}
 				ListViewItem Item = new ListViewItem(Item_S);
 				Item.Tag = Task;
 
-				// create listviewgroup for item
 				Tasual_ListView_AssignGroup(Task.Group.ToString(), ref Item);
-
-                // check status of task to see if it is checked or not
                 Tasual_ListView_ChangeStatus(ref Item, Task.Status);
-
-				++Tasual_Tasks_Total;
-				//Item.BackColor = Color.FromArgb(255, 0, 0, 0);
 				Tasual_ListView.Items.Add(Item);
 			}
 
@@ -464,41 +502,12 @@ namespace Tasual
 			//Tasual_ListView_ClearAll();
 			//Tasual_ListView_PopulateFromArray(ref TaskArray, ref timegroups);
 			TaskItem.TaskTime foobar = new TaskItem.TaskTime();
-			foobar.Start = 1;
-			foobar.End = 2;
+            var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+			foobar.Created = Convert.ToInt64((DateTime.Now - epoch).TotalSeconds);
+			foobar.Ending = 2;
 			foobar.Next = 3;
 			Tasual_Array_AddTask(ref TaskArray, 0, 0, 0, "Cows", "Testing 123", foobar);
-		}
-
-		private void Tasual_ListView_ChangeStatus(ref ListViewItem Item, int Status)
-		{
-			TaskItem Task = (TaskItem)Item.Tag;
-
-			if (Status == (int)taskstatus_t.STAT_COMPLETED)
-			{
-				Item.ForeColor = Color.FromArgb(255, 189, 208, 230);
-                Item.ImageIndex = 0;
-                if (Task.Status != (int)taskstatus_t.STAT_COMPLETED)
-				{
-					++Tasual_Tasks_Complete;
-					Task.Status = (int)taskstatus_t.STAT_COMPLETED;
-					Tasual_Array_Save_Text(ref TaskArray);
-				}
-
-			}
-			else if (Status == (int)taskstatus_t.STAT_NEW)
-			{
-				Item.ForeColor = Color.FromArgb(255, 36, 90, 150);
-                Item.ImageIndex = 1;
-				if (Task.Status != (int)taskstatus_t.STAT_NEW)
-				{
-					--Tasual_Tasks_Complete;
-					Task.Status = (int)taskstatus_t.STAT_NEW;
-					Tasual_Array_Save_Text(ref TaskArray);
-				}
-			}
-
-			Tasual_StatusLabel_UpdateCounts();
 		}
 
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
@@ -515,12 +524,13 @@ namespace Tasual
 
         private void Tasual_ListView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Tasual_ListView.LabelEdit = true;
-            Tasual_ListView.FocusedItem.BeginEdit();
+            //Tasual_ListView.LabelEdit = true;
+            //Tasual_ListView.FocusedItem.BeginEdit();
+
             ListViewItem FocusedItem = Tasual_ListView.FocusedItem;
-            Tasual_ListView_ChangeStatus(ref FocusedItem, (int)taskstatus_t.STAT_COMPLETED);
+            Tasual_ListView_ChangeStatus(ref FocusedItem, (int)StatusEnum.Toggle);
             Tasual_ListView.FocusedItem = FocusedItem;
-            // = true;
+            Tasual_StatusLabel_UpdateCounts();
         }
 
         private void Tasual_ListView_MouseClick(object sender, MouseEventArgs e)
@@ -540,8 +550,8 @@ namespace Tasual
 	{
 		public struct TaskTime
 		{
-			public double Start;
-			public double End;
+			public double Created;
+			public double Ending;
 			public double Next;
 		}
 
