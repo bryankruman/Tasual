@@ -174,10 +174,9 @@ namespace Tasual
 			}
 			else
 			{
-				var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-				epoch.AddSeconds(NewTask.Time.Created);
-				Item_S[1] = epoch.ToLongTimeString();
-			}
+                var CreationTime = DateTimeOffset.FromUnixTimeSeconds((long)NewTask.Time.Created).DateTime.ToLocalTime();
+                Item_S[1] = CreationTime.ToLongDateString();
+            }
 			ListViewItem Item = new ListViewItem(Item_S);
 			Item.Tag = NewTask;
 
@@ -403,10 +402,9 @@ namespace Tasual
 				}
 				else
 				{
-					var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-					epoch.AddSeconds(Task.Time.Created);
-					Item_S[1] = epoch.ToLongDateString();
-				}
+                    var CreationTime = DateTimeOffset.FromUnixTimeSeconds((long)Task.Time.Created).DateTime.ToLocalTime();
+                    Item_S[1] = CreationTime.ToLongDateString();
+                }
 				ListViewItem Item = new ListViewItem(Item_S);
 				Item.Tag = Task;
 
@@ -502,10 +500,12 @@ namespace Tasual
 			//Tasual_ListView_ClearAll();
 			//Tasual_ListView_PopulateFromArray(ref TaskArray, ref timegroups);
 			TaskItem.TaskTime foobar = new TaskItem.TaskTime();
-            var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            //var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            //long TimeStamp = DateTimeOffset.FromUnixTimeSeconds(1000).ToUnixTimeSeconds();
+            var dateTimeOffset = new DateTimeOffset(DateTime.Now.ToLocalTime());
+            foobar.Created = dateTimeOffset.ToUnixTimeSeconds();
 
-			foobar.Created = Convert.ToInt64((DateTime.Now - epoch).TotalSeconds);
-			foobar.Ending = 2;
+            foobar.Ending = 2;
 			foobar.Next = 3;
 			Tasual_Array_AddTask(ref TaskArray, 0, 0, 0, "Cows", "Testing 123", foobar);
 		}
