@@ -500,11 +500,8 @@ namespace Tasual
 			//Tasual_ListView_ClearAll();
 			//Tasual_ListView_PopulateFromArray(ref TaskArray, ref timegroups);
 			TaskItem.TaskTime foobar = new TaskItem.TaskTime();
-            //var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            //long TimeStamp = DateTimeOffset.FromUnixTimeSeconds(1000).ToUnixTimeSeconds();
-            var dateTimeOffset = new DateTimeOffset(DateTime.Now.ToLocalTime());
-            foobar.Created = dateTimeOffset.ToUnixTimeSeconds();
-
+            var CurrentTimeOffset = new DateTimeOffset(DateTime.Now.ToLocalTime());
+            foobar.Created = CurrentTimeOffset.ToUnixTimeSeconds();
             foobar.Ending = 2;
 			foobar.Next = 3;
 			Tasual_Array_AddTask(ref TaskArray, 0, 0, 0, "Cows", "Testing 123", foobar);
