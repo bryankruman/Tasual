@@ -517,9 +517,14 @@ namespace Tasual
         {
             Tasual_ListView.LabelEdit = false;
             Tasual_ListView_LastClicked = null;
-            TaskItem Task = (TaskItem)Tasual_ListView.Items[e.Item].Tag;
-            Task.Description = e.Label.ToString(); // WARNING: Sometimes causes an error when clicking away?
-            Tasual_Array_Save_Text(ref TaskArray);
+            this.BeginInvoke((MethodInvoker)delegate
+            {
+                ListViewItem Item = (ListViewItem)Tasual_ListView.Items[e.Item];
+                TaskItem Task = (TaskItem)Item.Tag;
+                Task.Description = Item.Text.ToString(); // WARNING: Sometimes causes an error when clicking away?
+                Console.WriteLine(Task.Description);
+                Tasual_Array_Save_Text(ref TaskArray);
+            });
         }
 
         private void Tasual_ListView_MouseDoubleClick(object sender, MouseEventArgs e)
