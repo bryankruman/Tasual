@@ -447,11 +447,6 @@ namespace Tasual
 			Tasual_ListView_PopulateFromArray(ref TaskArray);
 		}
 
-		private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-		{
-
-		}
-
 		private void toolStripStatusLabel1_Click(object sender, EventArgs e)
 		{
 
@@ -522,70 +517,21 @@ namespace Tasual
             Tasual_ListView.LabelEdit = true;
             Tasual_ListView.FocusedItem.BeginEdit();
         }
-        ListViewItem Tasual_ListView_LastClicked;
+
         private void Tasual_ListView_AfterLabelEdit(object sender, LabelEditEventArgs e)
         {
             Tasual_ListView.LabelEdit = false;
-            Tasual_ListView_LastClicked = null;
+
             this.BeginInvoke((MethodInvoker)delegate
             {
-                ListViewItem Item = (ListViewItem)Tasual_ListView.Items[e.Item];
+                ListViewItem Item = Tasual_ListView.Items[e.Item];
                 TaskItem Task = (TaskItem)Item.Tag;
-                Task.Description = Item.Text.ToString(); // WARNING: Sometimes causes an error when clicking away?
-                Tasual_Array_Save_Text(ref TaskArray);
+                if ((Task != null) && (Item != null))
+                {
+                    Task.Description = Item.Text.ToString();
+                    Tasual_Array_Save_Text(ref TaskArray);
+                }
             });
-        }
-
-        //private void Tasual_ListView_MouseDoubleClick(object sender, MouseEventArgs e)
-        //{
-        //Tasual_ListView.LabelEdit = true;
-        //Tasual_ListView.FocusedItem.BeginEdit();
-        /*
-        ListViewItem FocusedItem = Tasual_ListView.FocusedItem;
-        Tasual_ListView_ChangeStatus(ref FocusedItem, (int)StatusEnum.Toggle);
-        Tasual_ListView.FocusedItem = FocusedItem;
-        Tasual_StatusLabel_UpdateCounts();
-        Tasual_Array_Save_Text(ref TaskArray);*/
-        // }
-
-        //private static DispatcherTimer ClickWaitTimer =
-
-        private void Tasual_ListView_MouseClick(object sender, MouseEventArgs e)
-        {
-            ListViewHitTestInfo Info = Tasual_ListView.HitTest(e.X, e.Y);
-
-            if (Info != null)
-            {
-                Console.WriteLine("Single click!");
-                /*if (Tasual_ListView.FocusedItem == Info.Item)
-                {
-                    if (DateTime.Compare(Tasual_ListView_DoubleClickTime, DateTime.Now) >= 0)
-                    {
-                        Console.WriteLine("Double click!");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Single click!");
-                    }
-
-                    //Console.WriteLine("Clicks: {0}, Now: {1}, DoubleClickTime: {2}", e.Clicks, DateTime.Now.ToLongTimeString(), Tasual_ListView_DoubleClickTime.ToLongTimeString());
-
-                    //Tasual_ListView.LabelEdit = true;
-                    //Tasual_ListView.FocusedItem.BeginEdit();
-                }
-                else
-                {
-                    Tasual_ListView_LastClicked = Info.Item;
-                }
-
-                Tasual_ListView_DoubleClickTime = DateTime.Now.AddMilliseconds(500);
-                //Console.WriteLine("ACK {0}: {1}", Info.Item.Text, DateTime.Now.ToLongTimeString());
-                */
-            }
-            else
-            {
-                //Console.WriteLine("ACK null: {0}", DateTime.Now.ToLongTimeString());
-            }
         }
 
         private void Tasual_ListView_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -597,46 +543,117 @@ namespace Tasual
 
         private void Tasual_ListView_SingleClick(MouseEventArgs e)
         {
-            Console.WriteLine("Single click!");
+            if (Tasual_ListView_PreviouslySelected)
+            {
+                Console.WriteLine("  - on previously selected");
+                Tasual_ListView.LabelEdit = true;
+                Tasual_ListView.FocusedItem.BeginEdit();
+            }
+            else
+            {
+                Console.WriteLine("Single click!");
+                // do nothing
+            }
         }
 
         private void Tasual_ListView_DoubleClick(MouseEventArgs e)
         {
             Console.WriteLine("Double click!");
 
-            ListViewHitTestInfo Info = Tasual_ListView.HitTest(e.X, e.Y);
+            ListViewHitTestInfo SecondClickInfo = Tasual_ListView.HitTest(e.X, e.Y);
 
-            if (Info != null)
+            if ((Tasual_ListView_FirstClickInfo.Item != null) && (SecondClickInfo.Item != null))
             {
-                ListViewItem SelectedItem = Info.Item;
-                Tasual_ListView_ChangeStatus(ref SelectedItem, (int)StatusEnum.Toggle);
-                Tasual_ListView.FocusedItem = SelectedItem;
-                Tasual_StatusLabel_UpdateCounts();
-                Tasual_Array_Save_Text(ref TaskArray);
+                if (Tasual_ListView_FirstClickInfo.Item == SecondClickInfo.Item)
+                {
+                    ListViewItem SelectedItem = SecondClickInfo.Item;
+                    Tasual_ListView_ChangeStatus(ref SelectedItem, (int)StatusEnum.Toggle);
+                    Tasual_StatusLabel_UpdateCounts();
+                    Tasual_Array_Save_Text(ref TaskArray);
+                }
             }
         }
 
         private void ClickTimer_Tick(object sender, EventArgs e)
         {
             Tasual_ListView_SingleClick((MouseEventArgs)ClickTimer.Tag);
+            Tasual_ListView_FirstClickInfo = null;
+            Tasual_ListView_PreviouslySelected = false;
             ClickTimer.Stop();
         }
-
+        ListViewHitTestInfo Tasual_ListView_FirstClickInfo;
+        Boolean Tasual_ListView_PreviouslySelected;
         private void Tasual_ListView_MouseDown(object sender, MouseEventArgs e)
         {
             ListViewHitTestInfo Info = Tasual_ListView.HitTest(e.X, e.Y);
 
-            if (Info != null)
+            // todo: check location to see if they clicked on the icon/checkbox
+            // if so, immediately toggle state of task
+
+            if (Info.Item != null)
             {
-                if (ClickTimer.Enabled)
+                switch (e.Button)
                 {
-                    Tasual_ListView_DoubleClick(e);
-                    ClickTimer.Stop();
-                }
-                else
-                {
-                    ClickTimer.Start();
-                    ClickTimer.Tag = e;
+                    case MouseButtons.Left:
+                        {
+                            if (ClickTimer.Enabled) // second click
+                            {
+                                Tasual_ListView_DoubleClick(e);
+                                Tasual_ListView_PreviouslySelected = false;
+                                Tasual_ListView_FirstClickInfo = null;
+                                ClickTimer.Stop();
+                            }
+                            else // first click
+                            {
+                                if (e.X <= 20) // clicked checkbox area
+                                {
+                                    Console.WriteLine("Toggle!");
+                                    ListViewItem SelectedItem = Info.Item;
+                                    Tasual_ListView_ChangeStatus(ref SelectedItem, (int)StatusEnum.Toggle);
+                                    Tasual_StatusLabel_UpdateCounts();
+                                    Tasual_Array_Save_Text(ref TaskArray);
+                                }
+                                else // clicked item area
+                                {
+                                    int ColumnIndex = Info.Item.SubItems.IndexOf(Info.SubItem);
+                                    //Console.WriteLine("Column Index: {0}", ColumnIndex);
+
+                                    if (ColumnIndex == 0) // clicked item description
+                                    {
+                                        ClickTimer.Start();
+
+                                        if ((Info.Item == Tasual_ListView.FocusedItem) && (Tasual_ListView.LabelEdit != true))
+                                        { Tasual_ListView_PreviouslySelected = true; }
+
+                                        Tasual_ListView_FirstClickInfo = Info;
+                                        ClickTimer.Tag = e;
+                                    }
+                                    else // clicked subitem
+                                    {
+
+                                    }
+                                }
+                            }
+                            break;
+                        }
+
+                    case MouseButtons.Right:
+                        {
+                            break;
+                        }
+
+                    case MouseButtons.Middle:
+                        {
+                            // todo: perhaps duplicate item if middle clicked?
+                            break;
+                        }
+
+                    default:
+                        {
+                            // can this even happen?
+                            Console.WriteLine("unknown button");
+                            break;
+                        }
                 }
             }
         }
