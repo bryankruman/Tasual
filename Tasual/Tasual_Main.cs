@@ -671,6 +671,20 @@ namespace Tasual
             }
         }
 
+        private void Tasual_ListView_MouseMove(object sender, MouseEventArgs e)
+        {
+            ListViewHitTestInfo Info = Tasual_ListView.HitTest(e.X, e.Y);
+
+            if (Info.Item != null)
+            {
+                Tasual_ListView.Cursor = Cursors.Hand;
+            }
+            else
+            {
+                Tasual_ListView.Cursor = Cursors.Default;
+            }
+        }
+
         private void Tasual_ListView_SelectedIndexChanged(object sender, EventArgs e)
         {
             Tasual_ListView.Items.Cast<ListViewItem>()
