@@ -429,7 +429,7 @@ namespace Tasual
 		{
 			InitializeComponent();
 
-            ClickTimer.Interval = SystemInformation.DoubleClickTime;
+            Tasual_Timer_ListViewClick.Interval = SystemInformation.DoubleClickTime;
 
             // if we're using borderless mode, add an exit button
             if (FormBorderStyle == FormBorderStyle.None)
@@ -574,12 +574,12 @@ namespace Tasual
             }
         }
 
-        private void ClickTimer_Tick(object sender, EventArgs e)
+        private void Tasual_Timer_ListViewClick_Tick(object sender, EventArgs e)
         {
-            Tasual_ListView_SingleClick((MouseEventArgs)ClickTimer.Tag);
+            Tasual_ListView_SingleClick((MouseEventArgs)Tasual_Timer_ListViewClick.Tag);
             Tasual_ListView_FirstClickInfo = null;
             Tasual_ListView_PreviouslySelected = false;
-            ClickTimer.Stop();
+            Tasual_Timer_ListViewClick.Stop();
         }
         ListViewHitTestInfo Tasual_ListView_FirstClickInfo;
         Boolean Tasual_ListView_PreviouslySelected;
@@ -596,12 +596,12 @@ namespace Tasual
                 {
                     case MouseButtons.Left:
                         {
-                            if (ClickTimer.Enabled) // second click
+                            if (Tasual_Timer_ListViewClick.Enabled) // second click
                             {
                                 Tasual_ListView_DoubleClick(e);
                                 Tasual_ListView_PreviouslySelected = false;
                                 Tasual_ListView_FirstClickInfo = null;
-                                ClickTimer.Stop();
+                                Tasual_Timer_ListViewClick.Stop();
                             }
                             else // first click
                             {
@@ -620,13 +620,13 @@ namespace Tasual
 
                                     if (ColumnIndex == 0) // clicked item description
                                     {
-                                        ClickTimer.Start();
+                                        Tasual_Timer_ListViewClick.Start();
 
                                         if ((Info.Item == Tasual_ListView.FocusedItem) && (Tasual_ListView.LabelEdit != true))
                                         { Tasual_ListView_PreviouslySelected = true; }
 
                                         Tasual_ListView_FirstClickInfo = Info;
-                                        ClickTimer.Tag = e;
+                                        Tasual_Timer_ListViewClick.Tag = e;
                                     }
                                     else // clicked subitem
                                     {

@@ -79,7 +79,7 @@
             this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ClickTimer = new System.Windows.Forms.Timer(this.components);
+            this.Tasual_Timer_ListViewClick = new System.Windows.Forms.Timer(this.components);
             this.Tasual_Main_MenuStrip.SuspendLayout();
             this.Tasual_StatusLabel_MenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -269,7 +269,8 @@
             // 
             this.Tasual_TaskIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("Tasual_TaskIcons.ImageStream")));
             this.Tasual_TaskIcons.TransparentColor = System.Drawing.Color.Transparent;
-            this.Tasual_TaskIcons.Images.SetKeyName(0, "Add.png");
+            this.Tasual_TaskIcons.Images.SetKeyName(0, "checked-s.png");
+            this.Tasual_TaskIcons.Images.SetKeyName(1, "unchecked-s.png");
             // 
             // Tasual_Notify
             // 
@@ -340,10 +341,10 @@
             this.clearToolStripMenuItem.Text = "Clear";
             this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
             // 
-            // ClickTimer
+            // Tasual_Timer_ListViewClick
             // 
-            this.ClickTimer.Interval = 1000;
-            this.ClickTimer.Tick += new System.EventHandler(this.ClickTimer_Tick);
+            this.Tasual_Timer_ListViewClick.Interval = 1000;
+            this.Tasual_Timer_ListViewClick.Tick += new System.EventHandler(this.Tasual_Timer_ListViewClick_Tick);
             // 
             // Tasual_Main
             // 
@@ -399,7 +400,7 @@
 		private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
         private System.Windows.Forms.ImageList Tasual_TaskIcons;
-        private System.Windows.Forms.Timer ClickTimer;
+        private System.Windows.Forms.Timer Tasual_Timer_ListViewClick;
     }
 }
 
