@@ -521,6 +521,11 @@ namespace Tasual
             Tasual_ListView.FocusedItem.BeginEdit();
         }
 
+        private void Tasual_MenuStrip_Sources_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void Tasual_ListView_AfterLabelEdit(object sender, LabelEditEventArgs e)
         {
             Tasual_ListView.LabelEdit = false;
@@ -806,6 +811,7 @@ namespace Tasual
 
 		}
     }
+
     public class TaskItem
 	{
 		public struct TaskTime

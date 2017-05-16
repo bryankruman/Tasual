@@ -73,6 +73,16 @@ namespace Tasual.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Button_Sync {
+            get {
+                object obj = ResourceManager.GetObject("Button_Sync", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Error_Symbol {
             get {
                 object obj = ResourceManager.GetObject("Error_Symbol", resourceCulture);
