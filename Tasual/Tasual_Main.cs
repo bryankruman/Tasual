@@ -507,11 +507,6 @@ namespace Tasual
 			Tasual_ListView_PopulateFromArray(ref TaskArray);
 		}
 
-		private void toolStripStatusLabel1_Click(object sender, EventArgs e)
-		{
-
-		}
-
 		private void Button_Exit_Click(object sender, EventArgs e)
 		{
 			this.Close();
@@ -562,8 +557,6 @@ namespace Tasual
 
 		private void categoryToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			//Tasual_ListView_ClearAll();
-			//Tasual_ListView_PopulateFromArray(ref TaskArray, ref timegroups);
 			TaskItem.TaskTime Time = new TaskItem.TaskTime();
             var CurrentTimeOffset = new DateTimeOffset(DateTime.Now.ToLocalTime());
             Time.Created = CurrentTimeOffset.ToUnixTimeSeconds();
@@ -594,18 +587,10 @@ namespace Tasual
             });
         }
 
-        private void Tasual_ListView_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            //ListViewHitTestInfo Info = Tasual_ListView.HitTest(e.X, e.Y);
-
-            //Console.WriteLine("Double click!");
-        }
-
         private void Tasual_ListView_SingleClick(MouseEventArgs e)
         {
             if (Tasual_ListView_PreviouslySelected)
             {
-                Console.WriteLine("  - on previously selected");
                 Tasual_ListView.LabelEdit = true;
                 Tasual_ListView.FocusedItem.BeginEdit();
             }
@@ -626,10 +611,17 @@ namespace Tasual
             {
                 if (Tasual_ListView_FirstClickInfo.Item == SecondClickInfo.Item)
                 {
+                    /* if (settings.doubleclicktoggle) 
+                    {
                     ListViewItem SelectedItem = SecondClickInfo.Item;
                     Tasual_ListView_ChangeStatus(ref SelectedItem, (int)StatusEnum.Toggle);
                     Tasual_StatusLabel_UpdateCounts();
                     Tasual_Array_Save_Text(ref TaskArray);
+                    {
+                    else { */
+                    Tasual_ListView.LabelEdit = true;
+                    Tasual_ListView.FocusedItem.BeginEdit();
+                    //}
                 }
             }
         }
