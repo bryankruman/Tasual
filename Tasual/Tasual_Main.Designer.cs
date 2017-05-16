@@ -192,9 +192,11 @@
             // 
             // Tasual_ListView
             // 
+            this.Tasual_ListView.AllowDrop = true;
             this.Tasual_ListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Tasual_ListView.AutoArrange = false;
             this.Tasual_ListView.BackColor = System.Drawing.Color.White;
             this.Tasual_ListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.Tasual_ListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -232,13 +234,15 @@
             this.Tasual_ListView.Name = "Tasual_ListView";
             this.Tasual_ListView.Size = new System.Drawing.Size(405, 369);
             this.Tasual_ListView.SmallImageList = this.Tasual_TaskIcons;
-            this.Tasual_ListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.Tasual_ListView.TabIndex = 0;
             this.Tasual_ListView.UseCompatibleStateImageBehavior = false;
             this.Tasual_ListView.View = System.Windows.Forms.View.Details;
             this.Tasual_ListView.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.Tasual_ListView_AfterLabelEdit);
             this.Tasual_ListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.Tasual_ListView_ColumnWidthChanging);
+            this.Tasual_ListView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.Tasual_ListView_ItemDrag);
             this.Tasual_ListView.SelectedIndexChanged += new System.EventHandler(this.Tasual_ListView_SelectedIndexChanged);
+            this.Tasual_ListView.DragDrop += new System.Windows.Forms.DragEventHandler(this.Tasual_ListView_DragDrop);
+            this.Tasual_ListView.DragEnter += new System.Windows.Forms.DragEventHandler(this.Tasual_ListView_DragEnter);
             this.Tasual_ListView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Tasual_ListView_MouseDown);
             // 
             // Description

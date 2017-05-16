@@ -587,7 +587,10 @@ namespace Tasual
 
         private void Tasual_Timer_ListViewClick_Tick(object sender, EventArgs e)
         {
-            Tasual_ListView_SingleClick((MouseEventArgs)Tasual_Timer_ListViewClick.Tag);
+            if ((Control.MouseButtons & MouseButtons.Left) == 0)
+            {
+                Tasual_ListView_SingleClick((MouseEventArgs)Tasual_Timer_ListViewClick.Tag);
+            }
             Tasual_ListView_FirstClickInfo = null;
             Tasual_ListView_PreviouslySelected = false;
             Tasual_Timer_ListViewClick.Stop();
@@ -714,6 +717,44 @@ namespace Tasual
                 });
         }
 
+        private void Tasual_ListView_DragDrop(object sender, DragEventArgs e)
+        {
+            Point Loc = Tasual_ListView.PointToClient(new Point(e.X, e.Y));
+            ListViewItem DisplacedItem = Tasual_ListView.GetItemAt(Loc.X, Loc.Y);
+
+            if ((DisplacedItem == null) || (e.Data.GetDataPresent(typeof(ListViewItem)) == false))
+                return;
+
+            ListViewItem DraggedItem = (ListViewItem)e.Data.GetData(typeof(ListViewItem));
+
+            Console.WriteLine(
+                "Dragged from {0} to {1}: {2} > {3}",
+                DraggedItem.Index,
+                DisplacedItem.Index,
+                DraggedItem.Text.ToString(),
+                DisplacedItem.Text.ToString()
+            );
+
+            //int OldIndex
+
+            if (DraggedItem != DisplacedItem)
+            {
+                Rectangle Bounds = DisplacedItem.GetBounds(ItemBoundsPortion.Entire);
+
+            }
+        }
+
+        private void Tasual_ListView_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Copy;
+        }
+
+        private void Tasual_ListView_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+
+            Tasual_ListView.DoDragDrop(e.Item, DragDropEffects.Copy);
+        }
+
         // special event processing
         protected override void WndProc(ref Message m)
         {
@@ -754,11 +795,14 @@ namespace Tasual
 
 		private void Tasual_Main_Load(object sender, EventArgs e)
 		{
+            //Tasual_ListView.All
 			// load task array
 			Tasual_Array_Load_Text(ref TaskArray);
 
 			// load tasks into Tasual_ListView
 			Tasual_ListView_PopulateFromArray(ref TaskArray);
+
+
 		}
     }
     public class TaskItem
