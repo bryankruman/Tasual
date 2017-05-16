@@ -806,6 +806,7 @@ namespace Tasual
 		{
 			InitializeComponent();
 
+            ControlExtensions.DoubleBuffered(Tasual_ListView, true);
             Tasual_Timer_ListViewClick.Interval = SystemInformation.DoubleClickTime;
 		}
 
@@ -817,8 +818,6 @@ namespace Tasual
 
 			// load tasks into Tasual_ListView
 			Tasual_ListView_PopulateFromArray(ref TaskArray);
-
-            ControlExtensions.DoubleBuffered(Tasual_ListView, true);
 		}
     }
 
