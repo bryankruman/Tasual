@@ -15,11 +15,18 @@ namespace Tasual
 {
     public partial class Tasual_Main : Form
 	{
+        // ==============
+        //  Declarations
+        // ==============
+
 		public List<TaskItem> TaskArray = new List<TaskItem>();
 		bool Tasual_Setting_TimeGroups = false;
 		string Tasual_Setting_TextFile = "localdb.txt";
 
-		public enum ArgEnum
+        ListViewHitTestInfo Tasual_ListView_FirstClickInfo;
+        bool Tasual_ListView_PreviouslySelected;
+
+        public enum ArgEnum
 		{
 			Type,
 			Priority,
@@ -64,7 +71,12 @@ namespace Tasual
 					//PRO_TASUAL
 		}
 
-		public void Tasual_PrintTaskToConsole(TaskItem TaskItem)
+
+        // ===========================
+        //  Misc/Supporting Functions
+        // ===========================
+
+        public void Tasual_PrintTaskToConsole(TaskItem TaskItem)
 		{
 			Console.WriteLine(
 				"TaskItem: '{0}', '{1}', '{2}', '{3}', '{4}', ('{5}', '{6}', '{7}')",
@@ -79,9 +91,32 @@ namespace Tasual
 			);
 		}
 
-		//***********************************************************
-		//This gives us the ability to resize the borderless from any borders instead of just the lower right corner
-		protected override void WndProc(ref Message m)
+        private void Tasual_StatusLabel_UpdateCounts()
+        {
+            int Complete = 0;
+            int Total = 0;
+
+            foreach (TaskItem Task in TaskArray)
+            {
+                if (Task == null) { break; }
+
+                ++Total;
+                if (Task.Status == (int)StatusEnum.Complete) { ++Complete; }
+            }
+
+            if (Complete == Total)
+            {
+                Tasual_StatusLabel.Text = "All tasks complete";
+            }
+            else
+            {
+                Tasual_StatusLabel.Text = string.Format("{0} of {1} tasks complete", Complete, Total);
+            }
+        }
+
+        //***********************************************************
+        //This gives us the ability to resize the borderless from any borders instead of just the lower right corner
+        protected override void WndProc(ref Message m)
 		{
 			const int wmNcHitTest = 0x84;
 			const int htBottomLeft = 16;
@@ -141,9 +176,26 @@ namespace Tasual
 				return cp;
 			}
 		}
-		//***********************************************************
+        //***********************************************************
 
-		public void Tasual_Array_AddTask(
+
+        // =================
+        //  Array Functions
+        // =================
+
+        private void Tasual_Array_ReAssignGroup(string OldTaskGroup, string NewTaskGroup)
+        {
+            foreach (TaskItem Task in TaskArray)
+            {
+                if (Task == null) { break; }
+                if (Task.Group == OldTaskGroup)
+                {
+                    Task.Group = NewTaskGroup;
+                }
+            }
+        }
+
+        public void Tasual_Array_AddTask(
 			ref List<TaskItem> Array,
 			int Type,
 			int Priority,
@@ -278,7 +330,12 @@ namespace Tasual
 			}
 		}
 
-        private Color Tasual_ForeColorForStatus(int Status, bool Selected)
+
+        // ====================
+        //  ListView Functions
+        // ====================
+
+        private Color Tasual_ListView_ForeColor(int Status, bool Selected)
         {
             switch (Status)
             {
@@ -308,7 +365,7 @@ namespace Tasual
             }
         }
 
-        private Color Tasual_BackColorForStatus(int Status, bool Selected)
+        private Color Tasual_ListView_BackColor(int Status, bool Selected)
         {
             switch (Status)
             {
@@ -361,14 +418,14 @@ namespace Tasual
 
                 case (int)StatusEnum.Complete:
                     {
-                        Item.ForeColor = Tasual_ForeColorForStatus((int)StatusEnum.Complete, Item.Selected);//Color.FromArgb(255, 189, 208, 230);
+                        Item.ForeColor = Tasual_ListView_ForeColor((int)StatusEnum.Complete, Item.Selected);//Color.FromArgb(255, 189, 208, 230);
                         Item.ImageIndex = 0;
                         break;
                     }
 
                 case (int)StatusEnum.New:
                     {
-                        Item.ForeColor = Tasual_ForeColorForStatus((int)StatusEnum.New, Item.Selected);//Color.FromArgb(255, 36, 90, 150);
+                        Item.ForeColor = Tasual_ListView_ForeColor((int)StatusEnum.New, Item.Selected);//Color.FromArgb(255, 36, 90, 150);
                         Item.ImageIndex = 1;
                         break;
                     }
@@ -382,204 +439,149 @@ namespace Tasual
             Task.Status = Status;
         }
 
-        private void Tasual_StatusLabel_UpdateCounts()
-		{
-            int Complete = 0;
-            int Total = 0;
+        private void Tasual_ListView_SizeColumns()
+        {
+            Tasual_ListView.Columns[0].AutoResize(ColumnHeaderAutoResizeStyle.None);
+            Tasual_ListView.Columns[1].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
 
-            foreach (TaskItem Task in TaskArray)
+            Tasual_ListView.Columns[0].Width = Math.Max(100, (Tasual_ListView.Width - Tasual_ListView.Columns[1].Width) - 17);
+        }
+
+        private void Tasual_ListView_ClearAll()
+        {
+            Tasual_ListView.Columns.Clear();
+            Tasual_ListView.Groups.Clear();
+            Tasual_ListView.Items.Clear();
+            Tasual_ListView.Update();
+            Tasual_ListView.Refresh();
+        }
+
+        private void Tasual_ListView_AssignGroup(string TaskGroup, ref ListViewItem Item)
+        {
+            ListViewGroup Found = null;
+            foreach (ListViewGroup Group in Tasual_ListView.Groups)
             {
-                if (Task == null) { break; }
-
-                ++Total;
-                if (Task.Status == (int)StatusEnum.Complete) { ++Complete; }
+                if (Group.Name == TaskGroup)
+                {
+                    Found = Group;
+                    break;
+                }
             }
 
-            if (Complete == Total)
-			{
-				Tasual_StatusLabel.Text = "All tasks complete";
-			}
-			else
-			{
-				Tasual_StatusLabel.Text = string.Format("{0} of {1} tasks complete", Complete, Total);
-			}
-		}
-
-		private void Tasual_ListView_SizeColumns()
-		{
-			Tasual_ListView.Columns[0].AutoResize(ColumnHeaderAutoResizeStyle.None);
-			Tasual_ListView.Columns[1].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
-
-			Tasual_ListView.Columns[0].Width = Math.Max(100, (Tasual_ListView.Width - Tasual_ListView.Columns[1].Width) - 17);
-		}
-
-		private void Tasual_ListView_ClearAll()
-		{
-			Tasual_ListView.Columns.Clear();
-			Tasual_ListView.Groups.Clear();
-			Tasual_ListView.Items.Clear();
-			Tasual_ListView.Update();
-			Tasual_ListView.Refresh();
-		}
-
-		private void Tasual_ListView_AssignGroup(string TaskGroup, ref ListViewItem Item)
-		{
-			ListViewGroup Found = null;
-			foreach (ListViewGroup Group in Tasual_ListView.Groups)
-			{
-				if (Group.Name == TaskGroup)
-				{
-					Found = Group;
-					break;
-				}
-			}
-
-			if (Found == null)
-			{
-				ListViewGroup NewGroup = new ListViewGroup();
-				NewGroup.Name = TaskGroup;
-				NewGroup.Header = NewGroup.Name;
-				Tasual_ListView.Groups.Add(NewGroup);
-				Item.Group = NewGroup;
-			}
-			else
-			{
-				Item.Group = Found;
-			}
-		}
-
-        // Instead of bothering to reassign the groups in the listview, lets just reassign them in the task array
-        // and then you'll need to call Tasual_ListView_PopulateFromArray() afterwards.
-        private void Tasual_ListView_ReAssignGroup(string OldTaskGroup, string NewTaskGroup)
-        {
-            foreach (TaskItem Task in TaskArray)
+            if (Found == null)
             {
-                if (Task == null) { break; }
-                if (Task.Group == OldTaskGroup)
-                {
-                    Task.Group = NewTaskGroup;
-                }
+                ListViewGroup NewGroup = new ListViewGroup();
+                NewGroup.Name = TaskGroup;
+                NewGroup.Header = NewGroup.Name;
+                Tasual_ListView.Groups.Add(NewGroup);
+                Item.Group = NewGroup;
+            }
+            else
+            {
+                Item.Group = Found;
             }
         }
 
         public void Tasual_ListView_PopulateFromArray(ref List<TaskItem> TaskArray)
-		{
-			Tasual_ListView_ClearAll();
+        {
+            Tasual_ListView_ClearAll();
 
-			Tasual_ListView.Columns.Add("Description");
-			if (Tasual_Setting_TimeGroups) { Tasual_ListView.Columns.Add("Category"); }
-			else { Tasual_ListView.Columns.Add("Time"); }
+            Tasual_ListView.Columns.Add("Description");
+            if (Tasual_Setting_TimeGroups) { Tasual_ListView.Columns.Add("Category"); }
+            else { Tasual_ListView.Columns.Add("Time"); }
 
-			foreach (TaskItem Task in TaskArray)
-			{
-				if (Task == null) { break; }
-				Tasual_PrintTaskToConsole(Task);
+            foreach (TaskItem Task in TaskArray)
+            {
+                if (Task == null) { break; }
+                Tasual_PrintTaskToConsole(Task);
 
-				// create listviewitem basic info
-				string[] Item_S = new string[2];
-				Item_S[0] = Task.Description;
-				if (Tasual_Setting_TimeGroups)
-				{
-					Item_S[1] = Task.Group.ToString();
-				}
-				else
-				{
+                // create listviewitem basic info
+                string[] Item_S = new string[2];
+                Item_S[0] = Task.Description;
+                if (Tasual_Setting_TimeGroups)
+                {
+                    Item_S[1] = Task.Group.ToString();
+                }
+                else
+                {
                     var CreationTime = DateTimeOffset.FromUnixTimeSeconds((long)Task.Time.Created).DateTime.ToLocalTime();
                     Item_S[1] = CreationTime.ToLongDateString();
                 }
-				ListViewItem Item = new ListViewItem(Item_S);
-				Item.Tag = Task;
+                ListViewItem Item = new ListViewItem(Item_S);
+                Item.Tag = Task;
 
-				Tasual_ListView_AssignGroup(Task.Group.ToString(), ref Item);
+                Tasual_ListView_AssignGroup(Task.Group.ToString(), ref Item);
                 Tasual_ListView_ChangeStatus(ref Item, Task.Status);
-				Tasual_ListView.Items.Add(Item);
-			}
+                Tasual_ListView.Items.Add(Item);
+            }
 
-			Tasual_StatusLabel_UpdateCounts();
-			Tasual_ListView_SizeColumns();
-		}
+            Tasual_StatusLabel_UpdateCounts();
+            Tasual_ListView_SizeColumns();
+        }
 
-		public Tasual_Main()
-		{
-			InitializeComponent();
 
-            Tasual_Timer_ListViewClick.Interval = SystemInformation.DoubleClickTime;
+        // ================
+        //  Event Handlers
+        // ================
 
-            // if we're using borderless mode, add an exit button
-            if (FormBorderStyle == FormBorderStyle.None)
-			{
-				Button_Exit.Visible = true;
-			}
-		}
+        private void Button_Exit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
 
-		private void Tasual_Main_Load(object sender, EventArgs e)
-		{
-			// load task array
-			Tasual_Array_Load_Text(ref TaskArray);
+        private void Tasual_Main_Resize(object sender, EventArgs e)
+        {
+            Invalidate();
+            Tasual_ListView_SizeColumns();
+        }
 
-			// load tasks into Tasual_ListView
-			Tasual_ListView_PopulateFromArray(ref TaskArray);
-		}
-
-		private void Button_Exit_Click(object sender, EventArgs e)
-		{
-			this.Close();
-		}
-
-		private void Tasual_Main_Resize(object sender, EventArgs e)
-		{
-			Invalidate();
-			Tasual_ListView_SizeColumns();
-		}
-
-		private void keepOnTToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-            Tasual_ListView_ReAssignGroup("Testing", "");
-
+        private void keepOnTToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Tasual_Array_ReAssignGroup("Testing", "");
             Tasual_Array_Save_Text(ref TaskArray);
-			Tasual_Array_Load_Text(ref TaskArray);
-			Tasual_ListView_PopulateFromArray(ref TaskArray);
-		}
+            Tasual_Array_Load_Text(ref TaskArray);
+            Tasual_ListView_PopulateFromArray(ref TaskArray);
+        }
 
-		private void Tasual_ListView_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
-		{
-			//Tasual_SizeColumns();
-			e.NewWidth = this.Tasual_ListView.Columns[e.ColumnIndex].Width;
-			e.Cancel = true;
-		}
+        private void Tasual_ListView_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
+        {
+            //Tasual_SizeColumns();
+            e.NewWidth = this.Tasual_ListView.Columns[e.ColumnIndex].Width;
+            e.Cancel = true;
+        }
 
-		private void taskToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			Tasual_Create_Task TaskForm = new Tasual_Create_Task();
-			TaskForm.Show(this);
-		}
+        private void taskToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Tasual_Create_Task TaskForm = new Tasual_Create_Task();
+            TaskForm.Show(this);
+        }
 
-		private void Tasual_StatusLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-		{
-			Tasual_StatusLabel_MenuStrip.Show(Tasual_StatusLabel, new Point(0, Tasual_StatusLabel.Height));
-		}
+        private void Tasual_StatusLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Tasual_StatusLabel_MenuStrip.Show(Tasual_StatusLabel, new Point(0, Tasual_StatusLabel.Height));
+        }
 
-		private void Tasual_AboutLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-		{
-			Tasual_About AboutForm = new Tasual_About();
-			AboutForm.ShowDialog(this);
-		}
+        private void Tasual_AboutLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Tasual_About AboutForm = new Tasual_About();
+            AboutForm.ShowDialog(this);
+        }
 
-		private void clearToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			Tasual_Confirm_Clear ConfirmForm = new Tasual_Confirm_Clear(this);
-			ConfirmForm.ShowDialog(this);
-		}
+        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Tasual_Confirm_Clear ConfirmForm = new Tasual_Confirm_Clear(this);
+            ConfirmForm.ShowDialog(this);
+        }
 
-		private void categoryToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			TaskItem.TaskTime Time = new TaskItem.TaskTime();
+        private void categoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TaskItem.TaskTime Time = new TaskItem.TaskTime();
             var CurrentTimeOffset = new DateTimeOffset(DateTime.Now.ToLocalTime());
             Time.Created = CurrentTimeOffset.ToUnixTimeSeconds();
             Time.Ending = 2;
-			Time.Next = 3;
-			Tasual_Array_AddTask(ref TaskArray, 0, 0, 0, "Testing", "New task", Time, true);
-		}
+            Time.Next = 3;
+            Tasual_Array_AddTask(ref TaskArray, 0, 0, 0, "Testing", "New task", Time, true);
+        }
 
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
@@ -649,8 +651,7 @@ namespace Tasual
             Tasual_ListView_PreviouslySelected = false;
             Tasual_Timer_ListViewClick.Stop();
         }
-        ListViewHitTestInfo Tasual_ListView_FirstClickInfo;
-        Boolean Tasual_ListView_PreviouslySelected;
+
         private void Tasual_ListView_MouseDown(object sender, MouseEventArgs e)
         {
             ListViewHitTestInfo Info = Tasual_ListView.HitTest(e.X, e.Y);
@@ -730,19 +731,46 @@ namespace Tasual
         {
             Tasual_ListView.Items.Cast<ListViewItem>()
                 .ToList().ForEach(Item =>
-            {
-                TaskItem Task = (TaskItem)Item.Tag;
-                Item.BackColor = Tasual_BackColorForStatus(Task.Status, false);
-                Item.ForeColor = Tasual_ForeColorForStatus(Task.Status, false);
-            });
+                {
+                    TaskItem Task = (TaskItem)Item.Tag;
+                    Item.BackColor = Tasual_ListView_BackColor(Task.Status, false);
+                    Item.ForeColor = Tasual_ListView_ForeColor(Task.Status, false);
+                });
             Tasual_ListView.SelectedItems.Cast<ListViewItem>()
                 .ToList().ForEach(Item =>
-            {
-                TaskItem Task = (TaskItem)Item.Tag;
-                Item.BackColor = Color.DarkRed;
-                Item.ForeColor = Tasual_ForeColorForStatus(Task.Status, true);
-            });
+                {
+                    TaskItem Task = (TaskItem)Item.Tag;
+                    Item.BackColor = Color.DarkRed;
+                    Item.ForeColor = Tasual_ListView_ForeColor(Task.Status, true);
+                });
         }
+
+
+        // ================
+        //  Core Functions
+        // ================
+
+        public Tasual_Main()
+		{
+			InitializeComponent();
+
+            Tasual_Timer_ListViewClick.Interval = SystemInformation.DoubleClickTime;
+
+            // if we're using borderless mode, add an exit button
+            if (FormBorderStyle == FormBorderStyle.None)
+			{
+				Button_Exit.Visible = true;
+			}
+		}
+
+		private void Tasual_Main_Load(object sender, EventArgs e)
+		{
+			// load task array
+			Tasual_Array_Load_Text(ref TaskArray);
+
+			// load tasks into Tasual_ListView
+			Tasual_ListView_PopulateFromArray(ref TaskArray);
+		}
     }
     public class TaskItem
 	{
