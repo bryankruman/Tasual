@@ -671,6 +671,8 @@ namespace Tasual
             }
         }
 
+#if false
+        ListViewItem UnderlinedItem;
         private void Tasual_ListView_MouseMove(object sender, MouseEventArgs e)
         {
             ListViewHitTestInfo Info = Tasual_ListView.HitTest(e.X, e.Y);
@@ -678,12 +680,21 @@ namespace Tasual
             if (Info.Item != null)
             {
                 Tasual_ListView.Cursor = Cursors.Hand;
+                if (Info.Item != UnderlinedItem)
+                {
+                    if (UnderlinedItem != null)
+                        { UnderlinedItem.Font = new Font(UnderlinedItem.Font.Name, 9); }
+
+                    Info.Item.Font = new Font(Info.Item.Font.Name, 9, FontStyle.Underline);
+                    UnderlinedItem = Info.Item;
+                }
             }
             else
             {
                 Tasual_ListView.Cursor = Cursors.Default;
             }
         }
+#endif
 
         private void Tasual_ListView_SelectedIndexChanged(object sender, EventArgs e)
         {

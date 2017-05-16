@@ -240,7 +240,6 @@
             this.Tasual_ListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.Tasual_ListView_ColumnWidthChanging);
             this.Tasual_ListView.SelectedIndexChanged += new System.EventHandler(this.Tasual_ListView_SelectedIndexChanged);
             this.Tasual_ListView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Tasual_ListView_MouseDown);
-            this.Tasual_ListView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Tasual_ListView_MouseMove);
             // 
             // Description
             // 
