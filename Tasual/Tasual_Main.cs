@@ -603,6 +603,17 @@ namespace Tasual
         private void Tasual_ListView_DoubleClick(MouseEventArgs e)
         {
             Console.WriteLine("Double click!");
+
+            ListViewHitTestInfo Info = Tasual_ListView.HitTest(e.X, e.Y);
+
+            if (Info != null)
+            {
+                ListViewItem SelectedItem = Info.Item;
+                Tasual_ListView_ChangeStatus(ref SelectedItem, (int)StatusEnum.Toggle);
+                Tasual_ListView.FocusedItem = SelectedItem;
+                Tasual_StatusLabel_UpdateCounts();
+                Tasual_Array_Save_Text(ref TaskArray);
+            }
         }
 
         private void ClickTimer_Tick(object sender, EventArgs e)
