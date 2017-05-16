@@ -56,7 +56,6 @@
             "Sunday, Apr 13th - 8pm"}, -1);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Tasual_Main));
             this.Tasual_Main_MenuStrip = new System.Windows.Forms.MenuStrip();
-            this.Button_Exit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.taskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.categoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -91,7 +90,6 @@
             this.Tasual_Main_MenuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(232)))), ((int)(((byte)(246)))));
             this.Tasual_Main_MenuStrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Tasual_Main_MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Button_Exit,
             this.toolStripMenuItem2,
             this.toolStripMenuItem3,
             this.settingsToolStripMenuItem});
@@ -100,21 +98,6 @@
             this.Tasual_Main_MenuStrip.Size = new System.Drawing.Size(405, 24);
             this.Tasual_Main_MenuStrip.TabIndex = 1;
             this.Tasual_Main_MenuStrip.Text = "menuStrip1";
-            this.Tasual_Main_MenuStrip.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Tasual_Main_MouseDown);
-            // 
-            // Button_Exit
-            // 
-            this.Button_Exit.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.Button_Exit.BackColor = System.Drawing.Color.Transparent;
-            this.Button_Exit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
-            this.Button_Exit.Image = global::Tasual.Properties.Resources.Error_Symbol;
-            this.Button_Exit.Name = "Button_Exit";
-            this.Button_Exit.Size = new System.Drawing.Size(53, 20);
-            this.Button_Exit.Text = "Exit";
-            this.Button_Exit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Button_Exit.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.Button_Exit.Visible = false;
-            this.Button_Exit.Click += new System.EventHandler(this.Button_Exit_Click);
             // 
             // toolStripMenuItem2
             // 
@@ -367,7 +350,6 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Text = "Tasual";
             this.Load += new System.EventHandler(this.Tasual_Main_Load);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Tasual_Main_MouseDown);
             this.Resize += new System.EventHandler(this.Tasual_Main_Resize);
             this.Tasual_Main_MenuStrip.ResumeLayout(false);
             this.Tasual_Main_MenuStrip.PerformLayout();
@@ -382,7 +364,6 @@
 
 		private System.Windows.Forms.ListView Tasual_ListView;
 		private System.Windows.Forms.MenuStrip Tasual_Main_MenuStrip;
-		private System.Windows.Forms.ToolStripMenuItem Button_Exit;
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
 		private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem taskToolStripMenuItem;

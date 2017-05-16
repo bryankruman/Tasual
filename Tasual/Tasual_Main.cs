@@ -114,70 +114,6 @@ namespace Tasual
             }
         }
 
-        //***********************************************************
-        //This gives us the ability to resize the borderless from any borders instead of just the lower right corner
-        protected override void WndProc(ref Message m)
-		{
-			const int wmNcHitTest = 0x84;
-			const int htBottomLeft = 16;
-			const int htBottomRight = 17;
-			int padding = 15;
-
-			if (m.Msg == wmNcHitTest)
-			{
-				int x = (int)(m.LParam.ToInt64() & 0xFFFF);
-				int y = (int)((m.LParam.ToInt64() & 0xFFFF0000) >> 16);
-				Point pt = PointToClient(new Point(x, y));
-				Size clientSize = ClientSize;
-
-				///allow resize on the lower right corner // TODO: Fix this with multiple monitors
-				if (pt.X >= clientSize.Width - padding && pt.Y >= clientSize.Height - padding && clientSize.Height >= padding)
-				{
-					m.Result = (IntPtr)(IsMirrored ? htBottomLeft : htBottomRight);
-					//Invalidate();
-					return;
-				}
-			}
-			base.WndProc(ref m);
-		}
-
-		//***********************************************************
-		//This gives us the ability to drag the borderless form to a new location
-		public const int WM_NCLBUTTONDOWN = 0xA1;
-		public const int HT_CAPTION = 0x2;
-
-		[DllImportAttribute("user32.dll")]
-		public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-		[DllImportAttribute("user32.dll")]
-		public static extern bool ReleaseCapture();
-
-		private void Tasual_Main_MouseDown(object sender, MouseEventArgs e)
-		{
-			//ctrl-leftclick anywhere on the control to drag the form to a new location 
-			if (e.Button == MouseButtons.Left) // && Control.ModifierKeys == Keys.Control)
-			{
-				ReleaseCapture();
-				SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-			}
-		}
-
-		//***********************************************************
-		//This gives us the drop shadow behind the borderless form
-		private const int CS_DROPSHADOW = 0x20000;
-		protected override CreateParams CreateParams
-		{
-			get
-			{
-				CreateParams cp = base.CreateParams;
-				if (FormBorderStyle == FormBorderStyle.None)
-				{
-					cp.ClassStyle |= CS_DROPSHADOW;
-				}
-				return cp;
-			}
-		}
-        //***********************************************************
-
 
         // =================
         //  Array Functions
@@ -524,11 +460,6 @@ namespace Tasual
         //  Event Handlers
         // ================
 
-        private void Button_Exit_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void Tasual_Main_Resize(object sender, EventArgs e)
         {
             Invalidate();
@@ -745,6 +676,32 @@ namespace Tasual
                 });
         }
 
+        // special event processing
+        protected override void WndProc(ref Message m)
+        {
+            const int wmNcHitTest = 0x84;
+            const int htBottomLeft = 16;
+            const int htBottomRight = 17;
+            int padding = 15;
+
+            if (m.Msg == wmNcHitTest)
+            {
+                int x = (int)(m.LParam.ToInt64() & 0xFFFF);
+                int y = (int)((m.LParam.ToInt64() & 0xFFFF0000) >> 16);
+                Point pt = PointToClient(new Point(x, y));
+                Size clientSize = ClientSize;
+
+                // allow resize on the lower right corner // TODO: Fix this with multiple monitors
+                if (pt.X >= clientSize.Width - padding && pt.Y >= clientSize.Height - padding && clientSize.Height >= padding)
+                {
+                    m.Result = (IntPtr)(IsMirrored ? htBottomLeft : htBottomRight);
+                    //Invalidate();
+                    return;
+                }
+            }
+            base.WndProc(ref m);
+        }
+
 
         // ================
         //  Core Functions
@@ -755,12 +712,6 @@ namespace Tasual
 			InitializeComponent();
 
             Tasual_Timer_ListViewClick.Interval = SystemInformation.DoubleClickTime;
-
-            // if we're using borderless mode, add an exit button
-            if (FormBorderStyle == FormBorderStyle.None)
-			{
-				Button_Exit.Visible = true;
-			}
 		}
 
 		private void Tasual_Main_Load(object sender, EventArgs e)
