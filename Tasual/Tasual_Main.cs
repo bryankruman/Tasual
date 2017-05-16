@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
+using System.Reflection;
 
 namespace Tasual
 {
@@ -817,7 +818,7 @@ namespace Tasual
 			// load tasks into Tasual_ListView
 			Tasual_ListView_PopulateFromArray(ref TaskArray);
 
-
+            ControlExtensions.DoubleBuffered(Tasual_ListView, true);
 		}
     }
 
@@ -845,6 +846,15 @@ namespace Tasual
 		// deconstructor
 		//~taskitem_c();
 	}
+
+    public static class ControlExtensions
+    {
+        public static void DoubleBuffered(this Control Item, bool Enable)
+        {
+            var PropertyInfo = Item.GetType().GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
+            PropertyInfo.SetValue(Item, Enable, null);
+        }
+    }
 
     public class TasualListView : ListView
     {
