@@ -466,7 +466,7 @@ namespace Tasual
             Tasual_ListView_SizeColumns();
         }
 
-        private void keepOnTToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Tasual_MenuStrip_Settings_AlwaysOnTop_Click(object sender, EventArgs e)
         {
             Tasual_Array_ReAssignGroup("Testing", "");
             Tasual_Array_Save_Text(ref TaskArray);
@@ -481,7 +481,7 @@ namespace Tasual
             e.Cancel = true;
         }
 
-        private void taskToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Tasual_MenuStrip_Create_Advanced_Click(object sender, EventArgs e)
         {
             Tasual_Create_Task TaskForm = new Tasual_Create_Task();
             TaskForm.Show(this);
@@ -498,13 +498,13 @@ namespace Tasual
             AboutForm.ShowDialog(this);
         }
 
-        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Tasual_StatusLabel_MenuStrip_Clear_Click(object sender, EventArgs e)
         {
             Tasual_Confirm_Clear ConfirmForm = new Tasual_Confirm_Clear(this);
             ConfirmForm.ShowDialog(this);
         }
 
-        private void categoryToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Tasual_MenuStrip_Create_Quick_Click(object sender, EventArgs e)
         {
             TaskItem.TaskTime Time = new TaskItem.TaskTime();
             var CurrentTimeOffset = new DateTimeOffset(DateTime.Now.ToLocalTime());
@@ -514,7 +514,7 @@ namespace Tasual
             Tasual_Array_AddTask(ref TaskArray, 0, 0, 0, "Testing", "New task", Time, true);
         }
 
-        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        private void Tasual_MenuStrip_Edit_Click(object sender, EventArgs e)
         {
             Tasual_ListView.LabelEdit = true;
             Tasual_ListView.FocusedItem.BeginEdit();
