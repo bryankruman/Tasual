@@ -448,7 +448,21 @@ namespace Tasual
 			}
 		}
 
-		public void Tasual_ListView_PopulateFromArray(ref List<TaskItem> TaskArray)
+        // Instead of bothering to reassign the groups in the listview, lets just reassign them in the task array
+        // and then you'll need to call Tasual_ListView_PopulateFromArray() afterwards.
+        private void Tasual_ListView_ReAssignGroup(string OldTaskGroup, string NewTaskGroup)
+        {
+            foreach (TaskItem Task in TaskArray)
+            {
+                if (Task == null) { break; }
+                if (Task.Group == OldTaskGroup)
+                {
+                    Task.Group = NewTaskGroup;
+                }
+            }
+        }
+
+        public void Tasual_ListView_PopulateFromArray(ref List<TaskItem> TaskArray)
 		{
 			Tasual_ListView_ClearAll();
 
@@ -520,7 +534,9 @@ namespace Tasual
 
 		private void keepOnTToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			Tasual_Array_Save_Text(ref TaskArray);
+            Tasual_ListView_ReAssignGroup("Testing", "");
+
+            Tasual_Array_Save_Text(ref TaskArray);
 			Tasual_Array_Load_Text(ref TaskArray);
 			Tasual_ListView_PopulateFromArray(ref TaskArray);
 		}
