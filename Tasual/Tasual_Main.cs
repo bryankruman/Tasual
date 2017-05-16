@@ -671,7 +671,7 @@ namespace Tasual
                 .ToList().ForEach(Item =>
                 {
                     TaskItem Task = (TaskItem)Item.Tag;
-                    Item.BackColor = Color.DarkRed;
+                    Item.BackColor = Tasual_ListView_BackColor(Task.Status, true);
                     Item.ForeColor = Tasual_ListView_ForeColor(Task.Status, true);
                 });
         }
