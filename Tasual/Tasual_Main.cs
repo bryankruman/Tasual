@@ -524,22 +524,29 @@ namespace Tasual
         {
             Tasual_ListView.LabelEdit = false;
 
-            this.BeginInvoke((MethodInvoker)delegate
+            ListViewItem Item = Tasual_ListView.Items[e.Item];
+
+            if (Item != null)
             {
-                ListViewItem Item = Tasual_ListView.Items[e.Item];
-                TaskItem Task = (TaskItem)Item.Tag;
-                if ((Task != null) && (Item != null))
+                Item.Selected = false;
+
+                this.BeginInvoke((MethodInvoker)delegate
                 {
-                    Task.Description = Item.Text.ToString();
-                    Tasual_Array_Save_Text(ref TaskArray);
-                }
-            });
+                    TaskItem Task = (TaskItem)Item.Tag;
+                    if ((Task != null) && (Item != null))
+                    {
+                        Task.Description = Item.Text.ToString();
+                        Tasual_Array_Save_Text(ref TaskArray);
+                    }
+                });
+            }
         }
 
         private void Tasual_ListView_SingleClick(MouseEventArgs e)
         {
-            if (Tasual_ListView_PreviouslySelected)
+            if (Tasual_ListView_PreviouslySelected == true)
             {
+                Console.WriteLine("Single click prev!");
                 Tasual_ListView.LabelEdit = true;
                 Tasual_ListView.FocusedItem.BeginEdit();
             }
@@ -568,8 +575,11 @@ namespace Tasual
                     Tasual_Array_Save_Text(ref TaskArray);
                     {
                     else { */
-                    Tasual_ListView.LabelEdit = true;
-                    Tasual_ListView.FocusedItem.BeginEdit();
+                    this.BeginInvoke((MethodInvoker)delegate
+                    {
+                        Tasual_ListView.LabelEdit = true;
+                        Tasual_ListView.FocusedItem.BeginEdit();
+                    });
                     //}
                 }
             }
@@ -622,8 +632,11 @@ namespace Tasual
                                     {
                                         Tasual_Timer_ListViewClick.Start();
 
-                                        if ((Info.Item == Tasual_ListView.FocusedItem) && (Tasual_ListView.LabelEdit != true))
-                                        { Tasual_ListView_PreviouslySelected = true; }
+                                        if (Info.Item.Selected)
+                                        {
+                                            Console.WriteLine("Set as true!");
+                                            Tasual_ListView_PreviouslySelected = true;
+                                        }
 
                                         Tasual_ListView_FirstClickInfo = Info;
                                         Tasual_Timer_ListViewClick.Tag = e;
