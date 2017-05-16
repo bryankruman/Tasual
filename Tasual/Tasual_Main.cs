@@ -13,7 +13,7 @@ using System.Windows.Forms.VisualStyles;
 
 namespace Tasual
 {
-	public partial class Tasual_Main : Form
+    public partial class Tasual_Main : Form
 	{
 		public List<TaskItem> TaskArray = new List<TaskItem>();
 		bool Tasual_Setting_TimeGroups = false;
@@ -278,6 +278,66 @@ namespace Tasual
 			}
 		}
 
+        private Color Tasual_ForeColorForStatus(int Status, bool Selected)
+        {
+            switch (Status)
+            {
+                case (int)StatusEnum.Complete:
+                    {
+                        if (Selected)
+                        {
+                            return Color.FromArgb(255, 189, 208, 230);
+                        }
+                        else
+                        {
+                            return Color.FromArgb(255, 189, 208, 230);
+                        }
+                    }
+                case (int)StatusEnum.New:
+                    {
+                        if (Selected)
+                        {
+                            return Color.FromArgb(255, 36, 90, 150);
+                        }
+                        else
+                        {
+                            return Color.FromArgb(255, 36, 90, 150);
+                        }
+                    }
+                default: return Color.FromArgb(255, 0, 0, 0);
+            }
+        }
+
+        private Color Tasual_BackColorForStatus(int Status, bool Selected)
+        {
+            switch (Status)
+            {
+                case (int)StatusEnum.Complete:
+                    {
+                        if (Selected)
+                        {
+                            return Color.White;//FromArgb(255, 189, 208, 230);
+                        }
+                        else
+                        {
+                            return Color.White;
+                        }
+                    }
+                case (int)StatusEnum.New:
+                    {
+                        if (Selected)
+                        {
+                            return Color.White;//FromArgb(255, 36, 90, 150);
+                        }
+                        else
+                        {
+                            return Color.White;
+                        }
+                    }
+                default: return Color.FromArgb(255, 0, 0, 0);
+            }
+        }
+
         private void Tasual_ListView_ChangeStatus(ref ListViewItem Item, int Status)
         {
             TaskItem Task = (TaskItem)Item.Tag;
@@ -301,14 +361,14 @@ namespace Tasual
 
                 case (int)StatusEnum.Complete:
                     {
-                        Item.ForeColor = Color.FromArgb(255, 189, 208, 230);
+                        Item.ForeColor = Tasual_ForeColorForStatus((int)StatusEnum.Complete, Item.Selected);//Color.FromArgb(255, 189, 208, 230);
                         Item.ImageIndex = 0;
                         break;
                     }
 
                 case (int)StatusEnum.New:
                     {
-                        Item.ForeColor = Color.FromArgb(255, 36, 90, 150);
+                        Item.ForeColor = Tasual_ForeColorForStatus((int)StatusEnum.New, Item.Selected);//Color.FromArgb(255, 36, 90, 150);
                         Item.ImageIndex = 1;
                         break;
                     }
@@ -656,6 +716,24 @@ namespace Tasual
                         }
                 }
             }
+        }
+
+        private void Tasual_ListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Tasual_ListView.Items.Cast<ListViewItem>()
+                .ToList().ForEach(Item =>
+            {
+                TaskItem Task = (TaskItem)Item.Tag;
+                Item.BackColor = Tasual_BackColorForStatus(Task.Status, false);
+                Item.ForeColor = Tasual_ForeColorForStatus(Task.Status, false);
+            });
+            Tasual_ListView.SelectedItems.Cast<ListViewItem>()
+                .ToList().ForEach(Item =>
+            {
+                TaskItem Task = (TaskItem)Item.Tag;
+                Item.BackColor = Color.DarkRed;
+                Item.ForeColor = Tasual_ForeColorForStatus(Task.Status, true);
+            });
         }
     }
     public class TaskItem

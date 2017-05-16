@@ -80,8 +80,10 @@
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Tasual_Timer_ListViewClick = new System.Windows.Forms.Timer(this.components);
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.Tasual_Main_MenuStrip.SuspendLayout();
             this.Tasual_StatusLabel_MenuStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // Tasual_Main_MenuStrip
@@ -253,6 +255,7 @@
             this.Tasual_ListView.View = System.Windows.Forms.View.Details;
             this.Tasual_ListView.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.Tasual_ListView_AfterLabelEdit);
             this.Tasual_ListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.Tasual_ListView_ColumnWidthChanging);
+            this.Tasual_ListView.SelectedIndexChanged += new System.EventHandler(this.Tasual_ListView_SelectedIndexChanged);
             this.Tasual_ListView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Tasual_ListView_MouseDown);
             // 
             // Description
@@ -369,6 +372,7 @@
             this.Tasual_Main_MenuStrip.ResumeLayout(false);
             this.Tasual_Main_MenuStrip.PerformLayout();
             this.Tasual_StatusLabel_MenuStrip.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -401,6 +405,7 @@
 		private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
         private System.Windows.Forms.ImageList Tasual_TaskIcons;
         private System.Windows.Forms.Timer Tasual_Timer_ListViewClick;
+        private System.Windows.Forms.BindingSource bindingSource1;
     }
 }
 
