@@ -24,8 +24,10 @@ namespace Tasual
 		bool Tasual_Setting_TimeGroups = false;
 		string Tasual_Setting_TextFile = "localdb.txt";
 
-        ListViewHitTestInfo Tasual_ListView_FirstClickInfo;
-        bool Tasual_ListView_PreviouslySelected;
+        ListViewHitTestInfo CalendarPopout = null;
+        ListViewHitTestInfo Tasual_ListView_FirstClickInfo = null;
+        bool Tasual_ListView_PreviouslySelected = false;
+
 
         public enum ArgEnum
 		{
@@ -462,48 +464,12 @@ namespace Tasual
         //  Event Handlers
         // ================
 
-        private void Tasual_Main_Resize(object sender, EventArgs e)
-        {
-            Invalidate();
-            Tasual_ListView_SizeColumns();
-        }
 
-        private void Tasual_MenuStrip_Settings_AlwaysOnTop_Click(object sender, EventArgs e)
-        {
-            Tasual_Array_ReAssignGroup("Testing", "");
-            Tasual_Array_Save_Text(ref TaskArray);
-            Tasual_Array_Load_Text(ref TaskArray);
-            Tasual_ListView_PopulateFromArray(ref TaskArray);
-        }
-
-        private void Tasual_ListView_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
-        {
-            //Tasual_SizeColumns();
-            e.NewWidth = this.Tasual_ListView.Columns[e.ColumnIndex].Width;
-            e.Cancel = true;
-        }
-
+        // MenuStrips
         private void Tasual_MenuStrip_Create_Advanced_Click(object sender, EventArgs e)
         {
             Tasual_Create_Task TaskForm = new Tasual_Create_Task();
             TaskForm.Show(this);
-        }
-
-        private void Tasual_StatusLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Tasual_MenuStrip_Status.Show(Tasual_StatusLabel, new Point(0, Tasual_StatusLabel.Height));
-        }
-
-        private void Tasual_AboutLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Tasual_About AboutForm = new Tasual_About();
-            AboutForm.ShowDialog(this);
-        }
-
-        private void Tasual_StatusLabel_MenuStrip_Clear_Click(object sender, EventArgs e)
-        {
-            Tasual_Confirm_Clear ConfirmForm = new Tasual_Confirm_Clear(this);
-            ConfirmForm.ShowDialog(this);
         }
 
         private void Tasual_MenuStrip_Create_Quick_Click(object sender, EventArgs e)
@@ -522,9 +488,56 @@ namespace Tasual
             Tasual_ListView.FocusedItem.BeginEdit();
         }
 
+        private void Tasual_MenuStrip_Settings_AlwaysOnTop_Click(object sender, EventArgs e)
+        {
+            Tasual_Array_ReAssignGroup("Testing", "");
+            Tasual_Array_Save_Text(ref TaskArray);
+            Tasual_Array_Load_Text(ref TaskArray);
+            Tasual_ListView_PopulateFromArray(ref TaskArray);
+        }
+
         private void Tasual_MenuStrip_Sources_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Tasual_StatusLabel_MenuStrip_Clear_Click(object sender, EventArgs e)
+        {
+            Tasual_Confirm_Clear ConfirmForm = new Tasual_Confirm_Clear(this);
+            ConfirmForm.ShowDialog(this);
+        }
+
+        // Notification Icon
+        private void Tasual_Notify_Click(object sender, EventArgs e)
+        {
+            ReturnFormInstance().Activate();
+        }
+
+        // Labels
+        private void Tasual_StatusLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Tasual_MenuStrip_Status.Show(Tasual_StatusLabel, new Point(0, Tasual_StatusLabel.Height));
+        }
+
+        private void Tasual_AboutLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Tasual_About AboutForm = new Tasual_About();
+            AboutForm.ShowDialog(this);
+        }
+
+        // Main Form
+        private void Tasual_Main_Resize(object sender, EventArgs e)
+        {
+            Invalidate();
+            Tasual_ListView_SizeColumns();
+        }
+
+        // ListView
+        private void Tasual_ListView_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
+        {
+            //Tasual_SizeColumns();
+            e.NewWidth = this.Tasual_ListView.Columns[e.ColumnIndex].Width;
+            e.Cancel = true;
         }
 
         private void Tasual_ListView_AfterLabelEdit(object sender, LabelEditEventArgs e)
@@ -603,7 +616,6 @@ namespace Tasual
             Tasual_Timer_ListViewClick.Stop();
         }
 
-        ListViewHitTestInfo CalendarPopout = null;
         private void Tasual_ListView_MouseDown(object sender, MouseEventArgs e)
         {
             ListViewHitTestInfo Info = Tasual_ListView.HitTest(e.X, e.Y);
@@ -816,13 +828,7 @@ namespace Tasual
 
         private void Tasual_ListView_ItemDrag(object sender, ItemDragEventArgs e)
         {
-
             Tasual_ListView.DoDragDrop(e.Item, DragDropEffects.Copy);
-        }
-
-        private void Tasual_Notify_Click(object sender, EventArgs e)
-        {
-            ReturnFormInstance().Activate();
         }
 
 
@@ -851,6 +857,7 @@ namespace Tasual
 			// load tasks into Tasual_ListView
 			Tasual_ListView_PopulateFromArray(ref TaskArray);
 		}
+
         public static Tasual_Main ReturnFormInstance()
         {
             return Application.OpenForms[0] as Tasual_Main;
