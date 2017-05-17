@@ -426,6 +426,7 @@ namespace Tasual
                 NewGroup.Name = TaskGroup;
                 NewGroup.Header = NewGroup.Name;
                 Tasual_ListView.Groups.Add(NewGroup);
+                Console.WriteLine("Group: {0} - {1}", Tasual_ListView.Groups.IndexOf(NewGroup), NewGroup.Name);
                 Item.Group = NewGroup;
             }
             else
@@ -571,7 +572,6 @@ namespace Tasual
         //  Event Handlers
         // ================
 
-
         // MenuStrips
         private void Tasual_MenuStrip_Create_Advanced_Click(object sender, EventArgs e)
         {
@@ -673,41 +673,28 @@ namespace Tasual
         {
             if (Tasual_ListView_PreviouslySelected == true)
             {
-                Console.WriteLine("Single click prev!");
                 Tasual_ListView.LabelEdit = true;
                 Tasual_ListView.FocusedItem.BeginEdit();
             }
             else
             {
-                Console.WriteLine("Single click!");
                 // do nothing
             }
         }
 
         private void Tasual_ListView_DoubleClick(MouseEventArgs e)
         {
-            Console.WriteLine("Double click!");
-
             ListViewHitTestInfo SecondClickInfo = Tasual_ListView.HitTest(e.X, e.Y);
 
             if ((Tasual_ListView_FirstClickInfo.Item != null) && (SecondClickInfo.Item != null))
             {
                 if (Tasual_ListView_FirstClickInfo.Item == SecondClickInfo.Item)
                 {
-                    /* if (settings.doubleclicktoggle) 
-                    {
-                    ListViewItem SelectedItem = SecondClickInfo.Item;
-                    Tasual_ListView_ChangeStatus(ref SelectedItem, (int)StatusEnum.Toggle);
-                    Tasual_StatusLabel_UpdateCounts();
-                    Tasual_Array_Save_Text(ref TaskArray);
-                    {
-                    else { */
                     this.BeginInvoke((MethodInvoker)delegate
                     {
                         Tasual_ListView.LabelEdit = true;
                         Tasual_ListView.FocusedItem.BeginEdit();
                     });
-                    //}
                 }
             }
         }
@@ -747,7 +734,6 @@ namespace Tasual
                             {
                                 if (e.X <= 20) // clicked checkbox area
                                 {
-                                    Console.WriteLine("Toggle!");
                                     ListViewItem SelectedItem = Info.Item;
                                     Tasual_ListView_ChangeStatus(ref SelectedItem, (int)StatusEnum.Toggle);
                                     Tasual_StatusLabel_UpdateCounts();
@@ -845,7 +831,9 @@ namespace Tasual
             {
                 case MouseButtons.Left:
                     {
-                        Console.WriteLine("Header: {0} - {1} - {2}", e.Clicks, e.Button, this.Name.ToString());
+                        //Tasual_ListView.FindNearestItem(SearchDirectionHint.Down, Cursor.Position.X, Cursor.Position.Y).Group.Name,
+                        ListViewHitTestInfo Info = Tasual_ListView.HitTest(e.X, e.Y);
+                        Console.WriteLine("Header: {0} - {1} - {2}", Info.Item.Name, e.Button, this.Name.ToString());
                         break;
                     }
 
@@ -1066,10 +1054,11 @@ namespace Tasual
                 case 0x204:
                     {
                         LVHITTESTINFO ht = new LVHITTESTINFO() { pt_x = GetXLParam(m.LParam.ToInt32()), pt_y = GetYLParam(m.LParam.ToInt32()) };
-                        var value = SendMessage(Handle, LVM_HITTEST, -1, ref ht);
-                        if (value != -1 && (ht.flags & LVHT_EX_GROUP_HEADER) != 0)
+                        int value = SendMessage(Handle, LVM_HITTEST, -1, ref ht);
+                        if ((value != -1) && ((ht.flags & LVHT_EX_GROUP_HEADER) != 0))
                         {
-                            TasualListView.OnGroupHeaderClick(new MouseEventArgs(Control.MouseButtons, value, 0, 0, 0));
+                            Console.WriteLine("LVHITTESTINFO: {0} {1} {2} {3}", ht.flags, ht.iItem, ht.iSubItem, ht.iGroup);
+                            TasualListView.OnGroupHeaderClick(new MouseEventArgs(Control.MouseButtons, ht.iGroup, 0, 0, 0));
                         }
                         else
                         {
