@@ -603,6 +603,7 @@ namespace Tasual
             Tasual_Timer_ListViewClick.Stop();
         }
 
+        ListViewHitTestInfo CalendarPopout = null;
         private void Tasual_ListView_MouseDown(object sender, MouseEventArgs e)
         {
             ListViewHitTestInfo Info = Tasual_ListView.HitTest(e.X, e.Y);
@@ -652,22 +653,14 @@ namespace Tasual
                                     }
                                     else // clicked subitem
                                     {
+
                                         if (Info.SubItem != null)
                                         {
-                                            this.BeginInvoke((MethodInvoker)delegate
+                                            if (CalendarPopout == null)
                                             {
-                                                Console.WriteLine("Set as true!");
-                                                Tasual_CalendarPopout Calendar = new Tasual_CalendarPopout();
-
-                                                Rectangle Bounds = Info.SubItem.Bounds;
-
-                                                int one = Bounds.Bottom;
-                                                int two = Bounds.Left;
-
-                                                Calendar.Show(this);
-                                                Calendar.Focus();
-                                                Calendar.Location = PointToScreen(new Point(Bounds.Left, Bounds.Bottom + Bounds.Height + 5));
-                                            });
+                                                CalendarPopout = Info;
+                                            }
+                                            else { CalendarPopout = null; }
 
                                             /*
                                             MonthCalendar TimeSelector = new MonthCalendar();
@@ -709,6 +702,20 @@ namespace Tasual
             {
                 
                 Console.WriteLine("What got clicked?");
+            }
+        }
+
+        private void Tasual_ListView_MouseUp(object sender, MouseEventArgs e)
+        {
+            if(CalendarPopout != null)
+            {
+                Tasual_CalendarPopout Calendar = new Tasual_CalendarPopout();
+
+                Rectangle Bounds = CalendarPopout.SubItem.Bounds;
+                Calendar.Location = PointToScreen(new Point(Bounds.Left, Bounds.Bottom + Bounds.Height + 5));
+                Calendar.Show(this);
+
+                CalendarPopout = null;
             }
         }
 
