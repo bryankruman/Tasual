@@ -911,22 +911,30 @@ namespace Tasual
 
         protected override void WndProc(ref Message m)
         {
-            if ((m.Msg == 0x0201) || (m.Msg == 0x0204))
+            switch(m.Msg)
             {
-                LVHITTESTINFO ht = new LVHITTESTINFO() { pt_x = GetXLParam(m.LParam.ToInt32()), pt_y = GetYLParam(m.LParam.ToInt32()) };
-                var value = SendMessage(Handle, LVM_HITTEST, -1, ref ht);
-                if (value != -1 && (ht.flags & LVHT_EX_GROUP_HEADER) != 0)
-                {
-                    TasualListView.OnGroupHeaderClick(new MouseEventArgs(Control.MouseButtons, value, 0, 0, 0));
-                }
-                else
-                {
-                    base.WndProc(ref m);
-                }
-            }
-            else
-            {
-                base.WndProc(ref m);
+                case 0x201:
+                case 0x204:
+                    {
+                        LVHITTESTINFO ht = new LVHITTESTINFO() { pt_x = GetXLParam(m.LParam.ToInt32()), pt_y = GetYLParam(m.LParam.ToInt32()) };
+                        var value = SendMessage(Handle, LVM_HITTEST, -1, ref ht);
+                        if (value != -1 && (ht.flags & LVHT_EX_GROUP_HEADER) != 0)
+                        {
+                            TasualListView.OnGroupHeaderClick(new MouseEventArgs(Control.MouseButtons, value, 0, 0, 0));
+                        }
+                        else
+                        {
+                            base.WndProc(ref m);
+                        }
+                        break;
+                    }
+
+                default:
+                case 0x203:
+                    {
+                        base.WndProc(ref m);
+                        break;
+                    }
             }
         }
     }
