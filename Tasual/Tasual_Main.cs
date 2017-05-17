@@ -21,7 +21,9 @@ namespace Tasual
         // ==============
 
 		public List<TaskItem> TaskArray = new List<TaskItem>();
-        //bool Tasual_Setting_TimeGroups = false;
+        public List<string> HiddenGroups = new List<string>();
+        public List<string> HiddenGroupHasStub = new List<string>();
+
         StyleEnum Tasual_Setting_Style = StyleEnum.Custom;
         string Tasual_Setting_TextFile = "localdb.txt";
 
@@ -162,6 +164,13 @@ namespace Tasual
 
 			Array.Add(NewTask);
 			Tasual_Array_Save_Text(ref Array);
+
+            // force hidden group to be unhidden
+            if(HiddenGroups.Contains(NewTask.Group))
+            {
+                HiddenGroups.Remove(NewTask.Group);
+                Tasual_ListView_PopulateFromArray(ref TaskArray);
+            }
 
             ListViewItem Item = Tasual_ListView_CreateListViewItem(ref NewTask);
 
@@ -378,11 +387,26 @@ namespace Tasual
 
         private void Tasual_ListView_ClearAll()
         {
+            HiddenGroupHasStub.Clear();
             Tasual_ListView.Columns.Clear();
             Tasual_ListView.Groups.Clear();
             Tasual_ListView.Items.Clear();
             Tasual_ListView.Update();
             Tasual_ListView.Refresh();
+        }
+
+        private ListViewGroup Tasual_ListView_FindGroup(string GroupName)
+        {
+            ListViewGroup Found = null;
+            foreach (ListViewGroup Group in Tasual_ListView.Groups)
+            {
+                if (Group.Name == GroupName)
+                {
+                    Found = Group;
+                    break;
+                }
+            }
+            return Found;
         }
 
         private void Tasual_ListView_AssignGroup(string TaskGroup, ref ListViewItem Item)
@@ -396,7 +420,6 @@ namespace Tasual
                     break;
                 }
             }
-
             if (Found == null)
             {
                 ListViewGroup NewGroup = new ListViewGroup();
@@ -508,9 +531,35 @@ namespace Tasual
             foreach (TaskItem Task in TaskArray)
             {
                 if (Task == null) { break; }
-                //Tasual_PrintTaskToConsole(Task);
-                TaskItem Referral = Task;
-                Tasual_ListView_CreateListViewItem(ref Referral);
+
+                if (HiddenGroups.Contains(Task.Group))
+                {
+                    Console.WriteLine("Found a hidden group! {0}", Task.Group);
+                    if (!HiddenGroupHasStub.Contains(Task.Group))
+                    {
+                        HiddenGroupHasStub.Add(Task.Group);
+
+                        // create "stub" which sits underneath a hidden group name and states how many items are in it/that they're hidden
+                        // we want to make a fake task as we don't want it to actually go into the array
+                        // only needs: Description, Time, Group and Status
+                        TaskItem Stub = new TaskItem();
+                        Stub.Status = (int)StatusEnum.New;
+                        Stub.Group = "Testing";
+                        Stub.Description = "This item has been hidden";
+                        TaskItem.TaskTime Time = new TaskItem.TaskTime();
+                        var CurrentTimeOffset = new DateTimeOffset(DateTime.Now.ToLocalTime());
+                        Time.Created = CurrentTimeOffset.ToUnixTimeSeconds();
+                        Time.Ending = 2;
+                        Time.Next = 3;
+                        Stub.Time = Time;
+                        Tasual_ListView_CreateListViewItem(ref Stub);
+                    }
+                }
+                else
+                {
+                    TaskItem Referral = Task;
+                    Tasual_ListView_CreateListViewItem(ref Referral);
+                }
             }
 
             Tasual_StatusLabel_UpdateCounts();
@@ -912,8 +961,10 @@ namespace Tasual
 			// load task array
 			Tasual_Array_Load_Text(ref TaskArray);
 
-			// load tasks into Tasual_ListView
-			Tasual_ListView_PopulateFromArray(ref TaskArray);
+            //HiddenGroups.Add("Testing");
+
+            // load tasks into Tasual_ListView
+            Tasual_ListView_PopulateFromArray(ref TaskArray);
 		}
 
         public static Tasual_Main ReturnFormInstance()
@@ -937,6 +988,8 @@ namespace Tasual
 		public string Group;
 		public string Description;
 		public TaskTime Time;
+
+        //public ListViewGroup GroupTag;
 
 
 		// constructors
