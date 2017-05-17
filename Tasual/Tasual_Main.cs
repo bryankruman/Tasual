@@ -644,7 +644,6 @@ namespace Tasual
 
                                         if (Info.Item.Selected)
                                         {
-                                            Console.WriteLine("Set as true!");
                                             Tasual_ListView_PreviouslySelected = true;
                                         }
 
@@ -653,7 +652,34 @@ namespace Tasual
                                     }
                                     else // clicked subitem
                                     {
+                                        if (Info.SubItem != null)
+                                        {
+                                            this.BeginInvoke((MethodInvoker)delegate
+                                            {
+                                                Console.WriteLine("Set as true!");
+                                                Tasual_CalendarPopout Calendar = new Tasual_CalendarPopout();
 
+                                                Rectangle Bounds = Info.SubItem.Bounds;
+
+                                                int one = Bounds.Bottom;
+                                                int two = Bounds.Left;
+
+                                                Calendar.Show(this);
+                                                Calendar.Focus();
+                                                Calendar.Location = PointToScreen(new Point(Bounds.Left, Bounds.Bottom + Bounds.Height + 5));
+                                            });
+
+                                            /*
+                                            MonthCalendar TimeSelector = new MonthCalendar();
+
+                                            Rectangle Bounds = Info.SubItem.Bounds;
+                                            TimeSelector.Location = new Point(Cursor.Position.X, Cursor.Position.Y); //new Point(0, Bounds.Bottom);
+                                            TimeSelector.Size = new Size(300, 300);
+
+                                            this.Controls.Add(TimeSelector);
+                                            TimeSelector.BringToFront();
+                                            */
+                                        }
                                     }
                                 }
                             }
