@@ -681,6 +681,7 @@ namespace Tasual
 
                     case MouseButtons.Right:
                         {
+                            Tasual_MenuStrip_Item.Show(Cursor.Position.X, Cursor.Position.Y);
                             break;
                         }
 
