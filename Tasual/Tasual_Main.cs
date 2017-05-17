@@ -491,7 +491,7 @@ namespace Tasual
 
         private void Tasual_StatusLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Tasual_StatusLabel_MenuStrip.Show(Tasual_StatusLabel, new Point(0, Tasual_StatusLabel.Height));
+            Tasual_MenuStrip_Status.Show(Tasual_StatusLabel, new Point(0, Tasual_StatusLabel.Height));
         }
 
         private void Tasual_AboutLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -818,6 +818,11 @@ namespace Tasual
         {
 
             Tasual_ListView.DoDragDrop(e.Item, DragDropEffects.Copy);
+        }
+
+        private void Tasual_Notify_Click(object sender, EventArgs e)
+        {
+            ReturnFormInstance().Activate();
         }
 
 
