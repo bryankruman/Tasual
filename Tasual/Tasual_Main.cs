@@ -431,7 +431,7 @@ namespace Tasual
             foreach (TaskItem Task in TaskArray)
             {
                 if (Task == null) { break; }
-                Tasual_PrintTaskToConsole(Task);
+                //Tasual_PrintTaskToConsole(Task);
 
                 // create listviewitem basic info
                 string[] Item_S = new string[2];
