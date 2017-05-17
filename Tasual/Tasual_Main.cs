@@ -681,13 +681,15 @@ namespace Tasual
             }
             else if (Info != null)
             {
-                //Console.WriteLine("What got clicked? {0}", Info.);
+                
+                Console.WriteLine("What got clicked?");
             }
         }
 
-        private void Tasual_ListView_GroupHeaderClick(object sender, int e)
+        private void Tasual_ListView_GroupHeaderClick(object sender, MouseEventArgs e)
         {
-            Console.WriteLine("Header: {0}", e);
+            Tasual_StatusLabel_MenuStrip.Show(Cursor.Position.X, Cursor.Position.Y);
+            Console.WriteLine("Header: {0} - {1} - {2}", e.Clicks, e.Button, this.Name.ToString());
         }
 
 #if false
@@ -771,32 +773,6 @@ namespace Tasual
             Tasual_ListView.DoDragDrop(e.Item, DragDropEffects.Copy);
         }
 
-        // special event processing
-        protected override void WndProc(ref Message m)
-        {
-            const int wmNcHitTest = 0x84;
-            const int htBottomLeft = 16;
-            const int htBottomRight = 17;
-            int padding = 15;
-
-            if (m.Msg == wmNcHitTest)
-            {
-                int x = (int)(m.LParam.ToInt64() & 0xFFFF);
-                int y = (int)((m.LParam.ToInt64() & 0xFFFF0000) >> 16);
-                Point pt = PointToClient(new Point(x, y));
-                Size clientSize = ClientSize;
-
-                // allow resize on the lower right corner // TODO: Fix this with multiple monitors
-                if (pt.X >= clientSize.Width - padding && pt.Y >= clientSize.Height - padding && clientSize.Height >= padding)
-                {
-                    m.Result = (IntPtr)(IsMirrored ? htBottomLeft : htBottomRight);
-                    //Invalidate();
-                    return;
-                }
-            }
-            base.WndProc(ref m);
-        }
-
 
         // ================
         //  Core Functions
@@ -808,17 +784,23 @@ namespace Tasual
 
             ControlExtensions.DoubleBuffered(Tasual_ListView, true);
             Tasual_Timer_ListViewClick.Interval = SystemInformation.DoubleClickTime;
+
+            SubNativeWindow ListViewHandleClass = new SubNativeWindow();
+            ListViewHandleClass.AssignHandle(this.Tasual_ListView.Handle);
 		}
 
 		private void Tasual_Main_Load(object sender, EventArgs e)
 		{
-            //Tasual_ListView.All
 			// load task array
 			Tasual_Array_Load_Text(ref TaskArray);
 
 			// load tasks into Tasual_ListView
 			Tasual_ListView_PopulateFromArray(ref TaskArray);
 		}
+        public static Tasual_Main ReturnFormInstance()
+        {
+            return Application.OpenForms[0] as Tasual_Main;
+        }
     }
 
     public class TaskItem
@@ -855,16 +837,11 @@ namespace Tasual
         }
     }
 
-    public class TasualListView : ListView
+    public class SubNativeWindow : NativeWindow
     {
-        public event EventHandler<int> GroupHeaderClick;
-        protected virtual void OnGroupHeaderClick(int e)
-        {
-            var handler = GroupHeaderClick;
-            if (handler != null) handler(this, e);
-        }
         private const int LVM_HITTEST = 0x1000 + 18;
         private const int LVHT_EX_GROUP_HEADER = 0x10000000;
+
         [StructLayout(LayoutKind.Sequential)]
         private struct LVHITTESTINFO
         {
@@ -875,16 +852,43 @@ namespace Tasual
             public int iSubItem;
             public int iGroup;
         }
+
         [DllImport("user32.dll", EntryPoint = "SendMessage", CharSet = CharSet.Auto)]
-        private static extern int SendMessage(IntPtr hWnd, int msg,
-            int wParam, ref LVHITTESTINFO ht);
-        protected override void OnMouseDown(MouseEventArgs e)
+        private static extern int SendMessage(IntPtr hWnd, int msg, int wParam, ref LVHITTESTINFO ht);
+
+        public static int LowWord(int word) { return word & 0xFFFF; }
+        public static int HighWord(int word) { return word >> 16; }
+        public static int GetXLParam(int lparam) { return LowWord(lparam); }
+        public static int GetYLParam(int lparam) { return HighWord(lparam); }
+
+        protected override void WndProc(ref Message m)
         {
-            base.OnMouseDown(e);
-            var ht = new LVHITTESTINFO() { pt_x = e.X, pt_y = e.Y };
-            var value = SendMessage(this.Handle, LVM_HITTEST, -1, ref ht);
-            if (value != -1 && (ht.flags & LVHT_EX_GROUP_HEADER) != 0)
-                OnGroupHeaderClick(value);
+            if ((m.Msg == 0x0201) || (m.Msg == 0x0204))
+            {
+                LVHITTESTINFO ht = new LVHITTESTINFO() { pt_x = GetXLParam(m.LParam.ToInt32()), pt_y = GetYLParam(m.LParam.ToInt32()) };
+                var value = SendMessage(Handle, LVM_HITTEST, -1, ref ht);
+                if (value != -1 && (ht.flags & LVHT_EX_GROUP_HEADER) != 0)
+                {
+                    TasualListView.OnGroupHeaderClick(new MouseEventArgs(Control.MouseButtons, value, 0, 0, 0));
+                }
+                else
+                {
+                    base.WndProc(ref m);
+                }
+            }
+            else
+            {
+                base.WndProc(ref m);
+            }
+        }
+    }
+
+    public class TasualListView : ListView
+    {
+        public static MouseEventHandler GroupHeaderClick;
+        public static void OnGroupHeaderClick(MouseEventArgs e)
+        {
+            GroupHeaderClick?.Invoke(null, e);
         }
     }
 }

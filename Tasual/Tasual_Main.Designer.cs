@@ -249,7 +249,7 @@
             this.Tasual_ListView.TabIndex = 0;
             this.Tasual_ListView.UseCompatibleStateImageBehavior = false;
             this.Tasual_ListView.View = System.Windows.Forms.View.Details;
-            this.Tasual_ListView.GroupHeaderClick += new System.EventHandler<int>(this.Tasual_ListView_GroupHeaderClick);
+            Tasual.TasualListView.GroupHeaderClick += new System.Windows.Forms.MouseEventHandler(this.Tasual_ListView_GroupHeaderClick);
             this.Tasual_ListView.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.Tasual_ListView_AfterLabelEdit);
             this.Tasual_ListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.Tasual_ListView_ColumnWidthChanging);
             this.Tasual_ListView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.Tasual_ListView_ItemDrag);
@@ -380,7 +380,7 @@
         #endregion
 
         //private System.Windows.Forms.ListView Tasual_ListView;
-        private Tasual.TasualListView Tasual_ListView;
+        public Tasual.TasualListView Tasual_ListView;
 		private System.Windows.Forms.MenuStrip Tasual_MenuStrip;
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
 		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Settings;
