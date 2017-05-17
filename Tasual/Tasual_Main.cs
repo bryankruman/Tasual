@@ -21,13 +21,20 @@ namespace Tasual
         // ==============
 
 		public List<TaskItem> TaskArray = new List<TaskItem>();
-		bool Tasual_Setting_TimeGroups = false;
-		string Tasual_Setting_TextFile = "localdb.txt";
+        //bool Tasual_Setting_TimeGroups = false;
+        StyleEnum Tasual_Setting_Style = StyleEnum.Custom;
+        string Tasual_Setting_TextFile = "localdb.txt";
 
         ListViewHitTestInfo CalendarPopout = null;
         ListViewHitTestInfo Tasual_ListView_FirstClickInfo = null;
         bool Tasual_ListView_PreviouslySelected = false;
 
+        public enum StyleEnum
+        {
+            Custom,
+            Simple,
+            Detailed
+        }
 
         public enum ArgEnum
 		{
@@ -157,6 +164,9 @@ namespace Tasual
 			Tasual_Array_Save_Text(ref Array);
 
             ListViewItem Item = Tasual_ListView_CreateListViewItem(ref NewTask);
+
+            Tasual_StatusLabel_UpdateCounts();
+            Tasual_ListView_SizeColumns();
 
             if (Edit)
             {
@@ -403,27 +413,59 @@ namespace Tasual
 
         public ListViewItem Tasual_ListView_CreateListViewItem(ref TaskItem Task)
         {
-            string[] Item_S = new string[2];
-            Item_S[0] = Task.Description;
+            string[] Item_S;
 
-            if (Tasual_Setting_TimeGroups)
+            // determine which columns we're going to have
+            switch (Tasual_Setting_Style)
             {
-                Item_S[1] = Task.Group.ToString();
+                // "CUSTOM" STYLE:
+                // - groups: overdue at top, normal group listings below, completed at bottom
+                // - columns: Description, Time
+                case StyleEnum.Custom:
+                    {
+                        Item_S = new string[2];
+                        Item_S[0] = Task.Description;
+                        DateTime CreationTime = DateTimeOffset.FromUnixTimeSeconds((long)Task.Time.Created).DateTime.ToLocalTime();
+                        Item_S[1] = DateTimeExtensions.ElapsedTime(CreationTime);
+                        break;
+                    }
+
+                // "SIMPLE" STYLE:
+                // - groups: overdue at top, today, tomorrow, this week, next week, future, completed at bottom
+                // - columns: Description, Time
+                case StyleEnum.Simple:
+                    {
+                        Item_S = new string[2];
+                        Item_S[0] = Task.Description;
+                        Item_S[1] = Task.Group.ToString();
+                        break;
+                    }
+
+                // "DETAILED" STYLE:
+                // - groups: overdue at top, today, tomorrow, this week, next week, future, completed at bottom
+                // - columns: Description, Category, Time
+                case StyleEnum.Detailed:
+                    {
+                        Item_S = new string[3];
+                        Item_S[0] = Task.Description;
+                        Item_S[1] = Task.Group.ToString();
+                        DateTime CreationTime = DateTimeOffset.FromUnixTimeSeconds((long)Task.Time.Created).DateTime.ToLocalTime();
+                        Item_S[2] = DateTimeExtensions.ElapsedTime(CreationTime);
+                        break;
+                    }
+
+                default:
+                    {
+                        throw new Exception("Tasual_ListView_CreateListViewItem(): Invalid style setting!");
+                    }
             }
-            else
-            {
-                DateTime CreationTime = DateTimeOffset.FromUnixTimeSeconds((long)Task.Time.Created).DateTime.ToLocalTime();
-                Item_S[1] = DateTimeExtensions.ElapsedTime(CreationTime);
-            }
+
             ListViewItem Item = new ListViewItem(Item_S);
             Item.Tag = Task;
 
             Tasual_ListView_AssignGroup(Task.Group.ToString(), ref Item);
             Tasual_ListView_ChangeStatus(ref Item, Task.Status);
             Tasual_ListView.Items.Add(Item);
-
-            Tasual_StatusLabel_UpdateCounts();
-            Tasual_ListView_SizeColumns();
 
             return Item;
         }
@@ -432,9 +474,36 @@ namespace Tasual
         {
             Tasual_ListView_ClearAll();
 
-            Tasual_ListView.Columns.Add("Description");
-            if (Tasual_Setting_TimeGroups) { Tasual_ListView.Columns.Add("Category"); }
-            else { Tasual_ListView.Columns.Add("Time"); }
+            switch (Tasual_Setting_Style)
+            {
+                // See Tasual_ListView_CreateListViewItem() for details
+                case StyleEnum.Custom:
+                    {
+                        Tasual_ListView.Columns.Add("Description");
+                        Tasual_ListView.Columns.Add("Time");
+                        break;
+                    }
+
+                case StyleEnum.Simple:
+                    {
+                        Tasual_ListView.Columns.Add("Description");
+                        Tasual_ListView.Columns.Add("Time");
+                        break;
+                    }
+
+                case StyleEnum.Detailed:
+                    {
+                        Tasual_ListView.Columns.Add("Description");
+                        Tasual_ListView.Columns.Add("Category");
+                        Tasual_ListView.Columns.Add("Time");
+                        break;
+                    }
+
+                default:
+                    {
+                        throw new Exception("Tasual_ListView_PopulateFromArray(): Invalid style setting!");
+                    }
+            }
 
             foreach (TaskItem Task in TaskArray)
             {
@@ -894,10 +963,11 @@ namespace Tasual
             else if (intDays > 0) return String.Format("{0} {1} ago", intDays, (intDays == 1) ? "day" : "days");
             else if (intHours > 0) return String.Format("{0} {1} ago", intHours, (intHours == 1) ? "hour" : "hours");
             else if (intMinutes > 0) return String.Format("{0} {1} ago", intMinutes, (intMinutes == 1) ? "minute" : "minutes");
-            else if (intSeconds >= 0) return String.Format("{0} {1} ago", intSeconds, (intSeconds == 1) ? "second" : "seconds");
+            else if (intSeconds > 1) return String.Format("{0} {1} ago", intSeconds, (intSeconds == 1) ? "second" : "seconds");
+            else if (intSeconds >= 0) return "Just now";
             else
             {
-                return String.Format("{0} {1} ago", dtEvent.ToShortDateString(), dtEvent.ToShortTimeString());
+                return String.Format("{0} {1}", dtEvent.ToShortDateString(), dtEvent.ToShortTimeString());
             }
         }
     }
