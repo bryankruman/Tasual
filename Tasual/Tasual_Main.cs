@@ -732,7 +732,7 @@ namespace Tasual
                 default:
                 case MouseButtons.Right:
                     {
-                        Tasual_MenuStrip_Header.Show(Cursor.Position.X, Cursor.Position.Y);
+                        Tasual_MenuStrip_Group.Show(Cursor.Position.X, Cursor.Position.Y);
                         break;
                     }
             }
