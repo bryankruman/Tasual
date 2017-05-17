@@ -786,8 +786,10 @@ namespace Tasual
             Tasual_Timer_ListViewClick.Interval = SystemInformation.DoubleClickTime;
 
             SubNativeWindow ListViewHandleClass = new SubNativeWindow();
-            ListViewHandleClass.AssignHandle(this.Tasual_ListView.Handle);
-		}
+            ListViewHandleClass.AssignHandle(Tasual_ListView.Handle);
+
+            Tasual.TasualListView.GroupHeaderClick += new MouseEventHandler(this.Tasual_ListView_GroupHeaderClick);
+        }
 
 		private void Tasual_Main_Load(object sender, EventArgs e)
 		{
