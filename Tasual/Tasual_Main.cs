@@ -846,7 +846,7 @@ namespace Tasual
             SubNativeWindow ListViewHandleClass = new SubNativeWindow();
             ListViewHandleClass.AssignHandle(Tasual_ListView.Handle);
 
-            Tasual.TasualListView.GroupHeaderClick += new MouseEventHandler(this.Tasual_ListView_GroupHeaderClick);
+            TasualListView.GroupHeaderClick += new MouseEventHandler(Tasual_ListView_GroupHeaderClick);
         }
 
 		private void Tasual_Main_Load(object sender, EventArgs e)
