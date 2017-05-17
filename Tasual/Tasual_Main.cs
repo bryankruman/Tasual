@@ -382,7 +382,7 @@ namespace Tasual
             Tasual_ListView.Columns[1].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
 
             Tasual_ListView.Columns[1].Width = Math.Max(100, Tasual_ListView.Columns[1].Width);
-            Tasual_ListView.Columns[0].Width = Math.Max(100, (Tasual_ListView.Width - Tasual_ListView.Columns[1].Width) - 17);
+            Tasual_ListView.Columns[0].Width = Math.Max(100, (Tasual_ListView.ClientSize.Width - Tasual_ListView.Columns[1].Width));
         }
 
         private void Tasual_ListView_ClearAll()
