@@ -134,7 +134,7 @@ namespace Tasual
             }
         }
 
-        public void Tasual_Array_AddTask(
+        public void Tasual_Array_CreateTask(
 			ref List<TaskItem> Array,
 			int Type,
 			int Priority,
@@ -156,29 +156,7 @@ namespace Tasual
 			Array.Add(NewTask);
 			Tasual_Array_Save_Text(ref Array);
 
-			// create listviewitem basic info
-			string[] Item_S = new string[2];
-			Item_S[0] = NewTask.Description;
-
-			if (Tasual_Setting_TimeGroups)
-			{
-				Item_S[1] = NewTask.Group.ToString();
-			}
-			else
-			{
-                DateTime CreationTime = DateTimeOffset.FromUnixTimeSeconds((long)NewTask.Time.Created).DateTime.ToLocalTime();
-                //DateTimeExtensions.ElapsedTime(CreationTime);
-                Item_S[1] = CreationTime.ToLongDateString();
-            }
-			ListViewItem Item = new ListViewItem(Item_S);
-			Item.Tag = NewTask;
-
-			Tasual_ListView_AssignGroup(NewTask.Group.ToString(), ref Item);
-            Tasual_ListView_ChangeStatus(ref Item, NewTask.Status);
-			Tasual_ListView.Items.Add(Item);
-
-			Tasual_StatusLabel_UpdateCounts();
-			Tasual_ListView_SizeColumns();
+            ListViewItem Item = Tasual_ListView_CreateListViewItem(ref NewTask);
 
             if (Edit)
             {
@@ -423,6 +401,33 @@ namespace Tasual
             }
         }
 
+        public ListViewItem Tasual_ListView_CreateListViewItem(ref TaskItem Task)
+        {
+            string[] Item_S = new string[2];
+            Item_S[0] = Task.Description;
+
+            if (Tasual_Setting_TimeGroups)
+            {
+                Item_S[1] = Task.Group.ToString();
+            }
+            else
+            {
+                DateTime CreationTime = DateTimeOffset.FromUnixTimeSeconds((long)Task.Time.Created).DateTime.ToLocalTime();
+                Item_S[1] = DateTimeExtensions.ElapsedTime(CreationTime);
+            }
+            ListViewItem Item = new ListViewItem(Item_S);
+            Item.Tag = Task;
+
+            Tasual_ListView_AssignGroup(Task.Group.ToString(), ref Item);
+            Tasual_ListView_ChangeStatus(ref Item, Task.Status);
+            Tasual_ListView.Items.Add(Item);
+
+            Tasual_StatusLabel_UpdateCounts();
+            Tasual_ListView_SizeColumns();
+
+            return Item;
+        }
+
         public void Tasual_ListView_PopulateFromArray(ref List<TaskItem> TaskArray)
         {
             Tasual_ListView_ClearAll();
@@ -435,28 +440,8 @@ namespace Tasual
             {
                 if (Task == null) { break; }
                 //Tasual_PrintTaskToConsole(Task);
-
-                // create listviewitem basic info
-                string[] Item_S = new string[2];
-                Item_S[0] = Task.Description;
-                if (Tasual_Setting_TimeGroups)
-                {
-                    Item_S[1] = Task.Group.ToString();
-                }
-                else
-                {
-                    DateTime CreationTime = DateTimeOffset.FromUnixTimeSeconds((long)Task.Time.Created).DateTime.ToLocalTime();
-                    //DateTimeExtensions.ElapsedTime(CreationTime);
-                    Item_S[1] = DateTimeExtensions.ElapsedTime(CreationTime);
-                    //var CreationTime = DateTimeOffset.FromUnixTimeSeconds((long)Task.Time.Created).DateTime.ToLocalTime();
-                    //Item_S[1] = CreationTime.ToLongDateString();
-                }
-                ListViewItem Item = new ListViewItem(Item_S);
-                Item.Tag = Task;
-
-                Tasual_ListView_AssignGroup(Task.Group.ToString(), ref Item);
-                Tasual_ListView_ChangeStatus(ref Item, Task.Status);
-                Tasual_ListView.Items.Add(Item);
+                TaskItem Referral = Task;
+                Tasual_ListView_CreateListViewItem(ref Referral);
             }
 
             Tasual_StatusLabel_UpdateCounts();
@@ -483,7 +468,7 @@ namespace Tasual
             Time.Created = CurrentTimeOffset.ToUnixTimeSeconds();
             Time.Ending = 2;
             Time.Next = 3;
-            Tasual_Array_AddTask(ref TaskArray, 0, 0, 0, "Testing", "New task", Time, true);
+            Tasual_Array_CreateTask(ref TaskArray, 0, 0, 0, "Testing", "New task", Time, true);
         }
 
         private void Tasual_MenuStrip_Edit_Click(object sender, EventArgs e)
@@ -909,7 +894,7 @@ namespace Tasual
             else if (intDays > 0) return String.Format("{0} {1} ago", intDays, (intDays == 1) ? "day" : "days");
             else if (intHours > 0) return String.Format("{0} {1} ago", intHours, (intHours == 1) ? "hour" : "hours");
             else if (intMinutes > 0) return String.Format("{0} {1} ago", intMinutes, (intMinutes == 1) ? "minute" : "minutes");
-            else if (intSeconds > 0) return String.Format("{0} {1} ago", intSeconds, (intSeconds == 1) ? "second" : "seconds");
+            else if (intSeconds >= 0) return String.Format("{0} {1} ago", intSeconds, (intSeconds == 1) ? "second" : "seconds");
             else
             {
                 return String.Format("{0} {1} ago", dtEvent.ToShortDateString(), dtEvent.ToShortTimeString());
