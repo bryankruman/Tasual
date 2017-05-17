@@ -29,29 +29,29 @@
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("Work", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("Personal", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("Misc", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Work", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Personal", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Misc", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "",
             "Fuck Bitches, Get Money",
             "Fly motherfucker"}, "Add.png");
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "Boat to the island"}, -1, System.Drawing.Color.Empty, System.Drawing.Color.Transparent, null);
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
             "Drive to the mall",
             "Sunday, Apr 12th - 9pm"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
             "Jump to the sky",
             "",
             "",
             ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
             "Run up the hill",
             "",
             "",
             ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
             "Teleport to the store",
             "Sunday, Apr 13th - 8pm"}, -1);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Tasual_Main));
@@ -80,8 +80,21 @@
             this.Tasual_StatusLabel_MenuStrip_Export = new System.Windows.Forms.ToolStripMenuItem();
             this.Tasual_StatusLabel_MenuStrip_Clear = new System.Windows.Forms.ToolStripMenuItem();
             this.Tasual_Timer_ListViewClick = new System.Windows.Forms.Timer(this.components);
+            this.Tasual_MenuStrip_Header = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.quickToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.advancedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.moveTasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripComboBox2 = new System.Windows.Forms.ToolStripComboBox();
+            this.noOtherGroupsAvailableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Tasual_MenuStrip.SuspendLayout();
             this.Tasual_StatusLabel_MenuStrip.SuspendLayout();
+            this.Tasual_MenuStrip_Header.SuspendLayout();
             this.SuspendLayout();
             // 
             // Tasual_MenuStrip
@@ -214,30 +227,30 @@
             this.Time});
             this.Tasual_ListView.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Tasual_ListView.FullRowSelect = true;
-            listViewGroup4.Header = "Work";
-            listViewGroup4.Name = "Work";
-            listViewGroup5.Header = "Personal";
-            listViewGroup5.Name = "Personal";
-            listViewGroup6.Header = "Misc";
-            listViewGroup6.Name = "Misc";
+            listViewGroup1.Header = "Work";
+            listViewGroup1.Name = "Work";
+            listViewGroup2.Header = "Personal";
+            listViewGroup2.Name = "Personal";
+            listViewGroup3.Header = "Misc";
+            listViewGroup3.Name = "Misc";
             this.Tasual_ListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup4,
-            listViewGroup5,
-            listViewGroup6});
+            listViewGroup1,
+            listViewGroup2,
+            listViewGroup3});
             this.Tasual_ListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            listViewItem7.StateImageIndex = 0;
-            listViewItem8.StateImageIndex = 0;
-            listViewItem9.StateImageIndex = 0;
-            listViewItem10.StateImageIndex = 0;
-            listViewItem11.StateImageIndex = 0;
-            listViewItem12.StateImageIndex = 0;
+            listViewItem1.StateImageIndex = 0;
+            listViewItem2.StateImageIndex = 0;
+            listViewItem3.StateImageIndex = 0;
+            listViewItem4.StateImageIndex = 0;
+            listViewItem5.StateImageIndex = 0;
+            listViewItem6.StateImageIndex = 0;
             this.Tasual_ListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem7,
-            listViewItem8,
-            listViewItem9,
-            listViewItem10,
-            listViewItem11,
-            listViewItem12});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4,
+            listViewItem5,
+            listViewItem6});
             this.Tasual_ListView.Location = new System.Drawing.Point(0, 24);
             this.Tasual_ListView.Margin = new System.Windows.Forms.Padding(0);
             this.Tasual_ListView.MultiSelect = false;
@@ -346,6 +359,98 @@
             this.Tasual_Timer_ListViewClick.Interval = 1000;
             this.Tasual_Timer_ListViewClick.Tick += new System.EventHandler(this.Tasual_Timer_ListViewClick_Tick);
             // 
+            // Tasual_MenuStrip_Header
+            // 
+            this.Tasual_MenuStrip_Header.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.hideToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.editToolStripMenuItem,
+            this.moveTasksToolStripMenuItem,
+            this.deleteToolStripMenuItem1});
+            this.Tasual_MenuStrip_Header.Name = "Tasual_MenuStrip_Header";
+            this.Tasual_MenuStrip_Header.Size = new System.Drawing.Size(153, 148);
+            // 
+            // createToolStripMenuItem
+            // 
+            this.createToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.quickToolStripMenuItem,
+            this.advancedToolStripMenuItem});
+            this.createToolStripMenuItem.Name = "createToolStripMenuItem";
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.createToolStripMenuItem.Text = "Create";
+            // 
+            // quickToolStripMenuItem
+            // 
+            this.quickToolStripMenuItem.Name = "quickToolStripMenuItem";
+            this.quickToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.quickToolStripMenuItem.Text = "Quick";
+            // 
+            // advancedToolStripMenuItem
+            // 
+            this.advancedToolStripMenuItem.Name = "advancedToolStripMenuItem";
+            this.advancedToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.advancedToolStripMenuItem.Text = "Advanced";
+            // 
+            // hideToolStripMenuItem
+            // 
+            this.hideToolStripMenuItem.Name = "hideToolStripMenuItem";
+            this.hideToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.hideToolStripMenuItem.Text = "Hide";
+            this.hideToolStripMenuItem.Visible = false;
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.editToolStripMenuItem.Text = "Rename";
+            // 
+            // deleteToolStripMenuItem1
+            // 
+            this.deleteToolStripMenuItem1.Name = "deleteToolStripMenuItem1";
+            this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(168, 22);
+            this.deleteToolStripMenuItem1.Text = "Delete Tasks";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(178, 6);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Visible = false;
+            // 
+            // moveTasksToolStripMenuItem
+            // 
+            this.moveTasksToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.moveTasksToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripComboBox2,
+            this.noOtherGroupsAvailableToolStripMenuItem});
+            this.moveTasksToolStripMenuItem.Name = "moveTasksToolStripMenuItem";
+            this.moveTasksToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.moveTasksToolStripMenuItem.Text = "Move Tasks";
+            // 
+            // toolStripComboBox2
+            // 
+            this.toolStripComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.toolStripComboBox2.Items.AddRange(new object[] {
+            "Move to Foobar",
+            "Move to Yinzers",
+            "Move to Solar City",
+            "Move to Work"});
+            this.toolStripComboBox2.Name = "toolStripComboBox2";
+            this.toolStripComboBox2.Size = new System.Drawing.Size(121, 23);
+            // 
+            // noOtherGroupsAvailableToolStripMenuItem
+            // 
+            this.noOtherGroupsAvailableToolStripMenuItem.Enabled = false;
+            this.noOtherGroupsAvailableToolStripMenuItem.Name = "noOtherGroupsAvailableToolStripMenuItem";
+            this.noOtherGroupsAvailableToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.noOtherGroupsAvailableToolStripMenuItem.Text = "(No other groups available)";
+            // 
             // Tasual_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -368,6 +473,7 @@
             this.Tasual_MenuStrip.ResumeLayout(false);
             this.Tasual_MenuStrip.PerformLayout();
             this.Tasual_StatusLabel_MenuStrip.ResumeLayout(false);
+            this.Tasual_MenuStrip_Header.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -401,6 +507,18 @@
         private System.Windows.Forms.ImageList Tasual_TaskIcons;
         private System.Windows.Forms.Timer Tasual_Timer_ListViewClick;
         private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Sources;
+        private System.Windows.Forms.ContextMenuStrip Tasual_MenuStrip_Header;
+        private System.Windows.Forms.ToolStripMenuItem createToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem quickToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem advancedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem hideToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem moveTasksToolStripMenuItem;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBox2;
+        private System.Windows.Forms.ToolStripMenuItem noOtherGroupsAvailableToolStripMenuItem;
     }
 }
 

@@ -688,8 +688,21 @@ namespace Tasual
 
         private void Tasual_ListView_GroupHeaderClick(object sender, MouseEventArgs e)
         {
-            Tasual_StatusLabel_MenuStrip.Show(Cursor.Position.X, Cursor.Position.Y);
-            Console.WriteLine("Header: {0} - {1} - {2}", e.Clicks, e.Button, this.Name.ToString());
+            switch(e.Button)
+            {
+                case MouseButtons.Left:
+                    {
+                        Console.WriteLine("Header: {0} - {1} - {2}", e.Clicks, e.Button, this.Name.ToString());
+                        break;
+                    }
+
+                default:
+                case MouseButtons.Right:
+                    {
+                        Tasual_MenuStrip_Header.Show(Cursor.Position.X, Cursor.Position.Y);
+                        break;
+                    }
+            }
         }
 
 #if false
