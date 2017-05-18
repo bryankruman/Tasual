@@ -477,7 +477,7 @@ namespace Tasual
                     {
                         Item_S = new string[2];
                         Item_S[0] = Task.Description;
-                        Item_S[1] = DateTimeExtensions.ElapsedTime(Task.Time.Created.ToLocalTime());
+                        Item_S[1] = DateTimeExtensions.Tasual_ListView_FormatTime(Task.Time.Created.ToLocalTime(), DateTimeExtensions.TimeFormat.Elapsed);
                         break;
                     }
 
@@ -500,7 +500,7 @@ namespace Tasual
                         Item_S = new string[3];
                         Item_S[0] = Task.Description;
                         Item_S[1] = Task.Group.ToString();
-                        Item_S[2] = DateTimeExtensions.ElapsedTime(Task.Time.Created.ToLocalTime());
+                        Item_S[2] = DateTimeExtensions.Tasual_ListView_FormatTime(Task.Time.Created.ToLocalTime(), DateTimeExtensions.TimeFormat.Elapsed);
                         break;
                     }
 
@@ -1133,7 +1133,7 @@ namespace Tasual
 
         public static TaskItem.DayEnum FromDayToFlag(DayOfWeek Input)
         {
-            switch(Input)
+            switch (Input)
             {
                 case DayOfWeek.Monday: return TaskItem.DayEnum.Monday;
                 case DayOfWeek.Tuesday: return TaskItem.DayEnum.Tuesday;
@@ -1235,25 +1235,57 @@ namespace Tasual
 
             return NextTime;
         }
-        public static string ElapsedTime(DateTime dtEvent)
+
+        public enum TimeFormat
         {
-            TimeSpan TS = DateTime.Now - dtEvent;
-            int intYears = DateTime.Now.Year - dtEvent.Year;
-            int intMonths = DateTime.Now.Month - dtEvent.Month;
-            int intDays = DateTime.Now.Day - dtEvent.Day;
-            int intHours = DateTime.Now.Hour - dtEvent.Hour;
-            int intMinutes = DateTime.Now.Minute - dtEvent.Minute;
-            int intSeconds = DateTime.Now.Second - dtEvent.Second;
-            if (intYears > 0) return String.Format("{0} {1} ago", intYears, (intYears == 1) ? "year" : "years");
-            else if (intMonths > 0) return String.Format("{0} {1} ago", intMonths, (intMonths == 1) ? "month" : "months");
-            else if (intDays > 0) return String.Format("{0} {1} ago", intDays, (intDays == 1) ? "day" : "days");
-            else if (intHours > 0) return String.Format("{0} {1} ago", intHours, (intHours == 1) ? "hour" : "hours");
-            else if (intMinutes > 0) return String.Format("{0} {1} ago", intMinutes, (intMinutes == 1) ? "minute" : "minutes");
-            else if (intSeconds > 1) return String.Format("{0} {1} ago", intSeconds, (intSeconds == 1) ? "second" : "seconds");
-            else if (intSeconds >= 0) return "Just now";
-            else
+            Elapsed,
+            Due,
+            Short,
+            Long
+        }
+
+        public static string Tasual_ListView_FormatTime(DateTime Time, TimeFormat Format)
+        {
+            switch (Format)
             {
-                return String.Format("{0} {1}", dtEvent.ToShortDateString(), dtEvent.ToShortTimeString());
+                case TimeFormat.Elapsed:
+                    {
+                        TimeSpan TS = DateTime.Now - Time;
+                        int intYears = DateTime.Now.Year - Time.Year;
+                        int intMonths = DateTime.Now.Month - Time.Month;
+                        int intDays = DateTime.Now.Day - Time.Day;
+                        int intHours = DateTime.Now.Hour - Time.Hour;
+                        int intMinutes = DateTime.Now.Minute - Time.Minute;
+                        int intSeconds = DateTime.Now.Second - Time.Second;
+                        if (intYears > 0) return String.Format("{0} {1} ago", intYears, (intYears == 1) ? "year" : "years");
+                        else if (intMonths > 0) return String.Format("{0} {1} ago", intMonths, (intMonths == 1) ? "month" : "months");
+                        else if (intDays > 0) return String.Format("{0} {1} ago", intDays, (intDays == 1) ? "day" : "days");
+                        else if (intHours > 0) return String.Format("{0} {1} ago", intHours, (intHours == 1) ? "hour" : "hours");
+                        else if (intMinutes > 0) return String.Format("{0} {1} ago", intMinutes, (intMinutes == 1) ? "minute" : "minutes");
+                        else if (intSeconds > 1) return String.Format("{0} {1} ago", intSeconds, (intSeconds == 1) ? "second" : "seconds");
+                        else if (intSeconds >= 0) return "Just now";
+                        else
+                        {
+                            return String.Format("{0} {1}", Time.ToShortDateString(), Time.ToShortTimeString());
+                        }
+                    }
+
+                case TimeFormat.Due:
+                    {
+                        return "";
+                    }
+
+                case TimeFormat.Short:
+                    {
+                        return "";
+                    }
+
+                case TimeFormat.Long:
+                    {
+                        return "";
+                    }
+
+                default: return "";
             }
         }
     }
