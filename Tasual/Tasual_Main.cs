@@ -827,13 +827,20 @@ namespace Tasual
 
         private void Tasual_ListView_GroupHeaderClick(object sender, MouseEventArgs e)
         {
+            /* for now, lets just not worry about group header clicks... for now.
             switch(e.Button)
             {
                 case MouseButtons.Left:
                     {
                         //Tasual_ListView.FindNearestItem(SearchDirectionHint.Down, Cursor.Position.X, Cursor.Position.Y).Group.Name,
                         ListViewHitTestInfo Info = Tasual_ListView.HitTest(e.X, e.Y);
-                        Console.WriteLine("Header: {0} - {1} - {2}", Info.Item.Name, e.Button, this.Name.ToString());
+
+                        foreach (ListViewGroup Group in Tasual_ListView.Groups)
+                        {
+                            //Console.WriteLine("scanning through groups: {0}", Group.);
+                        }
+
+                        //Console.WriteLine("Header: {0} - {1} - {2}", Info.Item.Name, e.Button, this.Name.ToString());
                         break;
                     }
 
@@ -844,6 +851,7 @@ namespace Tasual
                         break;
                     }
             }
+            */
         }
 
 #if false
@@ -1057,7 +1065,7 @@ namespace Tasual
                         int value = SendMessage(Handle, LVM_HITTEST, -1, ref ht);
                         if ((value != -1) && ((ht.flags & LVHT_EX_GROUP_HEADER) != 0))
                         {
-                            Console.WriteLine("LVHITTESTINFO: {0} {1} {2} {3}", ht.flags, ht.iItem, ht.iSubItem, ht.iGroup);
+                            //Console.WriteLine("LVHITTESTINFO: {0} {1} {2} {3}", ht.flags, ht.iItem, ht.iSubItem, ht.iGroup);
                             TasualListView.OnGroupHeaderClick(new MouseEventArgs(Control.MouseButtons, ht.iGroup, 0, 0, 0));
                         }
                         else
