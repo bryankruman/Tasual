@@ -31,6 +31,11 @@ namespace Tasual
         ListViewHitTestInfo Tasual_ListView_FirstClickInfo = null;
         bool Tasual_ListView_PreviouslySelected = false;
 
+        [Flags] public enum TimeRules
+        {
+
+        }
+
         public enum StyleEnum
         {
             Custom,
@@ -198,10 +203,17 @@ namespace Tasual
 						Line = Line + (char)29 + Task.Status.ToString();
 						Line = Line + (char)29 + Task.Group;
 						Line = Line + (char)29 + Task.Description;
-						Line = Line + (char)29 + Task.Time.Created.ToString();
-						Line = Line + (char)29 + Task.Time.Ending.ToString();
-						Line = Line + (char)29 + Task.Time.Next.ToString();
-						OutputFile.WriteLine(Line);
+
+                        DateTimeOffset TimeOffset;
+                        TimeOffset = new DateTimeOffset(Task.Time.Created.ToLocalTime());
+						Line = Line + (char)29 + TimeOffset.ToUnixTimeSeconds();
+
+                        TimeOffset = new DateTimeOffset(Task.Time.Ending.ToLocalTime());
+                        Line = Line + (char)29 + TimeOffset.ToUnixTimeSeconds();
+
+                        TimeOffset = new DateTimeOffset(Task.Time.Next.ToLocalTime());
+                        Line = Line + (char)29 + TimeOffset.ToUnixTimeSeconds();
+                        OutputFile.WriteLine(Line);
 					}
 				}
 			}
@@ -227,8 +239,9 @@ namespace Tasual
 						TaskItem NewItem = new TaskItem();
 						int argtype = 0;
 						string[] segments = Line.Split((char)29);
+                        double UnixTime;
 
-						foreach (string token in segments)
+                        foreach (string token in segments)
 						{
 							// lets do something with this data now
 							switch (argtype)
@@ -238,9 +251,24 @@ namespace Tasual
 								case (int)ArgEnum.Status:       { Int32.TryParse(token, out NewItem.Status); break; }
 								case (int)ArgEnum.Group:        { NewItem.Group = token; break; }
 								case (int)ArgEnum.Description:  { NewItem.Description = token; break; }
-								case (int)ArgEnum.Created:        { Double.TryParse(token, out NewItem.Time.Created); break; }
-								case (int)ArgEnum.Ending:          { Double.TryParse(token, out NewItem.Time.Ending); break; }
-								case (int)ArgEnum.Next:         { Double.TryParse(token, out NewItem.Time.Next); break; }
+								case (int)ArgEnum.Created:
+                                    {
+                                        Double.TryParse(token, out UnixTime);
+                                        NewItem.Time.Created = DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
+                                        break;
+                                    }
+								case (int)ArgEnum.Ending:
+                                    {
+                                        Double.TryParse(token, out UnixTime);
+                                        NewItem.Time.Ending = DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
+                                        break;
+                                    }
+								case (int)ArgEnum.Next:
+                                    {
+                                        Double.TryParse(token, out UnixTime);
+                                        NewItem.Time.Next = DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
+                                        break;
+                                    }
 								default:
 									{
 										Console.WriteLine("TOO MANY ARGUMENTS IN FILE !!!!!!");
@@ -449,8 +477,7 @@ namespace Tasual
                     {
                         Item_S = new string[2];
                         Item_S[0] = Task.Description;
-                        DateTime CreationTime = DateTimeOffset.FromUnixTimeSeconds((long)Task.Time.Created).DateTime.ToLocalTime();
-                        Item_S[1] = DateTimeExtensions.ElapsedTime(CreationTime);
+                        Item_S[1] = DateTimeExtensions.ElapsedTime(Task.Time.Created.ToLocalTime());
                         break;
                     }
 
@@ -473,8 +500,7 @@ namespace Tasual
                         Item_S = new string[3];
                         Item_S[0] = Task.Description;
                         Item_S[1] = Task.Group.ToString();
-                        DateTime CreationTime = DateTimeOffset.FromUnixTimeSeconds((long)Task.Time.Created).DateTime.ToLocalTime();
-                        Item_S[2] = DateTimeExtensions.ElapsedTime(CreationTime);
+                        Item_S[2] = DateTimeExtensions.ElapsedTime(Task.Time.Created.ToLocalTime());
                         break;
                     }
 
@@ -548,10 +574,9 @@ namespace Tasual
                         Stub.Group = "Testing";
                         Stub.Description = "This item has been hidden";
                         TaskItem.TaskTime Time = new TaskItem.TaskTime();
-                        var CurrentTimeOffset = new DateTimeOffset(DateTime.Now.ToLocalTime());
-                        Time.Created = CurrentTimeOffset.ToUnixTimeSeconds();
-                        Time.Ending = 2;
-                        Time.Next = 3;
+                        Time.Created = DateTime.Now.ToLocalTime();
+                        //Time.Ending = 2;
+                        //Time.Next = 3;
                         Stub.Time = Time;
                         Tasual_ListView_CreateListViewItem(ref Stub);
                     }
@@ -582,10 +607,10 @@ namespace Tasual
         private void Tasual_MenuStrip_Create_Quick_Click(object sender, EventArgs e)
         {
             TaskItem.TaskTime Time = new TaskItem.TaskTime();
-            var CurrentTimeOffset = new DateTimeOffset(DateTime.Now.ToLocalTime());
-            Time.Created = CurrentTimeOffset.ToUnixTimeSeconds();
-            Time.Ending = 2;
-            Time.Next = 3;
+            //var CurrentTimeOffset = new DateTimeOffset(DateTime.Now.ToLocalTime());
+            Time.Created = DateTime.Now.ToLocalTime(); //CurrentTimeOffset.ToUnixTimeSeconds();
+            //Time.Ending = 2;
+            //Time.Next = 3;
             Tasual_Array_CreateTask(ref TaskArray, 0, 0, 0, "Testing", "New task", Time, true);
         }
 
@@ -825,8 +850,34 @@ namespace Tasual
             }
         }
 
+        public void TestFindNextDateFromRules()
+        {
+            DateTime NextTime = new DateTime();
+            NextTime = DateTime.Now;
+
+            TaskItem.TaskTime Rules = new TaskItem.TaskTime();
+            //Rules.MonthCast = 0;
+            //Rules.WeekCast = 4;
+            Rules.YearCast = 0;
+
+            Rules.TimeOfDay = new TimeSpan(20, 30, 15);
+            Rules.DayCast = TaskItem.DayEnum.Everyday;
+            //Rules.WeekCast = TaskItem.WeekEnum.Everyweek;
+            //Rules.MonthCast = TaskItem.MonthEnum.Everymonth;
+
+            // TODO check whether nexttime is AFTER endtime
+
+            //NextTime = DateTimeExtensions.FindNextDateFromRules(NextTime, Rules);
+            Console.WriteLine("STARTING: {0}", DateTime.Now);
+            for (int i = 0; i < 30; ++i)
+            {
+                Console.WriteLine("Next {0}", NextTime = DateTimeExtensions.FindNextDateFromRules(NextTime, Rules));
+            }
+        }
+
         private void Tasual_ListView_GroupHeaderClick(object sender, MouseEventArgs e)
         {
+            TestFindNextDateFromRules();
             /* for now, lets just not worry about group header clicks... for now.
             switch(e.Button)
             {
@@ -971,22 +1022,71 @@ namespace Tasual
 
     public class TaskItem
 	{
-		public struct TaskTime
+        public struct TaskTime
 		{
-			public double Created;
-			public double Ending;
-			public double Next;
-		}
+            // for all tasks
+			public DateTime Created;
+			public DateTime Ending;
+			public DateTime Next;
 
-		public int Type;
+            // for recurring tasks
+            public TimeSpan TimeOfDay;
+            public int YearCast;
+            public MonthEnum MonthCast;
+            public WeekEnum WeekCast;
+            public DayEnum DayCast;
+            public int Iterations;
+        }
+
+        [Flags]
+        public enum MonthEnum
+        {
+            January = 1,
+            February = 2,
+            March = 4,
+            April = 8,
+            May = 16,
+            June = 32,
+            July = 64,
+            August = 128,
+            September = 256,
+            October = 512,
+            November = 1024,
+            December = 2048,
+            Everymonth = 4095
+        }
+
+        [Flags]
+        public enum WeekEnum
+        {
+            First = 1,
+            Second = 2,
+            Third = 4,
+            Fourth = 8,
+            Fifth = 16,
+            Last = 32,
+            Everyweek = 31
+        }
+
+        [Flags]
+        public enum DayEnum
+        {
+            Monday = 1,
+            Tuesday = 2,
+            Wednesday = 4,
+            Thursday = 8,
+            Friday = 16,
+            Saturday = 32,
+            Sunday = 64,
+            Everyday = 127
+        }
+
+        public int Type;
 		public int Priority;
 		public int Status;
 		public string Group;
 		public string Description;
 		public TaskTime Time;
-
-        //public ListViewGroup GroupTag;
-
 
 		// constructors
 		//taskitem_c();
@@ -998,6 +1098,143 @@ namespace Tasual
 
     public static class DateTimeExtensions
     {
+        public static TaskItem.MonthEnum FromMonthToFlag(int Input)
+        {
+            switch (Input)
+            {
+                case 1: return TaskItem.MonthEnum.January;
+                case 2: return TaskItem.MonthEnum.February;
+                case 3: return TaskItem.MonthEnum.March;
+                case 4: return TaskItem.MonthEnum.April;
+                case 5: return TaskItem.MonthEnum.May;
+                case 6: return TaskItem.MonthEnum.June;
+                case 7: return TaskItem.MonthEnum.July;
+                case 8: return TaskItem.MonthEnum.August;
+                case 9: return TaskItem.MonthEnum.September;
+                case 10: return TaskItem.MonthEnum.October;
+                case 11: return TaskItem.MonthEnum.November;
+                case 12: return TaskItem.MonthEnum.December;
+                default: return 0;
+            }
+        }
+
+        public static TaskItem.WeekEnum FromWeekToFlag(int Input)
+        {
+            switch (Math.Ceiling((double)Input / 7))
+            {
+                case 1: return TaskItem.WeekEnum.First;
+                case 2: return TaskItem.WeekEnum.Second;
+                case 3: return TaskItem.WeekEnum.Third;
+                case 4: return TaskItem.WeekEnum.Fourth;
+                case 5: return TaskItem.WeekEnum.Fifth;
+                default: return 0;
+            }
+        }
+
+        public static TaskItem.DayEnum FromDayToFlag(DayOfWeek Input)
+        {
+            switch(Input)
+            {
+                case DayOfWeek.Monday: return TaskItem.DayEnum.Monday;
+                case DayOfWeek.Tuesday: return TaskItem.DayEnum.Tuesday;
+                case DayOfWeek.Wednesday: return TaskItem.DayEnum.Wednesday;
+                case DayOfWeek.Thursday: return TaskItem.DayEnum.Thursday;
+                case DayOfWeek.Friday: return TaskItem.DayEnum.Friday;
+                case DayOfWeek.Saturday: return TaskItem.DayEnum.Saturday;
+                case DayOfWeek.Sunday: return TaskItem.DayEnum.Sunday;
+                default: return 0;
+            }
+        }
+
+        public static DateTime FindNextDateFromRules(DateTime BaseTime, TaskItem.TaskTime Rules)
+        {
+            DateTime NextTime = new DateTime();
+            NextTime = BaseTime;
+
+            NextTime = NextTime - NextTime.TimeOfDay;
+            NextTime = NextTime + Rules.TimeOfDay;
+
+            NextTime = NextTime.AddYears(Rules.YearCast);
+
+            // handle things differently when trying to find the last week of every month
+            if ((Rules.WeekCast & TaskItem.WeekEnum.Last) != 0)
+            {
+                for (int i = 0; i < 12; ++i)
+                {
+                    if ((Rules.MonthCast & FromMonthToFlag(NextTime.Month)) != 0)
+                    {
+                        NextTime = NextTime.AddDays(DateTime.DaysInMonth(NextTime.Year, NextTime.Month) - NextTime.Day);
+
+                        if (NextTime > BaseTime)
+                        {
+                            for (int x = 0; x < 7; ++x)
+                            {
+                                if ((Rules.DayCast & FromDayToFlag(NextTime.DayOfWeek)) != 0)
+                                {
+                                    if (NextTime > BaseTime)
+                                    {
+                                        return NextTime;
+                                    }
+                                }
+                                NextTime = NextTime.AddDays(-1);
+                            }
+                        }
+                    }
+                    NextTime = NextTime.AddMonths(1);
+                }
+            }
+            else // otherwise, follow the filters normally
+            {
+                // find specific month
+                if (Rules.MonthCast != 0)
+                {
+                    for (int i = 0; i < 12; ++i)
+                    {
+                        if ((Rules.MonthCast & FromMonthToFlag(NextTime.Month)) != 0)
+                        {
+                            if (NextTime > BaseTime)
+                            {
+                                break;
+                            }
+                        }
+                        NextTime = NextTime.AddMonths(1);
+                        NextTime = NextTime.AddDays(1 - NextTime.Day);
+                    }
+                }
+
+                // find specific week 
+                if (Rules.WeekCast != 0)
+                {
+                    for (int i = 0; i < 5; ++i)
+                    {
+                        if ((Rules.WeekCast & FromWeekToFlag(NextTime.Day)) != 0)
+                        {
+                            if (NextTime > BaseTime)
+                            {
+                                break;
+                            }
+                        }
+
+                        NextTime = NextTime.AddDays(7);
+                    }
+                }
+
+                // find specific day
+                for (int i = 0; i < 7; ++i)
+                {
+                    if ((Rules.DayCast & FromDayToFlag(NextTime.DayOfWeek)) != 0)
+                    {
+                        if (NextTime > BaseTime)
+                        {
+                            break;
+                        }
+                    }
+                    NextTime = NextTime.AddDays(1);
+                }
+            }
+
+            return NextTime;
+        }
         public static string ElapsedTime(DateTime dtEvent)
         {
             TimeSpan TS = DateTime.Now - dtEvent;
