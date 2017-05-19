@@ -20,7 +20,7 @@ namespace Tasual
         //  Declarations
         // ==============
 
-        public List<TaskItem> TaskArray = new List<TaskItem>();
+        public List<Task> TaskArray = new List<Task>();
         public List<string> HiddenGroups = new List<string>();
         public List<string> HiddenGroupHasStub = new List<string>();
 
@@ -96,7 +96,7 @@ namespace Tasual
         //  Misc/Supporting Functions
         // ===========================
 
-        public void Tasual_PrintTaskToConsole(TaskItem TaskItem)
+        public void Tasual_PrintTaskToConsole(Task TaskItem)
         {
             Console.WriteLine(
                 "TaskItem: '{0}', '{1}', '{2}', '{3}', '{4}', ('{5}', '{6}', '{7}')",
@@ -116,7 +116,7 @@ namespace Tasual
             int Complete = 0;
             int Total = 0;
 
-            foreach (TaskItem Task in TaskArray)
+            foreach (Task Task in TaskArray)
             {
                 if (Task == null) { break; }
 
@@ -139,9 +139,16 @@ namespace Tasual
         //  Array Functions
         // =================
 
+        public void Tasual_Array_DeleteTask(ref List<Task> Array, ref Task Task)
+        {
+            Array.Remove(Task);
+            Tasual_Array_Save_Text(ref Array);
+            Tasual_ListView_PopulateFromArray(ref TaskArray); // TODO: Stop repopulating from array all the time
+        }
+
         private void Tasual_Array_ReAssignGroup(string OldTaskGroup, string NewTaskGroup)
         {
-            foreach (TaskItem Task in TaskArray)
+            foreach (Task Task in TaskArray)
             {
                 if (Task == null) { break; }
                 if (Task.Group == OldTaskGroup)
@@ -152,16 +159,16 @@ namespace Tasual
         }
 
         public void Tasual_Array_CreateTask(
-            ref List<TaskItem> Array,
+            ref List<Task> Array,
             int Type,
             int Priority,
             int Status,
             string Group,
             string Description,
-            TaskItem.TaskTime Time,
+            Task.TimeInfo Time,
             bool Edit)
         {
-            TaskItem NewTask = new TaskItem();
+            Task NewTask = new Task();
 
             NewTask.Type = Type;
             NewTask.Priority = Priority;
@@ -192,13 +199,13 @@ namespace Tasual
             }
         }
 
-        public void Tasual_Array_Save_Text(ref List<TaskItem> Array)
+        public void Tasual_Array_Save_Text(ref List<Task> Array)
         {
             try
             {
                 using (StreamWriter OutputFile = new StreamWriter(Tasual_Setting_TextFile))
                 {
-                    foreach (TaskItem Task in Array)
+                    foreach (Task Task in Array)
                     {
                         string Line;
                         Line = Task.Type.ToString();
@@ -226,7 +233,7 @@ namespace Tasual
             }
         }
 
-        public void Tasual_Array_Load_Text(ref List<TaskItem> Array)
+        public void Tasual_Array_Load_Text(ref List<Task> Array)
         {
             try
             {
@@ -239,7 +246,7 @@ namespace Tasual
 
                     while ((Line = InputFile.ReadLine()) != null)
                     {
-                        TaskItem NewItem = new TaskItem();
+                        Task NewItem = new Task();
                         int argtype = 0;
                         string[] segments = Line.Split((char)29);
                         double UnixTime;
@@ -410,7 +417,7 @@ namespace Tasual
 
         private void Tasual_ListView_ChangeStatus(ref ListViewItem Item, int Status)
         {
-            TaskItem Task = (TaskItem)Item.Tag;
+            Task Task = (Task)Item.Tag;
 
             switch (Status)
             {
@@ -511,7 +518,7 @@ namespace Tasual
             }
         }
 
-        public ListViewItem Tasual_ListView_CreateListViewItem(ref TaskItem Task)
+        public ListViewItem Tasual_ListView_CreateListViewItem(ref Task Task)
         {
             string[] Item_S;
 
@@ -568,7 +575,7 @@ namespace Tasual
             return Item;
         }
 
-        public void Tasual_ListView_PopulateFromArray(ref List<TaskItem> TaskArray)
+        public void Tasual_ListView_PopulateFromArray(ref List<Task> TaskArray)
         {
             Tasual_ListView_ClearAll();
 
@@ -603,7 +610,7 @@ namespace Tasual
                     }
             }
 
-            foreach (TaskItem Task in TaskArray)
+            foreach (Task Task in TaskArray)
             {
                 if (Task == null) { break; }
 
@@ -617,11 +624,11 @@ namespace Tasual
                         // create "stub" which sits underneath a hidden group name and states how many items are in it/that they're hidden
                         // we want to make a fake task as we don't want it to actually go into the array
                         // only needs: Description, Time, Group and Status
-                        TaskItem Stub = new TaskItem();
+                        Task Stub = new Task();
                         Stub.Status = (int)StatusEnum.New;
                         Stub.Group = "Testing";
                         Stub.Description = "This item has been hidden";
-                        TaskItem.TaskTime Time = new TaskItem.TaskTime();
+                        Task.TimeInfo Time = new Task.TimeInfo();
                         Time.Started = DateTime.Now.ToLocalTime();
                         //Time.Ending = 2;
                         //Time.Next = 3;
@@ -631,7 +638,7 @@ namespace Tasual
                 }
                 else
                 {
-                    TaskItem Referral = Task;
+                    Task Referral = Task;
                     Tasual_ListView_CreateListViewItem(ref Referral);
                 }
             }
@@ -654,7 +661,7 @@ namespace Tasual
 
         private void Tasual_MenuStrip_Create_Quick_Click(object sender, EventArgs e)
         {
-            TaskItem.TaskTime Time = new TaskItem.TaskTime();
+            Task.TimeInfo Time = new Task.TimeInfo();
             //var CurrentTimeOffset = new DateTimeOffset(DateTime.Now.ToLocalTime());
             Time.Started = DateTime.Now.ToLocalTime(); //CurrentTimeOffset.ToUnixTimeSeconds();
             //Time.Ending = 2;
@@ -732,7 +739,7 @@ namespace Tasual
 
                 this.BeginInvoke((MethodInvoker)delegate
                 {
-                    TaskItem Task = (TaskItem)Item.Tag;
+                    Task Task = (Task)Item.Tag;
                     if ((Task != null) && (Item != null))
                     {
                         Task.Description = Item.Text.ToString();
@@ -957,14 +964,14 @@ namespace Tasual
             Tasual_ListView.Items.Cast<ListViewItem>()
                 .ToList().ForEach(Item =>
                 {
-                    TaskItem Task = (TaskItem)Item.Tag;
+                    Task Task = (Task)Item.Tag;
                     Item.BackColor = Tasual_ListView_BackColor(Task.Status, false);
                     Item.ForeColor = Tasual_ListView_ForeColor(Task.Status, false);
                 });
             Tasual_ListView.SelectedItems.Cast<ListViewItem>()
                 .ToList().ForEach(Item =>
                 {
-                    TaskItem Task = (TaskItem)Item.Tag;
+                    Task Task = (Task)Item.Tag;
                     Item.BackColor = Tasual_ListView_BackColor(Task.Status, true);
                     Item.ForeColor = Tasual_ListView_ForeColor(Task.Status, true);
                 });
@@ -1048,9 +1055,9 @@ namespace Tasual
         }
     }
 
-    public class TaskItem
+    public class Task
     {
-        public struct TaskTime
+        public struct TimeInfo
         {
             // for all tasks
             public DateTime Started;
@@ -1119,7 +1126,7 @@ namespace Tasual
             Everyday = 127
         }
 
-        public static MonthEnum FromMonthToFlag(int Input)
+        private static MonthEnum FromMonthToFlag(int Input)
         {
             switch (Input)
             {
@@ -1139,7 +1146,7 @@ namespace Tasual
             }
         }
 
-        public static WeekEnum FromWeekToFlag(int Input)
+        private static WeekEnum FromWeekToFlag(int Input)
         {
             switch (Math.Ceiling((double)Input / 7))
             {
@@ -1152,7 +1159,7 @@ namespace Tasual
             }
         }
 
-        public static DayEnum FromDayToFlag(DayOfWeek Input)
+        private static DayEnum FromDayToFlag(DayOfWeek Input)
         {
             switch (Input)
             {
@@ -1167,7 +1174,7 @@ namespace Tasual
             }
         }
 
-        public static DateTime FindNextIteration(DateTime BaseTime, ref TaskTime Rules)
+        public static DateTime FindNextIteration(DateTime BaseTime, ref TimeInfo Rules)
         {
             DateTime NextTime = new DateTime();
             NextTime = BaseTime;
@@ -1267,7 +1274,7 @@ namespace Tasual
         public int Status;
         public string Group;
         public string Description;
-        public TaskTime Time;
+        public TimeInfo Time;
 
         // constructors
         //taskitem_c();
