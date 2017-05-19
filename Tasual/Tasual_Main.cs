@@ -31,9 +31,12 @@ namespace Tasual
         ListViewHitTestInfo Tasual_ListView_FirstClickInfo = null;
         bool Tasual_ListView_PreviouslySelected = false;
 
-        [Flags] public enum TimeRules
+        public enum TimeFormat
         {
-
+            Elapsed,
+            Due,
+            Short,
+            Long
         }
 
         public enum StyleEnum
@@ -300,6 +303,51 @@ namespace Tasual
         //  ListView Functions
         // ====================
 
+        public string Tasual_ListView_FormatTime(DateTime Time, TimeFormat Format)
+        {
+            switch (Format)
+            {
+                case TimeFormat.Elapsed:
+                    {
+                        TimeSpan TS = DateTime.Now - Time;
+                        int intYears = DateTime.Now.Year - Time.Year;
+                        int intMonths = DateTime.Now.Month - Time.Month;
+                        int intDays = DateTime.Now.Day - Time.Day;
+                        int intHours = DateTime.Now.Hour - Time.Hour;
+                        int intMinutes = DateTime.Now.Minute - Time.Minute;
+                        int intSeconds = DateTime.Now.Second - Time.Second;
+                        if (intYears > 0) return String.Format("{0} {1} ago", intYears, (intYears == 1) ? "year" : "years");
+                        else if (intMonths > 0) return String.Format("{0} {1} ago", intMonths, (intMonths == 1) ? "month" : "months");
+                        else if (intDays > 0) return String.Format("{0} {1} ago", intDays, (intDays == 1) ? "day" : "days");
+                        else if (intHours > 0) return String.Format("{0} {1} ago", intHours, (intHours == 1) ? "hour" : "hours");
+                        else if (intMinutes > 0) return String.Format("{0} {1} ago", intMinutes, (intMinutes == 1) ? "minute" : "minutes");
+                        else if (intSeconds > 1) return String.Format("{0} {1} ago", intSeconds, (intSeconds == 1) ? "second" : "seconds");
+                        else if (intSeconds >= 0) return "Just now";
+                        else
+                        {
+                            return String.Format("{0} {1}", Time.ToShortDateString(), Time.ToShortTimeString());
+                        }
+                    }
+
+                case TimeFormat.Due:
+                    {
+                        return "";
+                    }
+
+                case TimeFormat.Short:
+                    {
+                        return "";
+                    }
+
+                case TimeFormat.Long:
+                    {
+                        return "";
+                    }
+
+                default: return "";
+            }
+        }
+
         private Color Tasual_ListView_ForeColor(int Status, bool Selected)
         {
             switch (Status)
@@ -477,7 +525,7 @@ namespace Tasual
                     {
                         Item_S = new string[2];
                         Item_S[0] = Task.Description;
-                        Item_S[1] = DateTimeExtensions.Tasual_ListView_FormatTime(Task.Time.Started.ToLocalTime(), DateTimeExtensions.TimeFormat.Elapsed);
+                        Item_S[1] = Tasual_ListView_FormatTime(Task.Time.Started.ToLocalTime(), TimeFormat.Elapsed);
                         break;
                     }
 
@@ -500,7 +548,7 @@ namespace Tasual
                         Item_S = new string[3];
                         Item_S[0] = Task.Description;
                         Item_S[1] = Task.Group.ToString();
-                        Item_S[2] = DateTimeExtensions.Tasual_ListView_FormatTime(Task.Time.Started.ToLocalTime(), DateTimeExtensions.TimeFormat.Elapsed);
+                        Item_S[2] = Tasual_ListView_FormatTime(Task.Time.Started.ToLocalTime(), TimeFormat.Elapsed);
                         break;
                     }
 
@@ -850,34 +898,8 @@ namespace Tasual
             }
         }
 
-        public void TestFindNextDateFromRules()
-        {
-            DateTime NextTime = new DateTime();
-            NextTime = DateTime.Now;
-
-            TaskItem.TaskTime Rules = new TaskItem.TaskTime();
-
-            //Rules.TimeOfDay = new TimeSpan(20, 30, 15);
-            //Rules.SpecificDay = 31;
-            //Rules.DayFilter = TaskItem.DayEnum.Everyday;
-            //Rules.WeekFilter = TaskItem.WeekEnum.Fifth;
-            //Rules.MonthFilter = TaskItem.MonthEnum.Everymonth;
-            //Rules.Started = DateTime.Now;
-            //Rules.SpecificDay = 2;
-
-            // TODO check whether nexttime is AFTER endtime
-
-            //NextTime = DateTimeExtensions.FindNextDateFromRules(NextTime, Rules);
-            Console.WriteLine("STARTING: {0}", DateTime.Now);
-            for (int i = 0; i < 300; ++i)
-            {
-                Console.WriteLine("Next {0}", NextTime = DateTimeExtensions.FindNextDateFromRules(NextTime, ref Rules));
-            }
-        }
-
         private void Tasual_ListView_GroupHeaderClick(object sender, MouseEventArgs e)
         {
-            TestFindNextDateFromRules();
             /* for now, lets just not worry about group header clicks... for now.
             switch(e.Button)
             {
@@ -1145,24 +1167,7 @@ namespace Tasual
             }
         }
 
-        public int Type;
-        public int Priority;
-        public int Status;
-        public string Group;
-        public string Description;
-        public TaskTime Time;
-
-        // constructors
-        //taskitem_c();
-        //taskitem_c(int, int, int, int, string, xyztime);
-
-        // deconstructor
-        //~taskitem_c();
-    }
-
-    public static class DateTimeExtensions
-    {
-        public static DateTime FindNextDateFromRules(DateTime BaseTime, ref TaskItem.TaskTime Rules)
+        public static DateTime FindNextIteration(DateTime BaseTime, ref TaskTime Rules)
         {
             DateTime NextTime = new DateTime();
             NextTime = BaseTime;
@@ -1193,17 +1198,17 @@ namespace Tasual
 
             // COMPLEX RECURRANCE: SPECIAL CASE: Last week of the month
             // Scope through and select the last week, then find the applicable day for that week
-            else if ((Rules.WeekFilter & TaskItem.WeekEnum.Last) != 0)
+            else if ((Rules.WeekFilter & WeekEnum.Last) != 0)
             {
                 for (int i = 1; i <= 12; ++i)
                 {
-                    if ((Rules.MonthFilter & TaskItem.FromMonthToFlag(NextTime.Month)) != 0)
+                    if ((Rules.MonthFilter & FromMonthToFlag(NextTime.Month)) != 0)
                     {
                         NextTime = NextTime.AddDays(DateTime.DaysInMonth(NextTime.Year, NextTime.Month) - 7);
 
                         for (int x = 1; x <= 7; ++x)
                         {
-                            if ((Rules.DayFilter & TaskItem.FromDayToFlag(NextTime.DayOfWeek)) != 0)
+                            if ((Rules.DayFilter & FromDayToFlag(NextTime.DayOfWeek)) != 0)
                             {
                                 if (NextTime > BaseTime)
                                 {
@@ -1225,11 +1230,11 @@ namespace Tasual
             {
                 for (int hops = 1; hops <= 3650; ++hops) // maximum search of 10 years
                 {
-                    if ((Rules.MonthFilter & TaskItem.FromMonthToFlag(NextTime.Month)) != 0)
+                    if ((Rules.MonthFilter & FromMonthToFlag(NextTime.Month)) != 0)
                     {
-                        if ((Rules.WeekFilter & TaskItem.FromWeekToFlag(NextTime.Day)) != 0)
+                        if ((Rules.WeekFilter & FromWeekToFlag(NextTime.Day)) != 0)
                         {
-                            if ((Rules.DayFilter & TaskItem.FromDayToFlag(NextTime.DayOfWeek)) != 0)
+                            if ((Rules.DayFilter & FromDayToFlag(NextTime.DayOfWeek)) != 0)
                             {
                                 if (NextTime > BaseTime)
                                 {
@@ -1257,60 +1262,21 @@ namespace Tasual
             return new DateTime(1970, 1, 1);
         }
 
-        public enum TimeFormat
-        {
-            Elapsed,
-            Due,
-            Short,
-            Long
-        }
+        public int Type;
+        public int Priority;
+        public int Status;
+        public string Group;
+        public string Description;
+        public TaskTime Time;
 
-        public static string Tasual_ListView_FormatTime(DateTime Time, TimeFormat Format)
-        {
-            switch (Format)
-            {
-                case TimeFormat.Elapsed:
-                    {
-                        TimeSpan TS = DateTime.Now - Time;
-                        int intYears = DateTime.Now.Year - Time.Year;
-                        int intMonths = DateTime.Now.Month - Time.Month;
-                        int intDays = DateTime.Now.Day - Time.Day;
-                        int intHours = DateTime.Now.Hour - Time.Hour;
-                        int intMinutes = DateTime.Now.Minute - Time.Minute;
-                        int intSeconds = DateTime.Now.Second - Time.Second;
-                        if (intYears > 0) return String.Format("{0} {1} ago", intYears, (intYears == 1) ? "year" : "years");
-                        else if (intMonths > 0) return String.Format("{0} {1} ago", intMonths, (intMonths == 1) ? "month" : "months");
-                        else if (intDays > 0) return String.Format("{0} {1} ago", intDays, (intDays == 1) ? "day" : "days");
-                        else if (intHours > 0) return String.Format("{0} {1} ago", intHours, (intHours == 1) ? "hour" : "hours");
-                        else if (intMinutes > 0) return String.Format("{0} {1} ago", intMinutes, (intMinutes == 1) ? "minute" : "minutes");
-                        else if (intSeconds > 1) return String.Format("{0} {1} ago", intSeconds, (intSeconds == 1) ? "second" : "seconds");
-                        else if (intSeconds >= 0) return "Just now";
-                        else
-                        {
-                            return String.Format("{0} {1}", Time.ToShortDateString(), Time.ToShortTimeString());
-                        }
-                    }
+        // constructors
+        //taskitem_c();
+        //taskitem_c(int, int, int, int, string, xyztime);
 
-                case TimeFormat.Due:
-                    {
-                        return "";
-                    }
-
-                case TimeFormat.Short:
-                    {
-                        return "";
-                    }
-
-                case TimeFormat.Long:
-                    {
-                        return "";
-                    }
-
-                default: return "";
-            }
-        }
+        // deconstructor
+        //~taskitem_c();
     }
-
+    
     public static class ControlExtensions
     {
         public static void DoubleBuffered(this Control Item, bool Enable)
