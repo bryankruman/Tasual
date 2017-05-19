@@ -858,12 +858,13 @@ namespace Tasual
             TaskItem.TaskTime Rules = new TaskItem.TaskTime();
             //Rules.MonthCast = 0;
             //Rules.WeekCast = 4;
-            Rules.YearCast = 0;
+            //Rules.YearCast = 1;
 
             Rules.TimeOfDay = new TimeSpan(20, 30, 15);
-            Rules.DayCast = TaskItem.DayEnum.Everyday;
-            //Rules.WeekCast = TaskItem.WeekEnum.Everyweek;
-            //Rules.MonthCast = TaskItem.MonthEnum.Everymonth;
+            //Rules.SpecificDay = 19;
+            Rules.DayFilter = TaskItem.DayEnum.Everyday;
+            Rules.WeekFilter = TaskItem.WeekEnum.Fifth;
+            Rules.MonthFilter = TaskItem.MonthEnum.Everymonth;
 
             // TODO check whether nexttime is AFTER endtime
 
@@ -1030,12 +1031,17 @@ namespace Tasual
 			public DateTime Next;
 
             // for recurring tasks
+            // simple recurring tasks
+
+            // complex recurring tasks
             public TimeSpan TimeOfDay;
-            public int YearCast;
-            public MonthEnum MonthCast;
-            public WeekEnum WeekCast;
-            public DayEnum DayCast;
+            //public int YearCast;
+            public MonthEnum MonthFilter;
+            public WeekEnum WeekFilter;
+            public DayEnum DayFilter;
+            public int Yearly;
             public int Iterations;
+            public int SpecificDay;
         }
 
         [Flags]
@@ -1150,26 +1156,54 @@ namespace Tasual
         {
             DateTime NextTime = new DateTime();
             NextTime = BaseTime;
-
+            
+            // set hours/minutes/seconds
             NextTime = NextTime - NextTime.TimeOfDay;
             NextTime = NextTime + Rules.TimeOfDay;
 
-            NextTime = NextTime.AddYears(Rules.YearCast);
+            // set year
+            //NextTime = NextTime.AddYears(Rules.YearCast);
 
-            // handle things differently when trying to find the last week of every month
-            if ((Rules.WeekCast & TaskItem.WeekEnum.Last) != 0)
+            // SPECIAL CASE: Searching for a specific day every year
+            //if ((Rules.Yearly != 0) && (Rules.SpecificDay != 0))
+            //{
+            //}
+
+            // SPECIAL CASE: Searching for a specific day out of the month
+            if (Rules.SpecificDay != 0)
             {
                 for (int i = 0; i < 12; ++i)
                 {
-                    if ((Rules.MonthCast & FromMonthToFlag(NextTime.Month)) != 0)
+                    if ((Rules.MonthFilter & FromMonthToFlag(NextTime.Month)) != 0)
+                    {
+                        NextTime = NextTime.AddDays(Rules.SpecificDay - NextTime.Day);
+
+                        if (NextTime > BaseTime)
+                        {
+                            return NextTime;
+                        }
+                    }
+                    NextTime = NextTime.AddMonths(1);
+                }
+            }
+
+            // SPECIAL CASE: Last week of the month
+            // Scope through and select the last week, then find the applicable day for that week
+            else if ((Rules.WeekFilter & TaskItem.WeekEnum.Last) != 0)
+            {
+                for (int i = 0; i < 12; ++i)
+                {
+                    if ((Rules.MonthFilter & FromMonthToFlag(NextTime.Month)) != 0)
                     {
                         NextTime = NextTime.AddDays(DateTime.DaysInMonth(NextTime.Year, NextTime.Month) - NextTime.Day);
+
+                        // TODO: Doesn't this actually need to count forwards? Subtract the total days from 7
 
                         if (NextTime > BaseTime)
                         {
                             for (int x = 0; x < 7; ++x)
                             {
-                                if ((Rules.DayCast & FromDayToFlag(NextTime.DayOfWeek)) != 0)
+                                if ((Rules.DayFilter & FromDayToFlag(NextTime.DayOfWeek)) != 0)
                                 {
                                     if (NextTime > BaseTime)
                                     {
@@ -1183,17 +1217,20 @@ namespace Tasual
                     NextTime = NextTime.AddMonths(1);
                 }
             }
+
+            // NORMAL CASE: Filter month/week/day by flags
             else // otherwise, follow the filters normally
             {
                 // find specific month
-                if (Rules.MonthCast != 0)
+                if (Rules.MonthFilter != 0)
                 {
                     for (int i = 0; i < 12; ++i)
                     {
-                        if ((Rules.MonthCast & FromMonthToFlag(NextTime.Month)) != 0)
+                        if ((Rules.MonthFilter & FromMonthToFlag(NextTime.Month)) != 0)
                         {
                             if (NextTime > BaseTime)
                             {
+                                // we found a good month!
                                 break;
                             }
                         }
@@ -1203,14 +1240,15 @@ namespace Tasual
                 }
 
                 // find specific week 
-                if (Rules.WeekCast != 0)
+                if (Rules.WeekFilter != 0)
                 {
                     for (int i = 0; i < 5; ++i)
                     {
-                        if ((Rules.WeekCast & FromWeekToFlag(NextTime.Day)) != 0)
+                        if ((Rules.WeekFilter & FromWeekToFlag(NextTime.Day)) != 0)
                         {
                             if (NextTime > BaseTime)
                             {
+                                // we found a good week!
                                 break;
                             }
                         }
@@ -1222,10 +1260,11 @@ namespace Tasual
                 // find specific day
                 for (int i = 0; i < 7; ++i)
                 {
-                    if ((Rules.DayCast & FromDayToFlag(NextTime.DayOfWeek)) != 0)
+                    if ((Rules.DayFilter & FromDayToFlag(NextTime.DayOfWeek)) != 0)
                     {
                         if (NextTime > BaseTime)
                         {
+                            // we found a good day!
                             break;
                         }
                     }
