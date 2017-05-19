@@ -1019,6 +1019,12 @@ namespace Tasual
         {
             return Application.OpenForms[0] as Tasual_Main;
         }
+
+        private void Tasual_Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //Tasual_Notify.Visible = false;
+            Tasual_Notify.Dispose();
+        }
     }
 
     public class TaskItem

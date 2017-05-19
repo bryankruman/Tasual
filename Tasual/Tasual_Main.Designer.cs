@@ -46,11 +46,20 @@
             this.Tasual_ListView = new Tasual.TasualListView();
             this.Tasual_TaskIcons = new System.Windows.Forms.ImageList(this.components);
             this.Tasual_Notify = new System.Windows.Forms.NotifyIcon(this.components);
+            this.Tasual_MenuStrip_Notify = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Tasual_StatusLabel = new System.Windows.Forms.LinkLabel();
             this.Tasual_AboutLabel = new System.Windows.Forms.LinkLabel();
             this.Tasual_MenuStrip_Status = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.Tasual_StatusLabel_MenuStrip_Print = new System.Windows.Forms.ToolStripMenuItem();
+            this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fromClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fromSaveFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Tasual_StatusLabel_MenuStrip_Export = new System.Windows.Forms.ToolStripMenuItem();
+            this.toClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toSaveFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Tasual_StatusLabel_MenuStrip_Clear = new System.Windows.Forms.ToolStripMenuItem();
             this.Tasual_Timer_ListViewClick = new System.Windows.Forms.Timer(this.components);
             this.Tasual_MenuStrip_Group = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -70,20 +79,11 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.duplicateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fromClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fromSaveFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toSaveFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Tasual_MenuStrip_Notify = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Tasual_MenuStrip.SuspendLayout();
+            this.Tasual_MenuStrip_Notify.SuspendLayout();
             this.Tasual_MenuStrip_Status.SuspendLayout();
             this.Tasual_MenuStrip_Group.SuspendLayout();
             this.Tasual_MenuStrip_Item.SuspendLayout();
-            this.Tasual_MenuStrip_Notify.SuspendLayout();
             this.SuspendLayout();
             // 
             // Tasual_MenuStrip
@@ -248,6 +248,33 @@
             this.Tasual_Notify.Visible = true;
             this.Tasual_Notify.Click += new System.EventHandler(this.Tasual_Notify_Click);
             // 
+            // Tasual_MenuStrip_Notify
+            // 
+            this.Tasual_MenuStrip_Notify.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showToolStripMenuItem,
+            this.settingsToolStripMenuItem,
+            this.quitToolStripMenuItem});
+            this.Tasual_MenuStrip_Notify.Name = "Tasual_MenuStrip_Notify";
+            this.Tasual_MenuStrip_Notify.Size = new System.Drawing.Size(117, 70);
+            // 
+            // showToolStripMenuItem
+            // 
+            this.showToolStripMenuItem.Name = "showToolStripMenuItem";
+            this.showToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.showToolStripMenuItem.Text = "Show";
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            // 
+            // quitToolStripMenuItem
+            // 
+            this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.quitToolStripMenuItem.Text = "Quit";
+            // 
             // Tasual_StatusLabel
             // 
             this.Tasual_StatusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -300,6 +327,27 @@
             this.Tasual_StatusLabel_MenuStrip_Print.Size = new System.Drawing.Size(110, 22);
             this.Tasual_StatusLabel_MenuStrip_Print.Text = "Print";
             // 
+            // importToolStripMenuItem
+            // 
+            this.importToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fromClipboardToolStripMenuItem,
+            this.fromSaveFileToolStripMenuItem});
+            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.importToolStripMenuItem.Text = "Import";
+            // 
+            // fromClipboardToolStripMenuItem
+            // 
+            this.fromClipboardToolStripMenuItem.Name = "fromClipboardToolStripMenuItem";
+            this.fromClipboardToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.fromClipboardToolStripMenuItem.Text = "From clipboard";
+            // 
+            // fromSaveFileToolStripMenuItem
+            // 
+            this.fromSaveFileToolStripMenuItem.Name = "fromSaveFileToolStripMenuItem";
+            this.fromSaveFileToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.fromSaveFileToolStripMenuItem.Text = "From save file";
+            // 
             // Tasual_StatusLabel_MenuStrip_Export
             // 
             this.Tasual_StatusLabel_MenuStrip_Export.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -308,6 +356,18 @@
             this.Tasual_StatusLabel_MenuStrip_Export.Name = "Tasual_StatusLabel_MenuStrip_Export";
             this.Tasual_StatusLabel_MenuStrip_Export.Size = new System.Drawing.Size(110, 22);
             this.Tasual_StatusLabel_MenuStrip_Export.Text = "Export";
+            // 
+            // toClipboardToolStripMenuItem
+            // 
+            this.toClipboardToolStripMenuItem.Name = "toClipboardToolStripMenuItem";
+            this.toClipboardToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.toClipboardToolStripMenuItem.Text = "To clipboard";
+            // 
+            // toSaveFileToolStripMenuItem
+            // 
+            this.toSaveFileToolStripMenuItem.Name = "toSaveFileToolStripMenuItem";
+            this.toSaveFileToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.toSaveFileToolStripMenuItem.Text = "To save file";
             // 
             // Tasual_StatusLabel_MenuStrip_Clear
             // 
@@ -447,66 +507,6 @@
             this.duplicateToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.duplicateToolStripMenuItem.Text = "Duplicate";
             // 
-            // importToolStripMenuItem
-            // 
-            this.importToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fromClipboardToolStripMenuItem,
-            this.fromSaveFileToolStripMenuItem});
-            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
-            this.importToolStripMenuItem.Text = "Import";
-            // 
-            // fromClipboardToolStripMenuItem
-            // 
-            this.fromClipboardToolStripMenuItem.Name = "fromClipboardToolStripMenuItem";
-            this.fromClipboardToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.fromClipboardToolStripMenuItem.Text = "From clipboard";
-            // 
-            // fromSaveFileToolStripMenuItem
-            // 
-            this.fromSaveFileToolStripMenuItem.Name = "fromSaveFileToolStripMenuItem";
-            this.fromSaveFileToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.fromSaveFileToolStripMenuItem.Text = "From save file";
-            // 
-            // toClipboardToolStripMenuItem
-            // 
-            this.toClipboardToolStripMenuItem.Name = "toClipboardToolStripMenuItem";
-            this.toClipboardToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.toClipboardToolStripMenuItem.Text = "To clipboard";
-            // 
-            // toSaveFileToolStripMenuItem
-            // 
-            this.toSaveFileToolStripMenuItem.Name = "toSaveFileToolStripMenuItem";
-            this.toSaveFileToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.toSaveFileToolStripMenuItem.Text = "To save file";
-            // 
-            // Tasual_MenuStrip_Notify
-            // 
-            this.Tasual_MenuStrip_Notify.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.showToolStripMenuItem,
-            this.settingsToolStripMenuItem,
-            this.quitToolStripMenuItem});
-            this.Tasual_MenuStrip_Notify.Name = "Tasual_MenuStrip_Notify";
-            this.Tasual_MenuStrip_Notify.Size = new System.Drawing.Size(117, 70);
-            // 
-            // showToolStripMenuItem
-            // 
-            this.showToolStripMenuItem.Name = "showToolStripMenuItem";
-            this.showToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
-            this.showToolStripMenuItem.Text = "Show";
-            // 
-            // settingsToolStripMenuItem
-            // 
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
-            this.settingsToolStripMenuItem.Text = "Settings";
-            // 
-            // quitToolStripMenuItem
-            // 
-            this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
-            this.quitToolStripMenuItem.Text = "Quit";
-            // 
             // Tasual_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -524,14 +524,15 @@
             this.Name = "Tasual_Main";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Text = "Tasual";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Tasual_Main_FormClosing);
             this.Load += new System.EventHandler(this.Tasual_Main_Load);
             this.Resize += new System.EventHandler(this.Tasual_Main_Resize);
             this.Tasual_MenuStrip.ResumeLayout(false);
             this.Tasual_MenuStrip.PerformLayout();
+            this.Tasual_MenuStrip_Notify.ResumeLayout(false);
             this.Tasual_MenuStrip_Status.ResumeLayout(false);
             this.Tasual_MenuStrip_Group.ResumeLayout(false);
             this.Tasual_MenuStrip_Item.ResumeLayout(false);
-            this.Tasual_MenuStrip_Notify.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
