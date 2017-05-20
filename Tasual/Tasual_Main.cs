@@ -662,7 +662,7 @@ namespace Tasual
         // MenuStrips
         private void Tasual_MenuStrip_Create_Advanced_Click(object sender, EventArgs e)
         {
-            Tasual_Create_Task TaskForm = new Tasual_Create_Task();
+            Tasual_Create TaskForm = new Tasual_Create();
             TaskForm.Show(this);
         }
 

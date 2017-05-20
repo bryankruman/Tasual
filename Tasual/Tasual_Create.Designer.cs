@@ -1,6 +1,6 @@
 ﻿namespace Tasual
 {
-	partial class Tasual_Create_Task
+	partial class Tasual_Create
 	{
 		/// <summary>
 		/// Required designer variable.

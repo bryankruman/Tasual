@@ -84,11 +84,11 @@
     <Compile Include="Tasual_Confirm_Clear.Designer.cs">
       <DependentUpon>Tasual_Confirm_Clear.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tasual_Create_Task.cs">
+    <Compile Include="Tasual_Create.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tasual_Create_Task.Designer.cs">
-      <DependentUpon>Tasual_Create_Task.cs</DependentUpon>
+    <Compile Include="Tasual_Create.Designer.cs">
+      <DependentUpon>Tasual_Create.cs</DependentUpon>
     </Compile>
     <Compile Include="Tasual_Main.cs">
       <SubType>Form</SubType>
@@ -107,8 +107,8 @@
     <EmbeddedResource Include="Tasual_Confirm_Clear.resx">
       <DependentUpon>Tasual_Confirm_Clear.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tasual_Create_Task.resx">
-      <DependentUpon>Tasual_Create_Task.cs</DependentUpon>
+    <EmbeddedResource Include="Tasual_Create.resx">
+      <DependentUpon>Tasual_Create.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tasual_Main.resx">
       <DependentUpon>Tasual_Main.cs</DependentUpon>

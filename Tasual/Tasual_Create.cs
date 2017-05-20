@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Tasual
 {
-    public partial class Tasual_Create_Task : Form
+    public partial class Tasual_Create : Form
     {
-        public Tasual_Create_Task()
+        public Tasual_Create()
         {
             InitializeComponent();
         }
