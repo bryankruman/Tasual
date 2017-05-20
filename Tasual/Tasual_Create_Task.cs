@@ -26,5 +26,10 @@ namespace Tasual
         {
 
         }
+
+        private void checkBox4_CheckedChanged_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -139,11 +139,19 @@ namespace Tasual
         //  Array Functions
         // =================
 
-        public void Tasual_Array_DeleteTask(ref List<Task> Array, ref Task Task)
+        public void Tasual_Array_ClearAll()
         {
-            Array.Remove(Task);
-            Tasual_Array_Save_Text(ref Array);
-            Tasual_ListView_PopulateFromArray(ref TaskArray); // TODO: Stop repopulating from array all the time
+            TaskArray.Clear();
+            Tasual_Array_Save_Text();
+            Tasual_Array_Load_Text();
+            Tasual_ListView_PopulateFromArray();
+        }
+
+        public void Tasual_Array_DeleteTask(ref Task Task)
+        {
+            TaskArray.Remove(Task);
+            Tasual_Array_Save_Text();
+            Tasual_ListView_PopulateFromArray(); // TODO: Stop repopulating from array all the time
         }
 
         private void Tasual_Array_ReAssignGroup(string OldTaskGroup, string NewTaskGroup)
@@ -159,7 +167,6 @@ namespace Tasual
         }
 
         public void Tasual_Array_CreateTask(
-            ref List<Task> Array,
             int Type,
             int Priority,
             int Status,
@@ -177,14 +184,14 @@ namespace Tasual
             NewTask.Description = Description;
             NewTask.Time = Time;
 
-            Array.Add(NewTask);
-            Tasual_Array_Save_Text(ref Array);
+            TaskArray.Add(NewTask);
+            Tasual_Array_Save_Text();
 
             // force hidden group to be unhidden
             if (HiddenGroups.Contains(NewTask.Group))
             {
                 HiddenGroups.Remove(NewTask.Group);
-                Tasual_ListView_PopulateFromArray(ref TaskArray);
+                Tasual_ListView_PopulateFromArray();
             }
 
             ListViewItem Item = Tasual_ListView_CreateListViewItem(ref NewTask);
@@ -199,13 +206,13 @@ namespace Tasual
             }
         }
 
-        public void Tasual_Array_Save_Text(ref List<Task> Array)
+        public void Tasual_Array_Save_Text()
         {
             try
             {
                 using (StreamWriter OutputFile = new StreamWriter(Tasual_Setting_TextFile))
                 {
-                    foreach (Task Task in Array)
+                    foreach (Task Task in TaskArray)
                     {
                         string Line;
                         Line = Task.Type.ToString();
@@ -233,7 +240,7 @@ namespace Tasual
             }
         }
 
-        public void Tasual_Array_Load_Text(ref List<Task> Array)
+        public void Tasual_Array_Load_Text()
         {
             try
             {
@@ -575,7 +582,7 @@ namespace Tasual
             return Item;
         }
 
-        public void Tasual_ListView_PopulateFromArray(ref List<Task> TaskArray)
+        public void Tasual_ListView_PopulateFromArray()
         {
             Tasual_ListView_ClearAll();
 
@@ -666,7 +673,7 @@ namespace Tasual
             Time.Started = DateTime.Now.ToLocalTime(); //CurrentTimeOffset.ToUnixTimeSeconds();
             //Time.Ending = 2;
             //Time.Next = 3;
-            Tasual_Array_CreateTask(ref TaskArray, 0, 0, 0, "Testing", "New task", Time, true);
+            Tasual_Array_CreateTask(0, 0, 0, "Testing", "New task", Time, true);
         }
 
         private void Tasual_MenuStrip_Edit_Click(object sender, EventArgs e)
@@ -678,9 +685,9 @@ namespace Tasual
         private void Tasual_MenuStrip_Settings_AlwaysOnTop_Click(object sender, EventArgs e)
         {
             Tasual_Array_ReAssignGroup("Testing", "");
-            Tasual_Array_Save_Text(ref TaskArray);
-            Tasual_Array_Load_Text(ref TaskArray);
-            Tasual_ListView_PopulateFromArray(ref TaskArray);
+            Tasual_Array_Save_Text();
+            Tasual_Array_Load_Text();
+            Tasual_ListView_PopulateFromArray();
         }
 
         private void Tasual_MenuStrip_Sources_Click(object sender, EventArgs e)
@@ -743,7 +750,7 @@ namespace Tasual
                     if ((Task != null) && (Item != null))
                     {
                         Task.Description = Item.Text.ToString();
-                        Tasual_Array_Save_Text(ref TaskArray);
+                        Tasual_Array_Save_Text();
                     }
                 });
             }
@@ -817,7 +824,7 @@ namespace Tasual
                                     ListViewItem SelectedItem = Info.Item;
                                     Tasual_ListView_ChangeStatus(ref SelectedItem, (int)StatusEnum.Toggle);
                                     Tasual_StatusLabel_UpdateCounts();
-                                    Tasual_Array_Save_Text(ref TaskArray);
+                                    Tasual_Array_Save_Text();
                                 }
                                 else // clicked item area
                                 {
@@ -1035,12 +1042,12 @@ namespace Tasual
         private void Tasual_Main_Load(object sender, EventArgs e)
         {
             // load task array
-            Tasual_Array_Load_Text(ref TaskArray);
+            Tasual_Array_Load_Text();
 
             //HiddenGroups.Add("Testing");
 
             // load tasks into Tasual_ListView
-            Tasual_ListView_PopulateFromArray(ref TaskArray);
+            Tasual_ListView_PopulateFromArray();
         }
 
         public static Tasual_Main ReturnFormInstance()
