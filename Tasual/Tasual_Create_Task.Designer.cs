@@ -28,107 +28,116 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.comboBox7 = new System.Windows.Forms.ComboBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
-            this.label31 = new System.Windows.Forms.Label();
-            this.label32 = new System.Windows.Forms.Label();
-            this.label33 = new System.Windows.Forms.Label();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
-            this.radioButton5 = new System.Windows.Forms.RadioButton();
-            this.dateTimePicker3 = new System.Windows.Forms.DateTimePicker();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.label34 = new System.Windows.Forms.Label();
-            this.label35 = new System.Windows.Forms.Label();
-            this.label36 = new System.Windows.Forms.Label();
-            this.radioButton6 = new System.Windows.Forms.RadioButton();
-            this.radioButton7 = new System.Windows.Forms.RadioButton();
-            this.radioButton8 = new System.Windows.Forms.RadioButton();
-            this.label37 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            this.Tasual_Create_TextBox_Description = new System.Windows.Forms.TextBox();
+            this.Tasual_Create_ComboBox_Category = new System.Windows.Forms.ComboBox();
+            this.Tasual_Create_Label_Category = new System.Windows.Forms.Label();
+            this.Tasual_Create_ComboBox_Dismiss = new System.Windows.Forms.ComboBox();
+            this.Tasual_Create_Label_DaySel_Sat = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_DaySel_Fri = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_Priority = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_DaySel_Thu = new System.Windows.Forms.Label();
+            this.Tasual_Create_ComboBox_Priority = new System.Windows.Forms.ComboBox();
+            this.Tasual_Create_Label_DaySel_Wed = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_DaySel_Tue = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_DaySel_Mon = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_DaySel_Sun = new System.Windows.Forms.Label();
+            this.Tasual_Create_DateTimePicker_StartDate = new System.Windows.Forms.DateTimePicker();
+            this.Tasual_Create_GroupBox_Scheduled = new System.Windows.Forms.GroupBox();
+            this.Tasual_Create_RadioButton_Type_RepeatCustom = new System.Windows.Forms.RadioButton();
+            this.Tasual_Create_Label_Dismiss = new System.Windows.Forms.Label();
+            this.Tasual_Create_RadioButton_Type_RepeatSimple = new System.Windows.Forms.RadioButton();
+            this.Tasual_Create_RadioButton_Type_Singular = new System.Windows.Forms.RadioButton();
+            this.Tasual_Create_Label_DateandTime = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_Ends = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_Occurences = new System.Windows.Forms.Label();
+            this.Tasual_Create_NumericUpDown_Ends_Occurences = new System.Windows.Forms.NumericUpDown();
+            this.Tasual_Create_DateTimePicker_EndDate = new System.Windows.Forms.DateTimePicker();
+            this.Tasual_Create_RadioButton_Ends_OnDate = new System.Windows.Forms.RadioButton();
+            this.Tasual_Create_RadioButton_Ends_Occurences = new System.Windows.Forms.RadioButton();
+            this.Tasual_Create_RadioButton_Ends_Never = new System.Windows.Forms.RadioButton();
+            this.Tasual_Create_Label_MonthSel_All = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_WeekSel_All = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_DaySel_All = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_DaySel_Specific = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_Months = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_Weeks = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_Days = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_Summary = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_MonthSel_Dec = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_MonthSel_Nov = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_MonthSel_Oct = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_WeekSel_1st = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_MonthSel_Sep = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_WeekSel_2nd = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_WeekSel_3rd = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_MonthSel_Aug = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_MonthSel_Jul = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_MonthSel_Jun = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_WeekSel_Last = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_MonthSel_May = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_MonthSel_Apr = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_MonthSel_Mar = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_MonthSel_Feb = new System.Windows.Forms.Label();
+            this.Tasual_Create_Label_MonthSel_Jan = new System.Windows.Forms.Label();
+            this.Tasual_Create_RadioButton_Time_Specific = new System.Windows.Forms.RadioButton();
+            this.Tasual_Create_RadioButton_Time_AllDay = new System.Windows.Forms.RadioButton();
+            this.Tasual_Create_DateTimePicker_StartTime = new System.Windows.Forms.DateTimePicker();
+            this.Tasual_Create_CheckBox_Scheduled = new System.Windows.Forms.CheckBox();
+            this.Tasual_Create_NumericUpDown_Type_RepeatSimple = new System.Windows.Forms.NumericUpDown();
+            this.Tasual_Create_ComboBox_RepeatSimple = new System.Windows.Forms.ComboBox();
+            this.Tasual_Create_Button_Create = new System.Windows.Forms.Button();
+            this.Tasual_Create_Button_Cancel = new System.Windows.Forms.Button();
+            this.Tasual_Create_TextBox_Link = new System.Windows.Forms.TextBox();
+            this.Tasual_Create_TextBox_Location = new System.Windows.Forms.TextBox();
+            this.Tasual_Create_Button_Notes = new System.Windows.Forms.Button();
+            this.Tasual_Create_Panel_Time = new System.Windows.Forms.Panel();
+            this.Tasual_Create_Panel_Ends = new System.Windows.Forms.Panel();
+            this.Tasual_Create_Panel_Type = new System.Windows.Forms.Panel();
+            this.Tasual_Create_GroupBox_Scheduled.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Tasual_Create_NumericUpDown_Ends_Occurences)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Tasual_Create_NumericUpDown_Type_RepeatSimple)).BeginInit();
+            this.Tasual_Create_Panel_Time.SuspendLayout();
+            this.Tasual_Create_Panel_Ends.SuspendLayout();
+            this.Tasual_Create_Panel_Type.SuspendLayout();
             this.SuspendLayout();
             // 
-            // textBox1
+            // Tasual_Create_TextBox_Description
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.Tasual_Create_TextBox_Description.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(12, 14);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(282, 20);
-            this.textBox1.TabIndex = 5;
-            this.textBox1.Text = "Title";
+            this.Tasual_Create_TextBox_Description.Location = new System.Drawing.Point(12, 14);
+            this.Tasual_Create_TextBox_Description.Name = "Tasual_Create_TextBox_Description";
+            this.Tasual_Create_TextBox_Description.Size = new System.Drawing.Size(283, 20);
+            this.Tasual_Create_TextBox_Description.TabIndex = 5;
+            this.Tasual_Create_TextBox_Description.Text = "Title";
+            this.Tasual_Create_TextBox_Description.TextChanged += new System.EventHandler(this.Tasual_Create_TextBox_Description_TextChanged);
             // 
-            // comboBox1
+            // Tasual_Create_ComboBox_Category
             // 
-            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.Tasual_Create_ComboBox_Category.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(242, 49);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(111, 21);
-            this.comboBox1.TabIndex = 9;
+            this.Tasual_Create_ComboBox_Category.FormattingEnabled = true;
+            this.Tasual_Create_ComboBox_Category.Location = new System.Drawing.Point(242, 49);
+            this.Tasual_Create_ComboBox_Category.Name = "Tasual_Create_ComboBox_Category";
+            this.Tasual_Create_ComboBox_Category.Size = new System.Drawing.Size(112, 21);
+            this.Tasual_Create_ComboBox_Category.TabIndex = 9;
+            this.Tasual_Create_ComboBox_Category.SelectedIndexChanged += new System.EventHandler(this.Tasual_Create_ComboBox_Category_SelectedIndexChanged);
             // 
-            // label1
+            // Tasual_Create_Label_Category
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(191, 53);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(49, 13);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "Category";
+            this.Tasual_Create_Label_Category.AutoSize = true;
+            this.Tasual_Create_Label_Category.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.Tasual_Create_Label_Category.Location = new System.Drawing.Point(191, 53);
+            this.Tasual_Create_Label_Category.Name = "Tasual_Create_Label_Category";
+            this.Tasual_Create_Label_Category.Size = new System.Drawing.Size(49, 13);
+            this.Tasual_Create_Label_Category.TabIndex = 10;
+            this.Tasual_Create_Label_Category.Text = "Category";
             // 
-            // comboBox4
+            // Tasual_Create_ComboBox_Dismiss
             // 
-            this.comboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Items.AddRange(new object[] {
+            this.Tasual_Create_ComboBox_Dismiss.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.Tasual_Create_ComboBox_Dismiss.FormattingEnabled = true;
+            this.Tasual_Create_ComboBox_Dismiss.Items.AddRange(new object[] {
             "Never",
             "Immediately",
             "After 1 hour",
@@ -136,872 +145,955 @@
             "After 24 hours",
             "After 1 week",
             "After 1 month"});
-            this.comboBox4.Location = new System.Drawing.Point(195, 64);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(131, 21);
-            this.comboBox4.TabIndex = 21;
+            this.Tasual_Create_ComboBox_Dismiss.Location = new System.Drawing.Point(195, 64);
+            this.Tasual_Create_ComboBox_Dismiss.Name = "Tasual_Create_ComboBox_Dismiss";
+            this.Tasual_Create_ComboBox_Dismiss.Size = new System.Drawing.Size(131, 21);
+            this.Tasual_Create_ComboBox_Dismiss.TabIndex = 21;
+            this.Tasual_Create_ComboBox_Dismiss.SelectedIndexChanged += new System.EventHandler(this.Tasual_Create_ComboBox_Dismiss_SelectedIndexChanged);
             // 
-            // label9
+            // Tasual_Create_Label_DaySel_Sat
             // 
-            this.label9.BackColor = System.Drawing.Color.Silver;
-            this.label9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label9.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label9.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(299, 143);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(26, 16);
-            this.label9.TabIndex = 20;
-            this.label9.Text = "Sat";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_DaySel_Sat.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_DaySel_Sat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_DaySel_Sat.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_DaySel_Sat.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_DaySel_Sat.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_DaySel_Sat.Location = new System.Drawing.Point(299, 143);
+            this.Tasual_Create_Label_DaySel_Sat.Name = "Tasual_Create_Label_DaySel_Sat";
+            this.Tasual_Create_Label_DaySel_Sat.Size = new System.Drawing.Size(26, 16);
+            this.Tasual_Create_Label_DaySel_Sat.TabIndex = 20;
+            this.Tasual_Create_Label_DaySel_Sat.Text = "Sat";
+            this.Tasual_Create_Label_DaySel_Sat.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_DaySel_Sat.Click += new System.EventHandler(this.Tasual_Create_Label_DaySel_Sat_Click);
             // 
-            // label8
+            // Tasual_Create_Label_DaySel_Fri
             // 
-            this.label8.BackColor = System.Drawing.Color.Silver;
-            this.label8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label8.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label8.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(275, 143);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(26, 16);
-            this.label8.TabIndex = 19;
-            this.label8.Text = "Fri";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_DaySel_Fri.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_DaySel_Fri.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_DaySel_Fri.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_DaySel_Fri.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_DaySel_Fri.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_DaySel_Fri.Location = new System.Drawing.Point(275, 143);
+            this.Tasual_Create_Label_DaySel_Fri.Name = "Tasual_Create_Label_DaySel_Fri";
+            this.Tasual_Create_Label_DaySel_Fri.Size = new System.Drawing.Size(26, 16);
+            this.Tasual_Create_Label_DaySel_Fri.TabIndex = 19;
+            this.Tasual_Create_Label_DaySel_Fri.Text = "Fri";
+            this.Tasual_Create_Label_DaySel_Fri.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_DaySel_Fri.Click += new System.EventHandler(this.Tasual_Create_Label_DaySel_Fri_Click);
             // 
-            // label2
+            // Tasual_Create_Label_Priority
             // 
-            this.label2.AutoSize = true;
-            this.label2.Enabled = false;
-            this.label2.Location = new System.Drawing.Point(201, 79);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 13);
-            this.label2.TabIndex = 12;
-            this.label2.Text = "Priority";
+            this.Tasual_Create_Label_Priority.AutoSize = true;
+            this.Tasual_Create_Label_Priority.Enabled = false;
+            this.Tasual_Create_Label_Priority.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.Tasual_Create_Label_Priority.Location = new System.Drawing.Point(201, 79);
+            this.Tasual_Create_Label_Priority.Name = "Tasual_Create_Label_Priority";
+            this.Tasual_Create_Label_Priority.Size = new System.Drawing.Size(38, 13);
+            this.Tasual_Create_Label_Priority.TabIndex = 12;
+            this.Tasual_Create_Label_Priority.Text = "Priority";
             // 
-            // label7
+            // Tasual_Create_Label_DaySel_Thu
             // 
-            this.label7.BackColor = System.Drawing.Color.Silver;
-            this.label7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label7.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label7.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(250, 143);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(26, 16);
-            this.label7.TabIndex = 18;
-            this.label7.Text = "Thu";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_DaySel_Thu.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_DaySel_Thu.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_DaySel_Thu.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_DaySel_Thu.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_DaySel_Thu.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_DaySel_Thu.Location = new System.Drawing.Point(250, 143);
+            this.Tasual_Create_Label_DaySel_Thu.Name = "Tasual_Create_Label_DaySel_Thu";
+            this.Tasual_Create_Label_DaySel_Thu.Size = new System.Drawing.Size(26, 16);
+            this.Tasual_Create_Label_DaySel_Thu.TabIndex = 18;
+            this.Tasual_Create_Label_DaySel_Thu.Text = "Thu";
+            this.Tasual_Create_Label_DaySel_Thu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_DaySel_Thu.Click += new System.EventHandler(this.Tasual_Create_Label_DaySel_Thu_Click);
             // 
-            // comboBox2
+            // Tasual_Create_ComboBox_Priority
             // 
-            this.comboBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.Tasual_Create_ComboBox_Priority.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox2.Enabled = false;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(242, 75);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(111, 21);
-            this.comboBox2.TabIndex = 11;
+            this.Tasual_Create_ComboBox_Priority.FormattingEnabled = true;
+            this.Tasual_Create_ComboBox_Priority.Location = new System.Drawing.Point(242, 75);
+            this.Tasual_Create_ComboBox_Priority.Name = "Tasual_Create_ComboBox_Priority";
+            this.Tasual_Create_ComboBox_Priority.Size = new System.Drawing.Size(112, 21);
+            this.Tasual_Create_ComboBox_Priority.TabIndex = 11;
+            this.Tasual_Create_ComboBox_Priority.SelectedIndexChanged += new System.EventHandler(this.Tasual_Create_ComboBox_Priority_SelectedIndexChanged);
             // 
-            // label6
+            // Tasual_Create_Label_DaySel_Wed
             // 
-            this.label6.BackColor = System.Drawing.Color.Silver;
-            this.label6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label6.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label6.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(225, 143);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(26, 16);
-            this.label6.TabIndex = 17;
-            this.label6.Text = "Wed";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_DaySel_Wed.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_DaySel_Wed.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_DaySel_Wed.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_DaySel_Wed.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_DaySel_Wed.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_DaySel_Wed.Location = new System.Drawing.Point(225, 143);
+            this.Tasual_Create_Label_DaySel_Wed.Name = "Tasual_Create_Label_DaySel_Wed";
+            this.Tasual_Create_Label_DaySel_Wed.Size = new System.Drawing.Size(26, 16);
+            this.Tasual_Create_Label_DaySel_Wed.TabIndex = 17;
+            this.Tasual_Create_Label_DaySel_Wed.Text = "Wed";
+            this.Tasual_Create_Label_DaySel_Wed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_DaySel_Wed.Click += new System.EventHandler(this.Tasual_Create_Label_DaySel_Wed_Click);
             // 
-            // label5
+            // Tasual_Create_Label_DaySel_Tue
             // 
-            this.label5.BackColor = System.Drawing.Color.Silver;
-            this.label5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label5.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label5.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(200, 143);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(26, 16);
-            this.label5.TabIndex = 16;
-            this.label5.Text = "Tue";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_DaySel_Tue.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_DaySel_Tue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_DaySel_Tue.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_DaySel_Tue.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_DaySel_Tue.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_DaySel_Tue.Location = new System.Drawing.Point(200, 143);
+            this.Tasual_Create_Label_DaySel_Tue.Name = "Tasual_Create_Label_DaySel_Tue";
+            this.Tasual_Create_Label_DaySel_Tue.Size = new System.Drawing.Size(26, 16);
+            this.Tasual_Create_Label_DaySel_Tue.TabIndex = 16;
+            this.Tasual_Create_Label_DaySel_Tue.Text = "Tue";
+            this.Tasual_Create_Label_DaySel_Tue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_DaySel_Tue.Click += new System.EventHandler(this.Tasual_Create_Label_DaySel_Tue_Click);
             // 
-            // label4
+            // Tasual_Create_Label_DaySel_Mon
             // 
-            this.label4.BackColor = System.Drawing.Color.Silver;
-            this.label4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label4.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label4.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(175, 143);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(26, 16);
-            this.label4.TabIndex = 15;
-            this.label4.Text = "Mon";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_DaySel_Mon.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_DaySel_Mon.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_DaySel_Mon.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_DaySel_Mon.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_DaySel_Mon.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_DaySel_Mon.Location = new System.Drawing.Point(175, 143);
+            this.Tasual_Create_Label_DaySel_Mon.Name = "Tasual_Create_Label_DaySel_Mon";
+            this.Tasual_Create_Label_DaySel_Mon.Size = new System.Drawing.Size(26, 16);
+            this.Tasual_Create_Label_DaySel_Mon.TabIndex = 15;
+            this.Tasual_Create_Label_DaySel_Mon.Text = "Mon";
+            this.Tasual_Create_Label_DaySel_Mon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_DaySel_Mon.Click += new System.EventHandler(this.Tasual_Create_Label_DaySel_Mon_Click);
             // 
-            // label3
+            // Tasual_Create_Label_DaySel_Sun
             // 
-            this.label3.BackColor = System.Drawing.Color.Silver;
-            this.label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label3.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(150, 143);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(26, 16);
-            this.label3.TabIndex = 14;
-            this.label3.Text = "Sun";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_DaySel_Sun.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_DaySel_Sun.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_DaySel_Sun.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_DaySel_Sun.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_DaySel_Sun.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_DaySel_Sun.Location = new System.Drawing.Point(150, 143);
+            this.Tasual_Create_Label_DaySel_Sun.Name = "Tasual_Create_Label_DaySel_Sun";
+            this.Tasual_Create_Label_DaySel_Sun.Size = new System.Drawing.Size(26, 16);
+            this.Tasual_Create_Label_DaySel_Sun.TabIndex = 14;
+            this.Tasual_Create_Label_DaySel_Sun.Text = "Sun";
+            this.Tasual_Create_Label_DaySel_Sun.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_DaySel_Sun.Click += new System.EventHandler(this.Tasual_Create_Label_DaySel_Sun_Click);
             // 
-            // dateTimePicker1
+            // Tasual_Create_DateTimePicker_StartDate
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(13, 33);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(199, 20);
-            this.dateTimePicker1.TabIndex = 12;
+            this.Tasual_Create_DateTimePicker_StartDate.Location = new System.Drawing.Point(13, 33);
+            this.Tasual_Create_DateTimePicker_StartDate.Name = "Tasual_Create_DateTimePicker_StartDate";
+            this.Tasual_Create_DateTimePicker_StartDate.Size = new System.Drawing.Size(199, 20);
+            this.Tasual_Create_DateTimePicker_StartDate.TabIndex = 12;
+            this.Tasual_Create_DateTimePicker_StartDate.ValueChanged += new System.EventHandler(this.Tasual_Create_DateTimePicker_StartDate_ValueChanged);
             // 
-            // groupBox2
+            // Tasual_Create_GroupBox_Scheduled
             // 
-            this.groupBox2.Controls.Add(this.radioButton8);
-            this.groupBox2.Controls.Add(this.label37);
-            this.groupBox2.Controls.Add(this.radioButton7);
-            this.groupBox2.Controls.Add(this.radioButton6);
-            this.groupBox2.Controls.Add(this.label36);
-            this.groupBox2.Controls.Add(this.comboBox4);
-            this.groupBox2.Controls.Add(this.label35);
-            this.groupBox2.Controls.Add(this.label34);
-            this.groupBox2.Controls.Add(this.numericUpDown2);
-            this.groupBox2.Controls.Add(this.dateTimePicker3);
-            this.groupBox2.Controls.Add(this.radioButton5);
-            this.groupBox2.Controls.Add(this.radioButton4);
-            this.groupBox2.Controls.Add(this.radioButton3);
-            this.groupBox2.Controls.Add(this.label33);
-            this.groupBox2.Controls.Add(this.label32);
-            this.groupBox2.Controls.Add(this.label31);
-            this.groupBox2.Controls.Add(this.label30);
-            this.groupBox2.Controls.Add(this.label29);
-            this.groupBox2.Controls.Add(this.label28);
-            this.groupBox2.Controls.Add(this.label14);
-            this.groupBox2.Controls.Add(this.label13);
-            this.groupBox2.Controls.Add(this.label27);
-            this.groupBox2.Controls.Add(this.label26);
-            this.groupBox2.Controls.Add(this.label25);
-            this.groupBox2.Controls.Add(this.label10);
-            this.groupBox2.Controls.Add(this.label24);
-            this.groupBox2.Controls.Add(this.label11);
-            this.groupBox2.Controls.Add(this.label12);
-            this.groupBox2.Controls.Add(this.label23);
-            this.groupBox2.Controls.Add(this.label22);
-            this.groupBox2.Controls.Add(this.label21);
-            this.groupBox2.Controls.Add(this.label15);
-            this.groupBox2.Controls.Add(this.label20);
-            this.groupBox2.Controls.Add(this.label19);
-            this.groupBox2.Controls.Add(this.label18);
-            this.groupBox2.Controls.Add(this.label17);
-            this.groupBox2.Controls.Add(this.label16);
-            this.groupBox2.Controls.Add(this.radioButton2);
-            this.groupBox2.Controls.Add(this.radioButton1);
-            this.groupBox2.Controls.Add(this.dateTimePicker2);
-            this.groupBox2.Controls.Add(this.checkBox4);
-            this.groupBox2.Controls.Add(this.numericUpDown1);
-            this.groupBox2.Controls.Add(this.dateTimePicker1);
-            this.groupBox2.Controls.Add(this.comboBox7);
-            this.groupBox2.Controls.Add(this.label9);
-            this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Location = new System.Drawing.Point(12, 112);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(339, 333);
-            this.groupBox2.TabIndex = 17;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "                          ";
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Panel_Type);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Panel_Ends);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Panel_Time);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_Dismiss);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_DateandTime);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_ComboBox_Dismiss);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_Ends);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_MonthSel_All);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_WeekSel_All);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_DaySel_All);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_DaySel_Specific);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_Months);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_Weeks);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_Days);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_Summary);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_MonthSel_Dec);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_MonthSel_Nov);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_MonthSel_Oct);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_WeekSel_1st);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_MonthSel_Sep);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_WeekSel_2nd);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_WeekSel_3rd);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_MonthSel_Aug);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_MonthSel_Jul);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_MonthSel_Jun);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_WeekSel_Last);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_MonthSel_May);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_MonthSel_Apr);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_MonthSel_Mar);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_MonthSel_Feb);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_MonthSel_Jan);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_CheckBox_Scheduled);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_DateTimePicker_StartDate);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_DaySel_Sat);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_DaySel_Fri);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_DaySel_Tue);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_DaySel_Sun);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_DaySel_Thu);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_DaySel_Mon);
+            this.Tasual_Create_GroupBox_Scheduled.Controls.Add(this.Tasual_Create_Label_DaySel_Wed);
+            this.Tasual_Create_GroupBox_Scheduled.Location = new System.Drawing.Point(12, 112);
+            this.Tasual_Create_GroupBox_Scheduled.Name = "Tasual_Create_GroupBox_Scheduled";
+            this.Tasual_Create_GroupBox_Scheduled.Size = new System.Drawing.Size(339, 333);
+            this.Tasual_Create_GroupBox_Scheduled.TabIndex = 17;
+            this.Tasual_Create_GroupBox_Scheduled.TabStop = false;
+            this.Tasual_Create_GroupBox_Scheduled.Text = "                          ";
             // 
-            // comboBox7
+            // Tasual_Create_RadioButton_Type_RepeatCustom
             // 
-            this.comboBox7.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox7.FormattingEnabled = true;
-            this.comboBox7.Items.AddRange(new object[] {
+            this.Tasual_Create_RadioButton_Type_RepeatCustom.AutoSize = true;
+            this.Tasual_Create_RadioButton_Type_RepeatCustom.Location = new System.Drawing.Point(3, 25);
+            this.Tasual_Create_RadioButton_Type_RepeatCustom.Name = "Tasual_Create_RadioButton_Type_RepeatCustom";
+            this.Tasual_Create_RadioButton_Type_RepeatCustom.Size = new System.Drawing.Size(156, 17);
+            this.Tasual_Create_RadioButton_Type_RepeatCustom.TabIndex = 64;
+            this.Tasual_Create_RadioButton_Type_RepeatCustom.Text = "Repeats at custom intervals";
+            this.Tasual_Create_RadioButton_Type_RepeatCustom.UseVisualStyleBackColor = true;
+            this.Tasual_Create_RadioButton_Type_RepeatCustom.CheckedChanged += new System.EventHandler(this.Tasual_Create_RadioButton_Type_RepeatCustom_CheckedChanged);
+            // 
+            // Tasual_Create_Label_Dismiss
+            // 
+            this.Tasual_Create_Label_Dismiss.AutoSize = true;
+            this.Tasual_Create_Label_Dismiss.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.Tasual_Create_Label_Dismiss.Location = new System.Drawing.Point(10, 68);
+            this.Tasual_Create_Label_Dismiss.Name = "Tasual_Create_Label_Dismiss";
+            this.Tasual_Create_Label_Dismiss.Size = new System.Drawing.Size(113, 13);
+            this.Tasual_Create_Label_Dismiss.TabIndex = 22;
+            this.Tasual_Create_Label_Dismiss.Text = "Dismiss when overdue";
+            // 
+            // Tasual_Create_RadioButton_Type_RepeatSimple
+            // 
+            this.Tasual_Create_RadioButton_Type_RepeatSimple.AutoSize = true;
+            this.Tasual_Create_RadioButton_Type_RepeatSimple.Location = new System.Drawing.Point(70, 3);
+            this.Tasual_Create_RadioButton_Type_RepeatSimple.Name = "Tasual_Create_RadioButton_Type_RepeatSimple";
+            this.Tasual_Create_RadioButton_Type_RepeatSimple.Size = new System.Drawing.Size(94, 17);
+            this.Tasual_Create_RadioButton_Type_RepeatSimple.TabIndex = 63;
+            this.Tasual_Create_RadioButton_Type_RepeatSimple.Text = "Repeats every";
+            this.Tasual_Create_RadioButton_Type_RepeatSimple.UseVisualStyleBackColor = true;
+            this.Tasual_Create_RadioButton_Type_RepeatSimple.CheckedChanged += new System.EventHandler(this.Tasual_Create_RadioButton_Type_RepeatSimple_CheckedChanged);
+            // 
+            // Tasual_Create_RadioButton_Type_Singular
+            // 
+            this.Tasual_Create_RadioButton_Type_Singular.AutoSize = true;
+            this.Tasual_Create_RadioButton_Type_Singular.Checked = true;
+            this.Tasual_Create_RadioButton_Type_Singular.Location = new System.Drawing.Point(3, 3);
+            this.Tasual_Create_RadioButton_Type_Singular.Name = "Tasual_Create_RadioButton_Type_Singular";
+            this.Tasual_Create_RadioButton_Type_Singular.Size = new System.Drawing.Size(63, 17);
+            this.Tasual_Create_RadioButton_Type_Singular.TabIndex = 62;
+            this.Tasual_Create_RadioButton_Type_Singular.TabStop = true;
+            this.Tasual_Create_RadioButton_Type_Singular.Text = "Singular";
+            this.Tasual_Create_RadioButton_Type_Singular.UseVisualStyleBackColor = true;
+            this.Tasual_Create_RadioButton_Type_Singular.CheckedChanged += new System.EventHandler(this.Tasual_Create_RadioButton_Type_Singular_CheckedChanged);
+            // 
+            // Tasual_Create_Label_DateandTime
+            // 
+            this.Tasual_Create_Label_DateandTime.AutoSize = true;
+            this.Tasual_Create_Label_DateandTime.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.Tasual_Create_Label_DateandTime.Location = new System.Drawing.Point(72, 17);
+            this.Tasual_Create_Label_DateandTime.Name = "Tasual_Create_Label_DateandTime";
+            this.Tasual_Create_Label_DateandTime.Size = new System.Drawing.Size(77, 13);
+            this.Tasual_Create_Label_DateandTime.TabIndex = 61;
+            this.Tasual_Create_Label_DateandTime.Text = "Date and Time";
+            // 
+            // Tasual_Create_Label_Ends
+            // 
+            this.Tasual_Create_Label_Ends.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.Tasual_Create_Label_Ends.AutoSize = true;
+            this.Tasual_Create_Label_Ends.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.Tasual_Create_Label_Ends.Location = new System.Drawing.Point(9, 254);
+            this.Tasual_Create_Label_Ends.Name = "Tasual_Create_Label_Ends";
+            this.Tasual_Create_Label_Ends.Size = new System.Drawing.Size(31, 13);
+            this.Tasual_Create_Label_Ends.TabIndex = 60;
+            this.Tasual_Create_Label_Ends.Text = "Ends";
+            // 
+            // Tasual_Create_Label_Occurences
+            // 
+            this.Tasual_Create_Label_Occurences.AutoSize = true;
+            this.Tasual_Create_Label_Occurences.Location = new System.Drawing.Point(173, 5);
+            this.Tasual_Create_Label_Occurences.Name = "Tasual_Create_Label_Occurences";
+            this.Tasual_Create_Label_Occurences.Size = new System.Drawing.Size(63, 13);
+            this.Tasual_Create_Label_Occurences.TabIndex = 59;
+            this.Tasual_Create_Label_Occurences.Text = "occurences";
+            // 
+            // Tasual_Create_NumericUpDown_Ends_Occurences
+            // 
+            this.Tasual_Create_NumericUpDown_Ends_Occurences.Location = new System.Drawing.Point(117, 2);
+            this.Tasual_Create_NumericUpDown_Ends_Occurences.Maximum = new decimal(new int[] {
+            365,
+            0,
+            0,
+            0});
+            this.Tasual_Create_NumericUpDown_Ends_Occurences.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.Tasual_Create_NumericUpDown_Ends_Occurences.Name = "Tasual_Create_NumericUpDown_Ends_Occurences";
+            this.Tasual_Create_NumericUpDown_Ends_Occurences.Size = new System.Drawing.Size(53, 20);
+            this.Tasual_Create_NumericUpDown_Ends_Occurences.TabIndex = 58;
+            this.Tasual_Create_NumericUpDown_Ends_Occurences.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.Tasual_Create_NumericUpDown_Ends_Occurences.ValueChanged += new System.EventHandler(this.Tasual_Create_NumericUpDown_Ends_Occurences_ValueChanged);
+            // 
+            // Tasual_Create_DateTimePicker_EndDate
+            // 
+            this.Tasual_Create_DateTimePicker_EndDate.Location = new System.Drawing.Point(49, 24);
+            this.Tasual_Create_DateTimePicker_EndDate.Name = "Tasual_Create_DateTimePicker_EndDate";
+            this.Tasual_Create_DateTimePicker_EndDate.Size = new System.Drawing.Size(199, 20);
+            this.Tasual_Create_DateTimePicker_EndDate.TabIndex = 57;
+            this.Tasual_Create_DateTimePicker_EndDate.ValueChanged += new System.EventHandler(this.Tasual_Create_DateTimePicker_EndDate_ValueChanged);
+            // 
+            // Tasual_Create_RadioButton_Ends_OnDate
+            // 
+            this.Tasual_Create_RadioButton_Ends_OnDate.AutoSize = true;
+            this.Tasual_Create_RadioButton_Ends_OnDate.Location = new System.Drawing.Point(4, 26);
+            this.Tasual_Create_RadioButton_Ends_OnDate.Name = "Tasual_Create_RadioButton_Ends_OnDate";
+            this.Tasual_Create_RadioButton_Ends_OnDate.Size = new System.Drawing.Size(39, 17);
+            this.Tasual_Create_RadioButton_Ends_OnDate.TabIndex = 56;
+            this.Tasual_Create_RadioButton_Ends_OnDate.Text = "On";
+            this.Tasual_Create_RadioButton_Ends_OnDate.UseVisualStyleBackColor = true;
+            this.Tasual_Create_RadioButton_Ends_OnDate.CheckedChanged += new System.EventHandler(this.Tasual_Create_RadioButton_Ends_OnDate_CheckedChanged);
+            // 
+            // Tasual_Create_RadioButton_Ends_Occurences
+            // 
+            this.Tasual_Create_RadioButton_Ends_Occurences.AutoSize = true;
+            this.Tasual_Create_RadioButton_Ends_Occurences.Location = new System.Drawing.Point(70, 3);
+            this.Tasual_Create_RadioButton_Ends_Occurences.Name = "Tasual_Create_RadioButton_Ends_Occurences";
+            this.Tasual_Create_RadioButton_Ends_Occurences.Size = new System.Drawing.Size(47, 17);
+            this.Tasual_Create_RadioButton_Ends_Occurences.TabIndex = 55;
+            this.Tasual_Create_RadioButton_Ends_Occurences.Text = "After";
+            this.Tasual_Create_RadioButton_Ends_Occurences.UseVisualStyleBackColor = true;
+            this.Tasual_Create_RadioButton_Ends_Occurences.CheckedChanged += new System.EventHandler(this.Tasual_Create_RadioButton_Ends_Occurences_CheckedChanged);
+            // 
+            // Tasual_Create_RadioButton_Ends_Never
+            // 
+            this.Tasual_Create_RadioButton_Ends_Never.AutoSize = true;
+            this.Tasual_Create_RadioButton_Ends_Never.Checked = true;
+            this.Tasual_Create_RadioButton_Ends_Never.Location = new System.Drawing.Point(4, 3);
+            this.Tasual_Create_RadioButton_Ends_Never.Name = "Tasual_Create_RadioButton_Ends_Never";
+            this.Tasual_Create_RadioButton_Ends_Never.Size = new System.Drawing.Size(54, 17);
+            this.Tasual_Create_RadioButton_Ends_Never.TabIndex = 54;
+            this.Tasual_Create_RadioButton_Ends_Never.TabStop = true;
+            this.Tasual_Create_RadioButton_Ends_Never.Text = "Never";
+            this.Tasual_Create_RadioButton_Ends_Never.UseVisualStyleBackColor = true;
+            this.Tasual_Create_RadioButton_Ends_Never.CheckedChanged += new System.EventHandler(this.Tasual_Create_RadioButton_Ends_Never_CheckedChanged);
+            // 
+            // Tasual_Create_Label_MonthSel_All
+            // 
+            this.Tasual_Create_Label_MonthSel_All.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_MonthSel_All.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_MonthSel_All.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_MonthSel_All.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_MonthSel_All.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_MonthSel_All.Location = new System.Drawing.Point(110, 194);
+            this.Tasual_Create_Label_MonthSel_All.Name = "Tasual_Create_Label_MonthSel_All";
+            this.Tasual_Create_Label_MonthSel_All.Size = new System.Drawing.Size(35, 16);
+            this.Tasual_Create_Label_MonthSel_All.TabIndex = 53;
+            this.Tasual_Create_Label_MonthSel_All.Text = "All";
+            this.Tasual_Create_Label_MonthSel_All.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_MonthSel_All.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_All_Click);
+            // 
+            // Tasual_Create_Label_WeekSel_All
+            // 
+            this.Tasual_Create_Label_WeekSel_All.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_WeekSel_All.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_WeekSel_All.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_WeekSel_All.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_WeekSel_All.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_WeekSel_All.Location = new System.Drawing.Point(110, 166);
+            this.Tasual_Create_Label_WeekSel_All.Name = "Tasual_Create_Label_WeekSel_All";
+            this.Tasual_Create_Label_WeekSel_All.Size = new System.Drawing.Size(35, 16);
+            this.Tasual_Create_Label_WeekSel_All.TabIndex = 52;
+            this.Tasual_Create_Label_WeekSel_All.Text = "All";
+            this.Tasual_Create_Label_WeekSel_All.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_WeekSel_All.Click += new System.EventHandler(this.Tasual_Create_Label_WeekSel_All_Click);
+            // 
+            // Tasual_Create_Label_DaySel_All
+            // 
+            this.Tasual_Create_Label_DaySel_All.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_DaySel_All.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_DaySel_All.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_DaySel_All.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_DaySel_All.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_DaySel_All.Location = new System.Drawing.Point(110, 143);
+            this.Tasual_Create_Label_DaySel_All.Name = "Tasual_Create_Label_DaySel_All";
+            this.Tasual_Create_Label_DaySel_All.Size = new System.Drawing.Size(35, 16);
+            this.Tasual_Create_Label_DaySel_All.TabIndex = 51;
+            this.Tasual_Create_Label_DaySel_All.Text = "All";
+            this.Tasual_Create_Label_DaySel_All.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_DaySel_All.Click += new System.EventHandler(this.Tasual_Create_Label_DaySel_All_Click);
+            // 
+            // Tasual_Create_Label_DaySel_Specific
+            // 
+            this.Tasual_Create_Label_DaySel_Specific.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_DaySel_Specific.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_DaySel_Specific.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_DaySel_Specific.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_DaySel_Specific.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_DaySel_Specific.Location = new System.Drawing.Point(70, 143);
+            this.Tasual_Create_Label_DaySel_Specific.Name = "Tasual_Create_Label_DaySel_Specific";
+            this.Tasual_Create_Label_DaySel_Specific.Size = new System.Drawing.Size(35, 16);
+            this.Tasual_Create_Label_DaySel_Specific.TabIndex = 50;
+            this.Tasual_Create_Label_DaySel_Specific.Text = "19th";
+            this.Tasual_Create_Label_DaySel_Specific.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_DaySel_Specific.Click += new System.EventHandler(this.Tasual_Create_Label_DaySel_Specific_Click);
+            // 
+            // Tasual_Create_Label_Months
+            // 
+            this.Tasual_Create_Label_Months.AutoSize = true;
+            this.Tasual_Create_Label_Months.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.Tasual_Create_Label_Months.Location = new System.Drawing.Point(9, 197);
+            this.Tasual_Create_Label_Months.Name = "Tasual_Create_Label_Months";
+            this.Tasual_Create_Label_Months.Size = new System.Drawing.Size(42, 13);
+            this.Tasual_Create_Label_Months.TabIndex = 47;
+            this.Tasual_Create_Label_Months.Text = "Months";
+            // 
+            // Tasual_Create_Label_Weeks
+            // 
+            this.Tasual_Create_Label_Weeks.AutoSize = true;
+            this.Tasual_Create_Label_Weeks.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.Tasual_Create_Label_Weeks.Location = new System.Drawing.Point(10, 169);
+            this.Tasual_Create_Label_Weeks.Name = "Tasual_Create_Label_Weeks";
+            this.Tasual_Create_Label_Weeks.Size = new System.Drawing.Size(41, 13);
+            this.Tasual_Create_Label_Weeks.TabIndex = 46;
+            this.Tasual_Create_Label_Weeks.Text = "Weeks";
+            // 
+            // Tasual_Create_Label_Days
+            // 
+            this.Tasual_Create_Label_Days.AutoSize = true;
+            this.Tasual_Create_Label_Days.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.Tasual_Create_Label_Days.Location = new System.Drawing.Point(10, 146);
+            this.Tasual_Create_Label_Days.Name = "Tasual_Create_Label_Days";
+            this.Tasual_Create_Label_Days.Size = new System.Drawing.Size(31, 13);
+            this.Tasual_Create_Label_Days.TabIndex = 45;
+            this.Tasual_Create_Label_Days.Text = "Days";
+            // 
+            // Tasual_Create_Label_Summary
+            // 
+            this.Tasual_Create_Label_Summary.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.Tasual_Create_Label_Summary.Location = new System.Drawing.Point(3, 276);
+            this.Tasual_Create_Label_Summary.Name = "Tasual_Create_Label_Summary";
+            this.Tasual_Create_Label_Summary.Size = new System.Drawing.Size(333, 54);
+            this.Tasual_Create_Label_Summary.TabIndex = 42;
+            this.Tasual_Create_Label_Summary.Text = "Repeats on Mon, Tues, and Fri in the 2nd and 3rd weeks of May, Jun, and Jul until" +
+    " 12 occurences.";
+            this.Tasual_Create_Label_Summary.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Tasual_Create_Label_MonthSel_Dec
+            // 
+            this.Tasual_Create_Label_MonthSel_Dec.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_MonthSel_Dec.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_MonthSel_Dec.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_MonthSel_Dec.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_MonthSel_Dec.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_MonthSel_Dec.Location = new System.Drawing.Point(295, 203);
+            this.Tasual_Create_Label_MonthSel_Dec.Name = "Tasual_Create_Label_MonthSel_Dec";
+            this.Tasual_Create_Label_MonthSel_Dec.Size = new System.Drawing.Size(30, 16);
+            this.Tasual_Create_Label_MonthSel_Dec.TabIndex = 30;
+            this.Tasual_Create_Label_MonthSel_Dec.Text = "Dec";
+            this.Tasual_Create_Label_MonthSel_Dec.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_MonthSel_Dec.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_Dec_Click);
+            // 
+            // Tasual_Create_Label_MonthSel_Nov
+            // 
+            this.Tasual_Create_Label_MonthSel_Nov.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_MonthSel_Nov.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_MonthSel_Nov.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_MonthSel_Nov.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_MonthSel_Nov.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_MonthSel_Nov.Location = new System.Drawing.Point(266, 203);
+            this.Tasual_Create_Label_MonthSel_Nov.Name = "Tasual_Create_Label_MonthSel_Nov";
+            this.Tasual_Create_Label_MonthSel_Nov.Size = new System.Drawing.Size(30, 16);
+            this.Tasual_Create_Label_MonthSel_Nov.TabIndex = 40;
+            this.Tasual_Create_Label_MonthSel_Nov.Text = "Nov";
+            this.Tasual_Create_Label_MonthSel_Nov.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_MonthSel_Nov.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_Nov_Click);
+            // 
+            // Tasual_Create_Label_MonthSel_Oct
+            // 
+            this.Tasual_Create_Label_MonthSel_Oct.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_MonthSel_Oct.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_MonthSel_Oct.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_MonthSel_Oct.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_MonthSel_Oct.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_MonthSel_Oct.Location = new System.Drawing.Point(237, 203);
+            this.Tasual_Create_Label_MonthSel_Oct.Name = "Tasual_Create_Label_MonthSel_Oct";
+            this.Tasual_Create_Label_MonthSel_Oct.Size = new System.Drawing.Size(30, 16);
+            this.Tasual_Create_Label_MonthSel_Oct.TabIndex = 39;
+            this.Tasual_Create_Label_MonthSel_Oct.Text = "Oct";
+            this.Tasual_Create_Label_MonthSel_Oct.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_MonthSel_Oct.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_Oct_Click);
+            // 
+            // Tasual_Create_Label_WeekSel_1st
+            // 
+            this.Tasual_Create_Label_WeekSel_1st.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_WeekSel_1st.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_WeekSel_1st.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_WeekSel_1st.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_WeekSel_1st.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_WeekSel_1st.Location = new System.Drawing.Point(150, 166);
+            this.Tasual_Create_Label_WeekSel_1st.Name = "Tasual_Create_Label_WeekSel_1st";
+            this.Tasual_Create_Label_WeekSel_1st.Size = new System.Drawing.Size(45, 16);
+            this.Tasual_Create_Label_WeekSel_1st.TabIndex = 24;
+            this.Tasual_Create_Label_WeekSel_1st.Text = "1st";
+            this.Tasual_Create_Label_WeekSel_1st.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_WeekSel_1st.Click += new System.EventHandler(this.Tasual_Create_Label_WeekSel_1st_Click);
+            // 
+            // Tasual_Create_Label_MonthSel_Sep
+            // 
+            this.Tasual_Create_Label_MonthSel_Sep.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_MonthSel_Sep.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_MonthSel_Sep.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_MonthSel_Sep.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_MonthSel_Sep.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_MonthSel_Sep.Location = new System.Drawing.Point(208, 203);
+            this.Tasual_Create_Label_MonthSel_Sep.Name = "Tasual_Create_Label_MonthSel_Sep";
+            this.Tasual_Create_Label_MonthSel_Sep.Size = new System.Drawing.Size(30, 16);
+            this.Tasual_Create_Label_MonthSel_Sep.TabIndex = 38;
+            this.Tasual_Create_Label_MonthSel_Sep.Text = "Sep";
+            this.Tasual_Create_Label_MonthSel_Sep.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_MonthSel_Sep.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_Sep_Click);
+            // 
+            // Tasual_Create_Label_WeekSel_2nd
+            // 
+            this.Tasual_Create_Label_WeekSel_2nd.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_WeekSel_2nd.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_WeekSel_2nd.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_WeekSel_2nd.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_WeekSel_2nd.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_WeekSel_2nd.Location = new System.Drawing.Point(193, 166);
+            this.Tasual_Create_Label_WeekSel_2nd.Name = "Tasual_Create_Label_WeekSel_2nd";
+            this.Tasual_Create_Label_WeekSel_2nd.Size = new System.Drawing.Size(45, 16);
+            this.Tasual_Create_Label_WeekSel_2nd.TabIndex = 25;
+            this.Tasual_Create_Label_WeekSel_2nd.Text = "2nd";
+            this.Tasual_Create_Label_WeekSel_2nd.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_WeekSel_2nd.Click += new System.EventHandler(this.Tasual_Create_Label_WeekSel_2nd_Click);
+            // 
+            // Tasual_Create_Label_WeekSel_3rd
+            // 
+            this.Tasual_Create_Label_WeekSel_3rd.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_WeekSel_3rd.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_WeekSel_3rd.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_WeekSel_3rd.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_WeekSel_3rd.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_WeekSel_3rd.Location = new System.Drawing.Point(237, 166);
+            this.Tasual_Create_Label_WeekSel_3rd.Name = "Tasual_Create_Label_WeekSel_3rd";
+            this.Tasual_Create_Label_WeekSel_3rd.Size = new System.Drawing.Size(45, 16);
+            this.Tasual_Create_Label_WeekSel_3rd.TabIndex = 26;
+            this.Tasual_Create_Label_WeekSel_3rd.Text = "3rd";
+            this.Tasual_Create_Label_WeekSel_3rd.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_WeekSel_3rd.Click += new System.EventHandler(this.Tasual_Create_Label_WeekSel_3rd_Click);
+            // 
+            // Tasual_Create_Label_MonthSel_Aug
+            // 
+            this.Tasual_Create_Label_MonthSel_Aug.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_MonthSel_Aug.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_MonthSel_Aug.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_MonthSel_Aug.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_MonthSel_Aug.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_MonthSel_Aug.Location = new System.Drawing.Point(179, 203);
+            this.Tasual_Create_Label_MonthSel_Aug.Name = "Tasual_Create_Label_MonthSel_Aug";
+            this.Tasual_Create_Label_MonthSel_Aug.Size = new System.Drawing.Size(30, 16);
+            this.Tasual_Create_Label_MonthSel_Aug.TabIndex = 37;
+            this.Tasual_Create_Label_MonthSel_Aug.Text = "Aug";
+            this.Tasual_Create_Label_MonthSel_Aug.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_MonthSel_Aug.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_Aug_Click);
+            // 
+            // Tasual_Create_Label_MonthSel_Jul
+            // 
+            this.Tasual_Create_Label_MonthSel_Jul.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_MonthSel_Jul.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_MonthSel_Jul.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_MonthSel_Jul.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_MonthSel_Jul.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_MonthSel_Jul.Location = new System.Drawing.Point(150, 203);
+            this.Tasual_Create_Label_MonthSel_Jul.Name = "Tasual_Create_Label_MonthSel_Jul";
+            this.Tasual_Create_Label_MonthSel_Jul.Size = new System.Drawing.Size(30, 16);
+            this.Tasual_Create_Label_MonthSel_Jul.TabIndex = 36;
+            this.Tasual_Create_Label_MonthSel_Jul.Text = "Jul";
+            this.Tasual_Create_Label_MonthSel_Jul.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_MonthSel_Jul.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_Jul_Click);
+            // 
+            // Tasual_Create_Label_MonthSel_Jun
+            // 
+            this.Tasual_Create_Label_MonthSel_Jun.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_MonthSel_Jun.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_MonthSel_Jun.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_MonthSel_Jun.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_MonthSel_Jun.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_MonthSel_Jun.Location = new System.Drawing.Point(295, 188);
+            this.Tasual_Create_Label_MonthSel_Jun.Name = "Tasual_Create_Label_MonthSel_Jun";
+            this.Tasual_Create_Label_MonthSel_Jun.Size = new System.Drawing.Size(30, 16);
+            this.Tasual_Create_Label_MonthSel_Jun.TabIndex = 35;
+            this.Tasual_Create_Label_MonthSel_Jun.Text = "Jun";
+            this.Tasual_Create_Label_MonthSel_Jun.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_MonthSel_Jun.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_Jun_Click);
+            // 
+            // Tasual_Create_Label_WeekSel_Last
+            // 
+            this.Tasual_Create_Label_WeekSel_Last.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_WeekSel_Last.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_WeekSel_Last.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_WeekSel_Last.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_WeekSel_Last.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_WeekSel_Last.Location = new System.Drawing.Point(280, 166);
+            this.Tasual_Create_Label_WeekSel_Last.Name = "Tasual_Create_Label_WeekSel_Last";
+            this.Tasual_Create_Label_WeekSel_Last.Size = new System.Drawing.Size(45, 16);
+            this.Tasual_Create_Label_WeekSel_Last.TabIndex = 29;
+            this.Tasual_Create_Label_WeekSel_Last.Text = "Last";
+            this.Tasual_Create_Label_WeekSel_Last.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_WeekSel_Last.Click += new System.EventHandler(this.Tasual_Create_Label_WeekSel_Last_Click);
+            // 
+            // Tasual_Create_Label_MonthSel_May
+            // 
+            this.Tasual_Create_Label_MonthSel_May.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_MonthSel_May.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_MonthSel_May.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_MonthSel_May.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_MonthSel_May.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_MonthSel_May.Location = new System.Drawing.Point(266, 188);
+            this.Tasual_Create_Label_MonthSel_May.Name = "Tasual_Create_Label_MonthSel_May";
+            this.Tasual_Create_Label_MonthSel_May.Size = new System.Drawing.Size(30, 16);
+            this.Tasual_Create_Label_MonthSel_May.TabIndex = 34;
+            this.Tasual_Create_Label_MonthSel_May.Text = "May";
+            this.Tasual_Create_Label_MonthSel_May.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_MonthSel_May.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_May_Click);
+            // 
+            // Tasual_Create_Label_MonthSel_Apr
+            // 
+            this.Tasual_Create_Label_MonthSel_Apr.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_MonthSel_Apr.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_MonthSel_Apr.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_MonthSel_Apr.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_MonthSel_Apr.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_MonthSel_Apr.Location = new System.Drawing.Point(237, 188);
+            this.Tasual_Create_Label_MonthSel_Apr.Name = "Tasual_Create_Label_MonthSel_Apr";
+            this.Tasual_Create_Label_MonthSel_Apr.Size = new System.Drawing.Size(30, 16);
+            this.Tasual_Create_Label_MonthSel_Apr.TabIndex = 33;
+            this.Tasual_Create_Label_MonthSel_Apr.Text = "Apr";
+            this.Tasual_Create_Label_MonthSel_Apr.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_MonthSel_Apr.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_Apr_Click);
+            // 
+            // Tasual_Create_Label_MonthSel_Mar
+            // 
+            this.Tasual_Create_Label_MonthSel_Mar.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_MonthSel_Mar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_MonthSel_Mar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_MonthSel_Mar.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_MonthSel_Mar.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_MonthSel_Mar.Location = new System.Drawing.Point(208, 188);
+            this.Tasual_Create_Label_MonthSel_Mar.Name = "Tasual_Create_Label_MonthSel_Mar";
+            this.Tasual_Create_Label_MonthSel_Mar.Size = new System.Drawing.Size(30, 16);
+            this.Tasual_Create_Label_MonthSel_Mar.TabIndex = 32;
+            this.Tasual_Create_Label_MonthSel_Mar.Text = "Mar";
+            this.Tasual_Create_Label_MonthSel_Mar.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_MonthSel_Mar.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_Mar_Click);
+            // 
+            // Tasual_Create_Label_MonthSel_Feb
+            // 
+            this.Tasual_Create_Label_MonthSel_Feb.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_MonthSel_Feb.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_MonthSel_Feb.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_MonthSel_Feb.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_MonthSel_Feb.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_MonthSel_Feb.Location = new System.Drawing.Point(179, 188);
+            this.Tasual_Create_Label_MonthSel_Feb.Name = "Tasual_Create_Label_MonthSel_Feb";
+            this.Tasual_Create_Label_MonthSel_Feb.Size = new System.Drawing.Size(30, 16);
+            this.Tasual_Create_Label_MonthSel_Feb.TabIndex = 31;
+            this.Tasual_Create_Label_MonthSel_Feb.Text = "Feb";
+            this.Tasual_Create_Label_MonthSel_Feb.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_MonthSel_Feb.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_Feb_Click);
+            // 
+            // Tasual_Create_Label_MonthSel_Jan
+            // 
+            this.Tasual_Create_Label_MonthSel_Jan.BackColor = System.Drawing.Color.Silver;
+            this.Tasual_Create_Label_MonthSel_Jan.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Tasual_Create_Label_MonthSel_Jan.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tasual_Create_Label_MonthSel_Jan.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Tasual_Create_Label_MonthSel_Jan.ForeColor = System.Drawing.Color.White;
+            this.Tasual_Create_Label_MonthSel_Jan.Location = new System.Drawing.Point(150, 188);
+            this.Tasual_Create_Label_MonthSel_Jan.Name = "Tasual_Create_Label_MonthSel_Jan";
+            this.Tasual_Create_Label_MonthSel_Jan.Size = new System.Drawing.Size(30, 16);
+            this.Tasual_Create_Label_MonthSel_Jan.TabIndex = 30;
+            this.Tasual_Create_Label_MonthSel_Jan.Text = "Jan";
+            this.Tasual_Create_Label_MonthSel_Jan.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tasual_Create_Label_MonthSel_Jan.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_Jan_Click);
+            // 
+            // Tasual_Create_RadioButton_Time_Specific
+            // 
+            this.Tasual_Create_RadioButton_Time_Specific.AutoSize = true;
+            this.Tasual_Create_RadioButton_Time_Specific.Location = new System.Drawing.Point(6, 28);
+            this.Tasual_Create_RadioButton_Time_Specific.Name = "Tasual_Create_RadioButton_Time_Specific";
+            this.Tasual_Create_RadioButton_Time_Specific.Size = new System.Drawing.Size(14, 13);
+            this.Tasual_Create_RadioButton_Time_Specific.TabIndex = 23;
+            this.Tasual_Create_RadioButton_Time_Specific.UseVisualStyleBackColor = true;
+            this.Tasual_Create_RadioButton_Time_Specific.CheckedChanged += new System.EventHandler(this.Tasual_Create_RadioButton_Time_Specific_CheckedChanged);
+            // 
+            // Tasual_Create_RadioButton_Time_AllDay
+            // 
+            this.Tasual_Create_RadioButton_Time_AllDay.AutoSize = true;
+            this.Tasual_Create_RadioButton_Time_AllDay.Checked = true;
+            this.Tasual_Create_RadioButton_Time_AllDay.Location = new System.Drawing.Point(6, 5);
+            this.Tasual_Create_RadioButton_Time_AllDay.Name = "Tasual_Create_RadioButton_Time_AllDay";
+            this.Tasual_Create_RadioButton_Time_AllDay.Size = new System.Drawing.Size(56, 17);
+            this.Tasual_Create_RadioButton_Time_AllDay.TabIndex = 22;
+            this.Tasual_Create_RadioButton_Time_AllDay.TabStop = true;
+            this.Tasual_Create_RadioButton_Time_AllDay.Text = "All day";
+            this.Tasual_Create_RadioButton_Time_AllDay.UseVisualStyleBackColor = true;
+            this.Tasual_Create_RadioButton_Time_AllDay.CheckedChanged += new System.EventHandler(this.Tasual_Create_RadioButton_Time_AllDay_CheckedChanged);
+            // 
+            // Tasual_Create_DateTimePicker_StartTime
+            // 
+            this.Tasual_Create_DateTimePicker_StartTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.Tasual_Create_DateTimePicker_StartTime.Location = new System.Drawing.Point(24, 24);
+            this.Tasual_Create_DateTimePicker_StartTime.Name = "Tasual_Create_DateTimePicker_StartTime";
+            this.Tasual_Create_DateTimePicker_StartTime.ShowUpDown = true;
+            this.Tasual_Create_DateTimePicker_StartTime.Size = new System.Drawing.Size(85, 20);
+            this.Tasual_Create_DateTimePicker_StartTime.TabIndex = 21;
+            this.Tasual_Create_DateTimePicker_StartTime.ValueChanged += new System.EventHandler(this.Tasual_Create_DateTimePicker_StartTime_ValueChanged);
+            // 
+            // Tasual_Create_CheckBox_Scheduled
+            // 
+            this.Tasual_Create_CheckBox_Scheduled.AutoSize = true;
+            this.Tasual_Create_CheckBox_Scheduled.Location = new System.Drawing.Point(13, -1);
+            this.Tasual_Create_CheckBox_Scheduled.Name = "Tasual_Create_CheckBox_Scheduled";
+            this.Tasual_Create_CheckBox_Scheduled.Size = new System.Drawing.Size(77, 17);
+            this.Tasual_Create_CheckBox_Scheduled.TabIndex = 18;
+            this.Tasual_Create_CheckBox_Scheduled.Text = "Scheduled";
+            this.Tasual_Create_CheckBox_Scheduled.UseVisualStyleBackColor = true;
+            this.Tasual_Create_CheckBox_Scheduled.CheckedChanged += new System.EventHandler(this.Tasual_Create_CheckBox_Scheduled_CheckedChanged);
+            // 
+            // Tasual_Create_NumericUpDown_Type_RepeatSimple
+            // 
+            this.Tasual_Create_NumericUpDown_Type_RepeatSimple.Location = new System.Drawing.Point(166, 3);
+            this.Tasual_Create_NumericUpDown_Type_RepeatSimple.Maximum = new decimal(new int[] {
+            365,
+            0,
+            0,
+            0});
+            this.Tasual_Create_NumericUpDown_Type_RepeatSimple.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.Tasual_Create_NumericUpDown_Type_RepeatSimple.Name = "Tasual_Create_NumericUpDown_Type_RepeatSimple";
+            this.Tasual_Create_NumericUpDown_Type_RepeatSimple.Size = new System.Drawing.Size(48, 20);
+            this.Tasual_Create_NumericUpDown_Type_RepeatSimple.TabIndex = 18;
+            this.Tasual_Create_NumericUpDown_Type_RepeatSimple.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.Tasual_Create_NumericUpDown_Type_RepeatSimple.ValueChanged += new System.EventHandler(this.Tasual_Create_NumericUpDown_Type_RepeatSimple_ValueChanged);
+            // 
+            // Tasual_Create_ComboBox_RepeatSimple
+            // 
+            this.Tasual_Create_ComboBox_RepeatSimple.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.Tasual_Create_ComboBox_RepeatSimple.FormattingEnabled = true;
+            this.Tasual_Create_ComboBox_RepeatSimple.Items.AddRange(new object[] {
             "Day(s)",
             "Week(s)",
             "Month(s)",
             "Year(s)"});
-            this.comboBox7.Location = new System.Drawing.Point(230, 95);
-            this.comboBox7.Name = "comboBox7";
-            this.comboBox7.Size = new System.Drawing.Size(96, 21);
-            this.comboBox7.TabIndex = 17;
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Location = new System.Drawing.Point(175, 96);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
-            365,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(48, 20);
-            this.numericUpDown1.TabIndex = 18;
-            this.numericUpDown1.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(13, -1);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(77, 17);
-            this.checkBox4.TabIndex = 18;
-            this.checkBox4.Text = "Scheduled";
-            this.checkBox4.UseVisualStyleBackColor = true;
-            // 
-            // dateTimePicker2
-            // 
-            this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dateTimePicker2.Location = new System.Drawing.Point(240, 33);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.ShowUpDown = true;
-            this.dateTimePicker2.Size = new System.Drawing.Size(85, 20);
-            this.dateTimePicker2.TabIndex = 21;
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(222, 14);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(56, 17);
-            this.radioButton1.TabIndex = 22;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "All day";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(222, 37);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(14, 13);
-            this.radioButton2.TabIndex = 23;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.UseVisualStyleBackColor = true;
-            // 
-            // label10
-            // 
-            this.label10.BackColor = System.Drawing.Color.Silver;
-            this.label10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label10.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label10.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label10.ForeColor = System.Drawing.Color.White;
-            this.label10.Location = new System.Drawing.Point(150, 166);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(45, 16);
-            this.label10.TabIndex = 24;
-            this.label10.Text = "1st";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label11
-            // 
-            this.label11.BackColor = System.Drawing.Color.Silver;
-            this.label11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label11.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label11.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(193, 166);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(45, 16);
-            this.label11.TabIndex = 25;
-            this.label11.Text = "2nd";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label12
-            // 
-            this.label12.BackColor = System.Drawing.Color.Silver;
-            this.label12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label12.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label12.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label12.ForeColor = System.Drawing.Color.White;
-            this.label12.Location = new System.Drawing.Point(237, 166);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(45, 16);
-            this.label12.TabIndex = 26;
-            this.label12.Text = "3rd";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label15
-            // 
-            this.label15.BackColor = System.Drawing.Color.Silver;
-            this.label15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label15.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label15.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label15.ForeColor = System.Drawing.Color.White;
-            this.label15.Location = new System.Drawing.Point(280, 166);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(45, 16);
-            this.label15.TabIndex = 29;
-            this.label15.Text = "Last";
-            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label16
-            // 
-            this.label16.BackColor = System.Drawing.Color.Silver;
-            this.label16.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label16.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label16.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label16.ForeColor = System.Drawing.Color.White;
-            this.label16.Location = new System.Drawing.Point(150, 188);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(30, 16);
-            this.label16.TabIndex = 30;
-            this.label16.Text = "Jan";
-            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label17
-            // 
-            this.label17.BackColor = System.Drawing.Color.Silver;
-            this.label17.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label17.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label17.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label17.ForeColor = System.Drawing.Color.White;
-            this.label17.Location = new System.Drawing.Point(179, 188);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(30, 16);
-            this.label17.TabIndex = 31;
-            this.label17.Text = "Feb";
-            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label18
-            // 
-            this.label18.BackColor = System.Drawing.Color.Silver;
-            this.label18.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label18.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label18.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label18.ForeColor = System.Drawing.Color.White;
-            this.label18.Location = new System.Drawing.Point(208, 188);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(30, 16);
-            this.label18.TabIndex = 32;
-            this.label18.Text = "Mar";
-            this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label19
-            // 
-            this.label19.BackColor = System.Drawing.Color.Silver;
-            this.label19.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label19.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label19.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label19.ForeColor = System.Drawing.Color.White;
-            this.label19.Location = new System.Drawing.Point(237, 188);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(30, 16);
-            this.label19.TabIndex = 33;
-            this.label19.Text = "Apr";
-            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label20
-            // 
-            this.label20.BackColor = System.Drawing.Color.Silver;
-            this.label20.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label20.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label20.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label20.ForeColor = System.Drawing.Color.White;
-            this.label20.Location = new System.Drawing.Point(266, 188);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(30, 16);
-            this.label20.TabIndex = 34;
-            this.label20.Text = "May";
-            this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label21
-            // 
-            this.label21.BackColor = System.Drawing.Color.Silver;
-            this.label21.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label21.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label21.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label21.ForeColor = System.Drawing.Color.White;
-            this.label21.Location = new System.Drawing.Point(295, 188);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(30, 16);
-            this.label21.TabIndex = 35;
-            this.label21.Text = "Jun";
-            this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label22
-            // 
-            this.label22.BackColor = System.Drawing.Color.Silver;
-            this.label22.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label22.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label22.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label22.ForeColor = System.Drawing.Color.White;
-            this.label22.Location = new System.Drawing.Point(150, 203);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(30, 16);
-            this.label22.TabIndex = 36;
-            this.label22.Text = "Jul";
-            this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label23
-            // 
-            this.label23.BackColor = System.Drawing.Color.Silver;
-            this.label23.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label23.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label23.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label23.ForeColor = System.Drawing.Color.White;
-            this.label23.Location = new System.Drawing.Point(179, 203);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(30, 16);
-            this.label23.TabIndex = 37;
-            this.label23.Text = "Aug";
-            this.label23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label24
-            // 
-            this.label24.BackColor = System.Drawing.Color.Silver;
-            this.label24.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label24.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label24.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label24.ForeColor = System.Drawing.Color.White;
-            this.label24.Location = new System.Drawing.Point(208, 203);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(30, 16);
-            this.label24.TabIndex = 38;
-            this.label24.Text = "Sep";
-            this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label25
-            // 
-            this.label25.BackColor = System.Drawing.Color.Silver;
-            this.label25.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label25.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label25.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label25.ForeColor = System.Drawing.Color.White;
-            this.label25.Location = new System.Drawing.Point(237, 203);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(30, 16);
-            this.label25.TabIndex = 39;
-            this.label25.Text = "Oct";
-            this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label26
-            // 
-            this.label26.BackColor = System.Drawing.Color.Silver;
-            this.label26.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label26.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label26.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label26.ForeColor = System.Drawing.Color.White;
-            this.label26.Location = new System.Drawing.Point(266, 203);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(30, 16);
-            this.label26.TabIndex = 40;
-            this.label26.Text = "Nov";
-            this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label27
-            // 
-            this.label27.BackColor = System.Drawing.Color.Silver;
-            this.label27.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label27.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label27.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label27.ForeColor = System.Drawing.Color.White;
-            this.label27.Location = new System.Drawing.Point(295, 203);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(30, 16);
-            this.label27.TabIndex = 30;
-            this.label27.Text = "Dec";
-            this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label13
-            // 
-            this.label13.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.label13.Location = new System.Drawing.Point(3, 276);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(333, 54);
-            this.label13.TabIndex = 42;
-            this.label13.Text = "Repeats every Mon, Tues, and Fri in the 2nd and 3rd weeks of May, Jun, Jul.";
-            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label14.Location = new System.Drawing.Point(10, 146);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(31, 13);
-            this.label14.TabIndex = 45;
-            this.label14.Text = "Days";
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label28.Location = new System.Drawing.Point(10, 169);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(41, 13);
-            this.label28.TabIndex = 46;
-            this.label28.Text = "Weeks";
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label29.Location = new System.Drawing.Point(9, 197);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(42, 13);
-            this.label29.TabIndex = 47;
-            this.label29.Text = "Months";
-            // 
-            // label30
-            // 
-            this.label30.BackColor = System.Drawing.Color.Silver;
-            this.label30.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label30.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label30.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label30.ForeColor = System.Drawing.Color.White;
-            this.label30.Location = new System.Drawing.Point(70, 143);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(35, 16);
-            this.label30.TabIndex = 50;
-            this.label30.Text = "19th";
-            this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label31
-            // 
-            this.label31.BackColor = System.Drawing.Color.Silver;
-            this.label31.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label31.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label31.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label31.ForeColor = System.Drawing.Color.White;
-            this.label31.Location = new System.Drawing.Point(110, 143);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(35, 16);
-            this.label31.TabIndex = 51;
-            this.label31.Text = "All";
-            this.label31.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label32
-            // 
-            this.label32.BackColor = System.Drawing.Color.Silver;
-            this.label32.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label32.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label32.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label32.ForeColor = System.Drawing.Color.White;
-            this.label32.Location = new System.Drawing.Point(110, 166);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(35, 16);
-            this.label32.TabIndex = 52;
-            this.label32.Text = "All";
-            this.label32.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label33
-            // 
-            this.label33.BackColor = System.Drawing.Color.Silver;
-            this.label33.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label33.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label33.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label33.ForeColor = System.Drawing.Color.White;
-            this.label33.Location = new System.Drawing.Point(110, 194);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(35, 16);
-            this.label33.TabIndex = 53;
-            this.label33.Text = "All";
-            this.label33.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // radioButton3
-            // 
-            this.radioButton3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(82, 231);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(54, 17);
-            this.radioButton3.TabIndex = 54;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Never";
-            this.radioButton3.UseVisualStyleBackColor = true;
-            // 
-            // radioButton4
-            // 
-            this.radioButton4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(148, 231);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(47, 17);
-            this.radioButton4.TabIndex = 55;
-            this.radioButton4.TabStop = true;
-            this.radioButton4.Text = "After";
-            this.radioButton4.UseVisualStyleBackColor = true;
-            // 
-            // radioButton5
-            // 
-            this.radioButton5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.radioButton5.AutoSize = true;
-            this.radioButton5.Location = new System.Drawing.Point(82, 254);
-            this.radioButton5.Name = "radioButton5";
-            this.radioButton5.Size = new System.Drawing.Size(39, 17);
-            this.radioButton5.TabIndex = 56;
-            this.radioButton5.TabStop = true;
-            this.radioButton5.Text = "On";
-            this.radioButton5.UseVisualStyleBackColor = true;
-            // 
-            // dateTimePicker3
-            // 
-            this.dateTimePicker3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.dateTimePicker3.Location = new System.Drawing.Point(127, 252);
-            this.dateTimePicker3.Name = "dateTimePicker3";
-            this.dateTimePicker3.Size = new System.Drawing.Size(199, 20);
-            this.dateTimePicker3.TabIndex = 57;
-            // 
-            // numericUpDown2
-            // 
-            this.numericUpDown2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.numericUpDown2.Location = new System.Drawing.Point(195, 230);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
-            365,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(53, 20);
-            this.numericUpDown2.TabIndex = 58;
-            this.numericUpDown2.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // label34
-            // 
-            this.label34.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(251, 233);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(63, 13);
-            this.label34.TabIndex = 59;
-            this.label34.Text = "occurences";
-            // 
-            // label35
-            // 
-            this.label35.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label35.AutoSize = true;
-            this.label35.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label35.Location = new System.Drawing.Point(9, 254);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(31, 13);
-            this.label35.TabIndex = 60;
-            this.label35.Text = "Ends";
-            // 
-            // label36
-            // 
-            this.label36.AutoSize = true;
-            this.label36.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label36.Location = new System.Drawing.Point(72, 17);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(77, 13);
-            this.label36.TabIndex = 61;
-            this.label36.Text = "Date and Time";
-            // 
-            // radioButton6
-            // 
-            this.radioButton6.AutoSize = true;
-            this.radioButton6.Location = new System.Drawing.Point(12, 96);
-            this.radioButton6.Name = "radioButton6";
-            this.radioButton6.Size = new System.Drawing.Size(63, 17);
-            this.radioButton6.TabIndex = 62;
-            this.radioButton6.TabStop = true;
-            this.radioButton6.Text = "Singular";
-            this.radioButton6.UseVisualStyleBackColor = true;
-            // 
-            // radioButton7
-            // 
-            this.radioButton7.AutoSize = true;
-            this.radioButton7.Location = new System.Drawing.Point(79, 96);
-            this.radioButton7.Name = "radioButton7";
-            this.radioButton7.Size = new System.Drawing.Size(94, 17);
-            this.radioButton7.TabIndex = 63;
-            this.radioButton7.TabStop = true;
-            this.radioButton7.Text = "Repeats every";
-            this.radioButton7.UseVisualStyleBackColor = true;
-            // 
-            // radioButton8
-            // 
-            this.radioButton8.AutoSize = true;
-            this.radioButton8.Location = new System.Drawing.Point(12, 118);
-            this.radioButton8.Name = "radioButton8";
-            this.radioButton8.Size = new System.Drawing.Size(156, 17);
-            this.radioButton8.TabIndex = 64;
-            this.radioButton8.TabStop = true;
-            this.radioButton8.Text = "Repeats at custom intervals";
-            this.radioButton8.UseVisualStyleBackColor = true;
-            // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label37.Location = new System.Drawing.Point(10, 68);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(113, 13);
-            this.label37.TabIndex = 22;
-            this.label37.Text = "Dismiss when overdue";
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(197, 451);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 19;
-            this.button2.Text = "Create";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(278, 451);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 20;
-            this.button3.Text = "Cancel";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // textBox2
-            // 
-            this.textBox2.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.textBox2.Location = new System.Drawing.Point(12, 50);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(168, 20);
-            this.textBox2.TabIndex = 21;
-            this.textBox2.Text = "Link";
-            // 
-            // textBox3
-            // 
-            this.textBox3.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.textBox3.Location = new System.Drawing.Point(12, 76);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(168, 20);
-            this.textBox3.TabIndex = 22;
-            this.textBox3.Text = "Location";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(300, 13);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(53, 22);
-            this.button1.TabIndex = 23;
-            this.button1.Text = "Notes";
-            this.button1.UseVisualStyleBackColor = true;
+            this.Tasual_Create_ComboBox_RepeatSimple.Location = new System.Drawing.Point(221, 2);
+            this.Tasual_Create_ComboBox_RepeatSimple.Name = "Tasual_Create_ComboBox_RepeatSimple";
+            this.Tasual_Create_ComboBox_RepeatSimple.Size = new System.Drawing.Size(96, 21);
+            this.Tasual_Create_ComboBox_RepeatSimple.TabIndex = 17;
+            this.Tasual_Create_ComboBox_RepeatSimple.SelectedIndexChanged += new System.EventHandler(this.Tasual_Create_ComboBox_RepeatSimple_SelectedIndexChanged);
+            // 
+            // Tasual_Create_Button_Create
+            // 
+            this.Tasual_Create_Button_Create.Location = new System.Drawing.Point(197, 451);
+            this.Tasual_Create_Button_Create.Name = "Tasual_Create_Button_Create";
+            this.Tasual_Create_Button_Create.Size = new System.Drawing.Size(75, 23);
+            this.Tasual_Create_Button_Create.TabIndex = 19;
+            this.Tasual_Create_Button_Create.Text = "Create";
+            this.Tasual_Create_Button_Create.UseVisualStyleBackColor = true;
+            this.Tasual_Create_Button_Create.Click += new System.EventHandler(this.Tasual_Create_Button_Create_Click);
+            // 
+            // Tasual_Create_Button_Cancel
+            // 
+            this.Tasual_Create_Button_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.Tasual_Create_Button_Cancel.Location = new System.Drawing.Point(278, 451);
+            this.Tasual_Create_Button_Cancel.Name = "Tasual_Create_Button_Cancel";
+            this.Tasual_Create_Button_Cancel.Size = new System.Drawing.Size(75, 23);
+            this.Tasual_Create_Button_Cancel.TabIndex = 20;
+            this.Tasual_Create_Button_Cancel.Text = "Cancel";
+            this.Tasual_Create_Button_Cancel.UseVisualStyleBackColor = true;
+            this.Tasual_Create_Button_Cancel.Click += new System.EventHandler(this.Tasual_Create_Button_Cancel_Click);
+            // 
+            // Tasual_Create_TextBox_Link
+            // 
+            this.Tasual_Create_TextBox_Link.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.Tasual_Create_TextBox_Link.Location = new System.Drawing.Point(12, 50);
+            this.Tasual_Create_TextBox_Link.Name = "Tasual_Create_TextBox_Link";
+            this.Tasual_Create_TextBox_Link.Size = new System.Drawing.Size(168, 20);
+            this.Tasual_Create_TextBox_Link.TabIndex = 21;
+            this.Tasual_Create_TextBox_Link.Text = "Link";
+            this.Tasual_Create_TextBox_Link.TextChanged += new System.EventHandler(this.Tasual_Create_TextBox_Link_TextChanged);
+            // 
+            // Tasual_Create_TextBox_Location
+            // 
+            this.Tasual_Create_TextBox_Location.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.Tasual_Create_TextBox_Location.Location = new System.Drawing.Point(12, 76);
+            this.Tasual_Create_TextBox_Location.Name = "Tasual_Create_TextBox_Location";
+            this.Tasual_Create_TextBox_Location.Size = new System.Drawing.Size(168, 20);
+            this.Tasual_Create_TextBox_Location.TabIndex = 22;
+            this.Tasual_Create_TextBox_Location.Text = "Location";
+            this.Tasual_Create_TextBox_Location.TextChanged += new System.EventHandler(this.Tasual_Create_TextBox_Location_TextChanged);
+            // 
+            // Tasual_Create_Button_Notes
+            // 
+            this.Tasual_Create_Button_Notes.Location = new System.Drawing.Point(300, 13);
+            this.Tasual_Create_Button_Notes.Name = "Tasual_Create_Button_Notes";
+            this.Tasual_Create_Button_Notes.Size = new System.Drawing.Size(53, 22);
+            this.Tasual_Create_Button_Notes.TabIndex = 23;
+            this.Tasual_Create_Button_Notes.Text = "Notes";
+            this.Tasual_Create_Button_Notes.UseVisualStyleBackColor = true;
+            this.Tasual_Create_Button_Notes.Click += new System.EventHandler(this.Tasual_Create_Button_Notes_Click);
+            // 
+            // Tasual_Create_Panel_Time
+            // 
+            this.Tasual_Create_Panel_Time.Controls.Add(this.Tasual_Create_RadioButton_Time_AllDay);
+            this.Tasual_Create_Panel_Time.Controls.Add(this.Tasual_Create_DateTimePicker_StartTime);
+            this.Tasual_Create_Panel_Time.Controls.Add(this.Tasual_Create_RadioButton_Time_Specific);
+            this.Tasual_Create_Panel_Time.Location = new System.Drawing.Point(215, 13);
+            this.Tasual_Create_Panel_Time.Name = "Tasual_Create_Panel_Time";
+            this.Tasual_Create_Panel_Time.Size = new System.Drawing.Size(115, 46);
+            this.Tasual_Create_Panel_Time.TabIndex = 24;
+            // 
+            // Tasual_Create_Panel_Ends
+            // 
+            this.Tasual_Create_Panel_Ends.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.Tasual_Create_Panel_Ends.Controls.Add(this.Tasual_Create_Label_Occurences);
+            this.Tasual_Create_Panel_Ends.Controls.Add(this.Tasual_Create_RadioButton_Ends_Never);
+            this.Tasual_Create_Panel_Ends.Controls.Add(this.Tasual_Create_RadioButton_Ends_Occurences);
+            this.Tasual_Create_Panel_Ends.Controls.Add(this.Tasual_Create_RadioButton_Ends_OnDate);
+            this.Tasual_Create_Panel_Ends.Controls.Add(this.Tasual_Create_DateTimePicker_EndDate);
+            this.Tasual_Create_Panel_Ends.Controls.Add(this.Tasual_Create_NumericUpDown_Ends_Occurences);
+            this.Tasual_Create_Panel_Ends.Location = new System.Drawing.Point(75, 229);
+            this.Tasual_Create_Panel_Ends.Name = "Tasual_Create_Panel_Ends";
+            this.Tasual_Create_Panel_Ends.Size = new System.Drawing.Size(254, 49);
+            this.Tasual_Create_Panel_Ends.TabIndex = 24;
+            // 
+            // Tasual_Create_Panel_Type
+            // 
+            this.Tasual_Create_Panel_Type.Controls.Add(this.Tasual_Create_RadioButton_Type_RepeatSimple);
+            this.Tasual_Create_Panel_Type.Controls.Add(this.Tasual_Create_ComboBox_RepeatSimple);
+            this.Tasual_Create_Panel_Type.Controls.Add(this.Tasual_Create_RadioButton_Type_RepeatCustom);
+            this.Tasual_Create_Panel_Type.Controls.Add(this.Tasual_Create_NumericUpDown_Type_RepeatSimple);
+            this.Tasual_Create_Panel_Type.Controls.Add(this.Tasual_Create_RadioButton_Type_Singular);
+            this.Tasual_Create_Panel_Type.Location = new System.Drawing.Point(9, 92);
+            this.Tasual_Create_Panel_Type.Name = "Tasual_Create_Panel_Type";
+            this.Tasual_Create_Panel_Type.Size = new System.Drawing.Size(321, 46);
+            this.Tasual_Create_Panel_Type.TabIndex = 24;
             // 
             // Tasual_Create_Task
             // 
+            this.AcceptButton = this.Tasual_Create_Button_Create;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(363, 484);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.textBox1);
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.CancelButton = this.Tasual_Create_Button_Cancel;
+            this.ClientSize = new System.Drawing.Size(364, 485);
+            this.Controls.Add(this.Tasual_Create_Button_Notes);
+            this.Controls.Add(this.Tasual_Create_TextBox_Location);
+            this.Controls.Add(this.Tasual_Create_TextBox_Link);
+            this.Controls.Add(this.Tasual_Create_Label_Priority);
+            this.Controls.Add(this.Tasual_Create_Label_Category);
+            this.Controls.Add(this.Tasual_Create_Button_Cancel);
+            this.Controls.Add(this.Tasual_Create_Button_Create);
+            this.Controls.Add(this.Tasual_Create_ComboBox_Priority);
+            this.Controls.Add(this.Tasual_Create_GroupBox_Scheduled);
+            this.Controls.Add(this.Tasual_Create_ComboBox_Category);
+            this.Controls.Add(this.Tasual_Create_TextBox_Description);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.HelpButton = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Tasual_Create_Task";
+            this.Padding = new System.Windows.Forms.Padding(0, 0, 0, 8);
             this.Text = "Create";
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            this.Load += new System.EventHandler(this.Tasual_Create_Task_Load);
+            this.Tasual_Create_GroupBox_Scheduled.ResumeLayout(false);
+            this.Tasual_Create_GroupBox_Scheduled.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Tasual_Create_NumericUpDown_Ends_Occurences)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Tasual_Create_NumericUpDown_Type_RepeatSimple)).EndInit();
+            this.Tasual_Create_Panel_Time.ResumeLayout(false);
+            this.Tasual_Create_Panel_Time.PerformLayout();
+            this.Tasual_Create_Panel_Ends.ResumeLayout(false);
+            this.Tasual_Create_Panel_Ends.PerformLayout();
+            this.Tasual_Create_Panel_Type.ResumeLayout(false);
+            this.Tasual_Create_Panel_Type.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
 		}
 
 		#endregion
-		private System.Windows.Forms.TextBox textBox1;
-		private System.Windows.Forms.ComboBox comboBox1;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.ComboBox comboBox2;
-		private System.Windows.Forms.Label label9;
-		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.Label label6;
-		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.ComboBox comboBox7;
-        private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label36;
-        private System.Windows.Forms.Label label35;
-        private System.Windows.Forms.Label label34;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.DateTimePicker dateTimePicker3;
-        private System.Windows.Forms.RadioButton radioButton5;
-        private System.Windows.Forms.RadioButton radioButton4;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.Label label33;
-        private System.Windows.Forms.Label label32;
-        private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.RadioButton radioButton7;
-        private System.Windows.Forms.RadioButton radioButton6;
-        private System.Windows.Forms.RadioButton radioButton8;
-        private System.Windows.Forms.Label label37;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.TextBox Tasual_Create_TextBox_Description;
+		private System.Windows.Forms.ComboBox Tasual_Create_ComboBox_Category;
+		private System.Windows.Forms.Label Tasual_Create_Label_Category;
+		private System.Windows.Forms.Label Tasual_Create_Label_Priority;
+		private System.Windows.Forms.ComboBox Tasual_Create_ComboBox_Priority;
+		private System.Windows.Forms.Label Tasual_Create_Label_DaySel_Sat;
+		private System.Windows.Forms.Label Tasual_Create_Label_DaySel_Fri;
+		private System.Windows.Forms.Label Tasual_Create_Label_DaySel_Thu;
+		private System.Windows.Forms.Label Tasual_Create_Label_DaySel_Wed;
+		private System.Windows.Forms.Label Tasual_Create_Label_DaySel_Tue;
+		private System.Windows.Forms.Label Tasual_Create_Label_DaySel_Mon;
+		private System.Windows.Forms.Label Tasual_Create_Label_DaySel_Sun;
+		private System.Windows.Forms.ComboBox Tasual_Create_ComboBox_Dismiss;
+        private System.Windows.Forms.DateTimePicker Tasual_Create_DateTimePicker_StartDate;
+        private System.Windows.Forms.GroupBox Tasual_Create_GroupBox_Scheduled;
+        private System.Windows.Forms.NumericUpDown Tasual_Create_NumericUpDown_Type_RepeatSimple;
+        private System.Windows.Forms.ComboBox Tasual_Create_ComboBox_RepeatSimple;
+        private System.Windows.Forms.Label Tasual_Create_Label_MonthSel_Dec;
+        private System.Windows.Forms.Label Tasual_Create_Label_MonthSel_Nov;
+        private System.Windows.Forms.Label Tasual_Create_Label_MonthSel_Oct;
+        private System.Windows.Forms.Label Tasual_Create_Label_MonthSel_Sep;
+        private System.Windows.Forms.Label Tasual_Create_Label_MonthSel_Aug;
+        private System.Windows.Forms.Label Tasual_Create_Label_MonthSel_Jul;
+        private System.Windows.Forms.Label Tasual_Create_Label_MonthSel_Jun;
+        private System.Windows.Forms.Label Tasual_Create_Label_MonthSel_May;
+        private System.Windows.Forms.Label Tasual_Create_Label_MonthSel_Apr;
+        private System.Windows.Forms.Label Tasual_Create_Label_MonthSel_Mar;
+        private System.Windows.Forms.Label Tasual_Create_Label_MonthSel_Feb;
+        private System.Windows.Forms.Label Tasual_Create_Label_MonthSel_Jan;
+        private System.Windows.Forms.Label Tasual_Create_Label_WeekSel_Last;
+        private System.Windows.Forms.Label Tasual_Create_Label_WeekSel_3rd;
+        private System.Windows.Forms.Label Tasual_Create_Label_WeekSel_2nd;
+        private System.Windows.Forms.Label Tasual_Create_Label_WeekSel_1st;
+        private System.Windows.Forms.RadioButton Tasual_Create_RadioButton_Time_Specific;
+        private System.Windows.Forms.RadioButton Tasual_Create_RadioButton_Time_AllDay;
+        private System.Windows.Forms.DateTimePicker Tasual_Create_DateTimePicker_StartTime;
+        private System.Windows.Forms.CheckBox Tasual_Create_CheckBox_Scheduled;
+        private System.Windows.Forms.Label Tasual_Create_Label_Summary;
+        private System.Windows.Forms.Label Tasual_Create_Label_Months;
+        private System.Windows.Forms.Label Tasual_Create_Label_Weeks;
+        private System.Windows.Forms.Label Tasual_Create_Label_Days;
+        private System.Windows.Forms.Label Tasual_Create_Label_DateandTime;
+        private System.Windows.Forms.Label Tasual_Create_Label_Ends;
+        private System.Windows.Forms.Label Tasual_Create_Label_Occurences;
+        private System.Windows.Forms.NumericUpDown Tasual_Create_NumericUpDown_Ends_Occurences;
+        private System.Windows.Forms.DateTimePicker Tasual_Create_DateTimePicker_EndDate;
+        private System.Windows.Forms.RadioButton Tasual_Create_RadioButton_Ends_OnDate;
+        private System.Windows.Forms.RadioButton Tasual_Create_RadioButton_Ends_Occurences;
+        private System.Windows.Forms.RadioButton Tasual_Create_RadioButton_Ends_Never;
+        private System.Windows.Forms.Label Tasual_Create_Label_MonthSel_All;
+        private System.Windows.Forms.Label Tasual_Create_Label_WeekSel_All;
+        private System.Windows.Forms.Label Tasual_Create_Label_DaySel_All;
+        private System.Windows.Forms.Label Tasual_Create_Label_DaySel_Specific;
+        private System.Windows.Forms.RadioButton Tasual_Create_RadioButton_Type_RepeatSimple;
+        private System.Windows.Forms.RadioButton Tasual_Create_RadioButton_Type_Singular;
+        private System.Windows.Forms.RadioButton Tasual_Create_RadioButton_Type_RepeatCustom;
+        private System.Windows.Forms.Label Tasual_Create_Label_Dismiss;
+        private System.Windows.Forms.Button Tasual_Create_Button_Create;
+        private System.Windows.Forms.Button Tasual_Create_Button_Cancel;
+        private System.Windows.Forms.TextBox Tasual_Create_TextBox_Link;
+        private System.Windows.Forms.TextBox Tasual_Create_TextBox_Location;
+        private System.Windows.Forms.Button Tasual_Create_Button_Notes;
+        private System.Windows.Forms.Panel Tasual_Create_Panel_Time;
+        private System.Windows.Forms.Panel Tasual_Create_Panel_Ends;
+        private System.Windows.Forms.Panel Tasual_Create_Panel_Type;
     }
 }
