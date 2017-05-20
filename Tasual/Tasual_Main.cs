@@ -1199,6 +1199,7 @@ namespace Tasual
 
                 for (int hops = 1; hops <= 3650; ++hops)
                 {
+                    Rules.Count = hops;
                     if (NextTime > BaseTime)
                     {
                         return NextTime;
@@ -1211,35 +1212,9 @@ namespace Tasual
                 }
             }
 
-            // COMPLEX RECURRANCE: SPECIAL CASE: Last week of the month
-            // Scope through and select the last week, then find the applicable day for that week
-            else if ((Rules.WeekFilter & WeekEnum.Last) != 0)
-            {
-                for (int i = 1; i <= 12; ++i)
-                {
-                    if ((Rules.MonthFilter & FromMonthToFlag(NextTime.Month)) != 0)
-                    {
-                        NextTime = NextTime.AddDays(DateTime.DaysInMonth(NextTime.Year, NextTime.Month) - 7);
+            // todo: find some good way to count occurences of complex recurrances 
 
-                        for (int x = 1; x <= 7; ++x)
-                        {
-                            if ((Rules.DayFilter & FromDayToFlag(NextTime.DayOfWeek)) != 0)
-                            {
-                                if (NextTime > BaseTime)
-                                {
-                                    return NextTime;
-                                }
-                            }
-
-                            NextTime = NextTime.AddDays(1);
-                        }
-                    }
-
-                    NextTime = NextTime.AddMonths(1);
-                }
-            }
-
-            // COMPLEX RECURRANCE: STANDARD CASE: Filter month/week/day by flags
+            // COMPLEX RECURRANCE: Filter month/week/day by flags
             // Increment NextTime until we find a day that matches all of our criteria
             else if ((Rules.MonthFilter != 0) || (Rules.WeekFilter != 0) || (Rules.DayFilter != 0))
             {
@@ -1247,7 +1222,16 @@ namespace Tasual
                 {
                     if ((Rules.MonthFilter & FromMonthToFlag(NextTime.Month)) != 0)
                     {
-                        if ((Rules.WeekFilter & FromWeekToFlag(NextTime.Day)) != 0)
+                        // if we're searching for the last week, automatically jump to the last 7 days of the month
+                        bool FindingLastWeek = false;
+                        if ((Rules.WeekFilter & WeekEnum.Last) != 0)
+                        {
+                            FindingLastWeek = true;
+                            NextTime = NextTime.AddDays(DateTime.DaysInMonth(NextTime.Year, NextTime.Month) - 7);
+                            //Console.WriteLine("Last week {0} {1}", DateTime.DaysInMonth(NextTime.Year, NextTime.Month), DateTime.DaysInMonth(NextTime.Year, NextTime.Month) - 7);
+                        }
+
+                        if (((Rules.WeekFilter & FromWeekToFlag(NextTime.Day)) != 0) || FindingLastWeek)
                         {
                             if ((Rules.DayFilter & FromDayToFlag(NextTime.DayOfWeek)) != 0)
                             {
