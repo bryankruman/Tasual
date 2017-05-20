@@ -113,6 +113,7 @@ namespace Tasual
 
         private void Tasual_StatusLabel_UpdateCounts()
         {
+            // TODO: Get total from TaskArray size
             int Complete = 0;
             int Total = 0;
 
