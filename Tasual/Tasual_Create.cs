@@ -373,7 +373,82 @@ namespace Tasual
 
         private void Tasual_Create_Button_Create_Click(object sender, EventArgs e)
         {
+            Task Task = new Task();
+            Task.Description = Tasual_Create_TextBox_Description.Text;
+            Task.Priority = Tasual_Create_ComboBox_Priority.SelectedIndex;
+            Task.Group = "todofixthis";
+            Task.Status = (int)Tasual_Main.StatusEnum.New;
+            Task.Type = (int)Tasual_Main.TypeEnum.TYPE_USER_SINGLE;
 
+            Task.TimeInfo TimeInfo = new Task.TimeInfo();
+            TimeInfo.Started = DateTime.Now;
+            if (Tasual_Create_RadioButton_Type_Singular.Checked == false)
+            {
+                if (Tasual_Create_RadioButton_Type_RepeatSimple.Checked == true)
+                {
+                    switch (Tasual_Create_ComboBox_RepeatSimple.SelectedIndex)
+                    {
+                        case 0: // days
+                            {
+                                TimeInfo.Daily = (int)Tasual_Create_NumericUpDown_Type_RepeatSimple.Value;
+                                break;
+                            }
+                        case 1: // weeks
+                            {
+                                TimeInfo.Weekly = (int)Tasual_Create_NumericUpDown_Type_RepeatSimple.Value;
+                                break;
+                            }
+                        case 2: // months
+                            {
+                                TimeInfo.Monthly = (int)Tasual_Create_NumericUpDown_Type_RepeatSimple.Value;
+                                break;
+                            }
+                        case 3: // years
+                            {
+                                TimeInfo.Yearly = (int)Tasual_Create_NumericUpDown_Type_RepeatSimple.Value;
+                                break;
+                            }
+                    }
+                }
+                else if (Tasual_Create_RadioButton_Type_RepeatCustom.Checked == true)
+                {
+                    // day filters
+                    if (Tasual_Create_Label_DaySel_Specific.Tag != null)
+                    {
+                        TimeInfo.SpecificDay = Tasual_Create_DateTimePicker_StartDate.Value.Day;
+                    }
+                    else
+                    {
+                        if (Tasual_Create_Label_DaySel_Mon.Tag != null) { TimeInfo.DayFilter &= Task.DayEnum.Monday; }
+                        if (Tasual_Create_Label_DaySel_Tue.Tag != null) { TimeInfo.DayFilter &= Task.DayEnum.Tuesday; }
+                        if (Tasual_Create_Label_DaySel_Wed.Tag != null) { TimeInfo.DayFilter &= Task.DayEnum.Wednesday; }
+                        if (Tasual_Create_Label_DaySel_Thu.Tag != null) { TimeInfo.DayFilter &= Task.DayEnum.Thursday; }
+                        if (Tasual_Create_Label_DaySel_Fri.Tag != null) { TimeInfo.DayFilter &= Task.DayEnum.Friday; }
+                        if (Tasual_Create_Label_DaySel_Sat.Tag != null) { TimeInfo.DayFilter &= Task.DayEnum.Saturday; }
+                        if (Tasual_Create_Label_DaySel_Sun.Tag != null) { TimeInfo.DayFilter &= Task.DayEnum.Sunday; }
+                    }
+
+                    if (Tasual_Create_Label_WeekSel_1st.Tag != null) { TimeInfo.WeekFilter &= Task.WeekEnum.First; }
+                    if (Tasual_Create_Label_WeekSel_2nd.Tag != null) { TimeInfo.WeekFilter &= Task.WeekEnum.Second; }
+                    if (Tasual_Create_Label_WeekSel_3rd.Tag != null) { TimeInfo.WeekFilter &= Task.WeekEnum.Third; }
+                    if (Tasual_Create_Label_WeekSel_Last.Tag != null) { TimeInfo.WeekFilter &= Task.WeekEnum.Last; }
+
+                    if (Tasual_Create_Label_MonthSel_Jan.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.January; }
+                    if (Tasual_Create_Label_MonthSel_Feb.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.February; }
+                    if (Tasual_Create_Label_MonthSel_Mar.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.March; }
+                    if (Tasual_Create_Label_MonthSel_Apr.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.April; }
+                    if (Tasual_Create_Label_MonthSel_May.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.May; }
+                    if (Tasual_Create_Label_MonthSel_Jun.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.June; }
+                    if (Tasual_Create_Label_MonthSel_Jul.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.July; }
+                    if (Tasual_Create_Label_MonthSel_Aug.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.August; }
+                    if (Tasual_Create_Label_MonthSel_Sep.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.September; }
+                    if (Tasual_Create_Label_MonthSel_Oct.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.October; }
+                    if (Tasual_Create_Label_MonthSel_Nov.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.November; }
+                    if (Tasual_Create_Label_MonthSel_Dec.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.December; }
+
+                }
+            }
+            Task.Time = TimeInfo;
         }
 
         private void Tasual_Create_Button_Cancel_Click(object sender, EventArgs e)
