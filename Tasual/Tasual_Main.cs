@@ -22,7 +22,7 @@ namespace Tasual
         // ==============
 
         public List<Task> TaskArray = new List<Task>();
-        public List<string> GroupArray = new List<string>(); // currently unused // TODO: Add all known groups from taskarray tasks into here
+        //public List<string> GroupArray = new List<string>(); // currently unused // TODO: Add all known groups from taskarray tasks into here
         public List<string> HiddenGroups = new List<string>();
         public List<string> HiddenGroupHasStub = new List<string>();
 
@@ -76,16 +76,26 @@ namespace Tasual
 
         public void Tasual_DeleteTask(ref Task Task, ListViewItem Item)
         {
+            ListViewGroup OldGroup = Item.Group;
             TaskArray.Remove(Task);
             Tasual_Array_Save_Text();
             if (Item != null) { Tasual_ListView.Items.Remove(Item); }
+            if ((OldGroup != null) && (OldGroup.Items.Count == 0))
+            {
+                Tasual_ListView.Groups.Remove(OldGroup);
+            }
         }
 
         public void Tasual_DeleteTask(ListViewItem Item)
         {
+            ListViewGroup OldGroup = Item.Group;
             TaskArray.Remove((Task)Item.Tag);
             Tasual_Array_Save_Text();
             if (Item != null) { Tasual_ListView.Items.Remove(Item); }
+            if ((OldGroup != null) && (OldGroup.Items.Count == 0))
+            {
+                Tasual_ListView.Groups.Remove(OldGroup);
+            }
         }
 
         private void Tasual_ReAssignGroup(string OldTaskGroup, string NewTaskGroup)
@@ -707,11 +717,21 @@ namespace Tasual
 
         private void Tasual_MenuStrip_Create_Quick_Click(object sender, EventArgs e)
         {
+            string Group = "";
+            if(Tasual_ListView.Groups.Count != 0)
+            {
+                Group = Tasual_ListView.Groups[0].Name;
+            }
+            else
+            {
+                Group = "Tasks";
+            }
+
             Task Task = new Task(
                 0, 
                 0, 
                 0, 
-                "Testing", 
+                Group, 
                 "New task", 
                 new Task.TimeInfo(), 
                 new Timer()
