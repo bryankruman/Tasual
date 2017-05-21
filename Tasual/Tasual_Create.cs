@@ -238,139 +238,159 @@ namespace Tasual
             }
         }
 
+        private void Tasual_Create_AllNoneSelection(Label AllLabel, List<Label> LabelList)
+        {
+            bool Selected = true;
+
+            if (AllLabel.Text == "All")
+            {
+                AllLabel.Text = "None";
+                Selected = true;
+            }
+            else
+            {
+                AllLabel.Text = "All";
+                Selected = false;
+            }
+
+            foreach (Label SelectionLabel in LabelList)
+            {
+                Tasual_Create_TagLabel(SelectionLabel, Selected);
+            }
+        }
+
+        private void Tasual_Create_CheckSelected(List<Label> LabelList, Label AffectedLabel)
+        {
+            bool AllSelected = true;
+            foreach (Label SelectionLabel in LabelList)
+            {
+                if (SelectionLabel.Tag == null)
+                {
+                    AllSelected = false;
+                    break;
+                }
+            }
+
+            if (AllSelected)
+            {
+                AffectedLabel.Text = "None";
+            }
+            else
+            {
+                AffectedLabel.Text = "All";
+            }
+        }
+        private void Tasual_Create_TagLabel(Label Label, bool Tagged)
+        {
+            if (Tagged)
+            {
+                Label.ForeColor = Color.Black;
+                Label.BackColor = Color.LightBlue;
+                Label.Tag = true;
+            }
+            else
+            {
+                Label.ForeColor = Color.White;
+                Label.BackColor = Color.Silver;
+                Label.Tag = null;
+            }
+        }
+
         private void Tasual_Create_Label_DaySel_Specific_Click(object sender, EventArgs e)
         {
+            Label Label = sender as Label;
 
+            bool Selected = false;
+            if (Label.Tag == null)
+            {
+                // previously not selected, lets select it
+                Tasual_Create_TagLabel(Label, true);
+                Selected = false;
+            }
+            else
+            {
+                // previously selected, lets unselect it
+                Tasual_Create_TagLabel(Label, false);
+                Selected = true;
+            }
+
+            foreach (Label SelectionLabel in SelectionLabels_Days)
+            {
+                Tasual_Create_TagLabel(SelectionLabel, Selected);
+            }
+
+            Tasual_Create_CheckSelected(SelectionLabels_Days, Tasual_Create_Label_DaySel_All);
         }
 
         private void Tasual_Create_Label_DaySel_All_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void Tasual_Create_Label_DaySel_Sun_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Tasual_Create_Label_DaySel_Mon_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Tasual_Create_Label_DaySel_Tue_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Tasual_Create_Label_DaySel_Wed_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Tasual_Create_Label_DaySel_Thu_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Tasual_Create_Label_DaySel_Fri_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Tasual_Create_Label_DaySel_Sat_Click(object sender, EventArgs e)
-        {
-
+            Tasual_Create_AllNoneSelection((Label)sender, SelectionLabels_Days);
+            Tasual_Create_TagLabel(Tasual_Create_Label_DaySel_Specific, false);
         }
 
         private void Tasual_Create_Label_WeekSel_All_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void Tasual_Create_Label_WeekSel_1st_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Tasual_Create_Label_WeekSel_2nd_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Tasual_Create_Label_WeekSel_3rd_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Tasual_Create_Label_WeekSel_Last_Click(object sender, EventArgs e)
-        {
-
+            Tasual_Create_AllNoneSelection((Label)sender, SelectionLabels_Weeks);
         }
 
         private void Tasual_Create_Label_MonthSel_All_Click(object sender, EventArgs e)
         {
-
+            Tasual_Create_AllNoneSelection((Label)sender, SelectionLabels_Months);
         }
 
-        private void Tasual_Create_Label_MonthSel_Jan_Click(object sender, EventArgs e)
+        private void Tasual_Create_Label_DaySel_ClickHandler(object sender, EventArgs e)
         {
+            Label Label = sender as Label;
 
+            if (Label.Tag == null)
+            {
+                // previously not selected, lets select it
+                Tasual_Create_TagLabel(Label, true);
+                Tasual_Create_TagLabel(Tasual_Create_Label_DaySel_Specific, false);
+                Tasual_Create_CheckSelected(SelectionLabels_Days, Tasual_Create_Label_DaySel_All);
+            }
+            else
+            {
+                // previously selected, lets unselect it
+                Tasual_Create_TagLabel(Label, false);
+                Tasual_Create_Label_DaySel_All.Text = "All";
+            }
         }
 
-        private void Tasual_Create_Label_MonthSel_Feb_Click(object sender, EventArgs e)
+        private void Tasual_Create_Label_WeekSel_ClickHandler(object sender, EventArgs e)
         {
+            Label Label = sender as Label;
 
+            if (Label.Tag == null)
+            {
+                // previously not selected, lets select it
+                Tasual_Create_TagLabel(Label, true);
+                Tasual_Create_CheckSelected(SelectionLabels_Weeks, Tasual_Create_Label_WeekSel_All);
+            }
+            else
+            {
+                // previously selected, lets unselect it
+                Tasual_Create_TagLabel(Label, false);
+                Tasual_Create_Label_WeekSel_All.Text = "All";
+            }
         }
 
-        private void Tasual_Create_Label_MonthSel_Mar_Click(object sender, EventArgs e)
+        private void Tasual_Create_Label_MonthSel_ClickHandler(object sender, EventArgs e)
         {
+            Label Label = sender as Label;
 
-        }
-
-        private void Tasual_Create_Label_MonthSel_Apr_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Tasual_Create_Label_MonthSel_May_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Tasual_Create_Label_MonthSel_Jun_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Tasual_Create_Label_MonthSel_Jul_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Tasual_Create_Label_MonthSel_Aug_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Tasual_Create_Label_MonthSel_Sep_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Tasual_Create_Label_MonthSel_Oct_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Tasual_Create_Label_MonthSel_Nov_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Tasual_Create_Label_MonthSel_Dec_Click(object sender, EventArgs e)
-        {
-
+            if (Label.Tag == null)
+            {
+                // previously not selected, lets select it
+                Tasual_Create_TagLabel(Label, true);
+                Tasual_Create_CheckSelected(SelectionLabels_Months, Tasual_Create_Label_MonthSel_All);
+            }
+            else
+            {
+                // previously selected, lets unselect it
+                Tasual_Create_TagLabel(Label, false);
+                Tasual_Create_Label_MonthSel_All.Text = "All";
+            }
         }
 
         private void Tasual_Create_Button_Notes_Click(object sender, EventArgs e)

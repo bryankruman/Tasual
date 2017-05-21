@@ -21,6 +21,7 @@ namespace Tasual
         // ==============
 
         public List<Task> TaskArray = new List<Task>();
+        public List<string> GroupArray = new List<string>(); // currently unused // TODO: Add all known groups from taskarray tasks into here
         public List<string> HiddenGroups = new List<string>();
         public List<string> HiddenGroupHasStub = new List<string>();
 
@@ -94,6 +95,7 @@ namespace Tasual
                 if (Task.Group == OldTaskGroup)
                 {
                     Task.Group = NewTaskGroup;
+                    Tasual_ListView_AssignGroup(NewTaskGroup, ref Task.Item);
                 }
             }
         }
@@ -544,21 +546,13 @@ namespace Tasual
             return Found;
         }
 
-        private void Tasual_ListView_AssignGroup(string TaskGroup, ref ListViewItem Item)
+        private void Tasual_ListView_AssignGroup(string GroupName, ref ListViewItem Item)
         {
-            ListViewGroup Found = null;
-            foreach (ListViewGroup Group in Tasual_ListView.Groups)
-            {
-                if (Group.Name == TaskGroup)
-                {
-                    Found = Group;
-                    break;
-                }
-            }
+            ListViewGroup Found = Tasual_ListView_FindGroup(GroupName);
             if (Found == null)
             {
                 ListViewGroup NewGroup = new ListViewGroup();
-                NewGroup.Name = TaskGroup;
+                NewGroup.Name = GroupName;
                 NewGroup.Header = NewGroup.Name;
                 Tasual_ListView.Groups.Add(NewGroup);
                 Console.WriteLine("Group: {0} - {1}", Tasual_ListView.Groups.IndexOf(NewGroup), NewGroup.Name);
@@ -572,7 +566,7 @@ namespace Tasual
 
         public ListViewItem Tasual_ListView_CreateListViewItem(ref Task Task)
         {
-            string[] Item_S;
+            string[] ItemColumnData;
 
             // determine which columns we're going to have
             switch (Tasual_Setting_Style)
@@ -582,9 +576,9 @@ namespace Tasual
                 // - columns: Description, Time
                 case Styles.Custom:
                     {
-                        Item_S = new string[2];
-                        Item_S[0] = Task.Description;
-                        Item_S[1] = Tasual_ListView_FormatTime(Task.Time.Started.ToLocalTime(), TimeFormat.Short);
+                        ItemColumnData = new string[2];
+                        ItemColumnData[0] = Task.Description;
+                        ItemColumnData[1] = Tasual_ListView_FormatTime(Task.Time.Started.ToLocalTime(), TimeFormat.Short);
                         break;
                     }
 
@@ -593,9 +587,9 @@ namespace Tasual
                 // - columns: Description, Time
                 case Styles.Simple:
                     {
-                        Item_S = new string[2];
-                        Item_S[0] = Task.Description;
-                        Item_S[1] = Task.Group.ToString();
+                        ItemColumnData = new string[2];
+                        ItemColumnData[0] = Task.Description;
+                        ItemColumnData[1] = Task.Group.ToString();
                         break;
                     }
 
@@ -604,10 +598,10 @@ namespace Tasual
                 // - columns: Description, Category, Time
                 case Styles.Detailed:
                     {
-                        Item_S = new string[3];
-                        Item_S[0] = Task.Description;
-                        Item_S[1] = Task.Group.ToString();
-                        Item_S[2] = Tasual_ListView_FormatTime(Task.Time.Started.ToLocalTime(), TimeFormat.Elapsed);
+                        ItemColumnData = new string[3];
+                        ItemColumnData[0] = Task.Description;
+                        ItemColumnData[1] = Task.Group.ToString();
+                        ItemColumnData[2] = Tasual_ListView_FormatTime(Task.Time.Started.ToLocalTime(), TimeFormat.Elapsed);
                         break;
                     }
 
@@ -617,8 +611,9 @@ namespace Tasual
                     }
             }
 
-            ListViewItem Item = new ListViewItem(Item_S);
+            ListViewItem Item = new ListViewItem(ItemColumnData);
             Item.Tag = Task;
+            Task.Item = Item;
 
             Tasual_ListView_AssignGroup(Task.Group.ToString(), ref Item);
             Tasual_ListView_ChangeStatus(ref Item, Task.Status);
@@ -682,8 +677,6 @@ namespace Tasual
                         Stub.Description = "This item has been hidden";
                         Task.TimeInfo Time = new Task.TimeInfo();
                         Time.Started = DateTime.Now.ToLocalTime();
-                        //Time.Ending = 2;
-                        //Time.Next = 3;
                         Stub.Time = Time;
                         Tasual_ListView_CreateListViewItem(ref Stub);
                     }
@@ -783,7 +776,6 @@ namespace Tasual
         // ListView
         private void Tasual_ListView_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
         {
-            //Tasual_SizeColumns();
             e.NewWidth = this.Tasual_ListView.Columns[e.ColumnIndex].Width;
             e.Cancel = true;
         }
@@ -1453,6 +1445,7 @@ namespace Tasual
         public string Description;
         public TimeInfo Time;
         public Timer Timer;
+        public ListViewItem Item;
 
         public enum Arguments
         {
