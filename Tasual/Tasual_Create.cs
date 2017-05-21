@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace Tasual
 {
@@ -62,7 +63,14 @@ namespace Tasual
 
             // TODO: DataSource will need to be different for other display styles
             // Perhaps build an array of groups? Or just search through every task item in TaskArray worst case scenario
-            Tasual_Create_ComboBox_Category.DataSource = _Tasual_Main.Tasual_ListView.Groups;
+            if (_Tasual_Main.Tasual_ListView.Groups.Count != 0)
+            {
+                Tasual_Create_ComboBox_Category.DataSource = _Tasual_Main.Tasual_ListView.Groups;
+            }
+            else
+            {
+                Tasual_Create_ComboBox_Category.Items.Add("Tasks");
+            }
             Tasual_Create_ComboBox_Category.SelectedIndex = 0;
 
             // TODO: Populate Category list with existing categories
@@ -401,14 +409,40 @@ namespace Tasual
             NotesForm.ShowDialog(this);
         }
 
+        // TODO: Filter unwanted characters from text input on Tasual_ListView and all other textboxes
+        // See: http://stackoverflow.com/questions/12607087/only-allow-specific-characters-in-textbox
+        Regex AllowedCharacters = new Regex("^[\\w\\s]+$"); // todo: Make this not suck as much
+
         private void Tasual_Create_Button_Create_Click(object sender, EventArgs e)
         {
             Task Task = new Task();
-            Task.Description = Tasual_Create_TextBox_Description.Text;
-            Task.Priority = Tasual_Create_ComboBox_Priority.SelectedIndex;
-            Task.Group = Tasual_Create_ComboBox_Category.Text;
             Task.Status = (int)Task.Statuses.New;
             Task.Type = (int)Task.Types.TYPE_USER_SINGLE;
+
+            if (
+                (Tasual_Create_TextBox_Description.Text != Tasual_Create_TextBox_Description.WatermarkText)
+                &&
+                !string.IsNullOrWhiteSpace(Tasual_Create_TextBox_Description.Text)
+                )
+            {
+                if (AllowedCharacters.IsMatch(Tasual_Create_TextBox_Description.Text))
+                {
+                    Task.Description = Tasual_Create_TextBox_Description.Text;
+                }
+                else
+                {
+                    Console.WriteLine("Tasual_Create_Button_Create_Click(): Invalid characters!");
+                    return;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Tasual_Create_Button_Create_Click(): Description cannot be blank!");
+                return;
+            }
+
+            Task.Priority = Tasual_Create_ComboBox_Priority.SelectedIndex;
+            Task.Group = Tasual_Create_ComboBox_Category.Text;
 
             Task.Notes = Notes;
             if (Tasual_Create_TextBox_Link.Text != Tasual_Create_TextBox_Link.WatermarkText)
