@@ -18,6 +18,8 @@ namespace Tasual
         public List<Label> SelectionLabels_Weeks = new List<Label>();
         public List<Label> SelectionLabels_Months = new List<Label>();
 
+        public string Notes = "";
+
         public Tasual_Create(Tasual_Main Tasual_Main)
         {
             InitializeComponent();
@@ -407,7 +409,18 @@ namespace Tasual
             Task.Group = Tasual_Create_ComboBox_Category.Text;
             Task.Status = (int)Task.Statuses.New;
             Task.Type = (int)Task.Types.TYPE_USER_SINGLE;
-            
+
+            Task.Notes = Notes;
+            if (Tasual_Create_TextBox_Link.Text != Tasual_Create_TextBox_Link.WatermarkText)
+            {
+                Task.Link = Tasual_Create_TextBox_Link.Text;
+            }
+
+            if (Tasual_Create_TextBox_Location.Text != Tasual_Create_TextBox_Location.WatermarkText)
+            {
+                Task.Location = Tasual_Create_TextBox_Location.Text;
+            }
+
             Task.TimeInfo TimeInfo = new Task.TimeInfo();
             TimeInfo.Started = DateTime.Now;
             if (Tasual_Create_RadioButton_Type_Singular.Checked == false)

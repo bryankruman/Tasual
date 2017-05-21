@@ -1443,6 +1443,9 @@ namespace Tasual
         public int Status;
         public string Group;
         public string Description;
+        public string Notes;
+        public string Link;
+        public string Location;
         public TimeInfo Time;
         public Timer Timer;
         public ListViewItem Item;
