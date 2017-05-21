@@ -26,6 +26,9 @@ namespace Tasual
 
         Styles Tasual_Setting_Style = Styles.Custom;
         string Tasual_Setting_TextFile = "localdb.txt";
+        bool Tasual_Setting_ConfirmClear = true; // currently unused
+        bool Tasual_Setting_ConfirmDelete = true; // currently unused
+        bool Tasual_Setting_AlwaysOnTop = false; // currently unused
 
         ListViewHitTestInfo CalendarPopout = null;
         ListViewHitTestInfo Tasual_ListView_FirstClickInfo = null;
@@ -57,9 +60,43 @@ namespace Tasual
         }
 
 
-        // ===========================
-        //  Misc/Supporting Functions
-        // ===========================
+        // =============================
+        //  Common/Supporting Functions
+        // =============================
+
+        public void Tasual_ClearAll()
+        {
+            TaskArray.Clear();
+            Tasual_Array_Save_Text();
+            Tasual_Array_Load_Text();
+            Tasual_ListView_PopulateFromArray();
+        }
+
+        public void Tasual_DeleteTask(ref Task Task, ListViewItem Item)
+        {
+            TaskArray.Remove(Task);
+            Tasual_Array_Save_Text();
+            if (Item != null) { Tasual_ListView.Items.Remove(Item); }
+        }
+
+        public void Tasual_DeleteTask(ListViewItem Item)
+        {
+            TaskArray.Remove((Task)Item.Tag);
+            Tasual_Array_Save_Text();
+            if (Item != null) { Tasual_ListView.Items.Remove(Item); }
+        }
+
+        private void Tasual_ReAssignGroup(string OldTaskGroup, string NewTaskGroup)
+        {
+            foreach (Task Task in TaskArray)
+            {
+                if (Task == null) { break; }
+                if (Task.Group == OldTaskGroup)
+                {
+                    Task.Group = NewTaskGroup;
+                }
+            }
+        }
 
         public void Tasual_PrintTaskToConsole(Task TaskItem)
         {
@@ -76,7 +113,7 @@ namespace Tasual
             );
         }
 
-        private void Tasual_StatusLabel_UpdateCounts()
+        public void Tasual_StatusLabel_UpdateCounts()
         {
             // TODO: Get total from TaskArray size
             int Complete = 0;
@@ -104,33 +141,6 @@ namespace Tasual
         // =================
         //  Array Functions
         // =================
-
-        public void Tasual_Array_ClearAll()
-        {
-            TaskArray.Clear();
-            Tasual_Array_Save_Text();
-            Tasual_Array_Load_Text();
-            Tasual_ListView_PopulateFromArray();
-        }
-
-        public void Tasual_Array_DeleteTask(ref Task Task)
-        {
-            TaskArray.Remove(Task);
-            Tasual_Array_Save_Text();
-            Tasual_ListView_PopulateFromArray(); // TODO: Stop repopulating from array all the time
-        }
-
-        private void Tasual_Array_ReAssignGroup(string OldTaskGroup, string NewTaskGroup)
-        {
-            foreach (Task Task in TaskArray)
-            {
-                if (Task == null) { break; }
-                if (Task.Group == OldTaskGroup)
-                {
-                    Task.Group = NewTaskGroup;
-                }
-            }
-        }
 
         public void Tasual_Array_Save_Text()
         {
@@ -279,7 +289,7 @@ namespace Tasual
             return String.Format("{0}{1}", number, suffix);
         }
 
-        private void Tasual_ListView_BeginEdit(ListViewItem Item)
+        public void Tasual_ListView_BeginEdit(ListViewItem Item)
         {
             if (Item != null)
             {
@@ -501,7 +511,7 @@ namespace Tasual
             Task.Status = Status;
         }
 
-        private void Tasual_ListView_SizeColumns()
+        public void Tasual_ListView_SizeColumns()
         {
             Tasual_ListView.Columns[0].AutoResize(ColumnHeaderAutoResizeStyle.None);
             Tasual_ListView.Columns[1].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
@@ -715,9 +725,7 @@ namespace Tasual
 
             TaskArray.Add(Task);
             Tasual_Array_Save_Text();
-
             ListViewItem Item = Tasual_ListView_CreateListViewItem(ref Task);
-
             Tasual_StatusLabel_UpdateCounts();
             Tasual_ListView_SizeColumns();
             Tasual_ListView_BeginEdit(Item);
@@ -730,7 +738,7 @@ namespace Tasual
 
         private void Tasual_MenuStrip_Settings_AlwaysOnTop_Click(object sender, EventArgs e)
         {
-            Tasual_Array_ReAssignGroup("Testing", "");
+            Tasual_ReAssignGroup("Testing", "");
             Tasual_Array_Save_Text();
             Tasual_Array_Load_Text();
             Tasual_ListView_PopulateFromArray();
@@ -1092,6 +1100,11 @@ namespace Tasual
         {
             //Tasual_Notify.Visible = false;
             Tasual_Notify.Dispose();
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Tasual_DeleteTask(Tasual_ListView.FocusedItem);
         }
     }
 
@@ -1569,6 +1582,80 @@ namespace Tasual
                     }
             }
         }
+    }
+
+    // A textbox that supports a watermark hint
+    public class WatermarkTextBox : TextBox
+    {
+        // The text that will be presented as the watermark hint
+        private string _WatermarkText = "Type here";
+
+        // Gets or Sets the text that will be presented as the watermark hint
+        public string WatermarkText
+        {
+            get { return _WatermarkText; }
+            set { _WatermarkText = value; }
+        }
+
+        // Whether watermark effect is enabled or not
+        private bool _WatermarkActive = true;
+
+        // Gets or Sets whether watermark effect is enabled or not
+        public bool WatermarkActive
+        {
+            get { return _WatermarkActive; }
+            set { _WatermarkActive = value; }
+        }
+
+        // Create a new TextBox that supports watermark hint
+        public WatermarkTextBox()
+        {
+            _WatermarkActive = true;
+            Text = _WatermarkText;
+            ForeColor = Color.Gray;
+
+            GotFocus += (source, e) =>
+            {
+                RemoveWatermark();
+            };
+
+            LostFocus += (source, e) =>
+            {
+                ApplyWatermark();
+            };
+
+        }
+
+        // Remove watermark from the textbox
+        public void RemoveWatermark()
+        {
+            if (_WatermarkActive)
+            {
+                _WatermarkActive = false;
+                Text = "";
+                ForeColor = Color.Black;
+            }
+        }
+
+        // Applywatermark immediately
+        public void ApplyWatermark()
+        {
+            if (!_WatermarkActive && string.IsNullOrEmpty(Text)
+                || ForeColor == Color.Gray)
+            {
+                _WatermarkActive = true;
+                Text = _WatermarkText;
+                ForeColor = Color.Gray;
+            }
+        }
+
+        // Apply watermark to the textbox
+        public void ApplyWatermark(string newText)
+        {
+            WatermarkText = newText;
+            ApplyWatermark();
+        }
+
     }
 
     // TODO: We're really not doing much with this, is it even worth it to subclass?

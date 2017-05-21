@@ -28,7 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-            this.Tasual_Create_TextBox_Description = new System.Windows.Forms.TextBox();
             this.Tasual_Create_ComboBox_Category = new System.Windows.Forms.ComboBox();
             this.Tasual_Create_Label_Category = new System.Windows.Forms.Label();
             this.Tasual_Create_ComboBox_Dismiss = new System.Windows.Forms.ComboBox();
@@ -91,9 +90,10 @@
             this.Tasual_Create_CheckBox_Scheduled = new System.Windows.Forms.CheckBox();
             this.Tasual_Create_Button_Create = new System.Windows.Forms.Button();
             this.Tasual_Create_Button_Cancel = new System.Windows.Forms.Button();
-            this.Tasual_Create_TextBox_Link = new System.Windows.Forms.TextBox();
-            this.Tasual_Create_TextBox_Location = new System.Windows.Forms.TextBox();
+            this.Tasual_Create_TextBox_Link = new Tasual.WatermarkTextBox();
+            this.Tasual_Create_TextBox_Location = new Tasual.WatermarkTextBox();
             this.Tasual_Create_Button_Notes = new System.Windows.Forms.Button();
+            this.Tasual_Create_TextBox_Description = new Tasual.WatermarkTextBox();
             this.Tasual_Create_GroupBox_Scheduled.SuspendLayout();
             this.Tasual_Create_Panel_SelectionLabels.SuspendLayout();
             this.Tasual_Create_Panel_Type.SuspendLayout();
@@ -102,17 +102,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.Tasual_Create_NumericUpDown_Ends_Occurences)).BeginInit();
             this.Tasual_Create_Panel_Time.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // Tasual_Create_TextBox_Description
-            // 
-            this.Tasual_Create_TextBox_Description.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Tasual_Create_TextBox_Description.Location = new System.Drawing.Point(12, 14);
-            this.Tasual_Create_TextBox_Description.Name = "Tasual_Create_TextBox_Description";
-            this.Tasual_Create_TextBox_Description.Size = new System.Drawing.Size(283, 20);
-            this.Tasual_Create_TextBox_Description.TabIndex = 5;
-            this.Tasual_Create_TextBox_Description.Text = "Title";
-            this.Tasual_Create_TextBox_Description.TextChanged += new System.EventHandler(this.Tasual_Create_TextBox_Description_TextChanged);
             // 
             // Tasual_Create_ComboBox_Category
             // 
@@ -979,21 +968,27 @@
             // Tasual_Create_TextBox_Link
             // 
             this.Tasual_Create_TextBox_Link.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.Tasual_Create_TextBox_Link.ForeColor = System.Drawing.Color.Gray;
             this.Tasual_Create_TextBox_Link.Location = new System.Drawing.Point(12, 50);
             this.Tasual_Create_TextBox_Link.Name = "Tasual_Create_TextBox_Link";
             this.Tasual_Create_TextBox_Link.Size = new System.Drawing.Size(168, 20);
             this.Tasual_Create_TextBox_Link.TabIndex = 21;
             this.Tasual_Create_TextBox_Link.Text = "Link";
+            this.Tasual_Create_TextBox_Link.WatermarkActive = true;
+            this.Tasual_Create_TextBox_Link.WatermarkText = "Link";
             this.Tasual_Create_TextBox_Link.TextChanged += new System.EventHandler(this.Tasual_Create_TextBox_Link_TextChanged);
             // 
             // Tasual_Create_TextBox_Location
             // 
             this.Tasual_Create_TextBox_Location.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.Tasual_Create_TextBox_Location.ForeColor = System.Drawing.Color.Gray;
             this.Tasual_Create_TextBox_Location.Location = new System.Drawing.Point(12, 76);
             this.Tasual_Create_TextBox_Location.Name = "Tasual_Create_TextBox_Location";
             this.Tasual_Create_TextBox_Location.Size = new System.Drawing.Size(168, 20);
             this.Tasual_Create_TextBox_Location.TabIndex = 22;
             this.Tasual_Create_TextBox_Location.Text = "Location";
+            this.Tasual_Create_TextBox_Location.WatermarkActive = true;
+            this.Tasual_Create_TextBox_Location.WatermarkText = "Location";
             this.Tasual_Create_TextBox_Location.TextChanged += new System.EventHandler(this.Tasual_Create_TextBox_Location_TextChanged);
             // 
             // Tasual_Create_Button_Notes
@@ -1005,6 +1000,20 @@
             this.Tasual_Create_Button_Notes.Text = "Notes";
             this.Tasual_Create_Button_Notes.UseVisualStyleBackColor = true;
             this.Tasual_Create_Button_Notes.Click += new System.EventHandler(this.Tasual_Create_Button_Notes_Click);
+            // 
+            // Tasual_Create_TextBox_Description
+            // 
+            this.Tasual_Create_TextBox_Description.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Tasual_Create_TextBox_Description.ForeColor = System.Drawing.Color.Gray;
+            this.Tasual_Create_TextBox_Description.Location = new System.Drawing.Point(12, 14);
+            this.Tasual_Create_TextBox_Description.Name = "Tasual_Create_TextBox_Description";
+            this.Tasual_Create_TextBox_Description.Size = new System.Drawing.Size(283, 20);
+            this.Tasual_Create_TextBox_Description.TabIndex = 5;
+            this.Tasual_Create_TextBox_Description.Text = "Description";
+            this.Tasual_Create_TextBox_Description.WatermarkActive = true;
+            this.Tasual_Create_TextBox_Description.WatermarkText = "Description";
+            this.Tasual_Create_TextBox_Description.TextChanged += new System.EventHandler(this.Tasual_Create_TextBox_Description_TextChanged);
             // 
             // Tasual_Create
             // 
@@ -1033,6 +1042,8 @@
             this.MinimizeBox = false;
             this.Name = "Tasual_Create";
             this.Padding = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Create";
             this.Load += new System.EventHandler(this.Tasual_Create_Load);
@@ -1054,7 +1065,6 @@
 		}
 
 		#endregion
-		private System.Windows.Forms.TextBox Tasual_Create_TextBox_Description;
 		private System.Windows.Forms.ComboBox Tasual_Create_ComboBox_Category;
 		private System.Windows.Forms.Label Tasual_Create_Label_Category;
 		private System.Windows.Forms.Label Tasual_Create_Label_Priority;
@@ -1113,12 +1123,13 @@
         private System.Windows.Forms.Label Tasual_Create_Label_Dismiss;
         private System.Windows.Forms.Button Tasual_Create_Button_Create;
         private System.Windows.Forms.Button Tasual_Create_Button_Cancel;
-        private System.Windows.Forms.TextBox Tasual_Create_TextBox_Link;
-        private System.Windows.Forms.TextBox Tasual_Create_TextBox_Location;
+        private Tasual.WatermarkTextBox Tasual_Create_TextBox_Link;
+        private Tasual.WatermarkTextBox Tasual_Create_TextBox_Location;
         private System.Windows.Forms.Button Tasual_Create_Button_Notes;
         private System.Windows.Forms.Panel Tasual_Create_Panel_Time;
         private System.Windows.Forms.Panel Tasual_Create_Panel_Ends;
         private System.Windows.Forms.Panel Tasual_Create_Panel_Type;
         private System.Windows.Forms.Panel Tasual_Create_Panel_SelectionLabels;
+        private Tasual.WatermarkTextBox Tasual_Create_TextBox_Description;
     }
 }

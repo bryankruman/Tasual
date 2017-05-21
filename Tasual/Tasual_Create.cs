@@ -18,10 +18,10 @@ namespace Tasual
         public List<Label> SelectionLabels_Weeks = new List<Label>();
         public List<Label> SelectionLabels_Months = new List<Label>();
 
-        public Tasual_Create(Tasual_Main Main)
+        public Tasual_Create(Tasual_Main Tasual_Main)
         {
             InitializeComponent();
-            this._Tasual_Main = Main;
+            this._Tasual_Main = Tasual_Main;
         }
 
         private void Tasual_Create_Load(object sender, EventArgs e)
@@ -375,7 +375,8 @@ namespace Tasual
 
         private void Tasual_Create_Button_Notes_Click(object sender, EventArgs e)
         {
-
+            Tasual_Notes NotesForm = new Tasual_Notes(this);
+            NotesForm.ShowDialog(this);
         }
 
         private void Tasual_Create_Button_Create_Click(object sender, EventArgs e)
@@ -455,8 +456,13 @@ namespace Tasual
                 }
             }
             Task.Time = TimeInfo;
-            _Tasual_Main.Tasual_Array_CreateTask(Task.Type, Task.Priority, Task.Status, Task.Group, Task.Description, Task.Time, false);
-            //Tasual_Main.Tasual_Array_Create
+
+            _Tasual_Main.TaskArray.Add(Task);
+            _Tasual_Main.Tasual_Array_Save_Text();
+            ListViewItem Item = _Tasual_Main.Tasual_ListView_CreateListViewItem(ref Task);
+            _Tasual_Main.Tasual_StatusLabel_UpdateCounts();
+            _Tasual_Main.Tasual_ListView_SizeColumns();
+            _Tasual_Main.Tasual_ListView_BeginEdit(Item);
             this.Close();
         }
 

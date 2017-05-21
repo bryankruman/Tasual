@@ -12,12 +12,12 @@ namespace Tasual
 {
     public partial class Tasual_Confirm_Clear : Form
     {
-		private readonly Tasual_Main _tasual_main;
+		private readonly Tasual_Main _Tasual_Main;
 
         public Tasual_Confirm_Clear(Tasual_Main main)
         {
             InitializeComponent();
-			this._tasual_main = main;
+			this._Tasual_Main = main;
         }
 
         private void Tasual_Confirm_Clear_Button_Cancel_Click(object sender, EventArgs e)
@@ -27,7 +27,7 @@ namespace Tasual
 
 		private void Tasual_Confirm_Clear_Button_Confirm_Click(object sender, EventArgs e)
 		{
-			this._tasual_main.Tasual_Array_ClearAll();
+			this._Tasual_Main.Tasual_ClearAll();
 			this.Close();
 		}
 	}
