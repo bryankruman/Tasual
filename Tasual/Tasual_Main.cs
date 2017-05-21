@@ -36,6 +36,7 @@ namespace Tasual
             Elapsed,
             Due,
             Short,
+            Medium,
             Long
         }
 
@@ -318,6 +319,41 @@ namespace Tasual
         //  ListView Functions
         // ====================
 
+        public static string Ordinal(int number)
+        {
+            string suffix = String.Empty;
+
+            int ones = number % 10;
+            int tens = (int)Math.Floor(number / 10M) % 10;
+
+            if (tens == 1)
+            {
+                suffix = "th";
+            }
+            else
+            {
+                switch (ones)
+                {
+                    case 1:
+                        suffix = "st";
+                        break;
+
+                    case 2:
+                        suffix = "nd";
+                        break;
+
+                    case 3:
+                        suffix = "rd";
+                        break;
+
+                    default:
+                        suffix = "th";
+                        break;
+                }
+            }
+            return String.Format("{0}{1}", number, suffix);
+        }
+
         public string Tasual_ListView_FormatTime(DateTime Time, TimeFormat Format)
         {
             switch (Format)
@@ -349,14 +385,78 @@ namespace Tasual
                         return "";
                     }
 
-                case TimeFormat.Short:
+                case TimeFormat.Short: // "6/6 - Tue 10pm"
                     {
-                        return "";
+                        string TimeStamp = "";
+                        if (Time.TimeOfDay != TimeSpan.Zero)
+                        {
+                            string Minutes = "";
+                            if (Time.Minute != 0) { Minutes = ":" + Time.Minute.ToString("00"); }
+
+                            if (Time.Hour > 12)
+                            {
+                                TimeStamp = (Time.Hour - 12).ToString();
+                                TimeStamp = TimeStamp + Minutes + "pm";
+                            }
+                            else
+                            {
+                                TimeStamp = Time.Hour.ToString();
+                                TimeStamp = TimeStamp + Minutes + "am";
+                            }
+                        }
+
+                        return String.Format(
+                            "{0}/{1} - {2} {3}",
+                            Time.Month,
+                            Time.Day,
+                            Time.DayOfWeek.ToString().Substring(0, 3),
+                            TimeStamp);
                     }
 
-                case TimeFormat.Long:
+                case TimeFormat.Medium: // "Sat, Jun 6th at 10:00pm"
                     {
-                        return "";
+                        string TimeStamp;
+                        if (Time.TimeOfDay == TimeSpan.Zero)
+                        {
+                            TimeStamp = "";
+                        }
+                        else
+                        {
+                            TimeStamp = "at ";
+                            TimeStamp = TimeStamp + Time.Hour.ToString() + ":" + Time.Minute.ToString();
+                            if (Time.Hour <= 12) { TimeStamp = TimeStamp + "am"; }
+                            else { TimeStamp = TimeStamp + "pm"; }
+                        }
+
+                        return String.Format(
+                            "{0}, {1} {2} {3}",
+                            Time.DayOfWeek.ToString().Substring(0, 3),
+                            Time.Month.ToString().Substring(0, 3),
+                            Time.Day,
+                            TimeStamp);
+                    }
+
+                case TimeFormat.Long: // "Tuesday, June 6th at 10:00pm"
+                    {
+                        string TimeStamp;
+                        if (Time.TimeOfDay == TimeSpan.Zero)
+                        {
+                            TimeStamp = "";
+                        }
+                        else
+                        {
+                            TimeStamp = "at ";
+                            TimeStamp = TimeStamp + Time.Hour.ToString() + ":" + Time.Minute.ToString();
+                            if (Time.Hour <= 12) { TimeStamp = TimeStamp + "am"; }
+                            else { TimeStamp = TimeStamp + "pm"; }
+                        }
+
+                        return String.Format(
+                            "{0}, {1} {2} {3}",
+                            Time.DayOfWeek.ToString(),
+                            Time.Month.ToString(),
+                            Time.Day,
+                            TimeStamp);
                     }
 
                 default: return "";
@@ -540,7 +640,7 @@ namespace Tasual
                     {
                         Item_S = new string[2];
                         Item_S[0] = Task.Description;
-                        Item_S[1] = Tasual_ListView_FormatTime(Task.Time.Started.ToLocalTime(), TimeFormat.Elapsed);
+                        Item_S[1] = Tasual_ListView_FormatTime(Task.Time.Started.ToLocalTime(), TimeFormat.Short);
                         break;
                     }
 
