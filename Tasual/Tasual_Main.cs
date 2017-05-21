@@ -24,7 +24,7 @@ namespace Tasual
         public List<string> HiddenGroups = new List<string>();
         public List<string> HiddenGroupHasStub = new List<string>();
 
-        StyleEnum Tasual_Setting_Style = StyleEnum.Custom;
+        Styles Tasual_Setting_Style = Styles.Custom;
         string Tasual_Setting_TextFile = "localdb.txt";
 
         ListViewHitTestInfo CalendarPopout = null;
@@ -40,19 +40,20 @@ namespace Tasual
             Long
         }
 
-        public enum StyleEnum
+        public enum Styles
         {
             Custom,
             Simple,
             Detailed
         }
 
-        public enum ProtocolEnum
+        public enum Protocols
         {
-            PRO_TEXT//,
-                    //PRO_XML,
-                    //PRO_RTM,
-                    //PRO_TASUAL
+            Tasual,
+            JSON,
+            XML,
+            RTM,
+            Text
         }
 
 
@@ -86,7 +87,7 @@ namespace Tasual
                 if (Task == null) { break; }
 
                 ++Total;
-                if (Task.Status == (int)Task.StatusEnum.Complete) { ++Complete; }
+                if (Task.Status == (int)Task.Statuses.Complete) { ++Complete; }
             }
 
             if (Complete == Total)
@@ -131,6 +132,15 @@ namespace Tasual
             }
         }
 
+        private void Tasual_ListView_BeginEdit(ListViewItem Item)
+        {
+            if (Item != null)
+            {
+                Tasual_ListView.LabelEdit = true;
+                Item.BeginEdit();
+            }
+        }
+
         public void Tasual_Array_CreateTask(
             int Type,
             int Priority,
@@ -166,8 +176,7 @@ namespace Tasual
 
             if (Edit)
             {
-                Tasual_ListView.LabelEdit = true;
-                Item.BeginEdit();
+                Tasual_ListView_BeginEdit(Item);
             }
         }
 
@@ -201,7 +210,7 @@ namespace Tasual
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine("Tasual_Array_Save_Text(): {0}\nTrace: {1}", e.Message, e.StackTrace);
             }
         }
 
@@ -219,6 +228,7 @@ namespace Tasual
                     while ((Line = InputFile.ReadLine()) != null)
                     {
                         Task NewItem = new Task();
+                        //NewItem.Time = new Task.TimeInfo();
                         int argtype = 0;
                         string[] segments = Line.Split((char)29);
                         double UnixTime;
@@ -228,24 +238,24 @@ namespace Tasual
                             // lets do something with this data now
                             switch (argtype)
                             {
-                                case (int)Task.ArgEnum.Type: { Int32.TryParse(token, out NewItem.Type); break; }
-                                case (int)Task.ArgEnum.Priority: { Int32.TryParse(token, out NewItem.Priority); break; }
-                                case (int)Task.ArgEnum.Status: { Int32.TryParse(token, out NewItem.Status); break; }
-                                case (int)Task.ArgEnum.Group: { NewItem.Group = token; break; }
-                                case (int)Task.ArgEnum.Description: { NewItem.Description = token; break; }
-                                case (int)Task.ArgEnum.Created:
+                                case (int)Task.Arguments.Type: { Int32.TryParse(token, out NewItem.Type); break; }
+                                case (int)Task.Arguments.Priority: { Int32.TryParse(token, out NewItem.Priority); break; }
+                                case (int)Task.Arguments.Status: { Int32.TryParse(token, out NewItem.Status); break; }
+                                case (int)Task.Arguments.Group: { NewItem.Group = token; break; }
+                                case (int)Task.Arguments.Description: { NewItem.Description = token; break; }
+                                case (int)Task.Arguments.Created:
                                     {
                                         Double.TryParse(token, out UnixTime);
                                         NewItem.Time.Started = DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
                                         break;
                                     }
-                                case (int)Task.ArgEnum.Ending:
+                                case (int)Task.Arguments.Ending:
                                     {
                                         Double.TryParse(token, out UnixTime);
                                         NewItem.Time.Ending = DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
                                         break;
                                     }
-                                case (int)Task.ArgEnum.Next:
+                                case (int)Task.Arguments.Next:
                                     {
                                         Double.TryParse(token, out UnixTime);
                                         NewItem.Time.Next = DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
@@ -262,7 +272,7 @@ namespace Tasual
                             //Console.WriteLine(token);
                         }
 
-                        if (argtype == (int)Task.ArgEnum.Count)
+                        if (argtype == (int)Task.Arguments.Count)
                             TaskArray.Add(NewItem);
 
                         //Console.WriteLine(line);
@@ -273,7 +283,7 @@ namespace Tasual
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine("Tasual_Array_Load_Text(): {0}\nTrace: {1}", e.Message, e.StackTrace);
             }
         }
 
@@ -430,7 +440,7 @@ namespace Tasual
         {
             switch (Status)
             {
-                case (int)Task.StatusEnum.Complete:
+                case (int)Task.Statuses.Complete:
                     {
                         if (Selected)
                         {
@@ -441,7 +451,7 @@ namespace Tasual
                             return Color.FromArgb(255, 189, 208, 230);
                         }
                     }
-                case (int)Task.StatusEnum.New:
+                case (int)Task.Statuses.New:
                     {
                         if (Selected)
                         {
@@ -460,7 +470,7 @@ namespace Tasual
         {
             switch (Status)
             {
-                case (int)Task.StatusEnum.Complete:
+                case (int)Task.Statuses.Complete:
                     {
                         if (Selected)
                         {
@@ -471,7 +481,7 @@ namespace Tasual
                             return Color.White;
                         }
                     }
-                case (int)Task.StatusEnum.New:
+                case (int)Task.Statuses.New:
                     {
                         if (Selected)
                         {
@@ -492,31 +502,31 @@ namespace Tasual
 
             switch (Status)
             {
-                case (int)Task.StatusEnum.Toggle:
+                case (int)Task.Statuses.Toggle:
                     {
-                        if (Task.Status == (int)Task.StatusEnum.Complete)
+                        if (Task.Status == (int)Task.Statuses.Complete)
                         {
-                            Status = (int)Task.StatusEnum.New;
-                            goto case (int)Task.StatusEnum.New;
+                            Status = (int)Task.Statuses.New;
+                            goto case (int)Task.Statuses.New;
                         }
-                        else if (Task.Status == (int)Task.StatusEnum.New)
+                        else if (Task.Status == (int)Task.Statuses.New)
                         {
-                            Status = (int)Task.StatusEnum.Complete;
-                            goto case (int)Task.StatusEnum.Complete;
+                            Status = (int)Task.Statuses.Complete;
+                            goto case (int)Task.Statuses.Complete;
                         }
                         break;
                     }
 
-                case (int)Task.StatusEnum.Complete:
+                case (int)Task.Statuses.Complete:
                     {
-                        Item.ForeColor = Tasual_ListView_ForeColor((int)Task.StatusEnum.Complete, Item.Selected);//Color.FromArgb(255, 189, 208, 230);
+                        Item.ForeColor = Tasual_ListView_ForeColor((int)Task.Statuses.Complete, Item.Selected);//Color.FromArgb(255, 189, 208, 230);
                         Item.ImageIndex = 0;
                         break;
                     }
 
-                case (int)Task.StatusEnum.New:
+                case (int)Task.Statuses.New:
                     {
-                        Item.ForeColor = Tasual_ListView_ForeColor((int)Task.StatusEnum.New, Item.Selected);//Color.FromArgb(255, 36, 90, 150);
+                        Item.ForeColor = Tasual_ListView_ForeColor((int)Task.Statuses.New, Item.Selected);//Color.FromArgb(255, 36, 90, 150);
                         Item.ImageIndex = 1;
                         break;
                     }
@@ -599,7 +609,7 @@ namespace Tasual
                 // "CUSTOM" STYLE:
                 // - groups: overdue at top, normal group listings below, completed at bottom
                 // - columns: Description, Time
-                case StyleEnum.Custom:
+                case Styles.Custom:
                     {
                         Item_S = new string[2];
                         Item_S[0] = Task.Description;
@@ -610,7 +620,7 @@ namespace Tasual
                 // "SIMPLE" STYLE:
                 // - groups: overdue at top, today, tomorrow, this week, next week, future, completed at bottom
                 // - columns: Description, Time
-                case StyleEnum.Simple:
+                case Styles.Simple:
                     {
                         Item_S = new string[2];
                         Item_S[0] = Task.Description;
@@ -621,7 +631,7 @@ namespace Tasual
                 // "DETAILED" STYLE:
                 // - groups: overdue at top, today, tomorrow, this week, next week, future, completed at bottom
                 // - columns: Description, Category, Time
-                case StyleEnum.Detailed:
+                case Styles.Detailed:
                     {
                         Item_S = new string[3];
                         Item_S[0] = Task.Description;
@@ -653,21 +663,21 @@ namespace Tasual
             switch (Tasual_Setting_Style)
             {
                 // See Tasual_ListView_CreateListViewItem() for details
-                case StyleEnum.Custom:
+                case Styles.Custom:
                     {
                         Tasual_ListView.Columns.Add("Description");
                         Tasual_ListView.Columns.Add("Time");
                         break;
                     }
 
-                case StyleEnum.Simple:
+                case Styles.Simple:
                     {
                         Tasual_ListView.Columns.Add("Description");
                         Tasual_ListView.Columns.Add("Time");
                         break;
                     }
 
-                case StyleEnum.Detailed:
+                case Styles.Detailed:
                     {
                         Tasual_ListView.Columns.Add("Description");
                         Tasual_ListView.Columns.Add("Category");
@@ -696,7 +706,7 @@ namespace Tasual
                         // we want to make a fake task as we don't want it to actually go into the array
                         // only needs: Description, Time, Group and Status
                         Task Stub = new Task();
-                        Stub.Status = (int)Task.StatusEnum.New;
+                        Stub.Status = (int)Task.Statuses.New;
                         Stub.Group = "Testing";
                         Stub.Description = "This item has been hidden";
                         Task.TimeInfo Time = new Task.TimeInfo();
@@ -710,6 +720,7 @@ namespace Tasual
                 else
                 {
                     Task Referral = Task;
+                    Console.WriteLine("Task: {0}", Task.Description);
                     Tasual_ListView_CreateListViewItem(ref Referral);
                 }
             }
@@ -738,6 +749,7 @@ namespace Tasual
             //Time.Ending = 2;
             //Time.Next = 3;
             Tasual_Array_CreateTask(0, 0, 0, "Testing", "New task", Time, true);
+            //Tasual_ListView_BeginEdit()
         }
 
         private void Tasual_MenuStrip_Edit_Click(object sender, EventArgs e)
@@ -824,8 +836,7 @@ namespace Tasual
         {
             if (Tasual_ListView_PreviouslySelected == true)
             {
-                Tasual_ListView.LabelEdit = true;
-                Tasual_ListView.FocusedItem.BeginEdit();
+                Tasual_ListView_BeginEdit(Tasual_ListView.FocusedItem);
             }
             else
             {
@@ -843,8 +854,7 @@ namespace Tasual
                 {
                     this.BeginInvoke((MethodInvoker)delegate
                     {
-                        Tasual_ListView.LabelEdit = true;
-                        Tasual_ListView.FocusedItem.BeginEdit();
+                        Tasual_ListView_BeginEdit(Tasual_ListView.FocusedItem);
                     });
                 }
             }
@@ -886,7 +896,7 @@ namespace Tasual
                                 if (e.X <= 20) // clicked checkbox area
                                 {
                                     ListViewItem SelectedItem = Info.Item;
-                                    Tasual_ListView_ChangeStatus(ref SelectedItem, (int)Task.StatusEnum.Toggle);
+                                    Tasual_ListView_ChangeStatus(ref SelectedItem, (int)Task.Statuses.Toggle);
                                     Tasual_StatusLabel_UpdateCounts();
                                     Tasual_Array_Save_Text();
                                 }
@@ -1148,9 +1158,9 @@ namespace Tasual
 
             // complex recurring tasks
             public TimeSpan TimeOfDay;
-            public MonthEnum MonthFilter;
-            public WeekEnum WeekFilter;
-            public DayEnum DayFilter;
+            public MonthFlag MonthFilter;
+            public WeekFlag WeekFilter;
+            public DayFlag DayFilter;
             public int SpecificDay;
 
             // blank constructor
@@ -1236,9 +1246,9 @@ namespace Tasual
                 int _Count,
                 int _Expire,
                 TimeSpan _TimeOfDay,
-                MonthEnum _MonthFilter,
-                WeekEnum _WeekFilter,
-                DayEnum _DayFilter,
+                MonthFlag _MonthFilter,
+                WeekFlag _WeekFilter,
+                DayFlag _DayFilter,
                 int _SpecificDay)
             {
                 Started = _Started;
@@ -1271,9 +1281,9 @@ namespace Tasual
                 int _Weekly,
                 int _Daily,
                 TimeSpan _TimeOfDay,
-                MonthEnum _MonthFilter,
-                WeekEnum _WeekFilter,
-                DayEnum _DayFilter,
+                MonthFlag _MonthFilter,
+                WeekFlag _WeekFilter,
+                DayFlag _DayFilter,
                 int _SpecificDay)
             {
                 Started = _Started;
@@ -1295,7 +1305,7 @@ namespace Tasual
         }
 
         [Flags]
-        public enum MonthEnum
+        public enum MonthFlag
         {
             January = 1,
             February = 2,
@@ -1313,7 +1323,7 @@ namespace Tasual
         }
 
         [Flags]
-        public enum WeekEnum
+        public enum WeekFlag
         {
             First = 1,
             Second = 2,
@@ -1325,7 +1335,7 @@ namespace Tasual
         }
 
         [Flags]
-        public enum DayEnum
+        public enum DayFlag
         {
             Monday = 1,
             Tuesday = 2,
@@ -1337,50 +1347,50 @@ namespace Tasual
             Everyday = 127
         }
 
-        private static MonthEnum FromMonthToFlag(int Input)
+        private static MonthFlag FromMonthToFlag(int Input)
         {
             switch (Input)
             {
-                case 1: return MonthEnum.January;
-                case 2: return MonthEnum.February;
-                case 3: return MonthEnum.March;
-                case 4: return MonthEnum.April;
-                case 5: return MonthEnum.May;
-                case 6: return MonthEnum.June;
-                case 7: return MonthEnum.July;
-                case 8: return MonthEnum.August;
-                case 9: return MonthEnum.September;
-                case 10: return MonthEnum.October;
-                case 11: return MonthEnum.November;
-                case 12: return MonthEnum.December;
+                case 1: return MonthFlag.January;
+                case 2: return MonthFlag.February;
+                case 3: return MonthFlag.March;
+                case 4: return MonthFlag.April;
+                case 5: return MonthFlag.May;
+                case 6: return MonthFlag.June;
+                case 7: return MonthFlag.July;
+                case 8: return MonthFlag.August;
+                case 9: return MonthFlag.September;
+                case 10: return MonthFlag.October;
+                case 11: return MonthFlag.November;
+                case 12: return MonthFlag.December;
                 default: return 0;
             }
         }
 
-        private static WeekEnum FromWeekToFlag(int Input)
+        private static WeekFlag FromWeekToFlag(int Input)
         {
             switch (Math.Ceiling((double)Input / 7))
             {
-                case 1: return WeekEnum.First;
-                case 2: return WeekEnum.Second;
-                case 3: return WeekEnum.Third;
-                case 4: return WeekEnum.Fourth;
-                case 5: return WeekEnum.Fifth;
+                case 1: return WeekFlag.First;
+                case 2: return WeekFlag.Second;
+                case 3: return WeekFlag.Third;
+                case 4: return WeekFlag.Fourth;
+                case 5: return WeekFlag.Fifth;
                 default: return 0;
             }
         }
 
-        private static DayEnum FromDayToFlag(DayOfWeek Input)
+        private static DayFlag FromDayToFlag(DayOfWeek Input)
         {
             switch (Input)
             {
-                case DayOfWeek.Monday: return DayEnum.Monday;
-                case DayOfWeek.Tuesday: return DayEnum.Tuesday;
-                case DayOfWeek.Wednesday: return DayEnum.Wednesday;
-                case DayOfWeek.Thursday: return DayEnum.Thursday;
-                case DayOfWeek.Friday: return DayEnum.Friday;
-                case DayOfWeek.Saturday: return DayEnum.Saturday;
-                case DayOfWeek.Sunday: return DayEnum.Sunday;
+                case DayOfWeek.Monday: return DayFlag.Monday;
+                case DayOfWeek.Tuesday: return DayFlag.Tuesday;
+                case DayOfWeek.Wednesday: return DayFlag.Wednesday;
+                case DayOfWeek.Thursday: return DayFlag.Thursday;
+                case DayOfWeek.Friday: return DayFlag.Friday;
+                case DayOfWeek.Saturday: return DayFlag.Saturday;
+                case DayOfWeek.Sunday: return DayFlag.Sunday;
                 default: return 0;
             }
         }
@@ -1427,7 +1437,7 @@ namespace Tasual
                     {
                         // if we're searching for the last week, automatically jump to the last 7 days of the month
                         bool FindingLastWeek = false;
-                        if ((Rules.WeekFilter & WeekEnum.Last) != 0)
+                        if ((Rules.WeekFilter & WeekFlag.Last) != 0)
                         {
                             FindingLastWeek = true;
                             NextTime = NextTime.AddDays(DateTime.DaysInMonth(NextTime.Year, NextTime.Month) - 7);
@@ -1461,7 +1471,7 @@ namespace Tasual
             }
 
             // NON-RECURRANCE: Item has no rules that allow it to recur
-            return new DateTime(1970, 1, 1);
+            return DateTime.MinValue;
         }
 
         public int Type;
@@ -1472,7 +1482,7 @@ namespace Tasual
         public TimeInfo Time;
         public Timer Timer;
 
-        public enum ArgEnum
+        public enum Arguments
         {
             Type,
             Priority,
@@ -1485,7 +1495,7 @@ namespace Tasual
             Count
         }
 
-        public enum TypeEnum
+        public enum Types
         {
             TYPE_USER_SINGLE,
             TYPE_USER_RECURRING,
@@ -1495,26 +1505,29 @@ namespace Tasual
             TYPE_SYNDICATION_RECURRING
         }
 
-        public enum PrioEnum
+        public enum Priorities
         {
-            PRIO_LOW,
-            PRIO_MED,
-            PRIO_HIGH
+            Low,
+            Normal,
+            High
         }
 
-        public enum StatusEnum
+        public enum Statuses
         {
             New,
             Complete,
             Toggle
         }
 
-        // constructors
+        // blank constructor
         public Task()
         {
-
+            Type = 0;
+            Priority = (int)Priorities.Normal;
+            Time = new TimeInfo();
         }
 
+        // specific constructor
         public Task(
             int _Type, 
             int _Priority, 
@@ -1599,6 +1612,7 @@ namespace Tasual
         }
     }
 
+    // TODO: We're really not doing much with this, is it even worth it to subclass?
     public class TasualListView : ListView
     {
         public static MouseEventHandler GroupHeaderClick;

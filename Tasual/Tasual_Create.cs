@@ -384,8 +384,8 @@ namespace Tasual
             Task.Description = Tasual_Create_TextBox_Description.Text;
             Task.Priority = Tasual_Create_ComboBox_Priority.SelectedIndex;
             Task.Group = Tasual_Create_ComboBox_Category.Text;
-            Task.Status = (int)Task.StatusEnum.New;
-            Task.Type = (int)Task.TypeEnum.TYPE_USER_SINGLE;
+            Task.Status = (int)Task.Statuses.New;
+            Task.Type = (int)Task.Types.TYPE_USER_SINGLE;
             
             Task.TimeInfo TimeInfo = new Task.TimeInfo();
             TimeInfo.Started = DateTime.Now;
@@ -426,32 +426,32 @@ namespace Tasual
                     }
                     else
                     {
-                        if (Tasual_Create_Label_DaySel_Mon.Tag != null) { TimeInfo.DayFilter &= Task.DayEnum.Monday; }
-                        if (Tasual_Create_Label_DaySel_Tue.Tag != null) { TimeInfo.DayFilter &= Task.DayEnum.Tuesday; }
-                        if (Tasual_Create_Label_DaySel_Wed.Tag != null) { TimeInfo.DayFilter &= Task.DayEnum.Wednesday; }
-                        if (Tasual_Create_Label_DaySel_Thu.Tag != null) { TimeInfo.DayFilter &= Task.DayEnum.Thursday; }
-                        if (Tasual_Create_Label_DaySel_Fri.Tag != null) { TimeInfo.DayFilter &= Task.DayEnum.Friday; }
-                        if (Tasual_Create_Label_DaySel_Sat.Tag != null) { TimeInfo.DayFilter &= Task.DayEnum.Saturday; }
-                        if (Tasual_Create_Label_DaySel_Sun.Tag != null) { TimeInfo.DayFilter &= Task.DayEnum.Sunday; }
+                        if (Tasual_Create_Label_DaySel_Mon.Tag != null) { TimeInfo.DayFilter &= Task.DayFlag.Monday; }
+                        if (Tasual_Create_Label_DaySel_Tue.Tag != null) { TimeInfo.DayFilter &= Task.DayFlag.Tuesday; }
+                        if (Tasual_Create_Label_DaySel_Wed.Tag != null) { TimeInfo.DayFilter &= Task.DayFlag.Wednesday; }
+                        if (Tasual_Create_Label_DaySel_Thu.Tag != null) { TimeInfo.DayFilter &= Task.DayFlag.Thursday; }
+                        if (Tasual_Create_Label_DaySel_Fri.Tag != null) { TimeInfo.DayFilter &= Task.DayFlag.Friday; }
+                        if (Tasual_Create_Label_DaySel_Sat.Tag != null) { TimeInfo.DayFilter &= Task.DayFlag.Saturday; }
+                        if (Tasual_Create_Label_DaySel_Sun.Tag != null) { TimeInfo.DayFilter &= Task.DayFlag.Sunday; }
                     }
 
-                    if (Tasual_Create_Label_WeekSel_1st.Tag != null) { TimeInfo.WeekFilter &= Task.WeekEnum.First; }
-                    if (Tasual_Create_Label_WeekSel_2nd.Tag != null) { TimeInfo.WeekFilter &= Task.WeekEnum.Second; }
-                    if (Tasual_Create_Label_WeekSel_3rd.Tag != null) { TimeInfo.WeekFilter &= Task.WeekEnum.Third; }
-                    if (Tasual_Create_Label_WeekSel_Last.Tag != null) { TimeInfo.WeekFilter &= Task.WeekEnum.Last; }
+                    if (Tasual_Create_Label_WeekSel_1st.Tag != null) { TimeInfo.WeekFilter &= Task.WeekFlag.First; }
+                    if (Tasual_Create_Label_WeekSel_2nd.Tag != null) { TimeInfo.WeekFilter &= Task.WeekFlag.Second; }
+                    if (Tasual_Create_Label_WeekSel_3rd.Tag != null) { TimeInfo.WeekFilter &= Task.WeekFlag.Third; }
+                    if (Tasual_Create_Label_WeekSel_Last.Tag != null) { TimeInfo.WeekFilter &= Task.WeekFlag.Last; }
 
-                    if (Tasual_Create_Label_MonthSel_Jan.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.January; }
-                    if (Tasual_Create_Label_MonthSel_Feb.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.February; }
-                    if (Tasual_Create_Label_MonthSel_Mar.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.March; }
-                    if (Tasual_Create_Label_MonthSel_Apr.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.April; }
-                    if (Tasual_Create_Label_MonthSel_May.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.May; }
-                    if (Tasual_Create_Label_MonthSel_Jun.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.June; }
-                    if (Tasual_Create_Label_MonthSel_Jul.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.July; }
-                    if (Tasual_Create_Label_MonthSel_Aug.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.August; }
-                    if (Tasual_Create_Label_MonthSel_Sep.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.September; }
-                    if (Tasual_Create_Label_MonthSel_Oct.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.October; }
-                    if (Tasual_Create_Label_MonthSel_Nov.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.November; }
-                    if (Tasual_Create_Label_MonthSel_Dec.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.December; }
+                    if (Tasual_Create_Label_MonthSel_Jan.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.January; }
+                    if (Tasual_Create_Label_MonthSel_Feb.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.February; }
+                    if (Tasual_Create_Label_MonthSel_Mar.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.March; }
+                    if (Tasual_Create_Label_MonthSel_Apr.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.April; }
+                    if (Tasual_Create_Label_MonthSel_May.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.May; }
+                    if (Tasual_Create_Label_MonthSel_Jun.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.June; }
+                    if (Tasual_Create_Label_MonthSel_Jul.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.July; }
+                    if (Tasual_Create_Label_MonthSel_Aug.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.August; }
+                    if (Tasual_Create_Label_MonthSel_Sep.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.September; }
+                    if (Tasual_Create_Label_MonthSel_Oct.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.October; }
+                    if (Tasual_Create_Label_MonthSel_Nov.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.November; }
+                    if (Tasual_Create_Label_MonthSel_Dec.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.December; }
                 }
             }
             Task.Time = TimeInfo;
