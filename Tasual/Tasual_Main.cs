@@ -47,43 +47,6 @@ namespace Tasual
             Detailed
         }
 
-        public enum ArgEnum
-        {
-            Type,
-            Priority,
-            Status,
-            Group,
-            Description,
-            Created,
-            Ending,
-            Next,
-            Count
-        }
-
-        public enum TypeEnum
-        {
-            TYPE_USER_SINGLE,
-            TYPE_USER_RECURRING,
-            TYPE_USER_DEBT_OWED,
-            TYPE_USER_DEBT_LENT,
-            TYPE_SYNDICATION_SINGLE,
-            TYPE_SYNDICATION_RECURRING
-        }
-
-        public enum PrioEnum
-        {
-            PRIO_LOW,
-            PRIO_MED,
-            PRIO_HIGH
-        }
-
-        public enum StatusEnum
-        {
-            New,
-            Complete,
-            Toggle
-        }
-
         public enum ProtocolEnum
         {
             PRO_TEXT//,
@@ -123,7 +86,7 @@ namespace Tasual
                 if (Task == null) { break; }
 
                 ++Total;
-                if (Task.Status == (int)StatusEnum.Complete) { ++Complete; }
+                if (Task.Status == (int)Task.StatusEnum.Complete) { ++Complete; }
             }
 
             if (Complete == Total)
@@ -265,24 +228,24 @@ namespace Tasual
                             // lets do something with this data now
                             switch (argtype)
                             {
-                                case (int)ArgEnum.Type: { Int32.TryParse(token, out NewItem.Type); break; }
-                                case (int)ArgEnum.Priority: { Int32.TryParse(token, out NewItem.Priority); break; }
-                                case (int)ArgEnum.Status: { Int32.TryParse(token, out NewItem.Status); break; }
-                                case (int)ArgEnum.Group: { NewItem.Group = token; break; }
-                                case (int)ArgEnum.Description: { NewItem.Description = token; break; }
-                                case (int)ArgEnum.Created:
+                                case (int)Task.ArgEnum.Type: { Int32.TryParse(token, out NewItem.Type); break; }
+                                case (int)Task.ArgEnum.Priority: { Int32.TryParse(token, out NewItem.Priority); break; }
+                                case (int)Task.ArgEnum.Status: { Int32.TryParse(token, out NewItem.Status); break; }
+                                case (int)Task.ArgEnum.Group: { NewItem.Group = token; break; }
+                                case (int)Task.ArgEnum.Description: { NewItem.Description = token; break; }
+                                case (int)Task.ArgEnum.Created:
                                     {
                                         Double.TryParse(token, out UnixTime);
                                         NewItem.Time.Started = DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
                                         break;
                                     }
-                                case (int)ArgEnum.Ending:
+                                case (int)Task.ArgEnum.Ending:
                                     {
                                         Double.TryParse(token, out UnixTime);
                                         NewItem.Time.Ending = DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
                                         break;
                                     }
-                                case (int)ArgEnum.Next:
+                                case (int)Task.ArgEnum.Next:
                                     {
                                         Double.TryParse(token, out UnixTime);
                                         NewItem.Time.Next = DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
@@ -299,7 +262,7 @@ namespace Tasual
                             //Console.WriteLine(token);
                         }
 
-                        if (argtype == (int)ArgEnum.Count)
+                        if (argtype == (int)Task.ArgEnum.Count)
                             TaskArray.Add(NewItem);
 
                         //Console.WriteLine(line);
@@ -467,7 +430,7 @@ namespace Tasual
         {
             switch (Status)
             {
-                case (int)StatusEnum.Complete:
+                case (int)Task.StatusEnum.Complete:
                     {
                         if (Selected)
                         {
@@ -478,7 +441,7 @@ namespace Tasual
                             return Color.FromArgb(255, 189, 208, 230);
                         }
                     }
-                case (int)StatusEnum.New:
+                case (int)Task.StatusEnum.New:
                     {
                         if (Selected)
                         {
@@ -497,7 +460,7 @@ namespace Tasual
         {
             switch (Status)
             {
-                case (int)StatusEnum.Complete:
+                case (int)Task.StatusEnum.Complete:
                     {
                         if (Selected)
                         {
@@ -508,7 +471,7 @@ namespace Tasual
                             return Color.White;
                         }
                     }
-                case (int)StatusEnum.New:
+                case (int)Task.StatusEnum.New:
                     {
                         if (Selected)
                         {
@@ -529,31 +492,31 @@ namespace Tasual
 
             switch (Status)
             {
-                case (int)StatusEnum.Toggle:
+                case (int)Task.StatusEnum.Toggle:
                     {
-                        if (Task.Status == (int)StatusEnum.Complete)
+                        if (Task.Status == (int)Task.StatusEnum.Complete)
                         {
-                            Status = (int)StatusEnum.New;
-                            goto case (int)StatusEnum.New;
+                            Status = (int)Task.StatusEnum.New;
+                            goto case (int)Task.StatusEnum.New;
                         }
-                        else if (Task.Status == (int)StatusEnum.New)
+                        else if (Task.Status == (int)Task.StatusEnum.New)
                         {
-                            Status = (int)StatusEnum.Complete;
-                            goto case (int)StatusEnum.Complete;
+                            Status = (int)Task.StatusEnum.Complete;
+                            goto case (int)Task.StatusEnum.Complete;
                         }
                         break;
                     }
 
-                case (int)StatusEnum.Complete:
+                case (int)Task.StatusEnum.Complete:
                     {
-                        Item.ForeColor = Tasual_ListView_ForeColor((int)StatusEnum.Complete, Item.Selected);//Color.FromArgb(255, 189, 208, 230);
+                        Item.ForeColor = Tasual_ListView_ForeColor((int)Task.StatusEnum.Complete, Item.Selected);//Color.FromArgb(255, 189, 208, 230);
                         Item.ImageIndex = 0;
                         break;
                     }
 
-                case (int)StatusEnum.New:
+                case (int)Task.StatusEnum.New:
                     {
-                        Item.ForeColor = Tasual_ListView_ForeColor((int)StatusEnum.New, Item.Selected);//Color.FromArgb(255, 36, 90, 150);
+                        Item.ForeColor = Tasual_ListView_ForeColor((int)Task.StatusEnum.New, Item.Selected);//Color.FromArgb(255, 36, 90, 150);
                         Item.ImageIndex = 1;
                         break;
                     }
@@ -733,7 +696,7 @@ namespace Tasual
                         // we want to make a fake task as we don't want it to actually go into the array
                         // only needs: Description, Time, Group and Status
                         Task Stub = new Task();
-                        Stub.Status = (int)StatusEnum.New;
+                        Stub.Status = (int)Task.StatusEnum.New;
                         Stub.Group = "Testing";
                         Stub.Description = "This item has been hidden";
                         Task.TimeInfo Time = new Task.TimeInfo();
@@ -923,7 +886,7 @@ namespace Tasual
                                 if (e.X <= 20) // clicked checkbox area
                                 {
                                     ListViewItem SelectedItem = Info.Item;
-                                    Tasual_ListView_ChangeStatus(ref SelectedItem, (int)StatusEnum.Toggle);
+                                    Tasual_ListView_ChangeStatus(ref SelectedItem, (int)Task.StatusEnum.Toggle);
                                     Tasual_StatusLabel_UpdateCounts();
                                     Tasual_Array_Save_Text();
                                 }
@@ -1165,7 +1128,7 @@ namespace Tasual
 
     public class Task
     {
-        public struct TimeInfo
+        public class TimeInfo
         {
             // for all tasks
             public DateTime Started;
@@ -1189,6 +1152,146 @@ namespace Tasual
             public WeekEnum WeekFilter;
             public DayEnum DayFilter;
             public int SpecificDay;
+
+            // blank constructor
+            public TimeInfo()
+            {
+                Started = DateTime.MinValue;
+                Ending = DateTime.MinValue;
+                Next = DateTime.MinValue;
+                Iterations = 0;
+                Count = 0;
+                Expire = 0;
+                Yearly = 0;
+                Monthly = 0;
+                Weekly = 0;
+                Daily = 0;
+                TimeOfDay = TimeSpan.Zero;
+                MonthFilter = 0;
+                WeekFilter = 0;
+                DayFilter = 0;
+                SpecificDay = 0;
+            }
+
+            // singular constructor
+            public TimeInfo(
+                DateTime _Started,
+                DateTime _Ending,
+                DateTime _Next)
+            {
+                Started = _Started;
+                Ending = _Ending;
+                Next = _Next;
+                Iterations = 0;
+                Count = 0;
+                Expire = 0;
+                Yearly = 0;
+                Monthly = 0;
+                Weekly = 0;
+                Daily = 0;
+                TimeOfDay = TimeSpan.Zero;
+                MonthFilter = 0;
+                WeekFilter = 0;
+                DayFilter = 0;
+                SpecificDay = 0;
+            }
+
+            // simple repeating constructor
+            public TimeInfo(
+                DateTime _Started,
+                DateTime _Ending,
+                DateTime _Next,
+                int _Iterations,
+                int _Count,
+                int _Expire,
+                int _Yearly,
+                int _Monthly,
+                int _Weekly,
+                int _Daily,
+                TimeSpan _TimeOfDay)
+            {
+                Started = _Started;
+                Ending = _Ending;
+                Next = _Next;
+                Iterations = _Iterations;
+                Count = _Count;
+                Expire = _Expire;
+                Yearly = _Yearly;
+                Monthly = _Monthly;
+                Weekly = _Weekly;
+                Daily = _Daily;
+                TimeOfDay = _TimeOfDay;
+                MonthFilter = 0;
+                WeekFilter = 0;
+                DayFilter = 0;
+                SpecificDay = 0;
+            }
+
+            // complex repeating constructor
+            public TimeInfo(
+                DateTime _Started,
+                DateTime _Ending,
+                DateTime _Next,
+                int _Iterations,
+                int _Count,
+                int _Expire,
+                TimeSpan _TimeOfDay,
+                MonthEnum _MonthFilter,
+                WeekEnum _WeekFilter,
+                DayEnum _DayFilter,
+                int _SpecificDay)
+            {
+                Started = _Started;
+                Ending = _Ending;
+                Next = _Next;
+                Iterations = _Iterations;
+                Count = _Count;
+                Expire = _Expire;
+                Yearly = 0;
+                Monthly = 0;
+                Weekly = 0;
+                Daily = 0;
+                TimeOfDay = _TimeOfDay;
+                MonthFilter = _MonthFilter;
+                WeekFilter = _WeekFilter;
+                DayFilter = _DayFilter;
+                SpecificDay = _SpecificDay;
+            }
+
+            // full constructor
+            public TimeInfo(
+                DateTime _Started,
+                DateTime _Ending,
+                DateTime _Next,
+                int _Iterations,
+                int _Count,
+                int _Expire,
+                int _Yearly,
+                int _Monthly,
+                int _Weekly,
+                int _Daily,
+                TimeSpan _TimeOfDay,
+                MonthEnum _MonthFilter,
+                WeekEnum _WeekFilter,
+                DayEnum _DayFilter,
+                int _SpecificDay)
+            {
+                Started = _Started;
+                Ending = _Ending;
+                Next = _Next;
+                Iterations = _Iterations;
+                Count = _Count;
+                Expire = _Expire;
+                Yearly = _Yearly;
+                Monthly = _Monthly;
+                Weekly = _Weekly;
+                Daily = _Daily;
+                TimeOfDay = _TimeOfDay;
+                MonthFilter = _MonthFilter;
+                WeekFilter = _WeekFilter;
+                DayFilter = _DayFilter;
+                SpecificDay = _SpecificDay;
+            }
         }
 
         [Flags]
@@ -1367,13 +1470,69 @@ namespace Tasual
         public string Group;
         public string Description;
         public TimeInfo Time;
+        public Timer Timer;
+
+        public enum ArgEnum
+        {
+            Type,
+            Priority,
+            Status,
+            Group,
+            Description,
+            Created,
+            Ending,
+            Next,
+            Count
+        }
+
+        public enum TypeEnum
+        {
+            TYPE_USER_SINGLE,
+            TYPE_USER_RECURRING,
+            TYPE_USER_DEBT_OWED,
+            TYPE_USER_DEBT_LENT,
+            TYPE_SYNDICATION_SINGLE,
+            TYPE_SYNDICATION_RECURRING
+        }
+
+        public enum PrioEnum
+        {
+            PRIO_LOW,
+            PRIO_MED,
+            PRIO_HIGH
+        }
+
+        public enum StatusEnum
+        {
+            New,
+            Complete,
+            Toggle
+        }
 
         // constructors
-        //taskitem_c();
-        //taskitem_c(int, int, int, int, string, xyztime);
+        public Task()
+        {
 
-        // deconstructor
-        //~taskitem_c();
+        }
+
+        public Task(
+            int _Type, 
+            int _Priority, 
+            int _Status, 
+            string _Group, 
+            string _Description, 
+            TimeInfo _Time, 
+            Timer _Timer)
+        {
+
+            Type = _Type;
+            Priority = _Priority;
+            Status = _Status;
+            Group = _Group;
+            Description = _Description;
+            Time = _Time;
+            Timer = _Timer;
+        }
     }
     
     public static class ControlExtensions

@@ -384,8 +384,8 @@ namespace Tasual
             Task.Description = Tasual_Create_TextBox_Description.Text;
             Task.Priority = Tasual_Create_ComboBox_Priority.SelectedIndex;
             Task.Group = Tasual_Create_ComboBox_Category.Text;
-            Task.Status = (int)Tasual_Main.StatusEnum.New;
-            Task.Type = (int)Tasual_Main.TypeEnum.TYPE_USER_SINGLE;
+            Task.Status = (int)Task.StatusEnum.New;
+            Task.Type = (int)Task.TypeEnum.TYPE_USER_SINGLE;
             
             Task.TimeInfo TimeInfo = new Task.TimeInfo();
             TimeInfo.Started = DateTime.Now;
