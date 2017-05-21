@@ -720,7 +720,6 @@ namespace Tasual
                 else
                 {
                     Task Referral = Task;
-                    Console.WriteLine("Task: {0}", Task.Description);
                     Tasual_ListView_CreateListViewItem(ref Referral);
                 }
             }
@@ -743,19 +742,29 @@ namespace Tasual
 
         private void Tasual_MenuStrip_Create_Quick_Click(object sender, EventArgs e)
         {
-            Task.TimeInfo Time = new Task.TimeInfo();
-            //var CurrentTimeOffset = new DateTimeOffset(DateTime.Now.ToLocalTime());
-            Time.Started = DateTime.Now.ToLocalTime(); //CurrentTimeOffset.ToUnixTimeSeconds();
-            //Time.Ending = 2;
-            //Time.Next = 3;
-            Tasual_Array_CreateTask(0, 0, 0, "Testing", "New task", Time, true);
-            //Tasual_ListView_BeginEdit()
+            Task Task = new Task(
+                0, 
+                0, 
+                0, 
+                "Testing", 
+                "New task", 
+                new Task.TimeInfo(), 
+                new Timer()
+            );
+
+            TaskArray.Add(Task);
+            Tasual_Array_Save_Text();
+
+            ListViewItem Item = Tasual_ListView_CreateListViewItem(ref Task);
+
+            Tasual_StatusLabel_UpdateCounts();
+            Tasual_ListView_SizeColumns();
+            Tasual_ListView_BeginEdit(Item);
         }
 
         private void Tasual_MenuStrip_Edit_Click(object sender, EventArgs e)
         {
-            Tasual_ListView.LabelEdit = true;
-            Tasual_ListView.FocusedItem.BeginEdit();
+            Tasual_ListView_BeginEdit(Tasual_ListView.FocusedItem);
         }
 
         private void Tasual_MenuStrip_Settings_AlwaysOnTop_Click(object sender, EventArgs e)
@@ -919,7 +928,8 @@ namespace Tasual
                                     }
                                     else // clicked subitem
                                     {
-
+                                        // Set up popout calendar
+                                        // We have to wait until MouseUp so that the window gets proper focus when loading
                                         if (Info.SubItem != null)
                                         {
                                             if (CalendarPopout == null)
@@ -927,17 +937,6 @@ namespace Tasual
                                                 CalendarPopout = Info;
                                             }
                                             else { CalendarPopout = null; }
-
-                                            /*
-                                            MonthCalendar TimeSelector = new MonthCalendar();
-
-                                            Rectangle Bounds = Info.SubItem.Bounds;
-                                            TimeSelector.Location = new Point(Cursor.Position.X, Cursor.Position.Y); //new Point(0, Bounds.Bottom);
-                                            TimeSelector.Size = new Size(300, 300);
-
-                                            this.Controls.Add(TimeSelector);
-                                            TimeSelector.BringToFront();
-                                            */
                                         }
                                     }
                                 }
@@ -965,11 +964,10 @@ namespace Tasual
                         }
                 }
             }
-            else if (Info != null)
+            /* else if (Info != null)
             {
-
-                Console.WriteLine("What got clicked?");
-            }
+                // TODO: Should we handle clicking blank space in any particular way?
+            }*/
         }
 
         private void Tasual_ListView_MouseUp(object sender, MouseEventArgs e)

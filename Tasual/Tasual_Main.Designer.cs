@@ -195,6 +195,7 @@
             // Tasual_MenuStrip_Sources
             // 
             this.Tasual_MenuStrip_Sources.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.Tasual_MenuStrip_Sources.Enabled = false;
             this.Tasual_MenuStrip_Sources.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
             this.Tasual_MenuStrip_Sources.Image = global::Tasual.Properties.Resources.Button_Sync;
             this.Tasual_MenuStrip_Sources.Name = "Tasual_MenuStrip_Sources";
