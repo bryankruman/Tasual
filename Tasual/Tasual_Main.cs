@@ -132,54 +132,6 @@ namespace Tasual
             }
         }
 
-        private void Tasual_ListView_BeginEdit(ListViewItem Item)
-        {
-            if (Item != null)
-            {
-                Tasual_ListView.LabelEdit = true;
-                Item.BeginEdit();
-            }
-        }
-
-        public void Tasual_Array_CreateTask(
-            int Type,
-            int Priority,
-            int Status,
-            string Group,
-            string Description,
-            Task.TimeInfo Time,
-            bool Edit)
-        {
-            Task NewTask = new Task();
-
-            NewTask.Type = Type;
-            NewTask.Priority = Priority;
-            NewTask.Status = Status;
-            NewTask.Group = Group;
-            NewTask.Description = Description;
-            NewTask.Time = Time;
-
-            TaskArray.Add(NewTask);
-            Tasual_Array_Save_Text();
-
-            // force hidden group to be unhidden
-            if (HiddenGroups.Contains(NewTask.Group))
-            {
-                HiddenGroups.Remove(NewTask.Group);
-                Tasual_ListView_PopulateFromArray();
-            }
-
-            ListViewItem Item = Tasual_ListView_CreateListViewItem(ref NewTask);
-
-            Tasual_StatusLabel_UpdateCounts();
-            Tasual_ListView_SizeColumns();
-
-            if (Edit)
-            {
-                Tasual_ListView_BeginEdit(Item);
-            }
-        }
-
         public void Tasual_Array_Save_Text()
         {
             try
@@ -325,6 +277,15 @@ namespace Tasual
                 }
             }
             return String.Format("{0}{1}", number, suffix);
+        }
+
+        private void Tasual_ListView_BeginEdit(ListViewItem Item)
+        {
+            if (Item != null)
+            {
+                Tasual_ListView.LabelEdit = true;
+                Item.BeginEdit();
+            }
         }
 
         public string Tasual_ListView_FormatTime(DateTime Time, TimeFormat Format)
