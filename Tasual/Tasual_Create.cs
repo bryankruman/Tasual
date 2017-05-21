@@ -12,14 +12,16 @@ namespace Tasual
 {
     public partial class Tasual_Create : Form
     {
+        private readonly Tasual_Main _Tasual_Main;
+
         public List<Label> SelectionLabels_Days = new List<Label>();
         public List<Label> SelectionLabels_Weeks = new List<Label>();
         public List<Label> SelectionLabels_Months = new List<Label>();
 
-        public Tasual_Create()
+        public Tasual_Create(Tasual_Main Main)
         {
             InitializeComponent();
-
+            this._Tasual_Main = Main;
         }
 
         private void Tasual_Create_Load(object sender, EventArgs e)
@@ -55,6 +57,11 @@ namespace Tasual
             Tasual_Create_ComboBox_RepeatSimple.SelectedIndex = 0;
             Tasual_Create_ComboBox_Dismiss.SelectedIndex = 0;
             Tasual_Create_ComboBox_Priority.SelectedIndex = 1;
+
+            // TODO: DataSource will need to be different for other display styles
+            // Perhaps build an array of groups? Or just search through every task item in TaskArray worst case scenario
+            Tasual_Create_ComboBox_Category.DataSource = _Tasual_Main.Tasual_ListView.Groups;
+            Tasual_Create_ComboBox_Category.SelectedIndex = 0;
 
             // TODO: Populate Category list with existing categories
         }
@@ -376,10 +383,10 @@ namespace Tasual
             Task Task = new Task();
             Task.Description = Tasual_Create_TextBox_Description.Text;
             Task.Priority = Tasual_Create_ComboBox_Priority.SelectedIndex;
-            Task.Group = "todofixthis";
+            Task.Group = Tasual_Create_ComboBox_Category.Text;
             Task.Status = (int)Tasual_Main.StatusEnum.New;
             Task.Type = (int)Tasual_Main.TypeEnum.TYPE_USER_SINGLE;
-
+            
             Task.TimeInfo TimeInfo = new Task.TimeInfo();
             TimeInfo.Started = DateTime.Now;
             if (Tasual_Create_RadioButton_Type_Singular.Checked == false)
@@ -445,10 +452,12 @@ namespace Tasual
                     if (Tasual_Create_Label_MonthSel_Oct.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.October; }
                     if (Tasual_Create_Label_MonthSel_Nov.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.November; }
                     if (Tasual_Create_Label_MonthSel_Dec.Tag != null) { TimeInfo.MonthFilter &= Task.MonthEnum.December; }
-
                 }
             }
             Task.Time = TimeInfo;
+            _Tasual_Main.Tasual_Array_CreateTask(Task.Type, Task.Priority, Task.Status, Task.Group, Task.Description, Task.Time, false);
+            //Tasual_Main.Tasual_Array_Create
+            this.Close();
         }
 
         private void Tasual_Create_Button_Cancel_Click(object sender, EventArgs e)
