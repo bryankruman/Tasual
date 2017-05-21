@@ -1098,7 +1098,6 @@ namespace Tasual
 
         private void Tasual_Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //Tasual_Notify.Visible = false;
             Tasual_Notify.Dispose();
         }
 
