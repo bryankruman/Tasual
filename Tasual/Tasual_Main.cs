@@ -1083,6 +1083,7 @@ namespace Tasual
         private void Tasual_Main_Load(object sender, EventArgs e)
         {
             // load task array
+            // TODO select which method of array acquisition here
             Tasual_Array_Load_Text();
 
             //HiddenGroups.Add("Testing");
