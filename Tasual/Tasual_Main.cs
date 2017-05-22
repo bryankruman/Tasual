@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace Tasual
 {
@@ -160,11 +161,41 @@ namespace Tasual
         {
             try
             {
+                string Output = JsonConvert.SerializeObject(TaskArray, Formatting.Indented);
+                //Console.WriteLine("{0}", Output);
 
+                using (FileStream OutputFile = File.Open("local.json", FileMode.CreateNew))
+                using (StreamWriter OutputStream = new StreamWriter(OutputFile))
+                using (JsonWriter OutputJson = new JsonTextWriter(OutputStream))
+                {
+                    OutputJson.Formatting = Formatting.Indented;
+
+                    JsonSerializer Serializer = new JsonSerializer();
+                    Serializer.Serialize(OutputJson, TaskArray);
+                }
+                
             }
             catch (Exception e)
             {
                 Console.WriteLine("Tasual_Array_Save_JSON(): {0}\nTrace: {1}", e.Message, e.StackTrace);
+            }
+        }
+
+        public void Tasual_Array_Load_JSON()
+        {
+            try
+            {
+                TaskArray.Clear();
+
+                using (StreamReader InputFile = File.OpenText("local.json"))
+                {
+                    JsonSerializer Serializer = new JsonSerializer();
+                    //TaskArray = (List<Task>)Serializer.Deserialize(InputFile);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Tasual_Array_Load_JSON(): {0}\nTrace: {1}", e.Message, e.StackTrace);
             }
         }
 
@@ -773,7 +804,7 @@ namespace Tasual
 
         private void Tasual_MenuStrip_Sources_Click(object sender, EventArgs e)
         {
-
+            Tasual_Array_Save_JSON();
         }
 
         private void Tasual_StatusLabel_MenuStrip_Clear_Click(object sender, EventArgs e)
