@@ -109,25 +109,5 @@ namespace Tasual.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Symon_Background {
-            get {
-                object obj = ResourceManager.GetObject("Symon Background", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap zoom_red_guitar_wallpaper_1920x1200 {
-            get {
-                object obj = ResourceManager.GetObject("zoom_red_guitar-wallpaper-1920x1200", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
     }
 }
