@@ -409,6 +409,88 @@ namespace Tasual
             NotesForm.ShowDialog(this);
         }
 
+        private void Tasual_Create_UpdateSummaryLabel()
+        {
+            if (Tasual_Create_RadioButton_Type_Singular.Checked == true)
+            {
+                // "Scheduled for Mon, Jun 13th at 6:50 PM"
+                string YearInsert = "";
+                DateTime StartDate = Tasual_Create_DateTimePicker_StartDate.Value;
+                if(StartDate.Year != DateTime.Now.Year)
+                {
+                    YearInsert = StartDate.Year.ToString();
+                }
+                Tasual_Create_Label_Summary.Text = String.Format(
+                    "Scheduled for {0} {1}{2} at {3}",
+                    StartDate.ToString("ddd, MMM"),
+                    Tasual_Main.Ordinal(StartDate.Day),
+                    YearInsert,
+                    StartDate.TimeOfDay.ToString("h:mm tt")
+                );
+
+                return;
+            }
+
+            if (Tasual_Create_RadioButton_Type_RepeatSimple.Checked == true)
+            {
+                // "Repeats every 3 days for 13 occurences"
+                // "Repeats every 2 weeks forever"
+                // "Repeats every 2 weeks until Jun 13th, 2017"
+                string IncrementName = "";
+                switch (Tasual_Create_ComboBox_RepeatSimple.SelectedIndex)
+                {
+                    case 0: { IncrementName = "day"; break; }
+                    case 1: { IncrementName = "week"; break; }
+                    case 2: { IncrementName = "month"; break; }
+                    case 3: { IncrementName = "year"; break; }
+                }
+                if (Tasual_Create_NumericUpDown_Type_RepeatSimple.Value > 1)
+                {
+                    // make it plural
+                    IncrementName = IncrementName + "s";
+                }
+
+                return;
+            }
+
+            if (Tasual_Create_RadioButton_Type_RepeatCustom.Checked == true)
+            {
+                // day filters
+                if (Tasual_Create_Label_DaySel_Specific.Tag != null)
+                {
+                    TimeInfo.SpecificDay = Tasual_Create_DateTimePicker_StartDate.Value.Day;
+                }
+                else
+                {
+                    if (Tasual_Create_Label_DaySel_Mon.Tag != null) { TimeInfo.DayFilter &= Task.DayFlag.Monday; }
+                    if (Tasual_Create_Label_DaySel_Tue.Tag != null) { TimeInfo.DayFilter &= Task.DayFlag.Tuesday; }
+                    if (Tasual_Create_Label_DaySel_Wed.Tag != null) { TimeInfo.DayFilter &= Task.DayFlag.Wednesday; }
+                    if (Tasual_Create_Label_DaySel_Thu.Tag != null) { TimeInfo.DayFilter &= Task.DayFlag.Thursday; }
+                    if (Tasual_Create_Label_DaySel_Fri.Tag != null) { TimeInfo.DayFilter &= Task.DayFlag.Friday; }
+                    if (Tasual_Create_Label_DaySel_Sat.Tag != null) { TimeInfo.DayFilter &= Task.DayFlag.Saturday; }
+                    if (Tasual_Create_Label_DaySel_Sun.Tag != null) { TimeInfo.DayFilter &= Task.DayFlag.Sunday; }
+                }
+
+                if (Tasual_Create_Label_WeekSel_1st.Tag != null) { TimeInfo.WeekFilter &= Task.WeekFlag.First; }
+                if (Tasual_Create_Label_WeekSel_2nd.Tag != null) { TimeInfo.WeekFilter &= Task.WeekFlag.Second; }
+                if (Tasual_Create_Label_WeekSel_3rd.Tag != null) { TimeInfo.WeekFilter &= Task.WeekFlag.Third; }
+                if (Tasual_Create_Label_WeekSel_Last.Tag != null) { TimeInfo.WeekFilter &= Task.WeekFlag.Last; }
+
+                if (Tasual_Create_Label_MonthSel_Jan.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.January; }
+                if (Tasual_Create_Label_MonthSel_Feb.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.February; }
+                if (Tasual_Create_Label_MonthSel_Mar.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.March; }
+                if (Tasual_Create_Label_MonthSel_Apr.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.April; }
+                if (Tasual_Create_Label_MonthSel_May.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.May; }
+                if (Tasual_Create_Label_MonthSel_Jun.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.June; }
+                if (Tasual_Create_Label_MonthSel_Jul.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.July; }
+                if (Tasual_Create_Label_MonthSel_Aug.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.August; }
+                if (Tasual_Create_Label_MonthSel_Sep.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.September; }
+                if (Tasual_Create_Label_MonthSel_Oct.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.October; }
+                if (Tasual_Create_Label_MonthSel_Nov.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.November; }
+                if (Tasual_Create_Label_MonthSel_Dec.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.December; }
+            }
+        }
+
         // TODO: Filter unwanted characters from text input on Tasual_ListView and all other textboxes
         // See: http://stackoverflow.com/questions/12607087/only-allow-specific-characters-in-textbox
         Regex AllowedCharacters = new Regex("^[\\w\\s]+$"); // todo: Make this not suck as much
