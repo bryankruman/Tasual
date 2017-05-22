@@ -287,9 +287,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:TasualSetup"
+        "ProductName" = "8:Tasual"
         "ProductCode" = "8:{FFE65DC8-F01C-44DB-A28C-E8188AF131F0}"
-        "PackageCode" = "8:{424BDE7A-6BA7-4A0E-9B4E-5EC38B7B6BC1}"
+        "PackageCode" = "8:{0182C522-3F63-41EE-B562-3C550D1A21B2}"
         "UpgradeCode" = "8:{B20AA6F9-F652-422B-8067-AC74BA2773C3}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -300,7 +300,7 @@
         "Manufacturer" = "8:Bryan Kruman"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:TasualSetup"
+        "Title" = "8:Tasual"
         "Subject" = "8:"
         "ARPCONTACT" = "8:Bryan Kruman"
         "Keywords" = "8:"
@@ -409,6 +409,34 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_195FC024751943C69322C2834DE43F68"
+            {
+            "Name" = "8:Shortcut to Primary output from Tasual (Active)"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_12EA1EC196D24909A63D377AB2E76F4F"
+            "Folder" = "8:_EB5CA0B80B7146359E874B9D8A460C02"
+            "WorkingFolder" = "8:_69637734962C4DBD9A99E411EE41AFBB"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_D87D662DD0C44B159BD7964062AB4F51"
+            {
+            "Name" = "8:Shortcut to Primary output from Tasual (Active)"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_12EA1EC196D24909A63D377AB2E76F4F"
+            "Folder" = "8:_69098895A90C4B61B83571F054B8D653"
+            "WorkingFolder" = "8:_69637734962C4DBD9A99E411EE41AFBB"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
         }
         "UserInterface"
         {
