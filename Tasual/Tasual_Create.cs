@@ -456,7 +456,7 @@ namespace Tasual
             }
 
             Task.TimeInfo TimeInfo = new Task.TimeInfo();
-            TimeInfo.Started = DateTime.Now;
+            TimeInfo.Start = DateTime.Now;
             if (Tasual_Create_RadioButton_Type_Singular.Checked == false)
             {
                 if (Tasual_Create_RadioButton_Type_RepeatSimple.Checked == true)

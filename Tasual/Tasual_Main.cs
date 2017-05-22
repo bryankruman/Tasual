@@ -120,8 +120,8 @@ namespace Tasual
                 TaskItem.Status,
                 TaskItem.Group,
                 TaskItem.Description,
-                TaskItem.Time.Started,
-                TaskItem.Time.Ending,
+                TaskItem.Time.Start,
+                TaskItem.Time.End,
                 TaskItem.Time.Next
             );
         }
@@ -171,10 +171,10 @@ namespace Tasual
                         Line = Line + (char)29 + Task.Description;
 
                         DateTimeOffset TimeOffset;
-                        TimeOffset = new DateTimeOffset(Task.Time.Started.ToLocalTime());
+                        TimeOffset = new DateTimeOffset(Task.Time.Start.ToLocalTime());
                         Line = Line + (char)29 + TimeOffset.ToUnixTimeSeconds();
 
-                        TimeOffset = new DateTimeOffset(Task.Time.Ending.ToLocalTime());
+                        TimeOffset = new DateTimeOffset(Task.Time.End.ToLocalTime());
                         Line = Line + (char)29 + TimeOffset.ToUnixTimeSeconds();
 
                         TimeOffset = new DateTimeOffset(Task.Time.Next.ToLocalTime());
@@ -221,13 +221,13 @@ namespace Tasual
                                 case (int)Task.Arguments.Created:
                                     {
                                         Double.TryParse(token, out UnixTime);
-                                        NewItem.Time.Started = DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
+                                        NewItem.Time.Start = DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
                                         break;
                                     }
                                 case (int)Task.Arguments.Ending:
                                     {
                                         Double.TryParse(token, out UnixTime);
-                                        NewItem.Time.Ending = DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
+                                        NewItem.Time.End = DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
                                         break;
                                     }
                                 case (int)Task.Arguments.Next:
@@ -589,7 +589,7 @@ namespace Tasual
                     {
                         ItemColumnData = new string[2];
                         ItemColumnData[0] = Task.Description;
-                        ItemColumnData[1] = Tasual_ListView_FormatTime(Task.Time.Started.ToLocalTime(), TimeFormat.Short);
+                        ItemColumnData[1] = Tasual_ListView_FormatTime(Task.Time.Start.ToLocalTime(), TimeFormat.Short);
                         break;
                     }
 
@@ -612,7 +612,7 @@ namespace Tasual
                         ItemColumnData = new string[3];
                         ItemColumnData[0] = Task.Description;
                         ItemColumnData[1] = Task.Group.ToString();
-                        ItemColumnData[2] = Tasual_ListView_FormatTime(Task.Time.Started.ToLocalTime(), TimeFormat.Elapsed);
+                        ItemColumnData[2] = Tasual_ListView_FormatTime(Task.Time.Start.ToLocalTime(), TimeFormat.Elapsed);
                         break;
                     }
 
@@ -687,7 +687,7 @@ namespace Tasual
                         Stub.Group = "Testing";
                         Stub.Description = "This item has been hidden";
                         Task.TimeInfo Time = new Task.TimeInfo();
-                        Time.Started = DateTime.Now.ToLocalTime();
+                        Time.Start = DateTime.Now.ToLocalTime();
                         Stub.Time = Time;
                         Tasual_ListView_CreateListViewItem(ref Stub);
                     }
@@ -1126,14 +1126,15 @@ namespace Tasual
         public class TimeInfo
         {
             // for all tasks
-            public DateTime Started;
-            public DateTime Ending;
-            public DateTime Next;
+            public DateTime Created; // date of creation
+            public DateTime Start; // date of first occurence
 
             // for recurring tasks
-            public int Iterations; // number of total iterations allowed 
+            public DateTime Next; // date of next occurence
+            public DateTime End; // date when task stops recurring
+            public int Iterations; // number of total occurences allowed 
             public int Count; // instance count of this task (starts at 1)
-            public int Expire; // time in seconds after due date to remove task (-1 for instant)
+            public int Dismiss; // time in seconds after due date ("Next") to remove task (-1 for instant)
 
             // simple recurring tasks
             public int Yearly;
@@ -1151,12 +1152,13 @@ namespace Tasual
             // blank constructor
             public TimeInfo()
             {
-                Started = DateTime.MinValue;
-                Ending = DateTime.MinValue;
+                Created = DateTime.MinValue;
+                Start = DateTime.MinValue;
                 Next = DateTime.MinValue;
+                End = DateTime.MinValue;
                 Iterations = 0;
                 Count = 0;
-                Expire = 0;
+                Dismiss = 0;
                 Yearly = 0;
                 Monthly = 0;
                 Weekly = 0;
@@ -1170,20 +1172,25 @@ namespace Tasual
 
             // singular constructor
             public TimeInfo(
-                DateTime _Started,
-                DateTime _Ending,
-                DateTime _Next)
+                DateTime _Created,
+                DateTime _Start,
+                DateTime _Next,
+                DateTime _End)
             {
-                Started = _Started;
-                Ending = _Ending;
+                Created = _Created;
+                Start = _Start;
                 Next = _Next;
+                End = _End;
+
                 Iterations = 0;
                 Count = 0;
-                Expire = 0;
+                Dismiss = 0;
+
                 Yearly = 0;
                 Monthly = 0;
                 Weekly = 0;
                 Daily = 0;
+
                 TimeOfDay = TimeSpan.Zero;
                 MonthFilter = 0;
                 WeekFilter = 0;
@@ -1193,28 +1200,33 @@ namespace Tasual
 
             // simple repeating constructor
             public TimeInfo(
-                DateTime _Started,
-                DateTime _Ending,
+                DateTime _Created,
+                DateTime _Start,
                 DateTime _Next,
+                DateTime _End,
                 int _Iterations,
                 int _Count,
-                int _Expire,
+                int _Dismiss,
                 int _Yearly,
                 int _Monthly,
                 int _Weekly,
                 int _Daily,
                 TimeSpan _TimeOfDay)
             {
-                Started = _Started;
-                Ending = _Ending;
+                Created = _Created;
+                Start = _Start;
                 Next = _Next;
+                End = _End;
+
                 Iterations = _Iterations;
                 Count = _Count;
-                Expire = _Expire;
+                Dismiss = _Dismiss;
+
                 Yearly = _Yearly;
                 Monthly = _Monthly;
                 Weekly = _Weekly;
                 Daily = _Daily;
+
                 TimeOfDay = _TimeOfDay;
                 MonthFilter = 0;
                 WeekFilter = 0;
@@ -1224,9 +1236,10 @@ namespace Tasual
 
             // complex repeating constructor
             public TimeInfo(
-                DateTime _Started,
-                DateTime _Ending,
+                DateTime _Created,
+                DateTime _Start,
                 DateTime _Next,
+                DateTime _End,
                 int _Iterations,
                 int _Count,
                 int _Expire,
@@ -1236,16 +1249,20 @@ namespace Tasual
                 DayFlag _DayFilter,
                 int _SpecificDay)
             {
-                Started = _Started;
-                Ending = _Ending;
+                Created = _Created;
+                Start = _Start;
                 Next = _Next;
+                End = _End;
+
                 Iterations = _Iterations;
                 Count = _Count;
-                Expire = _Expire;
+                Dismiss = _Expire;
+
                 Yearly = 0;
                 Monthly = 0;
                 Weekly = 0;
                 Daily = 0;
+
                 TimeOfDay = _TimeOfDay;
                 MonthFilter = _MonthFilter;
                 WeekFilter = _WeekFilter;
@@ -1255,12 +1272,13 @@ namespace Tasual
 
             // full constructor
             public TimeInfo(
-                DateTime _Started,
-                DateTime _Ending,
+                DateTime _Created,
+                DateTime _Start,
                 DateTime _Next,
+                DateTime _End,
                 int _Iterations,
                 int _Count,
-                int _Expire,
+                int _Dismiss,
                 int _Yearly,
                 int _Monthly,
                 int _Weekly,
@@ -1271,16 +1289,20 @@ namespace Tasual
                 DayFlag _DayFilter,
                 int _SpecificDay)
             {
-                Started = _Started;
-                Ending = _Ending;
+                Created = _Created;
+                Start = _Start;
                 Next = _Next;
+                End = _End;
+
                 Iterations = _Iterations;
                 Count = _Count;
-                Expire = _Expire;
+                Dismiss = _Dismiss;
+
                 Yearly = _Yearly;
                 Monthly = _Monthly;
                 Weekly = _Weekly;
                 Daily = _Daily;
+
                 TimeOfDay = _TimeOfDay;
                 MonthFilter = _MonthFilter;
                 WeekFilter = _WeekFilter;
@@ -1393,7 +1415,7 @@ namespace Tasual
             // Increment from "start date"
             if ((Rules.Yearly + Rules.Monthly + Rules.Weekly + Rules.Daily) > 0)
             {
-                NextTime = Rules.Started;
+                NextTime = Rules.Start;
 
                 for (int hops = 1; hops <= 3650; ++hops)
                 {
