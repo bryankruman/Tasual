@@ -115,14 +115,14 @@
             // Tasual_MenuStrip_Create_Quick
             // 
             this.Tasual_MenuStrip_Create_Quick.Name = "Tasual_MenuStrip_Create_Quick";
-            this.Tasual_MenuStrip_Create_Quick.Size = new System.Drawing.Size(127, 22);
+            this.Tasual_MenuStrip_Create_Quick.Size = new System.Drawing.Size(152, 22);
             this.Tasual_MenuStrip_Create_Quick.Text = "Quick";
             this.Tasual_MenuStrip_Create_Quick.Click += new System.EventHandler(this.Tasual_MenuStrip_Create_Quick_Click);
             // 
             // Tasual_MenuStrip_Create_Advanced
             // 
             this.Tasual_MenuStrip_Create_Advanced.Name = "Tasual_MenuStrip_Create_Advanced";
-            this.Tasual_MenuStrip_Create_Advanced.Size = new System.Drawing.Size(127, 22);
+            this.Tasual_MenuStrip_Create_Advanced.Size = new System.Drawing.Size(152, 22);
             this.Tasual_MenuStrip_Create_Advanced.Text = "Advanced";
             this.Tasual_MenuStrip_Create_Advanced.Click += new System.EventHandler(this.Tasual_MenuStrip_Create_Advanced_Click);
             // 

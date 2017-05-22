@@ -574,6 +574,8 @@ namespace Tasual
         }
 
         // TODO: Filter unwanted characters from text input on Tasual_ListView and all other textboxes
+        // TODO: Force DateTimePicker_EndDate.MinValue to be later than StartDate
+        // TODO: Force DateTimePicker_StartDate.MinValue to be later than DateTime.Now
         // See: http://stackoverflow.com/questions/12607087/only-allow-specific-characters-in-textbox
         Regex AllowedCharacters = new Regex("^[\\w\\s]+$"); // todo: Make this not suck as much
 

@@ -762,7 +762,7 @@ namespace Tasual
         private void Tasual_MenuStrip_Create_Quick_Click(object sender, EventArgs e)
         {
             string Group = "";
-            if(Tasual_ListView.Groups.Count != 0)
+            if (Tasual_ListView.Groups.Count != 0)
             {
                 Group = Tasual_ListView.Groups[0].Name;
             }
@@ -772,12 +772,12 @@ namespace Tasual
             }
 
             Task Task = new Task(
-                0, 
-                0, 
-                0, 
-                Group, 
-                "New task", 
-                new Task.TimeInfo(), 
+                0,
+                0,
+                0,
+                Group,
+                "New task",
+                new Task.TimeInfo(),
                 new Timer()
             );
 
