@@ -153,9 +153,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\zoom_red_guitar-wallpaper-1920x1200.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Error_Symbol.png" />
   </ItemGroup>
   <ItemGroup>
@@ -166,9 +163,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\File_List.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Symon Background.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
