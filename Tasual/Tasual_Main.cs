@@ -155,6 +155,19 @@ namespace Tasual
         //  Array Functions
         // =================
 
+        
+        public void Tasual_Array_Save_JSON()
+        {
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Tasual_Array_Save_JSON(): {0}\nTrace: {1}", e.Message, e.StackTrace);
+            }
+        }
+
         public void Tasual_Array_Save_Text()
         {
             try
