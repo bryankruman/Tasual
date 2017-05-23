@@ -13,6 +13,7 @@ using System.Windows.Forms.VisualStyles;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
+using BrightIdeasSoftware;
 
 namespace Tasual
 {
@@ -1128,13 +1129,13 @@ namespace Tasual
         {
             InitializeComponent();
 
-            ControlExtensions.DoubleBuffered(Tasual_ListView, true);
+            //ControlExtensions.DoubleBuffered(Tasual_ListView, true);
             Tasual_Timer_ListViewClick.Interval = SystemInformation.DoubleClickTime;
 
-            SubNativeWindow ListViewHandleClass = new SubNativeWindow();
-            ListViewHandleClass.AssignHandle(Tasual_ListView.Handle);
+            //SubNativeWindow ListViewHandleClass = new SubNativeWindow();
+            //ListViewHandleClass.AssignHandle(Tasual_ListView.Handle);
 
-            TasualListView.GroupHeaderClick += new MouseEventHandler(Tasual_ListView_GroupHeaderClick);
+            //TasualListView.GroupHeaderClick += new MouseEventHandler(Tasual_ListView_GroupHeaderClick);
         }
 
         private void Tasual_Main_Load(object sender, EventArgs e)
@@ -1611,7 +1612,7 @@ namespace Tasual
             PropertyInfo.SetValue(Item, Enable, null);
         }
     }
-
+    /*
     public class SubNativeWindow : NativeWindow
     {
         private const int LVM_HITTEST = 0x1000 + 18;
@@ -1665,7 +1666,7 @@ namespace Tasual
                     }
             }
         }
-    }
+    }*/
 
     // A textbox that supports a watermark hint
     public class WatermarkTextBox : TextBox
@@ -1744,10 +1745,10 @@ namespace Tasual
     // TODO: We're really not doing much with this, is it even worth it to subclass?
     public class TasualListView : ListView
     {
-        public static MouseEventHandler GroupHeaderClick;
+        /*public static MouseEventHandler GroupHeaderClick;
         public static void OnGroupHeaderClick(MouseEventArgs e)
         {
             GroupHeaderClick?.Invoke(null, e);
-        }
+        }*/
     }
 }
