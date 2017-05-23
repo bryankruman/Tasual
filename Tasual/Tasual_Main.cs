@@ -116,7 +116,7 @@ namespace Tasual
     {
         Console.WriteLine(
             "TaskItem: '{0}', '{1}', '{2}', '{3}', '{4}', ('{5}', '{6}', '{7}')",
-            TaskItem.Type,
+            TaskItem.Checked,
             TaskItem.Priority,
             TaskItem.Status,
             TaskItem.Group,
@@ -201,6 +201,7 @@ namespace Tasual
 
     public void Tasual_Array_Save_Text()
     {
+            Console.WriteLine("Tasual_Array_Save_Text();");
         try
         {
             using (StreamWriter OutputFile = new StreamWriter(Tasual_Setting_TextFile))
@@ -208,7 +209,7 @@ namespace Tasual
                 foreach (Task Task in TaskArray)
                 {
                     string Line;
-                    Line = Task.Type.ToString();
+                    Line = Task.Checked.ToString();
                     Line = Line + (char)29 + Task.Priority.ToString();
                     Line = Line + (char)29 + Task.Status.ToString();
                     Line = Line + (char)29 + Task.Group;
@@ -235,7 +236,8 @@ namespace Tasual
 
     public void Tasual_Array_Load_Text()
     {
-        try
+            Console.WriteLine("Tasual_Array_Load_Text();");
+            try
         {
             TaskArray.Clear();
 
@@ -255,11 +257,13 @@ namespace Tasual
                     foreach (string token in segments)
                     {
                         // lets do something with this data now
+                        int Temp = 0;
+                            bool TempBool = false;
                         switch (argtype)
                         {
-                            case (int)Task.Arguments.Type: { Int32.TryParse(token, out NewItem.Type); break; }
-                            case (int)Task.Arguments.Priority: { Int32.TryParse(token, out NewItem.Priority); break; }
-                            case (int)Task.Arguments.Status: { Int32.TryParse(token, out NewItem.Status); break; }
+                            case (int)Task.Arguments.Checked: { Boolean.TryParse(token, out TempBool); NewItem.Checked = TempBool; break; }
+                            case (int)Task.Arguments.Priority: { Int32.TryParse(token, out Temp); NewItem.Priority = Temp; break; }
+                            case (int)Task.Arguments.Status: { Int32.TryParse(token, out Temp); NewItem.Status = Temp; break; }
                             case (int)Task.Arguments.Group: { NewItem.Group = token; break; }
                             case (int)Task.Arguments.Description: { NewItem.Description = token; break; }
                             case (int)Task.Arguments.Created:
@@ -1165,9 +1169,77 @@ namespace Tasual
             // TODO select which method of array acquisition here
             Tasual_Array_Load_Text();
 
+            Tasual_ListView.ShowGroups = true;
+            Tasual_ListView.ShowItemCountOnGroups = true;
             Tasual_ListView.HotItemStyle = new HotItemStyle();
             Tasual_ListView.HotItemStyle.FontStyle = FontStyle.Underline;
+            Tasual_ListView.PersistentCheckBoxes = true;
+            Tasual_ListView.CheckBoxes = true;
+            //Tasual_ListView.Check
+            Tasual_ListView.CheckedAspectName = "Checked";
+            Tasual_ListView.CellEditActivation = ObjectListView.CellEditActivateMode.DoubleClick;
+
+            //Generator.GenerateColumns(Tasual_ListView, typeof(Task), true);
+
+            /*foreach (Task Task in TaskArray)
+            {
+                Tasual_PrintTaskToConsole(Task);
+            }*/
+
+            OLVColumn DescriptionColumn = new OLVColumn("Description", "Description");
+            DescriptionColumn.AspectName = "Description";
+            //DescriptionColumn.Sortable = true;
+            DescriptionColumn.MinimumWidth = 100;
+            DescriptionColumn.FillsFreeSpace = true;
+            DescriptionColumn.IsVisible = true;
+            DescriptionColumn.IsEditable = true;
+            DescriptionColumn.DisplayIndex = 1;
+            DescriptionColumn.LastDisplayIndex = 1;
+
+            //DescriptionColumn.IsEditable = false;
+            //DescriptionColumn.Edit
+
+            //DescriptionColumn.ImageGetter = new
+            //DescriptionColumn.
+            //DescriptionColumn.AspectToStringConverter = 
+            Tasual_ListView.AllColumns.Add(DescriptionColumn);
+            Tasual_ListView.Columns.AddRange(new ColumnHeader[] { DescriptionColumn });
+
+
+            OLVColumn CategoryColumn = new OLVColumn("Category", "Category");
+            CategoryColumn.AspectName = "Group";
+            //CategoryColumn.Sortable = false;
+            CategoryColumn.MinimumWidth = 100;
+            CategoryColumn.IsVisible = false;
+            CategoryColumn.IsEditable = true;
+            CategoryColumn.DisplayIndex = 2;
+            CategoryColumn.LastDisplayIndex = 2;
+            //DescriptionColumn.
+            //DescriptionColumn.AspectToStringConverter = 
+            Tasual_ListView.AllColumns.Add(CategoryColumn);
+            Tasual_ListView.Columns.AddRange(new ColumnHeader[] { CategoryColumn });
+
+            OLVColumn TimeColumn = new OLVColumn("Time", "Time");
+            TimeColumn.AspectName = "Time";
+            //TimeColumn.Sortable = false;
+            TimeColumn.MinimumWidth = 100;
+            //TimeColumn.
+            TimeColumn.IsVisible = true;
+            TimeColumn.IsEditable = false;
+            TimeColumn.DisplayIndex = 3;
+            TimeColumn.LastDisplayIndex = 3;
+            //DescriptionColumn.
+            //DescriptionColumn.AspectToStringConverter = 
+            Tasual_ListView.AllColumns.Add(TimeColumn);
+            Tasual_ListView.Columns.AddRange(new ColumnHeader[] { TimeColumn });
+
+            Tasual_ListView.AlwaysGroupByColumn = CategoryColumn;
+
+            Tasual_ListView.RebuildColumns();
+
             Tasual_ListView.SetObjects(TaskArray);
+            //Tasual_ListView.
+            //Tasual_ListView.OLVGroups.
 
             //HiddenGroups.Add("Testing");
 
@@ -1193,6 +1265,83 @@ namespace Tasual
 
     public class Task
     {
+        public bool Checked { get; set; }
+        public int Priority { get; set; }
+        public int Status { get; set; }
+        public string Group { get; set; }
+        public string Description { get; set; }
+        public string Notes { get; set; }
+        public string Link { get; set; }
+        public string Location { get; set; }
+        public TimeInfo Time { get; set; }
+        public Timer Timer { get; set; }
+        //public ListViewItem Item { get; set; }
+
+        public enum Arguments
+        {
+            Checked,
+            Priority,
+            Status,
+            Group,
+            Description,
+            Created,
+            Ending,
+            Next,
+            Count
+        }
+
+        public enum Types
+        {
+            TYPE_USER_SINGLE,
+            TYPE_USER_RECURRING,
+            TYPE_USER_DEBT_OWED,
+            TYPE_USER_DEBT_LENT,
+            TYPE_SYNDICATION_SINGLE,
+            TYPE_SYNDICATION_RECURRING
+        }
+
+        public enum Priorities
+        {
+            Low,
+            Normal,
+            High
+        }
+
+        public enum Statuses
+        {
+            New,
+            Complete,
+            Toggle
+        }
+
+        // blank constructor
+        public Task()
+        {
+            Checked = false;
+            Priority = (int)Priorities.Normal;
+            Time = new TimeInfo();
+        }
+
+        // specific constructor
+        public Task(
+            bool Checked,
+            int Priority,
+            int Status,
+            string Group,
+            string Description,
+            TimeInfo Time,
+            Timer Timer)
+        {
+
+            this.Checked = Checked;
+            this.Priority = Priority;
+            this.Status = Status;
+            this.Group = Group;
+            this.Description = Description;
+            this.Time = Time;
+            this.Timer = Timer;
+        }
+
         public class TimeInfo
         {
             // for all tasks
@@ -1549,83 +1698,6 @@ namespace Tasual
 
             // NON-RECURRANCE: Item has no rules that allow it to recur
             return DateTime.MinValue;
-        }
-
-        public int Type;
-        public int Priority;
-        public int Status;
-        public string Group;
-        public string Description;
-        public string Notes;
-        public string Link;
-        public string Location;
-        public TimeInfo Time;
-        public Timer Timer;
-        public ListViewItem Item;
-
-        public enum Arguments
-        {
-            Type,
-            Priority,
-            Status,
-            Group,
-            Description,
-            Created,
-            Ending,
-            Next,
-            Count
-        }
-
-        public enum Types
-        {
-            TYPE_USER_SINGLE,
-            TYPE_USER_RECURRING,
-            TYPE_USER_DEBT_OWED,
-            TYPE_USER_DEBT_LENT,
-            TYPE_SYNDICATION_SINGLE,
-            TYPE_SYNDICATION_RECURRING
-        }
-
-        public enum Priorities
-        {
-            Low,
-            Normal,
-            High
-        }
-
-        public enum Statuses
-        {
-            New,
-            Complete,
-            Toggle
-        }
-
-        // blank constructor
-        public Task()
-        {
-            Type = 0;
-            Priority = (int)Priorities.Normal;
-            Time = new TimeInfo();
-        }
-
-        // specific constructor
-        public Task(
-            int _Type, 
-            int _Priority, 
-            int _Status, 
-            string _Group, 
-            string _Description, 
-            TimeInfo _Time, 
-            Timer _Timer)
-        {
-
-            Type = _Type;
-            Priority = _Priority;
-            Status = _Status;
-            Group = _Group;
-            Description = _Description;
-            Time = _Time;
-            Timer = _Timer;
         }
     }
     

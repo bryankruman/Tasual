@@ -583,7 +583,7 @@ namespace Tasual
         {
             Task Task = new Task();
             Task.Status = (int)Task.Statuses.New;
-            Task.Type = (int)Task.Types.TYPE_USER_SINGLE;
+            //Task.Checked = (int)Task.Types.TYPE_USER_SINGLE;
 
             if (
                 (Tasual_Create_TextBox_Description.Text != Tasual_Create_TextBox_Description.WatermarkText)
