@@ -8,6 +8,12 @@ namespace Tasual
 {
 	public class Setting
 	{
+		public Styles Style { get; set; }
+		public string TextFile { get; set; }
+		public bool ConfirmClear { get; set; }
+		public bool ConfirmDelete { get; set; }
+		public bool AlwaysOnTop { get; set; }
+
 		public enum TimeFormat
 		{
 			Elapsed,
@@ -32,11 +38,5 @@ namespace Tasual
 			RTM,
 			Text
 		}
-
-		public Styles Style;
-		public string TextFile;
-		public bool ConfirmClear;
-		public bool ConfirmDelete;
-		public bool AlwaysOnTop;
 	}
 }
