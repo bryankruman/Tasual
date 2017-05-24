@@ -364,13 +364,13 @@
             // toClipboardToolStripMenuItem
             // 
             this.toClipboardToolStripMenuItem.Name = "toClipboardToolStripMenuItem";
-            this.toClipboardToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.toClipboardToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.toClipboardToolStripMenuItem.Text = "To clipboard";
             // 
             // toSaveFileToolStripMenuItem
             // 
             this.toSaveFileToolStripMenuItem.Name = "toSaveFileToolStripMenuItem";
-            this.toSaveFileToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.toSaveFileToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.toSaveFileToolStripMenuItem.Text = "To save file";
             // 
             // Tasual_StatusLabel_MenuStrip_Clear
@@ -396,7 +396,7 @@
             this.moveTasksToolStripMenuItem,
             this.deleteToolStripMenuItem1});
             this.Tasual_MenuStrip_Group.Name = "Tasual_MenuStrip_Header";
-            this.Tasual_MenuStrip_Group.Size = new System.Drawing.Size(139, 126);
+            this.Tasual_MenuStrip_Group.Size = new System.Drawing.Size(140, 126);
             // 
             // createToolStripMenuItem
             // 
@@ -404,7 +404,7 @@
             this.quickToolStripMenuItem,
             this.advancedToolStripMenuItem});
             this.createToolStripMenuItem.Name = "createToolStripMenuItem";
-            this.createToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.createToolStripMenuItem.Text = "Create";
             // 
             // quickToolStripMenuItem
@@ -422,25 +422,25 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(135, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(136, 6);
             // 
             // hideToolStripMenuItem
             // 
             this.hideToolStripMenuItem.Name = "hideToolStripMenuItem";
-            this.hideToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.hideToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.hideToolStripMenuItem.Text = "Hide";
             this.hideToolStripMenuItem.Visible = false;
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(135, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(136, 6);
             this.toolStripSeparator2.Visible = false;
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.editToolStripMenuItem.Text = "Rename";
             // 
             // moveTasksToolStripMenuItem
@@ -450,7 +450,7 @@
             this.toolStripComboBox2,
             this.noOtherGroupsAvailableToolStripMenuItem});
             this.moveTasksToolStripMenuItem.Name = "moveTasksToolStripMenuItem";
-            this.moveTasksToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.moveTasksToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.moveTasksToolStripMenuItem.Text = "Move Tasks";
             // 
             // toolStripComboBox2
@@ -474,7 +474,7 @@
             // deleteToolStripMenuItem1
             // 
             this.deleteToolStripMenuItem1.Name = "deleteToolStripMenuItem1";
-            this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(138, 22);
+            this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(139, 22);
             this.deleteToolStripMenuItem1.Text = "Delete Tasks";
             // 
             // Tasual_MenuStrip_Item
@@ -485,31 +485,32 @@
             this.moveToolStripMenuItem,
             this.duplicateToolStripMenuItem});
             this.Tasual_MenuStrip_Item.Name = "Tasual_MenuStrip_Item";
-            this.Tasual_MenuStrip_Item.Size = new System.Drawing.Size(125, 92);
+            this.Tasual_MenuStrip_Item.Size = new System.Drawing.Size(153, 114);
             // 
             // editToolStripMenuItem1
             // 
             this.editToolStripMenuItem1.Name = "editToolStripMenuItem1";
-            this.editToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
+            this.editToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.editToolStripMenuItem1.Text = "Edit";
+            this.editToolStripMenuItem1.Click += new System.EventHandler(this.editToolStripMenuItem1_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // moveToolStripMenuItem
             // 
             this.moveToolStripMenuItem.Name = "moveToolStripMenuItem";
-            this.moveToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.moveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.moveToolStripMenuItem.Text = "Move";
             // 
             // duplicateToolStripMenuItem
             // 
             this.duplicateToolStripMenuItem.Name = "duplicateToolStripMenuItem";
-            this.duplicateToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.duplicateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.duplicateToolStripMenuItem.Text = "Duplicate";
             // 
             // Tasual_Main

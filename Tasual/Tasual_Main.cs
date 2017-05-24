@@ -31,8 +31,8 @@ namespace Tasual
         bool Tasual_Setting_ConfirmDelete = true; // currently unused
         bool Tasual_Setting_AlwaysOnTop = false; // currently unused
 
-        ListViewHitTestInfo CalendarPopout = null;
-        ListViewHitTestInfo Tasual_ListView_FirstClickInfo = null;
+        OlvListViewHitTestInfo CalendarPopout = null;
+        OlvListViewHitTestInfo Tasual_ListView_FirstClickInfo = null;
         bool Tasual_ListView_PreviouslySelected = false;
 
         public enum TimeFormat
@@ -70,7 +70,7 @@ namespace Tasual
             TaskArray.Clear();
             Tasual_Array_Save_Text();
             Tasual_Array_Load_Text();
-            Tasual_ListView_PopulateFromArray();
+            Tasual_ListView.BuildList();
         }
 
         /* // TODO: Re-write
@@ -530,78 +530,6 @@ namespace Tasual
         return null;
     }
 
-    public void Tasual_ListView_PopulateFromArray()
-    {
-            /*// TODO: Re-write
-            Tasual_ListView_ClearAll();
-
-            switch (Tasual_Setting_Style)
-            {
-                // See Tasual_ListView_CreateListViewItem() for details
-                case Styles.Custom:
-                    {
-                        Tasual_ListView.Columns.Add("Description");
-                        Tasual_ListView.Columns.Add("Time");
-                        break;
-                    }
-
-                case Styles.Simple:
-                    {
-                        Tasual_ListView.Columns.Add("Description");
-                        Tasual_ListView.Columns.Add("Time");
-                        break;
-                    }
-
-                case Styles.Detailed:
-                    {
-                        Tasual_ListView.Columns.Add("Description");
-                        Tasual_ListView.Columns.Add("Category");
-                        Tasual_ListView.Columns.Add("Time");
-                        break;
-                    }
-
-                default:
-                    {
-                        throw new Exception("Tasual_ListView_PopulateFromArray(): Invalid style setting!");
-                    }
-            }
-
-            foreach (Task Task in TaskArray)
-            {
-                if (Task == null) { break; }
-
-                if (HiddenGroups.Contains(Task.Group))
-                {
-                    Console.WriteLine("Found a hidden group! {0}", Task.Group);
-                    if (!HiddenGroupHasStub.Contains(Task.Group))
-                    {
-                        HiddenGroupHasStub.Add(Task.Group);
-
-                        // create "stub" which sits underneath a hidden group name and states how many items are in it/that they're hidden
-                        // we want to make a fake task as we don't want it to actually go into the array
-                        // only needs: Description, Time, Group and Status
-                        Task Stub = new Task();
-                        Stub.Status = (int)Task.Statuses.New;
-                        Stub.Group = "Testing";
-                        Stub.Description = "This item has been hidden";
-                        Task.TimeInfo Time = new Task.TimeInfo();
-                        Time.Start = DateTime.Now.ToLocalTime();
-                        Stub.Time = Time;
-                        Tasual_ListView_CreateListViewItem(ref Stub);
-                    }
-                }
-                else
-                {
-                    Task Referral = Task;
-                    Tasual_ListView_CreateListViewItem(ref Referral);
-                }
-            }
-
-            Tasual_StatusLabel_UpdateCounts();
-            Tasual_ListView_SizeColumns();
-            */
-        }
-
 
         // ================
         //  Event Handlers
@@ -616,9 +544,7 @@ namespace Tasual
 
         private void Tasual_MenuStrip_Create_Quick_Click(object sender, EventArgs e)
         {
-            //OLVGroup Group;
-            //string GroupName = "Tasks";
-
+            // TODO: Try to find the "first" group first, if nothing is found then just use the default group of "Tasks"
             //if (Tasual_ListView.OLVGroups.FirstOrDefault() != null)
             //{
             //    GroupName = Tasual_ListView.OLVGroups.FirstOrDefault().Name;
@@ -654,7 +580,7 @@ namespace Tasual
             //Tasual_ReAssignGroup("Testing", "");
             Tasual_Array_Save_Text();
             Tasual_Array_Load_Text();
-            Tasual_ListView_PopulateFromArray();
+            Tasual_ListView.BuildList();
         }
 
         private void Tasual_MenuStrip_Sources_Click(object sender, EventArgs e)
@@ -725,55 +651,64 @@ namespace Tasual
 
         private void Tasual_ListView_SingleClick(MouseEventArgs e)
         {
-            /* // TODO: Re-write
             if (Tasual_ListView_PreviouslySelected == true)
             {
-                Tasual_ListView_BeginEdit(Tasual_ListView.FocusedItem);
+                if (Tasual_ListView.SelectedItem != null)
+                {
+                    Tasual_ListView.EditModel(Tasual_ListView.SelectedItem.RowObject);
+                }
             }
             else
             {
                 // do nothing
-            }*/
+            }
         }
 
         private void Tasual_ListView_DoubleClick(MouseEventArgs e)
         {
-            /* // TODO: Re-write
-            ListViewHitTestInfo SecondClickInfo = Tasual_ListView.HitTest(e.X, e.Y);
+            OlvListViewHitTestInfo SecondClickInfo = Tasual_ListView.OlvHitTest(e.X, e.Y);
 
             if ((Tasual_ListView_FirstClickInfo.Item != null) && (SecondClickInfo.Item != null))
             {
                 if (Tasual_ListView_FirstClickInfo.Item == SecondClickInfo.Item)
                 {
-                    this.BeginInvoke((MethodInvoker)delegate
+                    if (Tasual_ListView.SelectedItem != null)
                     {
-                        Tasual_ListView_BeginEdit(Tasual_ListView.FocusedItem);
-                    });
+                        this.BeginInvoke((MethodInvoker)delegate
+                        {
+                            Tasual_ListView.EditModel(Tasual_ListView.SelectedItem.RowObject);
+                        });
+                    }
                 }
-            }*/
+            }
         }
 
         private void Tasual_Timer_ListViewClick_Tick(object sender, EventArgs e)
         {
-            /* // TODO: Re-write
-            if ((Control.MouseButtons & MouseButtons.Left) == 0)
+            if ((MouseButtons & MouseButtons.Left) == 0)
             {
                 Tasual_ListView_SingleClick((MouseEventArgs)Tasual_Timer_ListViewClick.Tag);
             }
             Tasual_ListView_FirstClickInfo = null;
             Tasual_ListView_PreviouslySelected = false;
-            Tasual_Timer_ListViewClick.Stop();*/
+            Tasual_Timer_ListViewClick.Stop();
         }
 
         private void Tasual_ListView_MouseDown(object sender, MouseEventArgs e)
         {
-            /* // TODO: Re-write
-            ListViewHitTestInfo Info = Tasual_ListView.HitTest(e.X, e.Y);
+            OlvListViewHitTestInfo Info = Tasual_ListView.OlvHitTest(e.X, e.Y);
 
-            // todo: check location to see if they clicked on the icon/checkbox
-            // if so, immediately toggle state of task
+            /*Console.WriteLine("Column: {0}, Group: {1}, Item: {2}, SubItem: {3}", 
+                Info.Column != null ? Info.Column.Text.ToString() : "null", 
+                Info.Group != null ? Info.Group.ToString() : "null",
+                Info.Item != null ? Info.Item.ToString() : "null",
+                Info.SubItem != null ? Info.SubItem.ToString() : "null");*/
 
-            if (Info.Item != null)
+            if (Info.Group != null)
+            {
+                // todo: write handling for group clicks
+            }
+            else if (Info.Item != null)
             {
                 switch (e.Button)
                 {
@@ -788,50 +723,75 @@ namespace Tasual
                             }
                             else // first click
                             {
-                                if (e.X <= 20) // clicked checkbox area
+                                switch (Info.Column.AspectName)
+                                {
+                                    case "Description":
+                                        {
+                                            Tasual_Timer_ListViewClick.Start();
+
+                                            if (Tasual_ListView.SelectedItem == Info.Item)
+                                            {
+                                                Tasual_ListView_PreviouslySelected = true;
+                                            }
+
+                                            Tasual_ListView_FirstClickInfo = Info;
+                                            Tasual_Timer_ListViewClick.Tag = e;
+                                            break;
+                                        }
+                                    case "Group":
+                                        {
+                                            Console.WriteLine("Clicked on a category!");
+                                            break;
+                                        }
+                                    case "Time":
+                                        {
+                                            if (Info.SubItem != null)
+                                            {
+                                                if (CalendarPopout == null)
+                                                {
+                                                    CalendarPopout = Info;
+                                                }
+                                                else { CalendarPopout = null; }
+                                            }
+                                            break;
+                                        }
+                                }
+                                /*if (e.X <= 20) // clicked checkbox area
                                 {
                                     ListViewItem SelectedItem = Info.Item;
-                                    Tasual_ListView_ChangeStatus(ref SelectedItem, (int)Task.Statuses.Toggle);
+                                    //Tasual_ListView_ChangeStatus(ref SelectedItem, (int)Task.Statuses.Toggle);
                                     Tasual_StatusLabel_UpdateCounts();
                                     Tasual_Array_Save_Text();
                                 }
                                 else // clicked item area
-                                {
-                                    int ColumnIndex = Info.Item.SubItems.IndexOf(Info.SubItem);
-                                    //Console.WriteLine("Column Index: {0}", ColumnIndex);
+                                {*/
+                                //int ColumnIndex = Info.Item.SubItems.IndexOf(Info.SubItem);
+                                //Console.WriteLine("Column Index: {0}", ColumnIndex);
 
-                                    if (ColumnIndex == 0) // clicked item description
-                                    {
-                                        Tasual_Timer_ListViewClick.Start();
-
-                                        if (Info.Item.Selected)
-                                        {
-                                            Tasual_ListView_PreviouslySelected = true;
-                                        }
-
-                                        Tasual_ListView_FirstClickInfo = Info;
-                                        Tasual_Timer_ListViewClick.Tag = e;
-                                    }
-                                    else // clicked subitem
-                                    {
-                                        // Set up popout calendar
-                                        // We have to wait until MouseUp so that the window gets proper focus when loading
-                                        if (Info.SubItem != null)
-                                        {
-                                            if (CalendarPopout == null)
-                                            {
-                                                CalendarPopout = Info;
-                                            }
-                                            else { CalendarPopout = null; }
-                                        }
-                                    }
-                                }
+                                //if (ColumnIndex == 0) // clicked item description
+                                //{
+                                //}
+                                //else // clicked subitem
+                                //{
+                                    // Set up popout calendar
+                                    // We have to wait until MouseUp so that the window gets proper focus when loading
+                                    //if (Info.SubItem != null)
+                                    //{
+                                        //if (CalendarPopout == null)
+                                        //{
+                                        //    CalendarPopout = Info;
+                                        //}
+                                        //else { CalendarPopout = null; }
+                                    //}
+                                //}
+                                //}
                             }
                             break;
                         }
 
                     case MouseButtons.Right:
                         {
+                            Tasual_MenuStrip_Item.Tag = Info.Item.RowObject;
                             Tasual_MenuStrip_Item.Show(Cursor.Position.X, Cursor.Position.Y);
                             break;
                         }
@@ -858,7 +818,6 @@ namespace Tasual
 
         private void Tasual_ListView_MouseUp(object sender, MouseEventArgs e)
         {
-            /* // TODO: Re-write
             if (CalendarPopout != null)
             {
                 Tasual_CalendarPopout Calendar = new Tasual_CalendarPopout();
@@ -868,7 +827,7 @@ namespace Tasual
                 Calendar.Show(this);
 
                 CalendarPopout = null;
-            }*/
+            }
         }
 
         private void Tasual_ListView_GroupHeaderClick(object sender, MouseEventArgs e)
@@ -973,19 +932,11 @@ namespace Tasual
         {
             InitializeComponent();
 
-            //ControlExtensions.DoubleBuffered(Tasual_ListView, true);
-            //Tasual_Timer_ListViewClick.Interval = SystemInformation.DoubleClickTime;
-
-            //SubNativeWindow ListViewHandleClass = new SubNativeWindow();
-            //ListViewHandleClass.AssignHandle(Tasual_ListView.Handle);
-
-            //TasualListView.GroupHeaderClick += new MouseEventHandler(Tasual_ListView_GroupHeaderClick);
+            Tasual_Timer_ListViewClick.Interval = SystemInformation.DoubleClickTime;
         }
 
         private void Tasual_ListView_FormatRow(object sender, FormatRowEventArgs e)
         {
-            //Task Task = (Task)e.Model;
-
             if (e.Item.Checked)
             {
                 e.Item.ForeColor = Color.FromArgb(255, 189, 208, 230);
@@ -1038,7 +989,8 @@ namespace Tasual
             Tasual_ListView.CheckBoxes = true;
             Tasual_ListView.CheckedAspectName = "Checked";
 
-            Tasual_ListView.CellEditActivation = ObjectListView.CellEditActivateMode.DoubleClick;
+            Tasual_ListView.CellEditUseWholeCell = true;
+            //Tasual_ListView.CellEditActivation = ObjectListView.CellEditActivateMode.DoubleClick;
 
             OLVColumn DescriptionColumn = new OLVColumn("Description", "Description");
             DescriptionColumn.AspectName = "Description";
@@ -1119,12 +1071,21 @@ namespace Tasual
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //Tasual_DeleteTask(Tasual_ListView.FocusedItem);
+            //ListViewGroup OldGroup = Item.Group;
+            TaskArray.Remove((Task)Tasual_MenuStrip_Item.Tag);
+            Tasual_Array_Save_Text();
+            Tasual_ListView.BuildList();
+            Tasual_StatusLabel_UpdateCounts();
         }
 
         private void Tasual_ListView_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
             Tasual_StatusLabel_UpdateCounts();
+        }
+
+        private void editToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Tasual_ListView.EditModel((Task)Tasual_MenuStrip_Item.Tag);
         }
     }
 
@@ -1140,7 +1101,6 @@ namespace Tasual
         public string Location { get; set; }
         public TimeInfo Time { get; set; }
         public Timer Timer { get; set; }
-        //public ListViewItem Item { get; set; }
 
         public enum Arguments
         {
