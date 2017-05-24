@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Tasual
 {
-	public partial class Tasual_CalendarPopout : Form
+	public partial class Tasual_Popout_Calendar : Form
 	{
-		public Tasual_CalendarPopout()
+		public Tasual_Popout_Calendar()
 		{
 			InitializeComponent();
 			//this.LostFocus += new EventHandler(this.Tasual_CalendarPopout_LostFocus);

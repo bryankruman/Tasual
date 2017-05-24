@@ -778,7 +778,7 @@ namespace Tasual
 		{
 			if (CalendarPopout != null)
 			{
-				Tasual_CalendarPopout Calendar = new Tasual_CalendarPopout();
+				Tasual_Popout_Calendar Calendar = new Tasual_Popout_Calendar();
 
 				Rectangle Bounds = CalendarPopout.SubItem.Bounds;
 				Calendar.Location = PointToScreen(new Point(Bounds.Left, Bounds.Bottom + Bounds.Height + 5));

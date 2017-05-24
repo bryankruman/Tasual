@@ -86,11 +86,11 @@
     <Compile Include="Tasual_About.Designer.cs">
       <DependentUpon>Tasual_About.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tasual_CalendarPopout.cs">
+    <Compile Include="Tasual_Popout_Calendar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tasual_CalendarPopout.Designer.cs">
-      <DependentUpon>Tasual_CalendarPopout.cs</DependentUpon>
+    <Compile Include="Tasual_Popout_Calendar.Designer.cs">
+      <DependentUpon>Tasual_Popout_Calendar.cs</DependentUpon>
     </Compile>
     <Compile Include="Tasual_Confirm_Clear.cs">
       <SubType>Form</SubType>
@@ -121,8 +121,8 @@
     <EmbeddedResource Include="Tasual_About.resx">
       <DependentUpon>Tasual_About.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tasual_CalendarPopout.resx">
-      <DependentUpon>Tasual_CalendarPopout.cs</DependentUpon>
+    <EmbeddedResource Include="Tasual_Popout_Calendar.resx">
+      <DependentUpon>Tasual_Popout_Calendar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tasual_Confirm_Clear.resx">
       <DependentUpon>Tasual_Confirm_Clear.cs</DependentUpon>

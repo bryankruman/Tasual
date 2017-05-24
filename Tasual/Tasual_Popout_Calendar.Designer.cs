@@ -1,6 +1,6 @@
 ﻿namespace Tasual
 {
-	partial class Tasual_CalendarPopout
+	partial class Tasual_Popout_Calendar
 	{
 		/// <summary>
 		/// Required designer variable.
