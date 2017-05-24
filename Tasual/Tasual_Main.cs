@@ -868,6 +868,9 @@ namespace Tasual
             Tasual_ListView.CellEditUseWholeCell = true;
             //Tasual_ListView.CellEditActivation = ObjectListView.CellEditActivateMode.DoubleClick;
 
+            Tasual_ListView.IsSimpleDragSource = true;
+            Tasual_ListView.IsSimpleDropSink = true;
+
             Tasual_ListView_AddColumns();
 
             Tasual_ListView.SetObjects(TaskArray);
