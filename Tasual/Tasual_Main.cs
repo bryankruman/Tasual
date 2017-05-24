@@ -687,15 +687,14 @@ namespace Tasual
         {
             OlvListViewHitTestInfo Info = Tasual_ListView.OlvHitTest(e.X, e.Y);
 
-            /*Console.WriteLine("Column: {0}, Group: {1}, Item: {2}, SubItem: {3}", 
-                Info.Column != null ? Info.Column.Text.ToString() : "null", 
-                Info.Group != null ? Info.Group.ToString() : "null",
-                Info.Item != null ? Info.Item.ToString() : "null",
-                Info.SubItem != null ? Info.SubItem.ToString() : "null");*/
-
             if (Info.Group != null)
             {
                 // todo: write handling for group clicks
+                if (e.Button == MouseButtons.Right)
+                {
+                    Tasual_MenuStrip_Group.Tag = Info.Group;
+                    Tasual_MenuStrip_Group.Show(Cursor.Position.X, Cursor.Position.Y);
+                }
             }
             else if (Info.Item != null)
             {
@@ -751,29 +750,7 @@ namespace Tasual
                                     //Tasual_ListView_ChangeStatus(ref SelectedItem, (int)Task.Statuses.Toggle);
                                     Tasual_StatusLabel_UpdateCounts();
                                     Tasual_Array_Save_Text();
-                                }
-                                else // clicked item area
-                                {*/
-                                //int ColumnIndex = Info.Item.SubItems.IndexOf(Info.SubItem);
-                                //Console.WriteLine("Column Index: {0}", ColumnIndex);
-
-                                //if (ColumnIndex == 0) // clicked item description
-                                //{
-                                //}
-                                //else // clicked subitem
-                                //{
-                                    // Set up popout calendar
-                                    // We have to wait until MouseUp so that the window gets proper focus when loading
-                                    //if (Info.SubItem != null)
-                                    //{
-                                        //if (CalendarPopout == null)
-                                        //{
-                                        //    CalendarPopout = Info;
-                                        //}
-                                        //else { CalendarPopout = null; }
-                                    //}
-                                //}
-                                //}
+                                }*/
                             }
                             break;
                         }
@@ -817,35 +794,6 @@ namespace Tasual
 
                 CalendarPopout = null;
             }
-        }
-
-        private void Tasual_ListView_GroupHeaderClick(object sender, MouseEventArgs e)
-        {
-            /* for now, lets just not worry about group header clicks... for now.
-            switch(e.Button)
-            {
-                case MouseButtons.Left:
-                    {
-                        //Tasual_ListView.FindNearestItem(SearchDirectionHint.Down, Cursor.Position.X, Cursor.Position.Y).Group.Name,
-                        ListViewHitTestInfo Info = Tasual_ListView.HitTest(e.X, e.Y);
-
-                        foreach (ListViewGroup Group in Tasual_ListView.Groups)
-                        {
-                            //Console.WriteLine("scanning through groups: {0}", Group.);
-                        }
-
-                        //Console.WriteLine("Header: {0} - {1} - {2}", Info.Item.Name, e.Button, this.Name.ToString());
-                        break;
-                    }
-
-                default:
-                case MouseButtons.Right:
-                    {
-                        Tasual_MenuStrip_Group.Show(Cursor.Position.X, Cursor.Position.Y);
-                        break;
-                    }
-            }
-            */
         }
 
 #if false
