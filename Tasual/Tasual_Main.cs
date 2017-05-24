@@ -373,8 +373,25 @@ namespace Tasual
 			TimeColumn.IsEditable = false;
 			TimeColumn.DisplayIndex = 3;
 			TimeColumn.LastDisplayIndex = 3;
+			TimeColumn.AspectToStringConverter = delegate(object Input)
+			{
+				TimeInfo Time = (TimeInfo)Input;
+				return Tasual_ListView_FormatTime(Time.Start.ToLocalTime(), Setting.TimeFormat.Elapsed);
+			};
 			Tasual_ListView.AllColumns.Add(TimeColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { TimeColumn });
+
+			OLVColumn DueColumn = new OLVColumn("Due", "Due");
+			//TimeColumn.AspectName = "Time";
+			//TimeColumn.Sortable = false;
+			//TimeColumn.Width = -1;
+			DueColumn.MinimumWidth = 100;
+			DueColumn.IsVisible = false;
+			DueColumn.IsEditable = false;
+			DueColumn.DisplayIndex = 4;
+			DueColumn.LastDisplayIndex = 4;
+			Tasual_ListView.AllColumns.Add(DueColumn);
+			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { DueColumn });
 
 			Tasual_ListView.AlwaysGroupByColumn = CategoryColumn;
 		}
