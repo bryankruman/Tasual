@@ -1419,15 +1419,6 @@ namespace Tasual
         }
     }
     
-    public static class ControlExtensions
-    {
-        public static void DoubleBuffered(this Control Item, bool Enable)
-        {
-            var PropertyInfo = Item.GetType().GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
-            PropertyInfo.SetValue(Item, Enable, null);
-        }
-    }
-
     // A textbox that supports a watermark hint
     public class WatermarkTextBox : TextBox
     {
