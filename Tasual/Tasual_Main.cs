@@ -544,7 +544,7 @@ namespace Tasual
 				0,
 				"Tasks",
 				"New task",
-				new Task.TimeInfo(),
+				new TimeInfo(),
 				new Timer()
 			);
 
