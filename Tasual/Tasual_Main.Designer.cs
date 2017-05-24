@@ -485,32 +485,32 @@
             this.moveToolStripMenuItem,
             this.duplicateToolStripMenuItem});
             this.Tasual_MenuStrip_Item.Name = "Tasual_MenuStrip_Item";
-            this.Tasual_MenuStrip_Item.Size = new System.Drawing.Size(153, 114);
+            this.Tasual_MenuStrip_Item.Size = new System.Drawing.Size(125, 92);
             // 
             // editToolStripMenuItem1
             // 
             this.editToolStripMenuItem1.Name = "editToolStripMenuItem1";
-            this.editToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.editToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
             this.editToolStripMenuItem1.Text = "Edit";
             this.editToolStripMenuItem1.Click += new System.EventHandler(this.editToolStripMenuItem1_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // moveToolStripMenuItem
             // 
             this.moveToolStripMenuItem.Name = "moveToolStripMenuItem";
-            this.moveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.moveToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.moveToolStripMenuItem.Text = "Move";
             // 
             // duplicateToolStripMenuItem
             // 
             this.duplicateToolStripMenuItem.Name = "duplicateToolStripMenuItem";
-            this.duplicateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.duplicateToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.duplicateToolStripMenuItem.Text = "Duplicate";
             // 
             // Tasual_Main
@@ -532,7 +532,6 @@
             this.Text = "Tasual";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Tasual_Main_FormClosing);
             this.Load += new System.EventHandler(this.Tasual_Main_Load);
-            this.Resize += new System.EventHandler(this.Tasual_Main_Resize);
             this.Tasual_MenuStrip.ResumeLayout(false);
             this.Tasual_MenuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Tasual_ListView)).EndInit();

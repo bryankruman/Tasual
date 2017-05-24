@@ -319,6 +319,49 @@ namespace Tasual
 
         private void Tasual_ListView_AddColumns()
         {
+            /*
+            switch (Tasual_Setting_Style)
+            {
+                // "CUSTOM" STYLE:
+                // - groups: overdue at top, normal group listings below, completed at bottom
+                // - columns: Description, Time
+                case Styles.Custom:
+                    {
+                        ItemColumnData = new string[2];
+                        ItemColumnData[0] = Task.Description;
+                        ItemColumnData[1] = Tasual_ListView_FormatTime(Task.Time.Start.ToLocalTime(), TimeFormat.Short);
+                        break;
+                    }
+
+                // "SIMPLE" STYLE:
+                // - groups: overdue at top, today, tomorrow, this week, next week, future, completed at bottom
+                // - columns: Description, Time
+                case Styles.Simple:
+                    {
+                        ItemColumnData = new string[2];
+                        ItemColumnData[0] = Task.Description;
+                        ItemColumnData[1] = Task.Group.ToString();
+                        break;
+                    }
+
+                // "DETAILED" STYLE:
+                // - groups: overdue at top, today, tomorrow, this week, next week, future, completed at bottom
+                // - columns: Description, Category, Time
+                case Styles.Detailed:
+                    {
+                        ItemColumnData = new string[3];
+                        ItemColumnData[0] = Task.Description;
+                        ItemColumnData[1] = Task.Group.ToString();
+                        ItemColumnData[2] = Tasual_ListView_FormatTime(Task.Time.Start.ToLocalTime(), TimeFormat.Elapsed);
+                        break;
+                    }
+
+                default:
+                    {
+                        throw new Exception("Tasual_ListView_CreateListViewItem(): Invalid style setting!");
+                    }
+            }*/
+
             OLVColumn DescriptionColumn = new OLVColumn("Description", "Description");
             //DescriptionColumn.AspectName = "Description";
             //DescriptionColumn.Sortable = true;
@@ -475,74 +518,6 @@ namespace Tasual
             }
         }
 
-        public void Tasual_ListView_SizeColumns()
-        {
-            //Tasual_ListView.Columns[0].AutoResize(ColumnHeaderAutoResizeStyle.None);
-            //Tasual_ListView.Columns[1].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
-
-            //Tasual_ListView.Columns[1].Width = Math.Max(100, Tasual_ListView.Columns[1].Width);
-            //Tasual_ListView.Columns[0].Width = Math.Max(100, (Tasual_ListView.ClientSize.Width - Tasual_ListView.Columns[1].Width));
-        }
-
-        //public void Tasual_ListView_Populate
-        public ListViewItem Tasual_ListView_CreateListViewItem(ref Task Task)
-        {
-            string[] ItemColumnData;
-
-            // determine which columns we're going to have
-            switch (Tasual_Setting_Style)
-            {
-                // "CUSTOM" STYLE:
-                // - groups: overdue at top, normal group listings below, completed at bottom
-                // - columns: Description, Time
-                case Styles.Custom:
-                    {
-                        ItemColumnData = new string[2];
-                        ItemColumnData[0] = Task.Description;
-                        ItemColumnData[1] = Tasual_ListView_FormatTime(Task.Time.Start.ToLocalTime(), TimeFormat.Short);
-                        break;
-                    }
-
-                // "SIMPLE" STYLE:
-                // - groups: overdue at top, today, tomorrow, this week, next week, future, completed at bottom
-                // - columns: Description, Time
-                case Styles.Simple:
-                    {
-                        ItemColumnData = new string[2];
-                        ItemColumnData[0] = Task.Description;
-                        ItemColumnData[1] = Task.Group.ToString();
-                        break;
-                    }
-
-                // "DETAILED" STYLE:
-                // - groups: overdue at top, today, tomorrow, this week, next week, future, completed at bottom
-                // - columns: Description, Category, Time
-                case Styles.Detailed:
-                    {
-                        ItemColumnData = new string[3];
-                        ItemColumnData[0] = Task.Description;
-                        ItemColumnData[1] = Task.Group.ToString();
-                        ItemColumnData[2] = Tasual_ListView_FormatTime(Task.Time.Start.ToLocalTime(), TimeFormat.Elapsed);
-                        break;
-                    }
-
-                default:
-                    {
-                        throw new Exception("Tasual_ListView_CreateListViewItem(): Invalid style setting!");
-                    }
-            }
-
-            //ListViewItem Item = new ListViewItem(ItemColumnData);
-            //Item.Tag = Task;
-            //Task.Item = Item;
-
-            //Tasual_ListView_AssignGroup(Task.Group.ToString(), ref Item);
-            //Tasual_ListView_ChangeStatus(ref Item, Task.Status);
-            //Tasual_ListView.Items.Add(Item);
-
-            return null;
-        }
-
 
         // ================
         //  Event Handlers
@@ -623,13 +598,6 @@ namespace Tasual
         {
             Tasual_About AboutForm = new Tasual_About();
             AboutForm.ShowDialog(this);
-        }
-
-        // Main Form
-        private void Tasual_Main_Resize(object sender, EventArgs e)
-        {
-            //Invalidate();
-            //Tasual_ListView_SizeColumns();
         }
 
         // ListView
