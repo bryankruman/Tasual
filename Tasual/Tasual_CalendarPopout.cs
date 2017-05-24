@@ -10,23 +10,23 @@ using System.Windows.Forms;
 
 namespace Tasual
 {
-    public partial class Tasual_CalendarPopout : Form
-    {
-        public Tasual_CalendarPopout()
-        {
-            InitializeComponent();
-            //this.LostFocus += new EventHandler(this.Tasual_CalendarPopout_LostFocus);
-        }
+	public partial class Tasual_CalendarPopout : Form
+	{
+		public Tasual_CalendarPopout()
+		{
+			InitializeComponent();
+			//this.LostFocus += new EventHandler(this.Tasual_CalendarPopout_LostFocus);
+		}
 
-        private void Tasual_CalendarPopout_Leave(object sender, EventArgs e)
-        {
-            //this.Close();
-        }
+		private void Tasual_CalendarPopout_Leave(object sender, EventArgs e)
+		{
+			//this.Close();
+		}
 
-        private void Tasual_CalendarPopout_Deactivate(object sender, EventArgs e)
-        {
-            
-            this.Close();
-        }
-    }
+		private void Tasual_CalendarPopout_Deactivate(object sender, EventArgs e)
+		{
+
+			this.Close();
+		}
+	}
 }
