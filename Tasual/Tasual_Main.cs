@@ -944,6 +944,18 @@ namespace Tasual
         {
             Tasual_ListView.EditModel((Task)Tasual_MenuStrip_Item.Tag);
         }
+
+        private void Tasual_ListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Tasual_ListView.SelectedItem != null)
+            {
+                Tasual_MenuStrip_Edit.Enabled = true;
+            }
+            else
+            {
+                Tasual_MenuStrip_Edit.Enabled = false;
+            }
+        }
     }
 
     public class Task
