@@ -460,17 +460,6 @@ namespace Tasual
         //Tasual_ListView.Columns[0].Width = Math.Max(100, (Tasual_ListView.ClientSize.Width - Tasual_ListView.Columns[1].Width));
     }
 
-    private void Tasual_ListView_ClearAll()
-    {
-            // TODO: Re-write
-            /*
-            Tasual_ListView.Columns.Clear();
-        Tasual_ListView.Groups.Clear();
-        Tasual_ListView.Items.Clear();
-        Tasual_ListView.Update();
-        Tasual_ListView.Refresh();*/
-    }
-
     //public void Tasual_ListView_Populate
     public ListViewItem Tasual_ListView_CreateListViewItem(ref Task Task)
     {
