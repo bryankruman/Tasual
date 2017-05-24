@@ -1188,23 +1188,21 @@ namespace Tasual
 
             Tasual_ListView.ShowGroups = true;
             Tasual_ListView.ShowItemCountOnGroups = true;
-            Tasual_ListView.HotItemStyle = new HotItemStyle();
-            Tasual_ListView.HotItemStyle.FontStyle = FontStyle.Underline;
-            Tasual_ListView.PersistentCheckBoxes = true;
-            Tasual_ListView.CheckBoxes = true;
-            //Tasual_ListView.Check
-            Tasual_ListView.CheckedAspectName = "Checked";
-            Tasual_ListView.CellEditActivation = ObjectListView.CellEditActivateMode.DoubleClick;
 
+            //Tasual_ListView.HotItemStyle = new HotItemStyle();
+            //Tasual_ListView.HotItemStyle.FontStyle = FontStyle.Underline;
+            //Tasual_ListView.
+            //Tasual_ListView.HotItemStyle
+            Tasual_ListView.UseCustomSelectionColors = true;
+            Tasual_ListView.SelectedBackColor = Color.FromArgb(255, 222, 232, 246);
+            Tasual_ListView.SelectedForeColor = Color.FromArgb(255, 36, 90, 150);
             Tasual_ListView.FormatRow += new EventHandler<FormatRowEventArgs>(Tasual_ListView_FormatRow);
 
+            Tasual_ListView.PersistentCheckBoxes = true;
+            Tasual_ListView.CheckBoxes = true;
+            Tasual_ListView.CheckedAspectName = "Checked";
 
-            //Generator.GenerateColumns(Tasual_ListView, typeof(Task), true);
-
-            /*foreach (Task Task in TaskArray)
-            {
-                Tasual_PrintTaskToConsole(Task);
-            }*/
+            Tasual_ListView.CellEditActivation = ObjectListView.CellEditActivateMode.DoubleClick;
 
             OLVColumn DescriptionColumn = new OLVColumn("Description", "Description");
             DescriptionColumn.AspectName = "Description";

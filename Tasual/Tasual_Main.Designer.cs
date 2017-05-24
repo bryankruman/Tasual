@@ -212,7 +212,6 @@
             this.Tasual_ListView.AutoArrange = false;
             this.Tasual_ListView.BackColor = System.Drawing.Color.White;
             this.Tasual_ListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Tasual_ListView.CellEditUseWholeCell = true;
             this.Tasual_ListView.Cursor = System.Windows.Forms.Cursors.Default;
             this.Tasual_ListView.EmptyListMsg = "All tasks completed. Create some tasks!";
             this.Tasual_ListView.EmptyListMsgFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -227,7 +226,6 @@
             this.Tasual_ListView.SmallImageList = this.Tasual_TaskIcons;
             this.Tasual_ListView.TabIndex = 0;
             this.Tasual_ListView.UseCompatibleStateImageBehavior = false;
-            this.Tasual_ListView.UseHotItem = true;
             this.Tasual_ListView.View = System.Windows.Forms.View.Details;
             this.Tasual_ListView.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.Tasual_ListView_AfterLabelEdit);
             this.Tasual_ListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.Tasual_ListView_ColumnWidthChanging);
@@ -365,13 +363,13 @@
             // toClipboardToolStripMenuItem
             // 
             this.toClipboardToolStripMenuItem.Name = "toClipboardToolStripMenuItem";
-            this.toClipboardToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.toClipboardToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.toClipboardToolStripMenuItem.Text = "To clipboard";
             // 
             // toSaveFileToolStripMenuItem
             // 
             this.toSaveFileToolStripMenuItem.Name = "toSaveFileToolStripMenuItem";
-            this.toSaveFileToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.toSaveFileToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.toSaveFileToolStripMenuItem.Text = "To save file";
             // 
             // Tasual_StatusLabel_MenuStrip_Clear
@@ -397,7 +395,7 @@
             this.moveTasksToolStripMenuItem,
             this.deleteToolStripMenuItem1});
             this.Tasual_MenuStrip_Group.Name = "Tasual_MenuStrip_Header";
-            this.Tasual_MenuStrip_Group.Size = new System.Drawing.Size(140, 126);
+            this.Tasual_MenuStrip_Group.Size = new System.Drawing.Size(139, 126);
             // 
             // createToolStripMenuItem
             // 
@@ -405,7 +403,7 @@
             this.quickToolStripMenuItem,
             this.advancedToolStripMenuItem});
             this.createToolStripMenuItem.Name = "createToolStripMenuItem";
-            this.createToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.createToolStripMenuItem.Text = "Create";
             // 
             // quickToolStripMenuItem
@@ -423,25 +421,25 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(136, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(135, 6);
             // 
             // hideToolStripMenuItem
             // 
             this.hideToolStripMenuItem.Name = "hideToolStripMenuItem";
-            this.hideToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.hideToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.hideToolStripMenuItem.Text = "Hide";
             this.hideToolStripMenuItem.Visible = false;
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(136, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(135, 6);
             this.toolStripSeparator2.Visible = false;
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.editToolStripMenuItem.Text = "Rename";
             // 
             // moveTasksToolStripMenuItem
@@ -451,7 +449,7 @@
             this.toolStripComboBox2,
             this.noOtherGroupsAvailableToolStripMenuItem});
             this.moveTasksToolStripMenuItem.Name = "moveTasksToolStripMenuItem";
-            this.moveTasksToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.moveTasksToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.moveTasksToolStripMenuItem.Text = "Move Tasks";
             // 
             // toolStripComboBox2
@@ -475,7 +473,7 @@
             // deleteToolStripMenuItem1
             // 
             this.deleteToolStripMenuItem1.Name = "deleteToolStripMenuItem1";
-            this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(139, 22);
+            this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(138, 22);
             this.deleteToolStripMenuItem1.Text = "Delete Tasks";
             // 
             // Tasual_MenuStrip_Item
