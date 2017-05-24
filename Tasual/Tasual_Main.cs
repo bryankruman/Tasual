@@ -689,7 +689,7 @@ namespace Tasual
 
             if (Info.Group != null)
             {
-                // todo: write handling for group clicks
+                // TODO: Fix the issue where clicking blank space inside of the group still triggers the group
                 if (e.Button == MouseButtons.Right)
                 {
                     Tasual_MenuStrip_Group.Tag = Info.Group;
