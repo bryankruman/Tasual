@@ -895,16 +895,10 @@ namespace Tasual
 
             //Tasual_ListView.HotItemStyle = new HotItemStyle();
             //Tasual_ListView.HotItemStyle.FontStyle = FontStyle.Underline;
-            //Tasual_ListView.
-            //Tasual_ListView.HotItemStyle
             Tasual_ListView.UseCustomSelectionColors = true;
             Tasual_ListView.SelectedBackColor = Color.FromArgb(255, 222, 232, 246);
             Tasual_ListView.SelectedForeColor = Color.FromArgb(255, 36, 90, 150);
             Tasual_ListView.FormatRow += new EventHandler<FormatRowEventArgs>(Tasual_ListView_FormatRow);
-            //Tasual_ListView.HasF
-            //Tasual_ListView.TintSortColumn = false;
-            //Tasual_ListView.SelectedColumnTint = Color.FromArgb(255, 255, 0, 0);
-
             //Tasual_ListView.TintSortColumn = false;
             //Tasual_ListView.SelectedColumnTint = Color.FromArgb(255, 230, 230, 255);
 
@@ -930,7 +924,7 @@ namespace Tasual
             //Tasual_ListView.CellEditActivation = ObjectListView.CellEditActivateMode.DoubleClick;
 
             OLVColumn DescriptionColumn = new OLVColumn("Description", "Description");
-            DescriptionColumn.AspectName = "Description";
+            //DescriptionColumn.AspectName = "Description";
             //DescriptionColumn.Sortable = true;
             DescriptionColumn.MinimumWidth = 100;
             DescriptionColumn.FillsFreeSpace = true;
@@ -953,8 +947,8 @@ namespace Tasual
             Tasual_ListView.Columns.AddRange(new ColumnHeader[] { DescriptionColumn });
 
 
-            OLVColumn CategoryColumn = new OLVColumn("Category", "Category");
-            CategoryColumn.AspectName = "Group";
+            OLVColumn CategoryColumn = new OLVColumn("Category", "Group");
+            //CategoryColumn.AspectName = "Group";
             //CategoryColumn.Sortable = false;
             CategoryColumn.MinimumWidth = 100;
             CategoryColumn.IsVisible = false;
@@ -967,33 +961,24 @@ namespace Tasual
             Tasual_ListView.Columns.AddRange(new ColumnHeader[] { CategoryColumn });
 
             OLVColumn TimeColumn = new OLVColumn("Time", "Time");
-            TimeColumn.AspectName = "Time";
+            //TimeColumn.AspectName = "Time";
             //TimeColumn.Sortable = false;
+            //TimeColumn.Width = -1;
             TimeColumn.MinimumWidth = 100;
-            //TimeColumn.
             TimeColumn.IsVisible = true;
             TimeColumn.IsEditable = false;
             TimeColumn.DisplayIndex = 3;
             TimeColumn.LastDisplayIndex = 3;
-            //DescriptionColumn.
-            //DescriptionColumn.AspectToStringConverter = 
             Tasual_ListView.AllColumns.Add(TimeColumn);
             Tasual_ListView.Columns.AddRange(new ColumnHeader[] { TimeColumn });
 
-            Tasual_ListView.AlwaysGroupByColumn = CategoryColumn;
-
-            Tasual_ListView.RebuildColumns();
 
             Tasual_ListView.SetObjects(TaskArray);
+            Tasual_ListView.AlwaysGroupByColumn = CategoryColumn;
+            Tasual_ListView.RebuildColumns();
+            Tasual_ListView.AutoResizeColumns();
 
             Tasual_StatusLabel_UpdateCounts();
-            //Tasual_ListView.
-            //Tasual_ListView.OLVGroups.
-
-            //HiddenGroups.Add("Testing");
-
-            // load tasks into Tasual_ListView
-            //Tasual_ListView_PopulateFromArray();
         }
 
         public static Tasual_Main ReturnFormInstance()
