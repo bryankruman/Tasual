@@ -694,7 +694,7 @@ namespace Tasual
             _Tasual_Main.TaskArray.Add(Task);
             _Tasual_Main.Tasual_Array_Save_Text();
             _Tasual_Main.Tasual_ListView.BuildList();
-            //_Tasual_Main.Tasual_StatusLabel_UpdateCounts();
+            _Tasual_Main.Tasual_StatusLabel_UpdateCounts();
             this.Close();
         }
 

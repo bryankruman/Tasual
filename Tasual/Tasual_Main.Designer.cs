@@ -212,6 +212,7 @@
             this.Tasual_ListView.AutoArrange = false;
             this.Tasual_ListView.BackColor = System.Drawing.Color.White;
             this.Tasual_ListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Tasual_ListView.CellEditUseWholeCell = false;
             this.Tasual_ListView.Cursor = System.Windows.Forms.Cursors.Default;
             this.Tasual_ListView.EmptyListMsg = "All tasks completed. Create some tasks!";
             this.Tasual_ListView.EmptyListMsgFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -229,6 +230,7 @@
             this.Tasual_ListView.View = System.Windows.Forms.View.Details;
             this.Tasual_ListView.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.Tasual_ListView_AfterLabelEdit);
             this.Tasual_ListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.Tasual_ListView_ColumnWidthChanging);
+            this.Tasual_ListView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.Tasual_ListView_ItemChecked);
             this.Tasual_ListView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.Tasual_ListView_ItemDrag);
             this.Tasual_ListView.DragDrop += new System.Windows.Forms.DragEventHandler(this.Tasual_ListView_DragDrop);
             this.Tasual_ListView.DragEnter += new System.Windows.Forms.DragEventHandler(this.Tasual_ListView_DragEnter);

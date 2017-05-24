@@ -130,16 +130,8 @@ namespace Tasual
     public void Tasual_StatusLabel_UpdateCounts()
     {
         // TODO: Get total from TaskArray size
-        int Complete = 0;
-        int Total = 0;
-
-        foreach (Task Task in TaskArray)
-        {
-            if (Task == null) { break; }
-
-            ++Total;
-            if (Task.Status == (int)Task.Statuses.Complete) { ++Complete; }
-        }
+        int Complete = Tasual_ListView.CheckedItems.Count;
+        int Total = Tasual_ListView.GetItemCount();
 
         if (Complete == Total)
         {
@@ -645,6 +637,7 @@ namespace Tasual
             TaskArray.Add(Task);
             Tasual_Array_Save_Text();
             Tasual_ListView.BuildList();
+            Tasual_StatusLabel_UpdateCounts();
             Tasual_ListView.EditModel(Task);
         }
 
@@ -1079,6 +1072,8 @@ namespace Tasual
             Tasual_ListView.RebuildColumns();
 
             Tasual_ListView.SetObjects(TaskArray);
+
+            Tasual_StatusLabel_UpdateCounts();
             //Tasual_ListView.
             //Tasual_ListView.OLVGroups.
 
@@ -1101,6 +1096,11 @@ namespace Tasual
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Tasual_DeleteTask(Tasual_ListView.FocusedItem);
+        }
+
+        private void Tasual_ListView_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            Tasual_StatusLabel_UpdateCounts();
         }
     }
 
