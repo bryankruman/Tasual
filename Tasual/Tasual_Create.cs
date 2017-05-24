@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using BrightIdeasSoftware;
 
 namespace Tasual
 {
@@ -64,9 +65,9 @@ namespace Tasual
 
             // TODO: DataSource will need to be different for other display styles
             // Perhaps build an array of groups? Or just search through every task item in TaskArray worst case scenario
-            if (_Tasual_Main.Tasual_ListView.Groups.Count != 0)
+            if (_Tasual_Main.Tasual_ListView.OLVGroups.Count != 0)
             {
-                Tasual_Create_ComboBox_Category.DataSource = _Tasual_Main.Tasual_ListView.Groups;
+                Tasual_Create_ComboBox_Category.DataSource = _Tasual_Main.Tasual_ListView.OLVGroups;
             }
             else
             {
@@ -608,7 +609,7 @@ namespace Tasual
             }
 
             Task.Priority = Tasual_Create_ComboBox_Priority.SelectedIndex;
-            Task.Group = Tasual_Create_ComboBox_Category.Text;
+            Task.Group = ((OLVGroup)Tasual_Create_ComboBox_Category.SelectedItem).Name;
 
             Task.Notes = Notes;
             if (Tasual_Create_TextBox_Link.Text != Tasual_Create_TextBox_Link.WatermarkText)
