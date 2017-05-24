@@ -775,22 +775,19 @@ namespace Tasual
 
         private void Tasual_MenuStrip_Create_Quick_Click(object sender, EventArgs e)
         {
-            /* // TODO: Re-write
-            string Group = "";
-            if (Tasual_ListView.Groups.Count != 0)
-            {
-                Group = Tasual_ListView.Groups[0].Name;
-            }
-            else
-            {
-                Group = "Tasks";
-            }
+            //OLVGroup Group;
+            //string GroupName = "Tasks";
+
+            //if (Tasual_ListView.OLVGroups.FirstOrDefault() != null)
+            //{
+            //    GroupName = Tasual_ListView.OLVGroups.FirstOrDefault().Name;
+            //}
 
             Task Task = new Task(
+                false,
                 0,
                 0,
-                0,
-                Group,
+                "Tasks",
                 "New task",
                 new Task.TimeInfo(),
                 new Timer()
@@ -798,10 +795,16 @@ namespace Tasual
 
             TaskArray.Add(Task);
             Tasual_Array_Save_Text();
-            ListViewItem Item = Tasual_ListView_CreateListViewItem(ref Task);
-            Tasual_StatusLabel_UpdateCounts();
-            Tasual_ListView_SizeColumns();
-            Tasual_ListView_BeginEdit(Item);*/
+            Tasual_ListView.BuildList();
+            //List<Task> Array = Tasual_ListView.Objects.Cast<Task>().ToList();
+
+            //foreach (Task )
+            Tasual_ListView.EditModel(Task);
+
+            //ListViewItem Item = Tasual_ListView_CreateListViewItem(ref Task);
+            //Tasual_StatusLabel_UpdateCounts();
+            //Tasual_ListView_SizeColumns();
+            //Tasual_ListView_BeginEdit(Item);*/
         }
 
         private void Tasual_MenuStrip_Edit_Click(object sender, EventArgs e)
@@ -1163,6 +1166,20 @@ namespace Tasual
             //TasualListView.GroupHeaderClick += new MouseEventHandler(Tasual_ListView_GroupHeaderClick);
         }
 
+        private void Tasual_ListView_FormatRow(object sender, FormatRowEventArgs e)
+        {
+            //Task Task = (Task)e.Model;
+
+            if (e.Item.Checked)
+            {
+                e.Item.ForeColor = Color.FromArgb(255, 189, 208, 230);
+            }
+            else
+            {
+                e.Item.ForeColor = Color.FromArgb(255, 36, 90, 150);
+            }
+        }
+
         private void Tasual_Main_Load(object sender, EventArgs e)
         {
             // load task array
@@ -1178,6 +1195,9 @@ namespace Tasual
             //Tasual_ListView.Check
             Tasual_ListView.CheckedAspectName = "Checked";
             Tasual_ListView.CellEditActivation = ObjectListView.CellEditActivateMode.DoubleClick;
+
+            Tasual_ListView.FormatRow += new EventHandler<FormatRowEventArgs>(Tasual_ListView_FormatRow);
+
 
             //Generator.GenerateColumns(Tasual_ListView, typeof(Task), true);
 
