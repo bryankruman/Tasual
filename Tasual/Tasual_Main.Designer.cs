@@ -43,7 +43,7 @@
             this.Tasual_MenuStrip_Settings_MinimizeToTray = new System.Windows.Forms.ToolStripMenuItem();
             this.Tasual_MenuStrip_Settings_LaunchOnStartup = new System.Windows.Forms.ToolStripMenuItem();
             this.Tasual_MenuStrip_Sources = new System.Windows.Forms.ToolStripMenuItem();
-            this.Tasual_ListView = new Tasual.TasualListView();
+            this.Tasual_ListView = new BrightIdeasSoftware.ObjectListView();
             this.Tasual_TaskIcons = new System.Windows.Forms.ImageList(this.components);
             this.Tasual_Notify = new System.Windows.Forms.NotifyIcon(this.components);
             this.Tasual_MenuStrip_Notify = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -548,7 +548,7 @@
         #endregion
 
         //private System.Windows.Forms.ListView Tasual_ListView;
-        public Tasual.TasualListView Tasual_ListView;
+        public BrightIdeasSoftware.ObjectListView Tasual_ListView;
 		private System.Windows.Forms.MenuStrip Tasual_MenuStrip;
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
 		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Settings;

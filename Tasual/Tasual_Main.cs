@@ -1501,9 +1501,4 @@ namespace Tasual
         }
 
     }
-
-    public class TasualListView : ObjectListView
-    {
-        // TODO: Remove this
-    }
 }
