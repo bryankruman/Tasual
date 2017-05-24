@@ -24,41 +24,11 @@ namespace Tasual
 		// ==============
 
 		public List<Task> TaskArray = new List<Task>();
-
-		Styles Tasual_Setting_Style = Styles.Custom;
-		string Tasual_Setting_TextFile = "localdb.txt";
-		bool Tasual_Setting_ConfirmClear = true; // currently unused
-		bool Tasual_Setting_ConfirmDelete = true; // currently unused
-		bool Tasual_Setting_AlwaysOnTop = false; // currently unused
+		public Setting Settings = new Setting();
 
 		OlvListViewHitTestInfo CalendarPopout = null;
 		OlvListViewHitTestInfo Tasual_ListView_FirstClickInfo = null;
 		bool Tasual_ListView_PreviouslySelected = false;
-
-		public enum TimeFormat
-		{
-			Elapsed,
-			Due,
-			Short,
-			Medium,
-			Long
-		}
-
-		public enum Styles
-		{
-			Custom,
-			Simple,
-			Detailed
-		}
-
-		public enum Protocols
-		{
-			Tasual,
-			JSON,
-			XML,
-			RTM,
-			Text
-		}
 
 
 		// =============================
@@ -168,10 +138,10 @@ namespace Tasual
 
 		public void Tasual_Array_Save_Text()
 		{
-				Console.WriteLine("Tasual_Array_Save_Text();");
+			Console.WriteLine("Tasual_Array_Save_Text();");
 			try
 			{
-				using (StreamWriter OutputFile = new StreamWriter(Tasual_Setting_TextFile))
+				using (StreamWriter OutputFile = new StreamWriter(Settings.TextFile))
 				{
 					foreach (Task Task in TaskArray)
 					{
@@ -208,7 +178,7 @@ namespace Tasual
 			{
 				TaskArray.Clear();
 
-				using (StreamReader InputFile = new StreamReader(Tasual_Setting_TextFile))
+				using (StreamReader InputFile = new StreamReader(Settings.TextFile))
 				{
 					int counter = 0;
 					string Line;
@@ -409,11 +379,11 @@ namespace Tasual
 			Tasual_ListView.AlwaysGroupByColumn = CategoryColumn;
 		}
 
-		public string Tasual_ListView_FormatTime(DateTime Time, TimeFormat Format)
+		public string Tasual_ListView_FormatTime(DateTime Time, Setting.TimeFormat Format)
 		{
 			switch (Format)
 			{
-				case TimeFormat.Elapsed:
+				case Setting.TimeFormat.Elapsed:
 					{
 						TimeSpan TS = DateTime.Now - Time;
 						int intYears = DateTime.Now.Year - Time.Year;
@@ -435,12 +405,12 @@ namespace Tasual
 						}
 					}
 
-				case TimeFormat.Due:
+				case Setting.TimeFormat.Due:
 					{
 						return "";
 					}
 
-				case TimeFormat.Short: // "6/6 - Tue 10pm"
+				case Setting.TimeFormat.Short: // "6/6 - Tue 10pm"
 					{
 						string TimeStamp = "";
 						if (Time.TimeOfDay != TimeSpan.Zero)
@@ -468,7 +438,7 @@ namespace Tasual
 							TimeStamp);
 					}
 
-				case TimeFormat.Medium: // "Sat, Jun 6th at 10:00pm"
+				case Setting.TimeFormat.Medium: // "Sat, Jun 6th at 10:00pm"
 					{
 						string TimeStamp;
 						if (Time.TimeOfDay == TimeSpan.Zero)
@@ -491,7 +461,7 @@ namespace Tasual
 							TimeStamp);
 					}
 
-				case TimeFormat.Long: // "Tuesday, June 6th at 10:00pm"
+				case Setting.TimeFormat.Long: // "Tuesday, June 6th at 10:00pm"
 					{
 						string TimeStamp;
 						if (Time.TimeOfDay == TimeSpan.Zero)
@@ -839,6 +809,13 @@ namespace Tasual
 
 		private void Tasual_Main_Load(object sender, EventArgs e)
 		{
+			// TODO: Load settings from json file
+			Settings.AlwaysOnTop = false; // currently unused
+			Settings.ConfirmClear = true; // currently unused
+			Settings.ConfirmDelete = true; // currently unused
+			Settings.Style = Setting.Styles.Custom; // currently unused
+			Settings.TextFile = "localdb.txt";
+
 			// load task array
 			// TODO select which method of array acquisition here
 			Tasual_Array_Load_Text();
