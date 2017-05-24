@@ -350,16 +350,6 @@ namespace Tasual
         return String.Format("{0}{1}", number, suffix);
     }
 
-    public void Tasual_ListView_BeginEdit(ListViewItem Item)
-    {
-        // TODO: Re-write
-        /*if (Item != null)
-        {
-            Tasual_ListView.LabelEdit = true;
-            Item.BeginEdit();
-        }*/
-    }
-
     public string Tasual_ListView_FormatTime(DateTime Time, TimeFormat Format)
     {
         switch (Format)
@@ -469,112 +459,6 @@ namespace Tasual
         }
     }
 
-    private Color Tasual_ListView_ForeColor(int Status, bool Selected)
-    {
-        switch (Status)
-        {
-            case (int)Task.Statuses.Complete:
-                {
-                    if (Selected)
-                    {
-                        return Color.FromArgb(255, 189, 208, 230);
-                    }
-                    else
-                    {
-                        return Color.FromArgb(255, 189, 208, 230);
-                    }
-                }
-            case (int)Task.Statuses.New:
-                {
-                    if (Selected)
-                    {
-                        return Color.FromArgb(255, 36, 90, 150);
-                    }
-                    else
-                    {
-                        return Color.FromArgb(255, 36, 90, 150);
-                    }
-                }
-            default: return Color.FromArgb(255, 0, 0, 0);
-        }
-    }
-
-    private Color Tasual_ListView_BackColor(int Status, bool Selected)
-    {
-        switch (Status)
-        {
-            case (int)Task.Statuses.Complete:
-                {
-                    if (Selected)
-                    {
-                        return Color.White;//FromArgb(255, 189, 208, 230);
-                    }
-                    else
-                    {
-                        return Color.White;
-                    }
-                }
-            case (int)Task.Statuses.New:
-                {
-                    if (Selected)
-                    {
-                        return Color.White;//FromArgb(255, 36, 90, 150);
-                    }
-                    else
-                    {
-                        return Color.White;
-                    }
-                }
-            default: return Color.FromArgb(255, 0, 0, 0);
-        }
-    }
-
-    private void Tasual_ListView_ChangeStatus(ref ListViewItem Item, int Status)
-    {
-            // TODO: Re-write
-            /*
-            Task Task = (Task)Item.Tag;
-
-        switch (Status)
-        {
-            case (int)Task.Statuses.Toggle:
-                {
-                    if (Task.Status == (int)Task.Statuses.Complete)
-                    {
-                        Status = (int)Task.Statuses.New;
-                        goto case (int)Task.Statuses.New;
-                    }
-                    else if (Task.Status == (int)Task.Statuses.New)
-                    {
-                        Status = (int)Task.Statuses.Complete;
-                        goto case (int)Task.Statuses.Complete;
-                    }
-                    break;
-                }
-
-            case (int)Task.Statuses.Complete:
-                {
-                    Item.ForeColor = Tasual_ListView_ForeColor((int)Task.Statuses.Complete, Item.Selected);//Color.FromArgb(255, 189, 208, 230);
-                    Item.ImageIndex = 0;
-                    break;
-                }
-
-            case (int)Task.Statuses.New:
-                {
-                    Item.ForeColor = Tasual_ListView_ForeColor((int)Task.Statuses.New, Item.Selected);//Color.FromArgb(255, 36, 90, 150);
-                    Item.ImageIndex = 1;
-                    break;
-                }
-            default:
-                {
-                    Console.WriteLine("Tasual_ListView_ChangeStatus(): Invalid Status!");
-                    return;
-                }
-        }
-
-        Task.Status = Status;*/
-    }
-
     public void Tasual_ListView_SizeColumns()
     {
         //Tasual_ListView.Columns[0].AutoResize(ColumnHeaderAutoResizeStyle.None);
@@ -593,41 +477,6 @@ namespace Tasual
         Tasual_ListView.Items.Clear();
         Tasual_ListView.Update();
         Tasual_ListView.Refresh();*/
-    }
-
-    private ListViewGroup Tasual_ListView_FindGroup(string GroupName)
-    {
-            /* // TODO: Re-write
-        ListViewGroup Found = null;
-        foreach (ListViewGroup Group in Tasual_ListView.Groups)
-        {
-            if (Group.Name == GroupName)
-            {
-                Found = Group;
-                break;
-            }
-        }*/
-        return null;
-    }
-
-    private void Tasual_ListView_AssignGroup(string GroupName, ref ListViewItem Item)
-    {
-            // TODO: Re-write
-            /*
-            ListViewGroup Found = Tasual_ListView_FindGroup(GroupName);
-        if (Found == null)
-        {
-            ListViewGroup NewGroup = new ListViewGroup();
-            NewGroup.Name = GroupName;
-            NewGroup.Header = NewGroup.Name;
-            Tasual_ListView.Groups.Add(NewGroup);
-            Console.WriteLine("Group: {0} - {1}", Tasual_ListView.Groups.IndexOf(NewGroup), NewGroup.Name);
-            Item.Group = NewGroup;
-        }
-        else
-        {
-            Item.Group = Found;
-        }*/
     }
 
     //public void Tasual_ListView_Populate
@@ -796,21 +645,15 @@ namespace Tasual
             TaskArray.Add(Task);
             Tasual_Array_Save_Text();
             Tasual_ListView.BuildList();
-            //List<Task> Array = Tasual_ListView.Objects.Cast<Task>().ToList();
-
-            //foreach (Task )
             Tasual_ListView.EditModel(Task);
-
-            //ListViewItem Item = Tasual_ListView_CreateListViewItem(ref Task);
-            //Tasual_StatusLabel_UpdateCounts();
-            //Tasual_ListView_SizeColumns();
-            //Tasual_ListView_BeginEdit(Item);*/
         }
 
         private void Tasual_MenuStrip_Edit_Click(object sender, EventArgs e)
         {
-            // TODO: Re-write
-            //Tasual_ListView_BeginEdit(Tasual_ListView.FocusedItem);
+            if (Tasual_ListView.SelectedItem != null)
+            {
+                Tasual_ListView.EditModel(Tasual_ListView.SelectedItem.RowObject);
+            }
         }
 
         private void Tasual_MenuStrip_Settings_AlwaysOnTop_Click(object sender, EventArgs e)
@@ -1088,26 +931,6 @@ namespace Tasual
             }
         }
 #endif
-
-        private void Tasual_ListView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            /* // TODO: Re-write
-            Tasual_ListView.Items.Cast<ListViewItem>()
-                .ToList().ForEach(Item =>
-                {
-                    Task Task = (Task)Item.Tag;
-                    Item.BackColor = Tasual_ListView_BackColor(Task.Status, false);
-                    Item.ForeColor = Tasual_ListView_ForeColor(Task.Status, false);
-                });
-            Tasual_ListView.SelectedItems.Cast<ListViewItem>()
-                .ToList().ForEach(Item =>
-                {
-                    Task Task = (Task)Item.Tag;
-                    Item.BackColor = Tasual_ListView_BackColor(Task.Status, true);
-                    Item.ForeColor = Tasual_ListView_ForeColor(Task.Status, true);
-                });
-                */
-        }
 
         private void Tasual_ListView_DragDrop(object sender, DragEventArgs e)
         {
