@@ -813,45 +813,6 @@ namespace Tasual
         }
 #endif
 
-        private void Tasual_ListView_DragDrop(object sender, DragEventArgs e)
-        {
-            /* // TODO: Re-write
-            Point Loc = Tasual_ListView.PointToClient(new Point(e.X, e.Y));
-            ListViewItem DisplacedItem = Tasual_ListView.GetItemAt(Loc.X, Loc.Y);
-
-            if ((DisplacedItem == null) || (e.Data.GetDataPresent(typeof(ListViewItem)) == false))
-                return;
-
-            ListViewItem DraggedItem = (ListViewItem)e.Data.GetData(typeof(ListViewItem));
-
-            Console.WriteLine(
-                "Dragged from {0} to {1}: {2} > {3}",
-                DraggedItem.Index,
-                DisplacedItem.Index,
-                DraggedItem.Text.ToString(),
-                DisplacedItem.Text.ToString()
-            );
-
-            //int OldIndex
-
-            if (DraggedItem != DisplacedItem)
-            {
-                Rectangle Bounds = DisplacedItem.GetBounds(ItemBoundsPortion.Entire);
-
-            }
-            */
-        }
-
-        private void Tasual_ListView_DragEnter(object sender, DragEventArgs e)
-        {
-            //e.Effect = DragDropEffects.Copy;
-        }
-
-        private void Tasual_ListView_ItemDrag(object sender, ItemDragEventArgs e)
-        {
-            //Tasual_ListView.DoDragDrop(e.Item, DragDropEffects.Copy);
-        }
-
 
         // ================
         //  Core Functions
