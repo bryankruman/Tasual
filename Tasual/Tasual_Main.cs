@@ -1013,6 +1013,26 @@ namespace Tasual
             Tasual_ListView.SelectedBackColor = Color.FromArgb(255, 222, 232, 246);
             Tasual_ListView.SelectedForeColor = Color.FromArgb(255, 36, 90, 150);
             Tasual_ListView.FormatRow += new EventHandler<FormatRowEventArgs>(Tasual_ListView_FormatRow);
+            //Tasual_ListView.HasF
+            //Tasual_ListView.TintSortColumn = false;
+            //Tasual_ListView.SelectedColumnTint = Color.FromArgb(255, 255, 0, 0);
+
+            //Tasual_ListView.TintSortColumn = false;
+            //Tasual_ListView.SelectedColumnTint = Color.FromArgb(255, 230, 230, 255);
+
+            HeaderFormatStyle FormatStyle = new HeaderFormatStyle();
+            FormatStyle.Normal.ForeColor = Color.FromArgb(255, 36, 90, 150);
+            FormatStyle.Normal.BackColor = Color.FromArgb(255, 230, 230, 255);
+            //FormatStyle.Normal.FrameColor = Color.FromArgb(255, 222, 232, 246);
+            //FormatStyle.Normal.FrameWidth = 1;
+            FormatStyle.Hot.ForeColor = Color.FromArgb(255, 36, 90, 150);
+            FormatStyle.Hot.BackColor = Color.FromArgb(255, 240, 240, 255);
+            //FormatStyle.Hot.Font = new Font(Tasual_ListView.Font, FontStyle.Underline);
+            FormatStyle.Pressed.ForeColor = Color.FromArgb(255, 36, 90, 150);
+            FormatStyle.Pressed.BackColor = Color.FromArgb(255, 240, 240, 255);
+            //FormatStyle.Pressed.Font = new Font(Tasual_ListView.Font, FontStyle.Underline);
+            Tasual_ListView.HeaderUsesThemes = false;
+            Tasual_ListView.HeaderFormatStyle = FormatStyle;
 
             Tasual_ListView.PersistentCheckBoxes = true;
             Tasual_ListView.CheckBoxes = true;
@@ -1027,8 +1047,12 @@ namespace Tasual
             DescriptionColumn.FillsFreeSpace = true;
             DescriptionColumn.IsVisible = true;
             DescriptionColumn.IsEditable = true;
+            //DescriptionColumn.HasFilterIndicator = false;
+            DescriptionColumn.Sortable = true;
             DescriptionColumn.DisplayIndex = 1;
             DescriptionColumn.LastDisplayIndex = 1;
+            //DescriptionColumn.header = false;
+
 
             //DescriptionColumn.IsEditable = false;
             //DescriptionColumn.Edit
