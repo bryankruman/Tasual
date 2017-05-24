@@ -74,450 +74,474 @@ namespace Tasual
         }
 
         /* // TODO: Re-write
-        public void Tasual_DeleteTask(ref Task Task, ListViewItem Item)
+        private void Tasual_ReAssignGroup(string OldTaskGroup, string NewTaskGroup)
         {
-            ListViewGroup OldGroup = Item.Group;
-            TaskArray.Remove(Task);
-            Tasual_Array_Save_Text();
-            if (Item != null) { Tasual_ListView.Items.Remove(Item); }
-            if ((OldGroup != null) && (OldGroup.Items.Count == 0))
+            foreach (Task Task in TaskArray)
             {
-                Tasual_ListView.Groups.Remove(OldGroup);
-            }
-        }
-
-        public void Tasual_DeleteTask(ListViewItem Item)
-        {
-            ListViewGroup OldGroup = Item.Group;
-            TaskArray.Remove((Task)Item.Tag);
-            Tasual_Array_Save_Text();
-            if (Item != null) { Tasual_ListView.Items.Remove(Item); }
-            if ((OldGroup != null) && (OldGroup.Items.Count == 0))
-            {
-                Tasual_ListView.Groups.Remove(OldGroup);
-            }
-        }*/
-
-        /* // TODO: Re-write
-    private void Tasual_ReAssignGroup(string OldTaskGroup, string NewTaskGroup)
-    {
-        foreach (Task Task in TaskArray)
-        {
-            if (Task == null) { break; }
-            if (Task.Group == OldTaskGroup)
-            {
-                Task.Group = NewTaskGroup;
-                Tasual_ListView_AssignGroup(NewTaskGroup, ref Task.Item);
-            }
-        }
-    } */
-
-    public void Tasual_PrintTaskToConsole(Task TaskItem)
-    {
-        Console.WriteLine(
-            "TaskItem: '{0}', '{1}', '{2}', '{3}', '{4}', ('{5}', '{6}', '{7}')",
-            TaskItem.Checked,
-            TaskItem.Priority,
-            TaskItem.Status,
-            TaskItem.Group,
-            TaskItem.Description,
-            TaskItem.Time.Start,
-            TaskItem.Time.End,
-            TaskItem.Time.Next
-        );
-    }
-
-    public void Tasual_StatusLabel_UpdateCounts()
-    {
-        // TODO: Get total from TaskArray size
-        int Complete = Tasual_ListView.CheckedItems.Count;
-        int Total = Tasual_ListView.GetItemCount();
-
-        if (Complete == Total)
-        {
-            Tasual_StatusLabel.Text = "All tasks complete";
-        }
-        else
-        {
-            Tasual_StatusLabel.Text = string.Format("{0} of {1} tasks complete", Complete, Total);
-        }
-    }
-
-
-    // =================
-    //  Array Functions
-    // =================
-
-
-    public void Tasual_Array_Save_JSON()
-    {
-        try
-        {
-            string Output = JsonConvert.SerializeObject(TaskArray, Formatting.Indented);
-            //Console.WriteLine("{0}", Output);
-
-            using (FileStream OutputFile = File.Open("local.json", FileMode.CreateNew))
-            using (StreamWriter OutputStream = new StreamWriter(OutputFile))
-            using (JsonWriter OutputJson = new JsonTextWriter(OutputStream))
-            {
-                OutputJson.Formatting = Formatting.Indented;
-
-                JsonSerializer Serializer = new JsonSerializer();
-                Serializer.Serialize(OutputJson, TaskArray);
-            }
-
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine("Tasual_Array_Save_JSON(): {0}\nTrace: {1}", e.Message, e.StackTrace);
-        }
-    }
-
-    public void Tasual_Array_Load_JSON()
-    {
-        try
-        {
-            TaskArray.Clear();
-
-            using (StreamReader InputFile = File.OpenText("local.json"))
-            {
-                JsonSerializer Serializer = new JsonSerializer();
-                //TaskArray = (List<Task>)Serializer.Deserialize(InputFile);
-            }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine("Tasual_Array_Load_JSON(): {0}\nTrace: {1}", e.Message, e.StackTrace);
-        }
-    }
-
-    public void Tasual_Array_Save_Text()
-    {
-            Console.WriteLine("Tasual_Array_Save_Text();");
-        try
-        {
-            using (StreamWriter OutputFile = new StreamWriter(Tasual_Setting_TextFile))
-            {
-                foreach (Task Task in TaskArray)
+                if (Task == null) { break; }
+                if (Task.Group == OldTaskGroup)
                 {
-                    string Line;
-                    Line = Task.Checked.ToString();
-                    Line = Line + (char)29 + Task.Priority.ToString();
-                    Line = Line + (char)29 + Task.Status.ToString();
-                    Line = Line + (char)29 + Task.Group;
-                    Line = Line + (char)29 + Task.Description;
-
-                    DateTimeOffset TimeOffset;
-                    TimeOffset = new DateTimeOffset(Task.Time.Start.ToLocalTime());
-                    Line = Line + (char)29 + TimeOffset.ToUnixTimeSeconds();
-
-                    TimeOffset = new DateTimeOffset(Task.Time.End.ToLocalTime());
-                    Line = Line + (char)29 + TimeOffset.ToUnixTimeSeconds();
-
-                    TimeOffset = new DateTimeOffset(Task.Time.Next.ToLocalTime());
-                    Line = Line + (char)29 + TimeOffset.ToUnixTimeSeconds();
-                    OutputFile.WriteLine(Line);
+                    Task.Group = NewTaskGroup;
+                    Tasual_ListView_AssignGroup(NewTaskGroup, ref Task.Item);
                 }
             }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine("Tasual_Array_Save_Text(): {0}\nTrace: {1}", e.Message, e.StackTrace);
-        }
-    }
+        } */
 
-    public void Tasual_Array_Load_Text()
-    {
-            Console.WriteLine("Tasual_Array_Load_Text();");
-            try
+        public void Tasual_PrintTaskToConsole(Task TaskItem)
         {
-            TaskArray.Clear();
+            Console.WriteLine(
+                "TaskItem: '{0}', '{1}', '{2}', '{3}', '{4}', ('{5}', '{6}', '{7}')",
+                TaskItem.Checked,
+                TaskItem.Priority,
+                TaskItem.Status,
+                TaskItem.Group,
+                TaskItem.Description,
+                TaskItem.Time.Start,
+                TaskItem.Time.End,
+                TaskItem.Time.Next
+            );
+        }
 
-            using (StreamReader InputFile = new StreamReader(Tasual_Setting_TextFile))
+        public void Tasual_StatusLabel_UpdateCounts()
+        {
+            // TODO: Get total from TaskArray size
+            int Complete = Tasual_ListView.CheckedItems.Count;
+            int Total = Tasual_ListView.GetItemCount();
+
+            if (Complete == Total)
             {
-                int counter = 0;
-                string Line;
+                Tasual_StatusLabel.Text = "All tasks complete";
+            }
+            else
+            {
+                Tasual_StatusLabel.Text = string.Format("{0} of {1} tasks complete", Complete, Total);
+            }
+        }
 
-                while ((Line = InputFile.ReadLine()) != null)
+
+        // =================
+        //  Array Functions
+        // =================
+
+
+        public void Tasual_Array_Save_JSON()
+        {
+            try
+            {
+                string Output = JsonConvert.SerializeObject(TaskArray, Formatting.Indented);
+                //Console.WriteLine("{0}", Output);
+
+                using (FileStream OutputFile = File.Open("local.json", FileMode.CreateNew))
+                using (StreamWriter OutputStream = new StreamWriter(OutputFile))
+                using (JsonWriter OutputJson = new JsonTextWriter(OutputStream))
                 {
-                    Task NewItem = new Task();
-                    //NewItem.Time = new Task.TimeInfo();
-                    int argtype = 0;
-                    string[] segments = Line.Split((char)29);
-                    double UnixTime;
+                    OutputJson.Formatting = Formatting.Indented;
 
-                    foreach (string token in segments)
+                    JsonSerializer Serializer = new JsonSerializer();
+                    Serializer.Serialize(OutputJson, TaskArray);
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Tasual_Array_Save_JSON(): {0}\nTrace: {1}", e.Message, e.StackTrace);
+            }
+        }
+
+        public void Tasual_Array_Load_JSON()
+        {
+            try
+            {
+                TaskArray.Clear();
+
+                using (StreamReader InputFile = File.OpenText("local.json"))
+                {
+                    JsonSerializer Serializer = new JsonSerializer();
+                    //TaskArray = (List<Task>)Serializer.Deserialize(InputFile);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Tasual_Array_Load_JSON(): {0}\nTrace: {1}", e.Message, e.StackTrace);
+            }
+        }
+
+        public void Tasual_Array_Save_Text()
+        {
+                Console.WriteLine("Tasual_Array_Save_Text();");
+            try
+            {
+                using (StreamWriter OutputFile = new StreamWriter(Tasual_Setting_TextFile))
+                {
+                    foreach (Task Task in TaskArray)
                     {
-                        // lets do something with this data now
-                        int Temp = 0;
-                            bool TempBool = false;
-                        switch (argtype)
+                        string Line;
+                        Line = Task.Checked.ToString();
+                        Line = Line + (char)29 + Task.Priority.ToString();
+                        Line = Line + (char)29 + Task.Status.ToString();
+                        Line = Line + (char)29 + Task.Group;
+                        Line = Line + (char)29 + Task.Description;
+
+                        DateTimeOffset TimeOffset;
+                        TimeOffset = new DateTimeOffset(Task.Time.Start.ToLocalTime());
+                        Line = Line + (char)29 + TimeOffset.ToUnixTimeSeconds();
+
+                        TimeOffset = new DateTimeOffset(Task.Time.End.ToLocalTime());
+                        Line = Line + (char)29 + TimeOffset.ToUnixTimeSeconds();
+
+                        TimeOffset = new DateTimeOffset(Task.Time.Next.ToLocalTime());
+                        Line = Line + (char)29 + TimeOffset.ToUnixTimeSeconds();
+                        OutputFile.WriteLine(Line);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Tasual_Array_Save_Text(): {0}\nTrace: {1}", e.Message, e.StackTrace);
+            }
+        }
+
+        public void Tasual_Array_Load_Text()
+        {
+                Console.WriteLine("Tasual_Array_Load_Text();");
+                try
+            {
+                TaskArray.Clear();
+
+                using (StreamReader InputFile = new StreamReader(Tasual_Setting_TextFile))
+                {
+                    int counter = 0;
+                    string Line;
+
+                    while ((Line = InputFile.ReadLine()) != null)
+                    {
+                        Task NewItem = new Task();
+                        //NewItem.Time = new Task.TimeInfo();
+                        int argtype = 0;
+                        string[] segments = Line.Split((char)29);
+                        double UnixTime;
+
+                        foreach (string token in segments)
                         {
-                            case (int)Task.Arguments.Checked: { Boolean.TryParse(token, out TempBool); NewItem.Checked = TempBool; break; }
-                            case (int)Task.Arguments.Priority: { Int32.TryParse(token, out Temp); NewItem.Priority = Temp; break; }
-                            case (int)Task.Arguments.Status: { Int32.TryParse(token, out Temp); NewItem.Status = Temp; break; }
-                            case (int)Task.Arguments.Group: { NewItem.Group = token; break; }
-                            case (int)Task.Arguments.Description: { NewItem.Description = token; break; }
-                            case (int)Task.Arguments.Created:
-                                {
-                                    Double.TryParse(token, out UnixTime);
-                                    NewItem.Time.Start = DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
-                                    break;
-                                }
-                            case (int)Task.Arguments.Ending:
-                                {
-                                    Double.TryParse(token, out UnixTime);
-                                    NewItem.Time.End = DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
-                                    break;
-                                }
-                            case (int)Task.Arguments.Next:
-                                {
-                                    Double.TryParse(token, out UnixTime);
-                                    NewItem.Time.Next = DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
-                                    break;
-                                }
-                            default:
-                                {
-                                    Console.WriteLine("TOO MANY ARGUMENTS IN FILE !!!!!!");
-                                    break;
-                                }
+                            // lets do something with this data now
+                            int Temp = 0;
+                                bool TempBool = false;
+                            switch (argtype)
+                            {
+                                case (int)Task.Arguments.Checked: { Boolean.TryParse(token, out TempBool); NewItem.Checked = TempBool; break; }
+                                case (int)Task.Arguments.Priority: { Int32.TryParse(token, out Temp); NewItem.Priority = Temp; break; }
+                                case (int)Task.Arguments.Status: { Int32.TryParse(token, out Temp); NewItem.Status = Temp; break; }
+                                case (int)Task.Arguments.Group: { NewItem.Group = token; break; }
+                                case (int)Task.Arguments.Description: { NewItem.Description = token; break; }
+                                case (int)Task.Arguments.Created:
+                                    {
+                                        Double.TryParse(token, out UnixTime);
+                                        NewItem.Time.Start = DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
+                                        break;
+                                    }
+                                case (int)Task.Arguments.Ending:
+                                    {
+                                        Double.TryParse(token, out UnixTime);
+                                        NewItem.Time.End = DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
+                                        break;
+                                    }
+                                case (int)Task.Arguments.Next:
+                                    {
+                                        Double.TryParse(token, out UnixTime);
+                                        NewItem.Time.Next = DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
+                                        break;
+                                    }
+                                default:
+                                    {
+                                        Console.WriteLine("TOO MANY ARGUMENTS IN FILE !!!!!!");
+                                        break;
+                                    }
+                            }
+
+                            ++argtype;
+                            //Console.WriteLine(token);
                         }
 
-                        ++argtype;
-                        //Console.WriteLine(token);
+                        if (argtype == (int)Task.Arguments.Count)
+                            TaskArray.Add(NewItem);
+
+                        //Console.WriteLine(line);
+                        counter++;
                     }
-
-                    if (argtype == (int)Task.Arguments.Count)
-                        TaskArray.Add(NewItem);
-
-                    //Console.WriteLine(line);
-                    counter++;
                 }
+
             }
-
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine("Tasual_Array_Load_Text(): {0}\nTrace: {1}", e.Message, e.StackTrace);
-        }
-    }
-
-
-    // ====================
-    //  ListView Functions
-    // ====================
-
-    public static string Ordinal(int number)
-    {
-        string suffix = String.Empty;
-
-        int ones = number % 10;
-        int tens = (int)Math.Floor(number / 10M) % 10;
-
-        if (tens == 1)
-        {
-            suffix = "th";
-        }
-        else
-        {
-            switch (ones)
+            catch (Exception e)
             {
-                case 1:
-                    suffix = "st";
-                    break;
-
-                case 2:
-                    suffix = "nd";
-                    break;
-
-                case 3:
-                    suffix = "rd";
-                    break;
-
-                default:
-                    suffix = "th";
-                    break;
+                Console.WriteLine("Tasual_Array_Load_Text(): {0}\nTrace: {1}", e.Message, e.StackTrace);
             }
         }
-        return String.Format("{0}{1}", number, suffix);
-    }
 
-    public string Tasual_ListView_FormatTime(DateTime Time, TimeFormat Format)
-    {
-        switch (Format)
+
+        // ====================
+        //  ListView Functions
+        // ====================
+
+        public static string Ordinal(int number)
         {
-            case TimeFormat.Elapsed:
+            string suffix = String.Empty;
+
+            int ones = number % 10;
+            int tens = (int)Math.Floor(number / 10M) % 10;
+
+            if (tens == 1)
+            {
+                suffix = "th";
+            }
+            else
+            {
+                switch (ones)
                 {
-                    TimeSpan TS = DateTime.Now - Time;
-                    int intYears = DateTime.Now.Year - Time.Year;
-                    int intMonths = DateTime.Now.Month - Time.Month;
-                    int intDays = DateTime.Now.Day - Time.Day;
-                    int intHours = DateTime.Now.Hour - Time.Hour;
-                    int intMinutes = DateTime.Now.Minute - Time.Minute;
-                    int intSeconds = DateTime.Now.Second - Time.Second;
-                    if (intYears > 0) return String.Format("{0} {1} ago", intYears, (intYears == 1) ? "year" : "years");
-                    else if (intMonths > 0) return String.Format("{0} {1} ago", intMonths, (intMonths == 1) ? "month" : "months");
-                    else if (intDays > 0) return String.Format("{0} {1} ago", intDays, (intDays == 1) ? "day" : "days");
-                    else if (intHours > 0) return String.Format("{0} {1} ago", intHours, (intHours == 1) ? "hour" : "hours");
-                    else if (intMinutes > 0) return String.Format("{0} {1} ago", intMinutes, (intMinutes == 1) ? "minute" : "minutes");
-                    else if (intSeconds > 1) return String.Format("{0} {1} ago", intSeconds, (intSeconds == 1) ? "second" : "seconds");
-                    else if (intSeconds >= 0) return "Just now";
-                    else
-                    {
-                        return String.Format("{0} {1}", Time.ToShortDateString(), Time.ToShortTimeString());
-                    }
+                    case 1:
+                        suffix = "st";
+                        break;
+
+                    case 2:
+                        suffix = "nd";
+                        break;
+
+                    case 3:
+                        suffix = "rd";
+                        break;
+
+                    default:
+                        suffix = "th";
+                        break;
                 }
+            }
+            return String.Format("{0}{1}", number, suffix);
+        }
 
-            case TimeFormat.Due:
-                {
-                    return "";
-                }
+        private void Tasual_ListView_AddColumns()
+        {
+            OLVColumn DescriptionColumn = new OLVColumn("Description", "Description");
+            //DescriptionColumn.AspectName = "Description";
+            //DescriptionColumn.Sortable = true;
+            DescriptionColumn.MinimumWidth = 100;
+            DescriptionColumn.FillsFreeSpace = true;
+            DescriptionColumn.IsVisible = true;
+            DescriptionColumn.IsEditable = true;
+            //DescriptionColumn.HasFilterIndicator = false;
+            DescriptionColumn.Sortable = true;
+            DescriptionColumn.DisplayIndex = 1;
+            DescriptionColumn.LastDisplayIndex = 1;
+            //DescriptionColumn.header = false;
+            //DescriptionColumn.IsEditable = false;
+            //DescriptionColumn.Edit
+            //DescriptionColumn.ImageGetter = new
+            //DescriptionColumn.AspectToStringConverter = 
+            Tasual_ListView.AllColumns.Add(DescriptionColumn);
+            Tasual_ListView.Columns.AddRange(new ColumnHeader[] { DescriptionColumn });
 
-            case TimeFormat.Short: // "6/6 - Tue 10pm"
-                {
-                    string TimeStamp = "";
-                    if (Time.TimeOfDay != TimeSpan.Zero)
+            OLVColumn CategoryColumn = new OLVColumn("Category", "Group");
+            //CategoryColumn.AspectName = "Group";
+            //CategoryColumn.Sortable = false;
+            CategoryColumn.MinimumWidth = 100;
+            CategoryColumn.IsVisible = false;
+            CategoryColumn.IsEditable = true;
+            CategoryColumn.DisplayIndex = 2;
+            CategoryColumn.LastDisplayIndex = 2;
+            //DescriptionColumn.
+            //DescriptionColumn.AspectToStringConverter = 
+            Tasual_ListView.AllColumns.Add(CategoryColumn);
+            Tasual_ListView.Columns.AddRange(new ColumnHeader[] { CategoryColumn });
+
+            OLVColumn TimeColumn = new OLVColumn("Time", "Time");
+            //TimeColumn.AspectName = "Time";
+            //TimeColumn.Sortable = false;
+            //TimeColumn.Width = -1;
+            TimeColumn.MinimumWidth = 100;
+            TimeColumn.IsVisible = true;
+            TimeColumn.IsEditable = false;
+            TimeColumn.DisplayIndex = 3;
+            TimeColumn.LastDisplayIndex = 3;
+            Tasual_ListView.AllColumns.Add(TimeColumn);
+            Tasual_ListView.Columns.AddRange(new ColumnHeader[] { TimeColumn });
+
+            Tasual_ListView.AlwaysGroupByColumn = CategoryColumn;
+        }
+
+        public string Tasual_ListView_FormatTime(DateTime Time, TimeFormat Format)
+        {
+            switch (Format)
+            {
+                case TimeFormat.Elapsed:
                     {
-                        string Minutes = "";
-                        if (Time.Minute != 0) { Minutes = ":" + Time.Minute.ToString("00"); }
-
-                        if (Time.Hour > 12)
+                        TimeSpan TS = DateTime.Now - Time;
+                        int intYears = DateTime.Now.Year - Time.Year;
+                        int intMonths = DateTime.Now.Month - Time.Month;
+                        int intDays = DateTime.Now.Day - Time.Day;
+                        int intHours = DateTime.Now.Hour - Time.Hour;
+                        int intMinutes = DateTime.Now.Minute - Time.Minute;
+                        int intSeconds = DateTime.Now.Second - Time.Second;
+                        if (intYears > 0) return String.Format("{0} {1} ago", intYears, (intYears == 1) ? "year" : "years");
+                        else if (intMonths > 0) return String.Format("{0} {1} ago", intMonths, (intMonths == 1) ? "month" : "months");
+                        else if (intDays > 0) return String.Format("{0} {1} ago", intDays, (intDays == 1) ? "day" : "days");
+                        else if (intHours > 0) return String.Format("{0} {1} ago", intHours, (intHours == 1) ? "hour" : "hours");
+                        else if (intMinutes > 0) return String.Format("{0} {1} ago", intMinutes, (intMinutes == 1) ? "minute" : "minutes");
+                        else if (intSeconds > 1) return String.Format("{0} {1} ago", intSeconds, (intSeconds == 1) ? "second" : "seconds");
+                        else if (intSeconds >= 0) return "Just now";
+                        else
                         {
-                            TimeStamp = (Time.Hour - 12).ToString();
-                            TimeStamp = TimeStamp + Minutes + "pm";
+                            return String.Format("{0} {1}", Time.ToShortDateString(), Time.ToShortTimeString());
+                        }
+                    }
+
+                case TimeFormat.Due:
+                    {
+                        return "";
+                    }
+
+                case TimeFormat.Short: // "6/6 - Tue 10pm"
+                    {
+                        string TimeStamp = "";
+                        if (Time.TimeOfDay != TimeSpan.Zero)
+                        {
+                            string Minutes = "";
+                            if (Time.Minute != 0) { Minutes = ":" + Time.Minute.ToString("00"); }
+
+                            if (Time.Hour > 12)
+                            {
+                                TimeStamp = (Time.Hour - 12).ToString();
+                                TimeStamp = TimeStamp + Minutes + "pm";
+                            }
+                            else
+                            {
+                                TimeStamp = Time.Hour.ToString();
+                                TimeStamp = TimeStamp + Minutes + "am";
+                            }
+                        }
+
+                        return String.Format(
+                            "{0}/{1} - {2} {3}",
+                            Time.Month,
+                            Time.Day,
+                            Time.DayOfWeek.ToString().Substring(0, 3),
+                            TimeStamp);
+                    }
+
+                case TimeFormat.Medium: // "Sat, Jun 6th at 10:00pm"
+                    {
+                        string TimeStamp;
+                        if (Time.TimeOfDay == TimeSpan.Zero)
+                        {
+                            TimeStamp = "";
                         }
                         else
                         {
-                            TimeStamp = Time.Hour.ToString();
-                            TimeStamp = TimeStamp + Minutes + "am";
+                            TimeStamp = "at ";
+                            TimeStamp = TimeStamp + Time.Hour.ToString() + ":" + Time.Minute.ToString();
+                            if (Time.Hour <= 12) { TimeStamp = TimeStamp + "am"; }
+                            else { TimeStamp = TimeStamp + "pm"; }
                         }
+
+                        return String.Format(
+                            "{0}, {1} {2} {3}",
+                            Time.DayOfWeek.ToString().Substring(0, 3),
+                            Time.Month.ToString().Substring(0, 3),
+                            Time.Day,
+                            TimeStamp);
                     }
 
-                    return String.Format(
-                        "{0}/{1} - {2} {3}",
-                        Time.Month,
-                        Time.Day,
-                        Time.DayOfWeek.ToString().Substring(0, 3),
-                        TimeStamp);
-                }
-
-            case TimeFormat.Medium: // "Sat, Jun 6th at 10:00pm"
-                {
-                    string TimeStamp;
-                    if (Time.TimeOfDay == TimeSpan.Zero)
+                case TimeFormat.Long: // "Tuesday, June 6th at 10:00pm"
                     {
-                        TimeStamp = "";
-                    }
-                    else
-                    {
-                        TimeStamp = "at ";
-                        TimeStamp = TimeStamp + Time.Hour.ToString() + ":" + Time.Minute.ToString();
-                        if (Time.Hour <= 12) { TimeStamp = TimeStamp + "am"; }
-                        else { TimeStamp = TimeStamp + "pm"; }
-                    }
+                        string TimeStamp;
+                        if (Time.TimeOfDay == TimeSpan.Zero)
+                        {
+                            TimeStamp = "";
+                        }
+                        else
+                        {
+                            TimeStamp = "at ";
+                            TimeStamp = TimeStamp + Time.Hour.ToString() + ":" + Time.Minute.ToString();
+                            if (Time.Hour <= 12) { TimeStamp = TimeStamp + "am"; }
+                            else { TimeStamp = TimeStamp + "pm"; }
+                        }
 
-                    return String.Format(
-                        "{0}, {1} {2} {3}",
-                        Time.DayOfWeek.ToString().Substring(0, 3),
-                        Time.Month.ToString().Substring(0, 3),
-                        Time.Day,
-                        TimeStamp);
-                }
-
-            case TimeFormat.Long: // "Tuesday, June 6th at 10:00pm"
-                {
-                    string TimeStamp;
-                    if (Time.TimeOfDay == TimeSpan.Zero)
-                    {
-                        TimeStamp = "";
-                    }
-                    else
-                    {
-                        TimeStamp = "at ";
-                        TimeStamp = TimeStamp + Time.Hour.ToString() + ":" + Time.Minute.ToString();
-                        if (Time.Hour <= 12) { TimeStamp = TimeStamp + "am"; }
-                        else { TimeStamp = TimeStamp + "pm"; }
+                        return String.Format(
+                            "{0}, {1} {2} {3}",
+                            Time.DayOfWeek.ToString(),
+                            Time.Month.ToString(),
+                            Time.Day,
+                            TimeStamp);
                     }
 
-                    return String.Format(
-                        "{0}, {1} {2} {3}",
-                        Time.DayOfWeek.ToString(),
-                        Time.Month.ToString(),
-                        Time.Day,
-                        TimeStamp);
-                }
-
-            default: return "";
+                default: return "";
+            }
         }
-    }
 
-    public void Tasual_ListView_SizeColumns()
-    {
-        //Tasual_ListView.Columns[0].AutoResize(ColumnHeaderAutoResizeStyle.None);
-        //Tasual_ListView.Columns[1].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
-
-        //Tasual_ListView.Columns[1].Width = Math.Max(100, Tasual_ListView.Columns[1].Width);
-        //Tasual_ListView.Columns[0].Width = Math.Max(100, (Tasual_ListView.ClientSize.Width - Tasual_ListView.Columns[1].Width));
-    }
-
-    //public void Tasual_ListView_Populate
-    public ListViewItem Tasual_ListView_CreateListViewItem(ref Task Task)
-    {
-        string[] ItemColumnData;
-
-        // determine which columns we're going to have
-        switch (Tasual_Setting_Style)
+        public void Tasual_ListView_SizeColumns()
         {
-            // "CUSTOM" STYLE:
-            // - groups: overdue at top, normal group listings below, completed at bottom
-            // - columns: Description, Time
-            case Styles.Custom:
-                {
-                    ItemColumnData = new string[2];
-                    ItemColumnData[0] = Task.Description;
-                    ItemColumnData[1] = Tasual_ListView_FormatTime(Task.Time.Start.ToLocalTime(), TimeFormat.Short);
-                    break;
-                }
+            //Tasual_ListView.Columns[0].AutoResize(ColumnHeaderAutoResizeStyle.None);
+            //Tasual_ListView.Columns[1].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
 
-            // "SIMPLE" STYLE:
-            // - groups: overdue at top, today, tomorrow, this week, next week, future, completed at bottom
-            // - columns: Description, Time
-            case Styles.Simple:
-                {
-                    ItemColumnData = new string[2];
-                    ItemColumnData[0] = Task.Description;
-                    ItemColumnData[1] = Task.Group.ToString();
-                    break;
-                }
-
-            // "DETAILED" STYLE:
-            // - groups: overdue at top, today, tomorrow, this week, next week, future, completed at bottom
-            // - columns: Description, Category, Time
-            case Styles.Detailed:
-                {
-                    ItemColumnData = new string[3];
-                    ItemColumnData[0] = Task.Description;
-                    ItemColumnData[1] = Task.Group.ToString();
-                    ItemColumnData[2] = Tasual_ListView_FormatTime(Task.Time.Start.ToLocalTime(), TimeFormat.Elapsed);
-                    break;
-                }
-
-            default:
-                {
-                    throw new Exception("Tasual_ListView_CreateListViewItem(): Invalid style setting!");
-                }
+            //Tasual_ListView.Columns[1].Width = Math.Max(100, Tasual_ListView.Columns[1].Width);
+            //Tasual_ListView.Columns[0].Width = Math.Max(100, (Tasual_ListView.ClientSize.Width - Tasual_ListView.Columns[1].Width));
         }
 
-        //ListViewItem Item = new ListViewItem(ItemColumnData);
-        //Item.Tag = Task;
-        //Task.Item = Item;
+        //public void Tasual_ListView_Populate
+        public ListViewItem Tasual_ListView_CreateListViewItem(ref Task Task)
+        {
+            string[] ItemColumnData;
 
-        //Tasual_ListView_AssignGroup(Task.Group.ToString(), ref Item);
-        //Tasual_ListView_ChangeStatus(ref Item, Task.Status);
-        //Tasual_ListView.Items.Add(Item);
+            // determine which columns we're going to have
+            switch (Tasual_Setting_Style)
+            {
+                // "CUSTOM" STYLE:
+                // - groups: overdue at top, normal group listings below, completed at bottom
+                // - columns: Description, Time
+                case Styles.Custom:
+                    {
+                        ItemColumnData = new string[2];
+                        ItemColumnData[0] = Task.Description;
+                        ItemColumnData[1] = Tasual_ListView_FormatTime(Task.Time.Start.ToLocalTime(), TimeFormat.Short);
+                        break;
+                    }
 
-        return null;
-    }
+                // "SIMPLE" STYLE:
+                // - groups: overdue at top, today, tomorrow, this week, next week, future, completed at bottom
+                // - columns: Description, Time
+                case Styles.Simple:
+                    {
+                        ItemColumnData = new string[2];
+                        ItemColumnData[0] = Task.Description;
+                        ItemColumnData[1] = Task.Group.ToString();
+                        break;
+                    }
+
+                // "DETAILED" STYLE:
+                // - groups: overdue at top, today, tomorrow, this week, next week, future, completed at bottom
+                // - columns: Description, Category, Time
+                case Styles.Detailed:
+                    {
+                        ItemColumnData = new string[3];
+                        ItemColumnData[0] = Task.Description;
+                        ItemColumnData[1] = Task.Group.ToString();
+                        ItemColumnData[2] = Tasual_ListView_FormatTime(Task.Time.Start.ToLocalTime(), TimeFormat.Elapsed);
+                        break;
+                    }
+
+                default:
+                    {
+                        throw new Exception("Tasual_ListView_CreateListViewItem(): Invalid style setting!");
+                    }
+            }
+
+            //ListViewItem Item = new ListViewItem(ItemColumnData);
+            //Item.Tag = Task;
+            //Task.Item = Item;
+
+            //Tasual_ListView_AssignGroup(Task.Group.ToString(), ref Item);
+            //Tasual_ListView_ChangeStatus(ref Item, Task.Status);
+            //Tasual_ListView.Items.Add(Item);
+
+            return null;
+        }
 
 
         // ================
@@ -892,89 +916,32 @@ namespace Tasual
 
             Tasual_ListView.ShowGroups = true;
             Tasual_ListView.ShowItemCountOnGroups = true;
-
             //Tasual_ListView.HotItemStyle = new HotItemStyle();
             //Tasual_ListView.HotItemStyle.FontStyle = FontStyle.Underline;
             Tasual_ListView.UseCustomSelectionColors = true;
             Tasual_ListView.SelectedBackColor = Color.FromArgb(255, 222, 232, 246);
             Tasual_ListView.SelectedForeColor = Color.FromArgb(255, 36, 90, 150);
             Tasual_ListView.FormatRow += new EventHandler<FormatRowEventArgs>(Tasual_ListView_FormatRow);
-            //Tasual_ListView.TintSortColumn = false;
+            //Tasual_ListView.TintSortColumn = false; // TODO: Add settings choice for this
             //Tasual_ListView.SelectedColumnTint = Color.FromArgb(255, 230, 230, 255);
-
             HeaderFormatStyle FormatStyle = new HeaderFormatStyle();
             FormatStyle.Normal.ForeColor = Color.FromArgb(255, 36, 90, 150);
             FormatStyle.Normal.BackColor = Color.FromArgb(255, 230, 230, 255);
-            //FormatStyle.Normal.FrameColor = Color.FromArgb(255, 222, 232, 246);
-            //FormatStyle.Normal.FrameWidth = 1;
             FormatStyle.Hot.ForeColor = Color.FromArgb(255, 36, 90, 150);
             FormatStyle.Hot.BackColor = Color.FromArgb(255, 240, 240, 255);
-            //FormatStyle.Hot.Font = new Font(Tasual_ListView.Font, FontStyle.Underline);
             FormatStyle.Pressed.ForeColor = Color.FromArgb(255, 36, 90, 150);
             FormatStyle.Pressed.BackColor = Color.FromArgb(255, 240, 240, 255);
-            //FormatStyle.Pressed.Font = new Font(Tasual_ListView.Font, FontStyle.Underline);
             Tasual_ListView.HeaderUsesThemes = false;
             Tasual_ListView.HeaderFormatStyle = FormatStyle;
-
             Tasual_ListView.PersistentCheckBoxes = true;
             Tasual_ListView.CheckBoxes = true;
             Tasual_ListView.CheckedAspectName = "Checked";
-
             Tasual_ListView.CellEditUseWholeCell = true;
             //Tasual_ListView.CellEditActivation = ObjectListView.CellEditActivateMode.DoubleClick;
 
-            OLVColumn DescriptionColumn = new OLVColumn("Description", "Description");
-            //DescriptionColumn.AspectName = "Description";
-            //DescriptionColumn.Sortable = true;
-            DescriptionColumn.MinimumWidth = 100;
-            DescriptionColumn.FillsFreeSpace = true;
-            DescriptionColumn.IsVisible = true;
-            DescriptionColumn.IsEditable = true;
-            //DescriptionColumn.HasFilterIndicator = false;
-            DescriptionColumn.Sortable = true;
-            DescriptionColumn.DisplayIndex = 1;
-            DescriptionColumn.LastDisplayIndex = 1;
-            //DescriptionColumn.header = false;
-
-
-            //DescriptionColumn.IsEditable = false;
-            //DescriptionColumn.Edit
-
-            //DescriptionColumn.ImageGetter = new
-            //DescriptionColumn.
-            //DescriptionColumn.AspectToStringConverter = 
-            Tasual_ListView.AllColumns.Add(DescriptionColumn);
-            Tasual_ListView.Columns.AddRange(new ColumnHeader[] { DescriptionColumn });
-
-
-            OLVColumn CategoryColumn = new OLVColumn("Category", "Group");
-            //CategoryColumn.AspectName = "Group";
-            //CategoryColumn.Sortable = false;
-            CategoryColumn.MinimumWidth = 100;
-            CategoryColumn.IsVisible = false;
-            CategoryColumn.IsEditable = true;
-            CategoryColumn.DisplayIndex = 2;
-            CategoryColumn.LastDisplayIndex = 2;
-            //DescriptionColumn.
-            //DescriptionColumn.AspectToStringConverter = 
-            Tasual_ListView.AllColumns.Add(CategoryColumn);
-            Tasual_ListView.Columns.AddRange(new ColumnHeader[] { CategoryColumn });
-
-            OLVColumn TimeColumn = new OLVColumn("Time", "Time");
-            //TimeColumn.AspectName = "Time";
-            //TimeColumn.Sortable = false;
-            //TimeColumn.Width = -1;
-            TimeColumn.MinimumWidth = 100;
-            TimeColumn.IsVisible = true;
-            TimeColumn.IsEditable = false;
-            TimeColumn.DisplayIndex = 3;
-            TimeColumn.LastDisplayIndex = 3;
-            Tasual_ListView.AllColumns.Add(TimeColumn);
-            Tasual_ListView.Columns.AddRange(new ColumnHeader[] { TimeColumn });
-
+            Tasual_ListView_AddColumns();
 
             Tasual_ListView.SetObjects(TaskArray);
-            Tasual_ListView.AlwaysGroupByColumn = CategoryColumn;
             Tasual_ListView.RebuildColumns();
             Tasual_ListView.AutoResizeColumns();
 
@@ -1414,7 +1381,11 @@ namespace Tasual
                         {
                             FindingLastWeek = true;
                             NextTime = NextTime.AddDays(DateTime.DaysInMonth(NextTime.Year, NextTime.Month) - 7);
-                            //Console.WriteLine("Last week {0} {1}", DateTime.DaysInMonth(NextTime.Year, NextTime.Month), DateTime.DaysInMonth(NextTime.Year, NextTime.Month) - 7);
+                            /*Console.WriteLine(
+                             * "Last week {0} {1}", 
+                             * DateTime.DaysInMonth(NextTime.Year, NextTime.Month), 
+                             * DateTime.DaysInMonth(NextTime.Year, NextTime.Month) - 7
+                            );*/
                         }
 
                         if (((Rules.WeekFilter & FromWeekToFlag(NextTime.Day)) != 0) || FindingLastWeek)
@@ -1456,64 +1427,9 @@ namespace Tasual
             PropertyInfo.SetValue(Item, Enable, null);
         }
     }
-    /*
-    public class SubNativeWindow : NativeWindow
-    {
-        private const int LVM_HITTEST = 0x1000 + 18;
-        private const int LVHT_EX_GROUP_HEADER = 0x10000000;
 
-        [StructLayout(LayoutKind.Sequential)]
-        private struct LVHITTESTINFO
-        {
-            public int pt_x;
-            public int pt_y;
-            public int flags;
-            public int iItem;
-            public int iSubItem;
-            public int iGroup;
-        }
-
-        [DllImport("user32.dll", EntryPoint = "SendMessage", CharSet = CharSet.Auto)]
-        private static extern int SendMessage(IntPtr hWnd, int msg, int wParam, ref LVHITTESTINFO ht);
-
-        public static int LowWord(int word) { return word & 0xFFFF; }
-        public static int HighWord(int word) { return word >> 16; }
-        public static int GetXLParam(int lparam) { return LowWord(lparam); }
-        public static int GetYLParam(int lparam) { return HighWord(lparam); }
-
-        protected override void WndProc(ref Message m)
-        {
-            switch(m.Msg)
-            {
-                case 0x201:
-                case 0x204:
-                    {
-                        LVHITTESTINFO ht = new LVHITTESTINFO() { pt_x = GetXLParam(m.LParam.ToInt32()), pt_y = GetYLParam(m.LParam.ToInt32()) };
-                        int value = SendMessage(Handle, LVM_HITTEST, -1, ref ht);
-                        if ((value != -1) && ((ht.flags & LVHT_EX_GROUP_HEADER) != 0))
-                        {
-                            //Console.WriteLine("LVHITTESTINFO: {0} {1} {2} {3}", ht.flags, ht.iItem, ht.iSubItem, ht.iGroup);
-                            TasualListView.OnGroupHeaderClick(new MouseEventArgs(Control.MouseButtons, ht.iGroup, 0, 0, 0));
-                        }
-                        else
-                        {
-                            base.WndProc(ref m);
-                        }
-                        break;
-                    }
-
-                default:
-                case 0x203:
-                    {
-                        base.WndProc(ref m);
-                        break;
-                    }
-            }
-        }
-    }*/
-
-            // A textbox that supports a watermark hint
-        public class WatermarkTextBox : TextBox
+    // A textbox that supports a watermark hint
+    public class WatermarkTextBox : TextBox
     {
         // The text that will be presented as the watermark hint
         private string _WatermarkText = "Type here";
@@ -1586,13 +1502,8 @@ namespace Tasual
 
     }
 
-    // TODO: We're really not doing much with this, is it even worth it to subclass?
     public class TasualListView : ObjectListView
     {
-        /*public static MouseEventHandler GroupHeaderClick;
-        public static void OnGroupHeaderClick(MouseEventArgs e)
-        {
-            GroupHeaderClick?.Invoke(null, e);
-        }*/
+        // TODO: Remove this
     }
 }
