@@ -889,11 +889,17 @@ namespace Tasual
 			Settings.ConfirmClear = true; // currently unused
 			Settings.ConfirmDelete = true; // currently unused
 			Settings.Style = Setting.Styles.Custom; // currently unused
+			Settings.Protocol = Setting.Protocols.Text;
 			Settings.TextFile = "localdb.txt";
 
 			// load task array
-			// TODO select which method of array acquisition here
-			Tasual_Array_Load_Text();
+			switch (Settings.Protocol)
+			{
+				case Setting.Protocols.JSON: { Tasual_Array_Load_JSON(); break; }
+
+				default:
+				case Setting.Protocols.Text: { Tasual_Array_Load_Text(); break; }
+			}
 
 			Tasual_ListView.ShowGroups = true;
 			Tasual_ListView.ShowItemCountOnGroups = true;
