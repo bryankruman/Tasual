@@ -357,10 +357,12 @@ namespace Tasual
 			{
 				Task Task = (Task)Input;
 				int[] Images = new int[3] { -1, -1, -1 };
+				int CheckedOffset = 0;
+				if (Task.Checked) { CheckedOffset = 3; }
 
-				if (Task.Location != null) { Images[0] = 1; }
-				if (Task.Link != null) { Images[1] = 2; }
-				if (Task.Notes != null) { Images[2] = 3; }
+				if (Task.Location != null) { Images[0] = 1 + CheckedOffset; }
+				if (Task.Link != null) { Images[1] = 2 + CheckedOffset; }
+				if (Task.Notes != null) { Images[2] = 3 + CheckedOffset; }
 
 				if ((Images[0] + Images[1] + Images[2]) == -3)
 				{
@@ -369,8 +371,8 @@ namespace Tasual
 
 				return Images;
 			};
-			IconColumn.MinimumWidth = 50;
-			IconColumn.MaximumWidth = 50;
+			IconColumn.MinimumWidth = 54;
+			IconColumn.MaximumWidth = 54;
 			IconColumn.IsVisible = true;
 			IconColumn.IsEditable = false;
 			IconColumn.Sortable = false;

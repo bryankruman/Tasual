@@ -205,10 +205,13 @@
 			// 
 			this.Tasual_TaskIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("Tasual_TaskIcons.ImageStream")));
 			this.Tasual_TaskIcons.TransparentColor = System.Drawing.Color.Transparent;
-			this.Tasual_TaskIcons.Images.SetKeyName(0, "checked-s.png");
-			this.Tasual_TaskIcons.Images.SetKeyName(1, "unchecked-s.png");
-			this.Tasual_TaskIcons.Images.SetKeyName(2, "File_List.png");
-			this.Tasual_TaskIcons.Images.SetKeyName(3, "Add.png");
+			this.Tasual_TaskIcons.Images.SetKeyName(0, "attach-checked.png");
+			this.Tasual_TaskIcons.Images.SetKeyName(1, "location.png");
+			this.Tasual_TaskIcons.Images.SetKeyName(2, "link.png");
+			this.Tasual_TaskIcons.Images.SetKeyName(3, "note.png");
+			this.Tasual_TaskIcons.Images.SetKeyName(4, "location-checked.png");
+			this.Tasual_TaskIcons.Images.SetKeyName(5, "link-checked.png");
+			this.Tasual_TaskIcons.Images.SetKeyName(6, "note-checked.png");
 			// 
 			// Tasual_Notify
 			// 
