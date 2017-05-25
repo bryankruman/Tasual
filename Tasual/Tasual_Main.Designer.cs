@@ -246,6 +246,7 @@
 			this.Tasual_ListView.TabIndex = 0;
 			this.Tasual_ListView.UseCompatibleStateImageBehavior = false;
 			this.Tasual_ListView.View = System.Windows.Forms.View.Details;
+			this.Tasual_ListView.CellEditFinished += new BrightIdeasSoftware.CellEditEventHandler(this.Tasual_ListView_CellEditFinished);
 			this.Tasual_ListView.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.Tasual_ListView_AfterLabelEdit);
 			this.Tasual_ListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.Tasual_ListView_ColumnWidthChanging);
 			this.Tasual_ListView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.Tasual_ListView_ItemChecked);

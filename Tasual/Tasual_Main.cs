@@ -966,6 +966,7 @@ namespace Tasual
 
 		private void Tasual_ListView_ItemChecked(object sender, ItemCheckedEventArgs e)
 		{
+			Tasual_Array_Save_Text();
 			Tasual_StatusLabel_UpdateCounts();
 		}
 
@@ -991,6 +992,11 @@ namespace Tasual
 			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
 			Tasual_Notes NotesForm = new Tasual_Notes(Task.Notes);
 			NotesForm.ShowDialog(this);
+		}
+
+		private void Tasual_ListView_CellEditFinished(object sender, CellEditEventArgs e)
+		{
+			Tasual_Array_Save_Text();
 		}
 	}
 }
