@@ -153,6 +153,9 @@
     <EmbeddedResource Include="Tasual_Notes.resx">
       <DependentUpon>Tasual_Notes.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Tasual_Settings.resx">
+      <DependentUpon>Tasual_Settings.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
