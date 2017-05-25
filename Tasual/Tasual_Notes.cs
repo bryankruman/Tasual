@@ -12,27 +12,52 @@ namespace Tasual
 {
 	public partial class Tasual_Notes : Form
 	{
-		//private readonly Tasual_Create _Tasual_Create;
+		private readonly Tasual_Create _Tasual_Create;
+		private readonly Tasual_Main _Tasual_Main;
 
-		private string Notes;
+		private int Index; 
 
-		public Tasual_Notes(string Notes)
+		//private string Notes;
+
+		private int Origination; // 1 = Main, 2 = Create
+
+		public Tasual_Notes(Tasual_Main PassedForm, int PassedIndex)
 		{
 			InitializeComponent();
-			this.Notes = Notes;
-			//this._Tasual_Create = Tasual_Create;
+			_Tasual_Main = PassedForm;
+			Index = PassedIndex;
+			Tasual_Notes_TextBox.Text = _Tasual_Main.TaskArray[Index].Notes;
+			Origination = 1;
+			Console.WriteLine("Notes_Main: '{0}'", Tasual_Notes_TextBox.Text);
+		}
+
+		public Tasual_Notes(Tasual_Create PassedForm)
+		{
+			InitializeComponent();
+			_Tasual_Create = PassedForm;
+			Tasual_Notes_TextBox.Text = _Tasual_Create.Notes;
+			Origination = 2;
+			Console.WriteLine("Notes_Create: '{0}'", Tasual_Notes_TextBox.Text);
 		}
 
 		private void Tasual_Notes_Load(object sender, EventArgs e)
 		{
-			Tasual_Notes_WatermarkTextBox.Text = Notes;
+			//
 		}
 
 		private void Tasual_Notes_Done_Click(object sender, EventArgs e)
 		{
-			if (Tasual_Notes_WatermarkTextBox.Text != Tasual_Notes_WatermarkTextBox.WatermarkText)
+			if (Tasual_Notes_TextBox.Text != "")
 			{
-				Notes = Tasual_Notes_WatermarkTextBox.Text;
+				if (Origination == 1)
+				{
+					_Tasual_Main.TaskArray[Index].Notes = Tasual_Notes_TextBox.Text;
+					_Tasual_Main.Tasual_Array_Save_Text();
+				}
+				else
+				{
+					_Tasual_Create.Notes = Tasual_Notes_TextBox.Text;
+				}
 			}
 		}
 	}

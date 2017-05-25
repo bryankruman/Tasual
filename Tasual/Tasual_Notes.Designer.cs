@@ -30,7 +30,7 @@
 		{
 			this.Tasual_Notes_Cancel = new System.Windows.Forms.Button();
 			this.Tasual_Notes_Done = new System.Windows.Forms.Button();
-			this.Tasual_Notes_WatermarkTextBox = new Tasual.WatermarkTextBox();
+			this.Tasual_Notes_TextBox = new System.Windows.Forms.TextBox();
 			this.SuspendLayout();
 			// 
 			// Tasual_Notes_Cancel
@@ -56,23 +56,21 @@
 			this.Tasual_Notes_Done.UseVisualStyleBackColor = true;
 			this.Tasual_Notes_Done.Click += new System.EventHandler(this.Tasual_Notes_Done_Click);
 			// 
-			// Tasual_Notes_WatermarkTextBox
+			// Tasual_Notes_TextBox
 			// 
-			this.Tasual_Notes_WatermarkTextBox.AcceptsReturn = true;
-			this.Tasual_Notes_WatermarkTextBox.AcceptsTab = true;
-			this.Tasual_Notes_WatermarkTextBox.AllowDrop = true;
-			this.Tasual_Notes_WatermarkTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
-			this.Tasual_Notes_WatermarkTextBox.ForeColor = System.Drawing.Color.Gray;
-			this.Tasual_Notes_WatermarkTextBox.Location = new System.Drawing.Point(12, 12);
-			this.Tasual_Notes_WatermarkTextBox.Multiline = true;
-			this.Tasual_Notes_WatermarkTextBox.Name = "Tasual_Notes_WatermarkTextBox";
-			this.Tasual_Notes_WatermarkTextBox.Size = new System.Drawing.Size(337, 155);
-			this.Tasual_Notes_WatermarkTextBox.TabIndex = 0;
-			this.Tasual_Notes_WatermarkTextBox.Text = "Write notes here";
-			this.Tasual_Notes_WatermarkTextBox.WatermarkActive = true;
-			this.Tasual_Notes_WatermarkTextBox.WatermarkText = "Write notes here";
+			this.Tasual_Notes_TextBox.AcceptsReturn = true;
+			this.Tasual_Notes_TextBox.AcceptsTab = true;
+			this.Tasual_Notes_TextBox.AllowDrop = true;
+			this.Tasual_Notes_TextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.Tasual_Notes_TextBox.ForeColor = System.Drawing.Color.Black;
+			this.Tasual_Notes_TextBox.Location = new System.Drawing.Point(12, 12);
+			this.Tasual_Notes_TextBox.Multiline = true;
+			this.Tasual_Notes_TextBox.Name = "Tasual_Notes_TextBox";
+			this.Tasual_Notes_TextBox.Size = new System.Drawing.Size(337, 155);
+			this.Tasual_Notes_TextBox.TabIndex = 0;
+			this.Tasual_Notes_TextBox.Text = "Write notes here";
 			// 
 			// Tasual_Notes
 			// 
@@ -83,7 +81,7 @@
 			this.ClientSize = new System.Drawing.Size(361, 208);
 			this.Controls.Add(this.Tasual_Notes_Done);
 			this.Controls.Add(this.Tasual_Notes_Cancel);
-			this.Controls.Add(this.Tasual_Notes_WatermarkTextBox);
+			this.Controls.Add(this.Tasual_Notes_TextBox);
 			this.Name = "Tasual_Notes";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
@@ -99,6 +97,6 @@
 		#endregion
 		private System.Windows.Forms.Button Tasual_Notes_Cancel;
 		private System.Windows.Forms.Button Tasual_Notes_Done;
-		private WatermarkTextBox Tasual_Notes_WatermarkTextBox;
+		private System.Windows.Forms.TextBox Tasual_Notes_TextBox;
 	}
 }

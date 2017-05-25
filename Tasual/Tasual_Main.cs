@@ -990,7 +990,7 @@ namespace Tasual
 		private void viewNotesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
-			Tasual_Notes NotesForm = new Tasual_Notes(Task.Notes);
+			Tasual_Notes NotesForm = new Tasual_Notes(this, TaskArray.IndexOf(Task));
 			NotesForm.ShowDialog(this);
 		}
 

@@ -425,7 +425,7 @@ namespace Tasual
 
 		private void Tasual_Create_Button_Notes_Click(object sender, EventArgs e)
 		{
-			Tasual_Notes NotesForm = new Tasual_Notes(Notes);
+			Tasual_Notes NotesForm = new Tasual_Notes(this);
 			NotesForm.ShowDialog(this);
 		}
 
