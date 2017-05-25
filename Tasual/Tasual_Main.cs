@@ -43,8 +43,7 @@ namespace Tasual
 			Tasual_ListView.BuildList();
 		}
 
-		/* // TODO: Re-write
-		private void Tasual_ReAssignGroup(string OldTaskGroup, string NewTaskGroup)
+		private void Tasual_Array_ReAssignGroup(string OldTaskGroup, string NewTaskGroup)
 		{
 			foreach (Task Task in TaskArray)
 			{
@@ -52,10 +51,10 @@ namespace Tasual
 				if (Task.Group == OldTaskGroup)
 				{
 					Task.Group = NewTaskGroup;
-					Tasual_ListView_AssignGroup(NewTaskGroup, ref Task.Item);
+					//Tasual_ListView_AssignGroup(NewTaskGroup, ref Task.Item);
 				}
 			}
-		} */
+		}
 
 		public void Tasual_PrintTaskToConsole(Task TaskItem)
 		{
@@ -886,7 +885,7 @@ namespace Tasual
 			}
 
 			Tasual_ListView.ShowGroups = true;
-			Tasual_ListView.ShowItemCountOnGroups = true;
+			Tasual_ListView.ShowItemCountOnGroups = false;
 			//Tasual_ListView.HotItemStyle = new HotItemStyle();
 			//Tasual_ListView.HotItemStyle.FontStyle = FontStyle.Underline;
 			Tasual_ListView.UseCustomSelectionColors = true;
@@ -982,6 +981,50 @@ namespace Tasual
 		{
 			Tasual_Settings SettingsForm = new Tasual_Settings();
 			SettingsForm.ShowDialog(this);
+		}
+
+		private void Tasual_MenuStrip_Group_MoveTasks_ClickHandler(object sender, EventArgs e)
+		{
+			ToolStripDropDownItem Item = (ToolStripDropDownItem)sender;
+			OLVGroup Group = (OLVGroup)Tasual_MenuStrip_Group.Tag;
+			//Task Task = (Task)Tasual_MenuStrip
+			Tasual_Array_ReAssignGroup(Group.Name, Item.Text);
+			Tasual_ListView.BuildList();
+			//Console.WriteLine("Tasual_Array_ReAssignGroup({0}, {1});", Group.Name, Item.Text);
+		}
+
+		private void moveTasksToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+		{
+			OLVGroup Group = (OLVGroup)Tasual_MenuStrip_Group.Tag;
+			List<string> AlreadySelectedGroups = new List<string>();
+
+			Tasual_MenuStrip_Group_MoveTasks.DropDownItems.Clear();
+			Tasual_MenuStrip_Group_MoveTasks.DropDownItems.Add("(No other groups available)");
+			Tasual_MenuStrip_Group_MoveTasks.DropDownItems[0].Enabled = false;
+
+			foreach (Task Task in TaskArray)
+			{
+				if (!AlreadySelectedGroups.Contains(Task.Group) && (Group.Name != Task.Group))
+				{
+					Tasual_MenuStrip_Group_MoveTasks.DropDownItems.Add(Task.Group, null, Tasual_MenuStrip_Group_MoveTasks_ClickHandler);
+					AlreadySelectedGroups.Add(Task.Group);
+					Tasual_MenuStrip_Group_MoveTasks.DropDownItems[0].Visible = false;
+				}
+			}
+		}
+
+		private void Tasual_ListView_AboutToCreateGroups(object sender, CreateGroupsEventArgs e)
+		{
+			foreach (OLVGroup Group in e.Groups)
+			{
+				int GroupItems = 0;
+				Group.Name = Group.Header;
+				foreach (OLVListItem Item in Group.Items)
+				{
+					++GroupItems;
+				}
+				Group.Header = String.Format("{0} ({1} items)", Group.Name, GroupItems.ToString());
+			}
 		}
 	}
 }
