@@ -364,34 +364,39 @@ namespace Tasual
 			Tasual_ListView.AllColumns.Add(CategoryColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { CategoryColumn });
 
+			OLVColumn DueColumn = new OLVColumn("Due", "Time");
+			//TimeColumn.AspectName = "Time";
+			//TimeColumn.Sortable = false;
+			//TimeColumn.Width = -1;
+			DueColumn.MinimumWidth = 80;
+			DueColumn.IsVisible = false;
+			DueColumn.IsEditable = false;
+			DueColumn.DisplayIndex = 3;
+			DueColumn.LastDisplayIndex = 3;
+			DueColumn.AspectToStringConverter = delegate (object Input)
+			{
+				TimeInfo Time = (TimeInfo)Input;
+				return Tasual_ListView_FormatTime(Time.Start.ToLocalTime(), Setting.TimeFormat.Due);
+			};
+			Tasual_ListView.AllColumns.Add(DueColumn);
+			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { DueColumn });
+
 			OLVColumn TimeColumn = new OLVColumn("Time", "Time");
 			//TimeColumn.AspectName = "Time";
 			//TimeColumn.Sortable = false;
 			//TimeColumn.Width = -1;
-			TimeColumn.MinimumWidth = 100;
+			TimeColumn.MinimumWidth = 130;
 			TimeColumn.IsVisible = true;
 			TimeColumn.IsEditable = false;
-			TimeColumn.DisplayIndex = 3;
-			TimeColumn.LastDisplayIndex = 3;
+			TimeColumn.DisplayIndex = 4;
+			TimeColumn.LastDisplayIndex = 4;
 			TimeColumn.AspectToStringConverter = delegate(object Input)
 			{
 				TimeInfo Time = (TimeInfo)Input;
-				return Tasual_ListView_FormatTime(Time.Start.ToLocalTime(), Setting.TimeFormat.Elapsed);
+				return Tasual_ListView_FormatTime(Time.Start.ToLocalTime(), Setting.TimeFormat.Short);
 			};
 			Tasual_ListView.AllColumns.Add(TimeColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { TimeColumn });
-
-			OLVColumn DueColumn = new OLVColumn("Due", "Due");
-			//TimeColumn.AspectName = "Time";
-			//TimeColumn.Sortable = false;
-			//TimeColumn.Width = -1;
-			DueColumn.MinimumWidth = 100;
-			DueColumn.IsVisible = false;
-			DueColumn.IsEditable = false;
-			DueColumn.DisplayIndex = 4;
-			DueColumn.LastDisplayIndex = 4;
-			Tasual_ListView.AllColumns.Add(DueColumn);
-			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { DueColumn });
 
 			Tasual_ListView.AlwaysGroupByColumn = CategoryColumn;
 		}
@@ -424,7 +429,57 @@ namespace Tasual
 
 				case Setting.TimeFormat.Due:
 					{
-						return "";
+						// Overdue
+						// Today
+						// Tomorrow
+						// Friday
+						// Next Week
+						// 2 Weeks
+						// Next Month
+						// Future
+
+						if (DateTime.Now > Time)
+						{
+							return "Overdue";
+						}
+						else
+						{
+							DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
+							DateTime TargetDay = Time - Time.TimeOfDay;
+							TimeSpan Span = TargetDay - Today;
+							if (TargetDay.Day == Today.Day)
+							{
+								return "Today";
+							}
+							else if (Span.Days <= 1)
+							{
+								return "Tomorrow";
+							}
+							else if (Span.Days <= 7)
+							{
+								return Time.DayOfWeek.ToString();
+							}
+							else if (Span.Days <= 14)
+							{
+								return "Next Week";
+							}
+							else if (Span.Days <= 21)
+							{
+								return "2 Weeks";
+							}
+							else if (Span.Days <= 30)
+							{
+								return "3 Weeks";
+							}
+							else if (TargetDay.Month == Today.AddMonths(1).Month)
+							{
+								return "Next Month";
+							}
+							else
+							{
+								return "Future";
+							}
+						}
 					}
 
 				case Setting.TimeFormat.Short: // "6/6 - Tue 10pm"
@@ -437,21 +492,19 @@ namespace Tasual
 
 							if (Time.Hour > 12)
 							{
-								TimeStamp = (Time.Hour - 12).ToString();
+								TimeStamp = " - " + (Time.Hour - 12).ToString();
 								TimeStamp = TimeStamp + Minutes + "pm";
 							}
 							else
 							{
-								TimeStamp = Time.Hour.ToString();
+								TimeStamp = " - " + Time.Hour.ToString();
 								TimeStamp = TimeStamp + Minutes + "am";
 							}
 						}
 
 						return String.Format(
-							"{0}/{1} - {2} {3}",
-							Time.Month,
-							Time.Day,
-							Time.DayOfWeek.ToString().Substring(0, 3),
+							"{0}{1}",
+							Time.ToString("M/d - ddd"),
 							TimeStamp);
 					}
 
@@ -471,10 +524,9 @@ namespace Tasual
 						}
 
 						return String.Format(
-							"{0}, {1} {2} {3}",
-							Time.DayOfWeek.ToString().Substring(0, 3),
-							Time.Month.ToString().Substring(0, 3),
-							Time.Day,
+							"{0} {1} {2}",
+							Time.ToString("ddd, MMM"),
+							Ordinal(Time.Day),
 							TimeStamp);
 					}
 
@@ -494,10 +546,9 @@ namespace Tasual
 						}
 
 						return String.Format(
-							"{0}, {1} {2} {3}",
-							Time.DayOfWeek.ToString(),
-							Time.Month.ToString(),
-							Time.Day,
+							"{0} {1} {2}",
+							Time.ToString("dddd, MMMM"),
+							Ordinal(Time.Day),
 							TimeStamp);
 					}
 
@@ -869,7 +920,7 @@ namespace Tasual
 
 			Tasual_ListView.SetObjects(TaskArray);
 			Tasual_ListView.RebuildColumns();
-			Tasual_ListView.AutoResizeColumns();
+			//Tasual_ListView.AutoResizeColumns();
 
 			Tasual_StatusLabel_UpdateCounts();
 		}

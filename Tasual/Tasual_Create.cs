@@ -623,7 +623,9 @@ namespace Tasual
 			}
 
 			TimeInfo TimeInfo = new TimeInfo();
-			TimeInfo.Start = DateTime.Now;
+			TimeInfo.Start = Tasual_Create_DateTimePicker_StartDate.Value;
+			TimeInfo.Start = TimeInfo.Start - TimeInfo.Start.TimeOfDay;
+			TimeInfo.Start = TimeInfo.Start + Tasual_Create_DateTimePicker_StartTime.Value.TimeOfDay;
 			if (Tasual_Create_RadioButton_Type_Singular.Checked == false)
 			{
 				if (Tasual_Create_RadioButton_Type_RepeatSimple.Checked == true)
