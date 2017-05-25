@@ -36,12 +36,6 @@
 			this.Tasual_MenuStrip_Create_Advanced = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_MenuStrip_Edit = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_MenuStrip_Settings = new System.Windows.Forms.ToolStripMenuItem();
-			this.Tasual_MenuStrip_Settings_Sorting = new System.Windows.Forms.ToolStripMenuItem();
-			this.Tasual_MenuStrip_Settings_Sorting_Category = new System.Windows.Forms.ToolStripMenuItem();
-			this.Tasual_MenuStrip_Settings_Sorting_Time = new System.Windows.Forms.ToolStripMenuItem();
-			this.Tasual_MenuStrip_Settings_AlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
-			this.Tasual_MenuStrip_Settings_MinimizeToTray = new System.Windows.Forms.ToolStripMenuItem();
-			this.Tasual_MenuStrip_Settings_LaunchOnStartup = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_MenuStrip_Sources = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_ListView = new BrightIdeasSoftware.ObjectListView();
 			this.Tasual_TaskIcons = new System.Windows.Forms.ImageList(this.components);
@@ -157,58 +151,12 @@
 			// Tasual_MenuStrip_Settings
 			// 
 			this.Tasual_MenuStrip_Settings.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-			this.Tasual_MenuStrip_Settings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Tasual_MenuStrip_Settings_Sorting,
-            this.Tasual_MenuStrip_Settings_AlwaysOnTop,
-            this.Tasual_MenuStrip_Settings_MinimizeToTray,
-            this.Tasual_MenuStrip_Settings_LaunchOnStartup});
 			this.Tasual_MenuStrip_Settings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
 			this.Tasual_MenuStrip_Settings.Image = global::Tasual.Properties.Resources.Gear;
 			this.Tasual_MenuStrip_Settings.Name = "Tasual_MenuStrip_Settings";
 			this.Tasual_MenuStrip_Settings.Size = new System.Drawing.Size(77, 20);
 			this.Tasual_MenuStrip_Settings.Text = "Settings";
-			// 
-			// Tasual_MenuStrip_Settings_Sorting
-			// 
-			this.Tasual_MenuStrip_Settings_Sorting.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Tasual_MenuStrip_Settings_Sorting_Category,
-            this.Tasual_MenuStrip_Settings_Sorting_Time});
-			this.Tasual_MenuStrip_Settings_Sorting.Name = "Tasual_MenuStrip_Settings_Sorting";
-			this.Tasual_MenuStrip_Settings_Sorting.Size = new System.Drawing.Size(170, 22);
-			this.Tasual_MenuStrip_Settings_Sorting.Text = "Sorting";
-			// 
-			// Tasual_MenuStrip_Settings_Sorting_Category
-			// 
-			this.Tasual_MenuStrip_Settings_Sorting_Category.Checked = true;
-			this.Tasual_MenuStrip_Settings_Sorting_Category.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.Tasual_MenuStrip_Settings_Sorting_Category.Name = "Tasual_MenuStrip_Settings_Sorting_Category";
-			this.Tasual_MenuStrip_Settings_Sorting_Category.Size = new System.Drawing.Size(162, 22);
-			this.Tasual_MenuStrip_Settings_Sorting_Category.Text = "Sort by Category";
-			// 
-			// Tasual_MenuStrip_Settings_Sorting_Time
-			// 
-			this.Tasual_MenuStrip_Settings_Sorting_Time.Name = "Tasual_MenuStrip_Settings_Sorting_Time";
-			this.Tasual_MenuStrip_Settings_Sorting_Time.Size = new System.Drawing.Size(162, 22);
-			this.Tasual_MenuStrip_Settings_Sorting_Time.Text = "Sort by Time";
-			// 
-			// Tasual_MenuStrip_Settings_AlwaysOnTop
-			// 
-			this.Tasual_MenuStrip_Settings_AlwaysOnTop.Name = "Tasual_MenuStrip_Settings_AlwaysOnTop";
-			this.Tasual_MenuStrip_Settings_AlwaysOnTop.Size = new System.Drawing.Size(170, 22);
-			this.Tasual_MenuStrip_Settings_AlwaysOnTop.Text = "Always on top";
-			this.Tasual_MenuStrip_Settings_AlwaysOnTop.Click += new System.EventHandler(this.Tasual_MenuStrip_Settings_AlwaysOnTop_Click);
-			// 
-			// Tasual_MenuStrip_Settings_MinimizeToTray
-			// 
-			this.Tasual_MenuStrip_Settings_MinimizeToTray.Name = "Tasual_MenuStrip_Settings_MinimizeToTray";
-			this.Tasual_MenuStrip_Settings_MinimizeToTray.Size = new System.Drawing.Size(170, 22);
-			this.Tasual_MenuStrip_Settings_MinimizeToTray.Text = "Minimize to tray";
-			// 
-			// Tasual_MenuStrip_Settings_LaunchOnStartup
-			// 
-			this.Tasual_MenuStrip_Settings_LaunchOnStartup.Name = "Tasual_MenuStrip_Settings_LaunchOnStartup";
-			this.Tasual_MenuStrip_Settings_LaunchOnStartup.Size = new System.Drawing.Size(170, 22);
-			this.Tasual_MenuStrip_Settings_LaunchOnStartup.Text = "Launch on startup";
+			this.Tasual_MenuStrip_Settings.Click += new System.EventHandler(this.Tasual_MenuStrip_Settings_Click);
 			// 
 			// Tasual_MenuStrip_Sources
 			// 
@@ -682,12 +630,6 @@
 		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Create_Advanced;
 		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Create_Quick;
 		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Edit;
-		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Settings_Sorting;
-		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Settings_Sorting_Category;
-		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Settings_Sorting_Time;
-		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Settings_LaunchOnStartup;
-		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Settings_MinimizeToTray;
-		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Settings_AlwaysOnTop;
 		private System.Windows.Forms.NotifyIcon Tasual_Notify;
 		private System.Windows.Forms.LinkLabel Tasual_StatusLabel;
 		private System.Windows.Forms.LinkLabel Tasual_AboutLabel;

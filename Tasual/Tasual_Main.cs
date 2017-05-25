@@ -998,5 +998,11 @@ namespace Tasual
 		{
 			Tasual_Array_Save_Text();
 		}
+
+		private void Tasual_MenuStrip_Settings_Click(object sender, EventArgs e)
+		{
+			Tasual_Settings SettingsForm = new Tasual_Settings();
+			SettingsForm.ShowDialog(this);
+		}
 	}
 }
