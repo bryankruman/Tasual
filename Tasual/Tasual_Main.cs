@@ -74,7 +74,6 @@ namespace Tasual
 
 		public void Tasual_StatusLabel_UpdateCounts()
 		{
-			// TODO: Get total from TaskArray size
 			int Complete = Tasual_ListView.CheckedItems.Count;
 			int Total = Tasual_ListView.GetItemCount();
 
@@ -352,14 +351,45 @@ namespace Tasual
 			Tasual_ListView.AllColumns.Add(DescriptionColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { DescriptionColumn });
 
+			OLVColumn IconColumn = new OLVColumn("Icons", "");
+			IconColumn.Renderer = new ImageRenderer();
+			IconColumn.AspectGetter = delegate (object Input)
+			{
+				Task Task = (Task)Input;
+				int[] Images = new int[3];
+
+				if (Task.Location != null) { Images[0] = 1; }
+				if (Task.Link != null) { Images[1] = 2; }
+				if (Task.Notes != null) { Images[2] = 3; }
+
+				// TODO: Make this work
+				if (Images.Count() == 0)
+				{
+					Images[0] = 1;
+				}
+
+				return Images;
+			};
+			IconColumn.MinimumWidth = 30;
+			IconColumn.IsVisible = true;
+			IconColumn.IsEditable = false;
+			IconColumn.Sortable = false;
+			IconColumn.DisplayIndex = 2;
+			IconColumn.LastDisplayIndex = 2;
+			IconColumn.TextAlign = HorizontalAlignment.Right;
+			IconColumn.HeaderTextAlign = HorizontalAlignment.Center;
+			IconColumn.ShowTextInHeader = false;
+			Tasual_ListView.AllColumns.Add(IconColumn);
+			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { IconColumn });
+
 			OLVColumn CategoryColumn = new OLVColumn("Category", "Group");
 			//CategoryColumn.AspectName = "Group";
 			//CategoryColumn.Sortable = false;
 			CategoryColumn.MinimumWidth = 100;
 			CategoryColumn.IsVisible = false;
 			CategoryColumn.IsEditable = true;
-			CategoryColumn.DisplayIndex = 2;
-			CategoryColumn.LastDisplayIndex = 2;
+			CategoryColumn.DisplayIndex = 3;
+			CategoryColumn.LastDisplayIndex = 3;
 			//DescriptionColumn.
 			//DescriptionColumn.AspectToStringConverter = 
 			CategoryColumn.TextAlign = HorizontalAlignment.Center;
@@ -374,8 +404,8 @@ namespace Tasual
 			DueColumn.MinimumWidth = 80;
 			DueColumn.IsVisible = false;
 			DueColumn.IsEditable = false;
-			DueColumn.DisplayIndex = 3;
-			DueColumn.LastDisplayIndex = 3;
+			DueColumn.DisplayIndex = 4;
+			DueColumn.LastDisplayIndex = 4;
 			DueColumn.TextAlign = HorizontalAlignment.Center;
 			DueColumn.HeaderTextAlign = HorizontalAlignment.Center;
 			DueColumn.AspectToStringConverter = delegate (object Input)
@@ -393,8 +423,8 @@ namespace Tasual
 			TimeColumn.MinimumWidth = 130;
 			TimeColumn.IsVisible = true;
 			TimeColumn.IsEditable = false;
-			TimeColumn.DisplayIndex = 4;
-			TimeColumn.LastDisplayIndex = 4;
+			TimeColumn.DisplayIndex = 5;
+			TimeColumn.LastDisplayIndex = 5;
 			TimeColumn.TextAlign = HorizontalAlignment.Center;
 			TimeColumn.HeaderTextAlign = HorizontalAlignment.Center;
 			TimeColumn.AspectToStringConverter = delegate(object Input)
