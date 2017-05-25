@@ -677,29 +677,6 @@ namespace Tasual
 			//e.Cancel = true;
 		}
 
-		private void Tasual_ListView_AfterLabelEdit(object sender, LabelEditEventArgs e)
-		{
-			/* // TODO: Re-write
-			Tasual_ListView.LabelEdit = false;
-
-			ListViewItem Item = Tasual_ListView.Items[e.Item];
-
-			if (Item != null)
-			{
-				Item.Selected = false;
-
-				this.BeginInvoke((MethodInvoker)delegate
-				{
-					Task Task = (Task)Item.Tag;
-					if ((Task != null) && (Item != null))
-					{
-						Task.Description = Item.Text.ToString();
-						Tasual_Array_Save_Text();
-					}
-				});
-			}*/
-		}
-
 		private void Tasual_ListView_SingleClick(MouseEventArgs e)
 		{
 			if (Tasual_ListView_PreviouslySelected == true)
