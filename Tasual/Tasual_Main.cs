@@ -1176,5 +1176,41 @@ namespace Tasual
 				);
 			}
 		}
+
+		private void Tasual_MenuStrip_Icon_Opening(object sender, CancelEventArgs e)
+		{
+			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
+
+			if (Task.Location != null)
+			{
+				Tasual_MenuStrip_Icon_AddLocation.Visible = false;
+				Tasual_MenuStrip_Icon_Location.Visible = true;
+			}
+			else
+			{
+				Tasual_MenuStrip_Icon_AddLocation.Visible = true;
+				Tasual_MenuStrip_Icon_Location.Visible = false;
+			}
+			if (Task.Link != null)
+			{
+				Tasual_MenuStrip_Icon_AddLink.Visible = false;
+				Tasual_MenuStrip_Icon_Link.Visible = true;
+			}
+			else
+			{
+				Tasual_MenuStrip_Icon_AddLink.Visible = true;
+				Tasual_MenuStrip_Icon_Link.Visible = false;
+			}
+			if (Task.Notes != null)
+			{
+				Tasual_MenuStrip_Icon_AddNotes.Visible = false;
+				Tasual_MenuStrip_Icon_Notes.Visible = true;
+			}
+			else
+			{
+				Tasual_MenuStrip_Icon_AddNotes.Visible = true;
+				Tasual_MenuStrip_Icon_Notes.Visible = false;
+			}
+		}
 	}
 }

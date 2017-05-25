@@ -72,20 +72,23 @@
 			this.moveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.duplicateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_MenuStrip_Icon = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.notesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.viewNotesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.copyToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.deleteNotesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.linkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.viewLinkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.copyToClipboardToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.followLinkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.removeLinkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.locationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.viewLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.copyToClipboardToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-			this.openGoogleMapsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.removeLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_MenuStrip_Icon_Notes = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_MenuStrip_Icon_Notes_EditNotes = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_MenuStrip_Icon_Notes_Clipboard = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_MenuStrip_Icon_Notes_Remove = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_MenuStrip_Icon_Link = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_MenuStrip_Icon_Link_Edit = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_MenuStrip_Icon_Link_Clipboard = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_MenuStrip_Icon_Link_Follow = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_MenuStrip_Icon_Link_Remove = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_MenuStrip_Icon_Location = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_MenuStrip_Icon_Location_Edit = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_MenuStrip_Icon_Location_Clipboard = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_MenuStrip_Icon_Location_Maps = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_MenuStrip_Icon_Location_Remove = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_MenuStrip_Icon_AddNotes = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_MenuStrip_Icon_AddLink = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_MenuStrip_Icon_AddLocation = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_MenuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Tasual_ListView)).BeginInit();
 			this.Tasual_MenuStrip_Notify.SuspendLayout();
@@ -467,110 +470,132 @@
 			// Tasual_MenuStrip_Icon
 			// 
 			this.Tasual_MenuStrip_Icon.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.notesToolStripMenuItem,
-            this.linkToolStripMenuItem,
-            this.locationToolStripMenuItem});
+            this.Tasual_MenuStrip_Icon_Notes,
+            this.Tasual_MenuStrip_Icon_AddNotes,
+            this.Tasual_MenuStrip_Icon_Link,
+            this.Tasual_MenuStrip_Icon_AddLink,
+            this.Tasual_MenuStrip_Icon_Location,
+            this.Tasual_MenuStrip_Icon_AddLocation});
 			this.Tasual_MenuStrip_Icon.Name = "Tasual_MenuStrip_Icon";
-			this.Tasual_MenuStrip_Icon.Size = new System.Drawing.Size(121, 70);
+			this.Tasual_MenuStrip_Icon.Size = new System.Drawing.Size(153, 158);
+			this.Tasual_MenuStrip_Icon.Opening += new System.ComponentModel.CancelEventHandler(this.Tasual_MenuStrip_Icon_Opening);
 			// 
-			// notesToolStripMenuItem
+			// Tasual_MenuStrip_Icon_Notes
 			// 
-			this.notesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.viewNotesToolStripMenuItem,
-            this.copyToClipboardToolStripMenuItem,
-            this.deleteNotesToolStripMenuItem});
-			this.notesToolStripMenuItem.Name = "notesToolStripMenuItem";
-			this.notesToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
-			this.notesToolStripMenuItem.Text = "Notes";
+			this.Tasual_MenuStrip_Icon_Notes.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Tasual_MenuStrip_Icon_Notes_EditNotes,
+            this.Tasual_MenuStrip_Icon_Notes_Clipboard,
+            this.Tasual_MenuStrip_Icon_Notes_Remove});
+			this.Tasual_MenuStrip_Icon_Notes.Name = "Tasual_MenuStrip_Icon_Notes";
+			this.Tasual_MenuStrip_Icon_Notes.Size = new System.Drawing.Size(152, 22);
+			this.Tasual_MenuStrip_Icon_Notes.Text = "Notes";
 			// 
-			// viewNotesToolStripMenuItem
+			// Tasual_MenuStrip_Icon_Notes_EditNotes
 			// 
-			this.viewNotesToolStripMenuItem.Name = "viewNotesToolStripMenuItem";
-			this.viewNotesToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-			this.viewNotesToolStripMenuItem.Text = "Edit notes";
-			this.viewNotesToolStripMenuItem.Click += new System.EventHandler(this.viewNotesToolStripMenuItem_Click);
+			this.Tasual_MenuStrip_Icon_Notes_EditNotes.Name = "Tasual_MenuStrip_Icon_Notes_EditNotes";
+			this.Tasual_MenuStrip_Icon_Notes_EditNotes.Size = new System.Drawing.Size(169, 22);
+			this.Tasual_MenuStrip_Icon_Notes_EditNotes.Text = "Edit notes";
+			this.Tasual_MenuStrip_Icon_Notes_EditNotes.Click += new System.EventHandler(this.viewNotesToolStripMenuItem_Click);
 			// 
-			// copyToClipboardToolStripMenuItem
+			// Tasual_MenuStrip_Icon_Notes_Clipboard
 			// 
-			this.copyToClipboardToolStripMenuItem.Name = "copyToClipboardToolStripMenuItem";
-			this.copyToClipboardToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-			this.copyToClipboardToolStripMenuItem.Text = "Copy to clipboard";
+			this.Tasual_MenuStrip_Icon_Notes_Clipboard.Name = "Tasual_MenuStrip_Icon_Notes_Clipboard";
+			this.Tasual_MenuStrip_Icon_Notes_Clipboard.Size = new System.Drawing.Size(169, 22);
+			this.Tasual_MenuStrip_Icon_Notes_Clipboard.Text = "Copy to clipboard";
 			// 
-			// deleteNotesToolStripMenuItem
+			// Tasual_MenuStrip_Icon_Notes_Remove
 			// 
-			this.deleteNotesToolStripMenuItem.Name = "deleteNotesToolStripMenuItem";
-			this.deleteNotesToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-			this.deleteNotesToolStripMenuItem.Text = "Remove notes";
+			this.Tasual_MenuStrip_Icon_Notes_Remove.Name = "Tasual_MenuStrip_Icon_Notes_Remove";
+			this.Tasual_MenuStrip_Icon_Notes_Remove.Size = new System.Drawing.Size(169, 22);
+			this.Tasual_MenuStrip_Icon_Notes_Remove.Text = "Remove notes";
 			// 
-			// linkToolStripMenuItem
+			// Tasual_MenuStrip_Icon_Link
 			// 
-			this.linkToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.viewLinkToolStripMenuItem,
-            this.copyToClipboardToolStripMenuItem1,
-            this.followLinkToolStripMenuItem,
-            this.removeLinkToolStripMenuItem});
-			this.linkToolStripMenuItem.Name = "linkToolStripMenuItem";
-			this.linkToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
-			this.linkToolStripMenuItem.Text = "Link";
+			this.Tasual_MenuStrip_Icon_Link.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Tasual_MenuStrip_Icon_Link_Edit,
+            this.Tasual_MenuStrip_Icon_Link_Clipboard,
+            this.Tasual_MenuStrip_Icon_Link_Follow,
+            this.Tasual_MenuStrip_Icon_Link_Remove});
+			this.Tasual_MenuStrip_Icon_Link.Name = "Tasual_MenuStrip_Icon_Link";
+			this.Tasual_MenuStrip_Icon_Link.Size = new System.Drawing.Size(152, 22);
+			this.Tasual_MenuStrip_Icon_Link.Text = "Link";
 			// 
-			// viewLinkToolStripMenuItem
+			// Tasual_MenuStrip_Icon_Link_Edit
 			// 
-			this.viewLinkToolStripMenuItem.Name = "viewLinkToolStripMenuItem";
-			this.viewLinkToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-			this.viewLinkToolStripMenuItem.Text = "Edit link";
+			this.Tasual_MenuStrip_Icon_Link_Edit.Name = "Tasual_MenuStrip_Icon_Link_Edit";
+			this.Tasual_MenuStrip_Icon_Link_Edit.Size = new System.Drawing.Size(169, 22);
+			this.Tasual_MenuStrip_Icon_Link_Edit.Text = "Edit link";
 			// 
-			// copyToClipboardToolStripMenuItem1
+			// Tasual_MenuStrip_Icon_Link_Clipboard
 			// 
-			this.copyToClipboardToolStripMenuItem1.Name = "copyToClipboardToolStripMenuItem1";
-			this.copyToClipboardToolStripMenuItem1.Size = new System.Drawing.Size(169, 22);
-			this.copyToClipboardToolStripMenuItem1.Text = "Copy to clipboard";
+			this.Tasual_MenuStrip_Icon_Link_Clipboard.Name = "Tasual_MenuStrip_Icon_Link_Clipboard";
+			this.Tasual_MenuStrip_Icon_Link_Clipboard.Size = new System.Drawing.Size(169, 22);
+			this.Tasual_MenuStrip_Icon_Link_Clipboard.Text = "Copy to clipboard";
 			// 
-			// followLinkToolStripMenuItem
+			// Tasual_MenuStrip_Icon_Link_Follow
 			// 
-			this.followLinkToolStripMenuItem.Name = "followLinkToolStripMenuItem";
-			this.followLinkToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-			this.followLinkToolStripMenuItem.Text = "Follow link";
+			this.Tasual_MenuStrip_Icon_Link_Follow.Name = "Tasual_MenuStrip_Icon_Link_Follow";
+			this.Tasual_MenuStrip_Icon_Link_Follow.Size = new System.Drawing.Size(169, 22);
+			this.Tasual_MenuStrip_Icon_Link_Follow.Text = "Follow link";
 			// 
-			// removeLinkToolStripMenuItem
+			// Tasual_MenuStrip_Icon_Link_Remove
 			// 
-			this.removeLinkToolStripMenuItem.Name = "removeLinkToolStripMenuItem";
-			this.removeLinkToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-			this.removeLinkToolStripMenuItem.Text = "Remove link";
+			this.Tasual_MenuStrip_Icon_Link_Remove.Name = "Tasual_MenuStrip_Icon_Link_Remove";
+			this.Tasual_MenuStrip_Icon_Link_Remove.Size = new System.Drawing.Size(169, 22);
+			this.Tasual_MenuStrip_Icon_Link_Remove.Text = "Remove link";
 			// 
-			// locationToolStripMenuItem
+			// Tasual_MenuStrip_Icon_Location
 			// 
-			this.locationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.viewLocationToolStripMenuItem,
-            this.copyToClipboardToolStripMenuItem2,
-            this.openGoogleMapsToolStripMenuItem,
-            this.removeLocationToolStripMenuItem});
-			this.locationToolStripMenuItem.Name = "locationToolStripMenuItem";
-			this.locationToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
-			this.locationToolStripMenuItem.Text = "Location";
+			this.Tasual_MenuStrip_Icon_Location.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Tasual_MenuStrip_Icon_Location_Edit,
+            this.Tasual_MenuStrip_Icon_Location_Clipboard,
+            this.Tasual_MenuStrip_Icon_Location_Maps,
+            this.Tasual_MenuStrip_Icon_Location_Remove});
+			this.Tasual_MenuStrip_Icon_Location.Name = "Tasual_MenuStrip_Icon_Location";
+			this.Tasual_MenuStrip_Icon_Location.Size = new System.Drawing.Size(152, 22);
+			this.Tasual_MenuStrip_Icon_Location.Text = "Location";
 			// 
-			// viewLocationToolStripMenuItem
+			// Tasual_MenuStrip_Icon_Location_Edit
 			// 
-			this.viewLocationToolStripMenuItem.Name = "viewLocationToolStripMenuItem";
-			this.viewLocationToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-			this.viewLocationToolStripMenuItem.Text = "Edit location";
+			this.Tasual_MenuStrip_Icon_Location_Edit.Name = "Tasual_MenuStrip_Icon_Location_Edit";
+			this.Tasual_MenuStrip_Icon_Location_Edit.Size = new System.Drawing.Size(176, 22);
+			this.Tasual_MenuStrip_Icon_Location_Edit.Text = "Edit location";
 			// 
-			// copyToClipboardToolStripMenuItem2
+			// Tasual_MenuStrip_Icon_Location_Clipboard
 			// 
-			this.copyToClipboardToolStripMenuItem2.Name = "copyToClipboardToolStripMenuItem2";
-			this.copyToClipboardToolStripMenuItem2.Size = new System.Drawing.Size(176, 22);
-			this.copyToClipboardToolStripMenuItem2.Text = "Copy to clipboard";
+			this.Tasual_MenuStrip_Icon_Location_Clipboard.Name = "Tasual_MenuStrip_Icon_Location_Clipboard";
+			this.Tasual_MenuStrip_Icon_Location_Clipboard.Size = new System.Drawing.Size(176, 22);
+			this.Tasual_MenuStrip_Icon_Location_Clipboard.Text = "Copy to clipboard";
 			// 
-			// openGoogleMapsToolStripMenuItem
+			// Tasual_MenuStrip_Icon_Location_Maps
 			// 
-			this.openGoogleMapsToolStripMenuItem.Name = "openGoogleMapsToolStripMenuItem";
-			this.openGoogleMapsToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-			this.openGoogleMapsToolStripMenuItem.Text = "Open Google Maps";
+			this.Tasual_MenuStrip_Icon_Location_Maps.Name = "Tasual_MenuStrip_Icon_Location_Maps";
+			this.Tasual_MenuStrip_Icon_Location_Maps.Size = new System.Drawing.Size(176, 22);
+			this.Tasual_MenuStrip_Icon_Location_Maps.Text = "Open Google Maps";
 			// 
-			// removeLocationToolStripMenuItem
+			// Tasual_MenuStrip_Icon_Location_Remove
 			// 
-			this.removeLocationToolStripMenuItem.Name = "removeLocationToolStripMenuItem";
-			this.removeLocationToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-			this.removeLocationToolStripMenuItem.Text = "Remove location";
+			this.Tasual_MenuStrip_Icon_Location_Remove.Name = "Tasual_MenuStrip_Icon_Location_Remove";
+			this.Tasual_MenuStrip_Icon_Location_Remove.Size = new System.Drawing.Size(176, 22);
+			this.Tasual_MenuStrip_Icon_Location_Remove.Text = "Remove location";
+			// 
+			// Tasual_MenuStrip_Icon_AddNotes
+			// 
+			this.Tasual_MenuStrip_Icon_AddNotes.Name = "Tasual_MenuStrip_Icon_AddNotes";
+			this.Tasual_MenuStrip_Icon_AddNotes.Size = new System.Drawing.Size(152, 22);
+			this.Tasual_MenuStrip_Icon_AddNotes.Text = "Add notes";
+			// 
+			// Tasual_MenuStrip_Icon_AddLink
+			// 
+			this.Tasual_MenuStrip_Icon_AddLink.Name = "Tasual_MenuStrip_Icon_AddLink";
+			this.Tasual_MenuStrip_Icon_AddLink.Size = new System.Drawing.Size(152, 22);
+			this.Tasual_MenuStrip_Icon_AddLink.Text = "Add link";
+			// 
+			// Tasual_MenuStrip_Icon_AddLocation
+			// 
+			this.Tasual_MenuStrip_Icon_AddLocation.Name = "Tasual_MenuStrip_Icon_AddLocation";
+			this.Tasual_MenuStrip_Icon_AddLocation.Size = new System.Drawing.Size(152, 22);
+			this.Tasual_MenuStrip_Icon_AddLocation.Text = "Add location";
 			// 
 			// Tasual_Main
 			// 
@@ -649,20 +674,23 @@
 		private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
 		private System.Windows.Forms.ContextMenuStrip Tasual_MenuStrip_Icon;
-		private System.Windows.Forms.ToolStripMenuItem notesToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem viewNotesToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem copyToClipboardToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem deleteNotesToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem linkToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem viewLinkToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem copyToClipboardToolStripMenuItem1;
-		private System.Windows.Forms.ToolStripMenuItem followLinkToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem removeLinkToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem locationToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem viewLocationToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem copyToClipboardToolStripMenuItem2;
-		private System.Windows.Forms.ToolStripMenuItem openGoogleMapsToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem removeLocationToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Icon_Notes;
+		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Icon_Notes_EditNotes;
+		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Icon_Notes_Clipboard;
+		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Icon_Notes_Remove;
+		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Icon_Link;
+		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Icon_Link_Edit;
+		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Icon_Link_Clipboard;
+		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Icon_Link_Follow;
+		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Icon_Link_Remove;
+		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Icon_Location;
+		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Icon_Location_Edit;
+		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Icon_Location_Clipboard;
+		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Icon_Location_Maps;
+		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Icon_Location_Remove;
+		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Icon_AddNotes;
+		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Icon_AddLink;
+		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Icon_AddLocation;
 	}
 }
 
