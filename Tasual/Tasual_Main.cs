@@ -348,6 +348,7 @@ namespace Tasual
 			//DescriptionColumn.Edit
 			//DescriptionColumn.ImageGetter = new
 			//DescriptionColumn.AspectToStringConverter = 
+			DescriptionColumn.HeaderTextAlign = HorizontalAlignment.Center;
 			Tasual_ListView.AllColumns.Add(DescriptionColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { DescriptionColumn });
 
@@ -361,6 +362,8 @@ namespace Tasual
 			CategoryColumn.LastDisplayIndex = 2;
 			//DescriptionColumn.
 			//DescriptionColumn.AspectToStringConverter = 
+			CategoryColumn.TextAlign = HorizontalAlignment.Center;
+			CategoryColumn.HeaderTextAlign = HorizontalAlignment.Center;
 			Tasual_ListView.AllColumns.Add(CategoryColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { CategoryColumn });
 
@@ -373,6 +376,8 @@ namespace Tasual
 			DueColumn.IsEditable = false;
 			DueColumn.DisplayIndex = 3;
 			DueColumn.LastDisplayIndex = 3;
+			DueColumn.TextAlign = HorizontalAlignment.Center;
+			DueColumn.HeaderTextAlign = HorizontalAlignment.Center;
 			DueColumn.AspectToStringConverter = delegate (object Input)
 			{
 				TimeInfo Time = (TimeInfo)Input;
@@ -390,6 +395,8 @@ namespace Tasual
 			TimeColumn.IsEditable = false;
 			TimeColumn.DisplayIndex = 4;
 			TimeColumn.LastDisplayIndex = 4;
+			TimeColumn.TextAlign = HorizontalAlignment.Center;
+			TimeColumn.HeaderTextAlign = HorizontalAlignment.Center;
 			TimeColumn.AspectToStringConverter = delegate(object Input)
 			{
 				TimeInfo Time = (TimeInfo)Input;
@@ -900,7 +907,7 @@ namespace Tasual
 			//Tasual_ListView.SelectedColumnTint = Color.FromArgb(255, 230, 230, 255);
 			HeaderFormatStyle FormatStyle = new HeaderFormatStyle();
 			FormatStyle.Normal.ForeColor = Color.FromArgb(255, 36, 90, 150);
-			FormatStyle.Normal.BackColor = Color.FromArgb(255, 230, 230, 255);
+			FormatStyle.Normal.BackColor = Color.FromArgb(255, 222, 232, 246);
 			FormatStyle.Hot.ForeColor = Color.FromArgb(255, 36, 90, 150);
 			FormatStyle.Hot.BackColor = Color.FromArgb(255, 240, 240, 255);
 			FormatStyle.Pressed.ForeColor = Color.FromArgb(255, 36, 90, 150);
