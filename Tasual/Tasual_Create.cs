@@ -63,21 +63,19 @@ namespace Tasual
 			Tasual_Create_ComboBox_Dismiss.SelectedIndex = 0;
 			Tasual_Create_ComboBox_Priority.SelectedIndex = 1;
 
-			// TODO: DataSource will need to be different for other display styles
-			// Perhaps build an array of groups? Or just search through every task item in TaskArray worst case scenario
-			if (_Tasual_Main.Tasual_ListView.OLVGroups.Count != 0)
+			foreach (Task Task in _Tasual_Main.TaskArray)
 			{
-				Tasual_Create_ComboBox_Category.DataSource = _Tasual_Main.Tasual_ListView.OLVGroups;
+				if (!Tasual_Create_ComboBox_Category.Items.Contains(Task.Group))
+				{
+					Tasual_Create_ComboBox_Category.Items.Add(Task.Group);
+				}
 			}
-			else
+			if (Tasual_Create_ComboBox_Category.Items.Count == 0)
 			{
 				Tasual_Create_ComboBox_Category.Items.Add("Tasks");
 			}
+
 			Tasual_Create_ComboBox_Category.SelectedIndex = 0;
-
-
-
-			// TODO: Populate Category list with existing categories
 		}
 
 		private void Tasual_Create_CheckGroupBoxSize()
@@ -609,7 +607,7 @@ namespace Tasual
 			}
 
 			Task.Priority = Tasual_Create_ComboBox_Priority.SelectedIndex;
-			Task.Group = ((OLVGroup)Tasual_Create_ComboBox_Category.SelectedItem).Name;
+			Task.Group = ((string)Tasual_Create_ComboBox_Category.SelectedItem);
 
 			Task.Notes = Notes;
 			if (Tasual_Create_TextBox_Link.Text != Tasual_Create_TextBox_Link.WatermarkText)

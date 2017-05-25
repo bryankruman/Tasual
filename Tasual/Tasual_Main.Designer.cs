@@ -92,10 +92,10 @@
 			this.Tasual_MenuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(232)))), ((int)(((byte)(246)))));
 			this.Tasual_MenuStrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.Tasual_MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.toolStripMenuItem2,
-			this.Tasual_MenuStrip_Edit,
-			this.Tasual_MenuStrip_Settings,
-			this.Tasual_MenuStrip_Sources});
+            this.toolStripMenuItem2,
+            this.Tasual_MenuStrip_Edit,
+            this.Tasual_MenuStrip_Settings,
+            this.Tasual_MenuStrip_Sources});
 			this.Tasual_MenuStrip.Location = new System.Drawing.Point(0, 0);
 			this.Tasual_MenuStrip.Name = "Tasual_MenuStrip";
 			this.Tasual_MenuStrip.Size = new System.Drawing.Size(405, 24);
@@ -105,8 +105,8 @@
 			// toolStripMenuItem2
 			// 
 			this.toolStripMenuItem2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.Tasual_MenuStrip_Create_Quick,
-			this.Tasual_MenuStrip_Create_Advanced});
+            this.Tasual_MenuStrip_Create_Quick,
+            this.Tasual_MenuStrip_Create_Advanced});
 			this.toolStripMenuItem2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
 			this.toolStripMenuItem2.Image = global::Tasual.Properties.Resources.Add;
 			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
@@ -142,10 +142,10 @@
 			// 
 			this.Tasual_MenuStrip_Settings.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
 			this.Tasual_MenuStrip_Settings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.Tasual_MenuStrip_Settings_Sorting,
-			this.Tasual_MenuStrip_Settings_AlwaysOnTop,
-			this.Tasual_MenuStrip_Settings_MinimizeToTray,
-			this.Tasual_MenuStrip_Settings_LaunchOnStartup});
+            this.Tasual_MenuStrip_Settings_Sorting,
+            this.Tasual_MenuStrip_Settings_AlwaysOnTop,
+            this.Tasual_MenuStrip_Settings_MinimizeToTray,
+            this.Tasual_MenuStrip_Settings_LaunchOnStartup});
 			this.Tasual_MenuStrip_Settings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
 			this.Tasual_MenuStrip_Settings.Image = global::Tasual.Properties.Resources.Gear;
 			this.Tasual_MenuStrip_Settings.Name = "Tasual_MenuStrip_Settings";
@@ -155,8 +155,8 @@
 			// Tasual_MenuStrip_Settings_Sorting
 			// 
 			this.Tasual_MenuStrip_Settings_Sorting.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.Tasual_MenuStrip_Settings_Sorting_Category,
-			this.Tasual_MenuStrip_Settings_Sorting_Time});
+            this.Tasual_MenuStrip_Settings_Sorting_Category,
+            this.Tasual_MenuStrip_Settings_Sorting_Time});
 			this.Tasual_MenuStrip_Settings_Sorting.Name = "Tasual_MenuStrip_Settings_Sorting";
 			this.Tasual_MenuStrip_Settings_Sorting.Size = new System.Drawing.Size(170, 22);
 			this.Tasual_MenuStrip_Settings_Sorting.Text = "Sorting";
@@ -207,9 +207,9 @@
 			// Tasual_ListView
 			// 
 			this.Tasual_ListView.AllowDrop = true;
-			this.Tasual_ListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.Tasual_ListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.Tasual_ListView.AutoArrange = false;
 			this.Tasual_ListView.BackColor = System.Drawing.Color.White;
 			this.Tasual_ListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -219,6 +219,7 @@
 			this.Tasual_ListView.EmptyListMsgFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Tasual_ListView.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Tasual_ListView.FullRowSelect = true;
+			this.Tasual_ListView.HeaderMaximumHeight = 24;
 			this.Tasual_ListView.HideSelection = false;
 			this.Tasual_ListView.Location = new System.Drawing.Point(0, 24);
 			this.Tasual_ListView.Margin = new System.Windows.Forms.Padding(0);
@@ -254,9 +255,9 @@
 			// Tasual_MenuStrip_Notify
 			// 
 			this.Tasual_MenuStrip_Notify.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.showToolStripMenuItem,
-			this.settingsToolStripMenuItem,
-			this.quitToolStripMenuItem});
+            this.showToolStripMenuItem,
+            this.settingsToolStripMenuItem,
+            this.quitToolStripMenuItem});
 			this.Tasual_MenuStrip_Notify.Name = "Tasual_MenuStrip_Notify";
 			this.Tasual_MenuStrip_Notify.Size = new System.Drawing.Size(117, 70);
 			// 
@@ -280,8 +281,8 @@
 			// 
 			// Tasual_StatusLabel
 			// 
-			this.Tasual_StatusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.Tasual_StatusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.Tasual_StatusLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Tasual_StatusLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
 			this.Tasual_StatusLabel.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
@@ -317,10 +318,10 @@
 			// Tasual_MenuStrip_Status
 			// 
 			this.Tasual_MenuStrip_Status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.Tasual_StatusLabel_MenuStrip_Print,
-			this.importToolStripMenuItem,
-			this.Tasual_StatusLabel_MenuStrip_Export,
-			this.Tasual_StatusLabel_MenuStrip_Clear});
+            this.Tasual_StatusLabel_MenuStrip_Print,
+            this.importToolStripMenuItem,
+            this.Tasual_StatusLabel_MenuStrip_Export,
+            this.Tasual_StatusLabel_MenuStrip_Clear});
 			this.Tasual_MenuStrip_Status.Name = "Tasual_Main_Status_MenuStrip";
 			this.Tasual_MenuStrip_Status.Size = new System.Drawing.Size(111, 92);
 			// 
@@ -333,8 +334,8 @@
 			// importToolStripMenuItem
 			// 
 			this.importToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.fromClipboardToolStripMenuItem,
-			this.fromSaveFileToolStripMenuItem});
+            this.fromClipboardToolStripMenuItem,
+            this.fromSaveFileToolStripMenuItem});
 			this.importToolStripMenuItem.Name = "importToolStripMenuItem";
 			this.importToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
 			this.importToolStripMenuItem.Text = "Import";
@@ -354,8 +355,8 @@
 			// Tasual_StatusLabel_MenuStrip_Export
 			// 
 			this.Tasual_StatusLabel_MenuStrip_Export.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.toClipboardToolStripMenuItem,
-			this.toSaveFileToolStripMenuItem});
+            this.toClipboardToolStripMenuItem,
+            this.toSaveFileToolStripMenuItem});
 			this.Tasual_StatusLabel_MenuStrip_Export.Name = "Tasual_StatusLabel_MenuStrip_Export";
 			this.Tasual_StatusLabel_MenuStrip_Export.Size = new System.Drawing.Size(110, 22);
 			this.Tasual_StatusLabel_MenuStrip_Export.Text = "Export";
@@ -363,13 +364,13 @@
 			// toClipboardToolStripMenuItem
 			// 
 			this.toClipboardToolStripMenuItem.Name = "toClipboardToolStripMenuItem";
-			this.toClipboardToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+			this.toClipboardToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
 			this.toClipboardToolStripMenuItem.Text = "To clipboard";
 			// 
 			// toSaveFileToolStripMenuItem
 			// 
 			this.toSaveFileToolStripMenuItem.Name = "toSaveFileToolStripMenuItem";
-			this.toSaveFileToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+			this.toSaveFileToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
 			this.toSaveFileToolStripMenuItem.Text = "To save file";
 			// 
 			// Tasual_StatusLabel_MenuStrip_Clear
@@ -387,23 +388,23 @@
 			// Tasual_MenuStrip_Group
 			// 
 			this.Tasual_MenuStrip_Group.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.createToolStripMenuItem,
-			this.toolStripSeparator1,
-			this.hideToolStripMenuItem,
-			this.toolStripSeparator2,
-			this.editToolStripMenuItem,
-			this.moveTasksToolStripMenuItem,
-			this.deleteToolStripMenuItem1});
+            this.createToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.hideToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.editToolStripMenuItem,
+            this.moveTasksToolStripMenuItem,
+            this.deleteToolStripMenuItem1});
 			this.Tasual_MenuStrip_Group.Name = "Tasual_MenuStrip_Header";
-			this.Tasual_MenuStrip_Group.Size = new System.Drawing.Size(140, 126);
+			this.Tasual_MenuStrip_Group.Size = new System.Drawing.Size(139, 126);
 			// 
 			// createToolStripMenuItem
 			// 
 			this.createToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.quickToolStripMenuItem,
-			this.advancedToolStripMenuItem});
+            this.quickToolStripMenuItem,
+            this.advancedToolStripMenuItem});
 			this.createToolStripMenuItem.Name = "createToolStripMenuItem";
-			this.createToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+			this.createToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
 			this.createToolStripMenuItem.Text = "Create";
 			// 
 			// quickToolStripMenuItem
@@ -421,45 +422,45 @@
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(136, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(135, 6);
 			// 
 			// hideToolStripMenuItem
 			// 
 			this.hideToolStripMenuItem.Name = "hideToolStripMenuItem";
-			this.hideToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+			this.hideToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
 			this.hideToolStripMenuItem.Text = "Hide";
 			this.hideToolStripMenuItem.Visible = false;
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(136, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(135, 6);
 			this.toolStripSeparator2.Visible = false;
 			// 
 			// editToolStripMenuItem
 			// 
 			this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-			this.editToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+			this.editToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
 			this.editToolStripMenuItem.Text = "Rename";
 			// 
 			// moveTasksToolStripMenuItem
 			// 
 			this.moveTasksToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.moveTasksToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.toolStripComboBox2,
-			this.noOtherGroupsAvailableToolStripMenuItem});
+            this.toolStripComboBox2,
+            this.noOtherGroupsAvailableToolStripMenuItem});
 			this.moveTasksToolStripMenuItem.Name = "moveTasksToolStripMenuItem";
-			this.moveTasksToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+			this.moveTasksToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
 			this.moveTasksToolStripMenuItem.Text = "Move Tasks";
 			// 
 			// toolStripComboBox2
 			// 
 			this.toolStripComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.toolStripComboBox2.Items.AddRange(new object[] {
-			"Move to Foobar",
-			"Move to Yinzers",
-			"Move to Solar City",
-			"Move to Work"});
+            "Move to Foobar",
+            "Move to Yinzers",
+            "Move to Solar City",
+            "Move to Work"});
 			this.toolStripComboBox2.Name = "toolStripComboBox2";
 			this.toolStripComboBox2.Size = new System.Drawing.Size(121, 23);
 			// 
@@ -473,16 +474,16 @@
 			// deleteToolStripMenuItem1
 			// 
 			this.deleteToolStripMenuItem1.Name = "deleteToolStripMenuItem1";
-			this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(139, 22);
+			this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(138, 22);
 			this.deleteToolStripMenuItem1.Text = "Delete Tasks";
 			// 
 			// Tasual_MenuStrip_Item
 			// 
 			this.Tasual_MenuStrip_Item.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.editToolStripMenuItem1,
-			this.deleteToolStripMenuItem,
-			this.moveToolStripMenuItem,
-			this.duplicateToolStripMenuItem});
+            this.editToolStripMenuItem1,
+            this.deleteToolStripMenuItem,
+            this.moveToolStripMenuItem,
+            this.duplicateToolStripMenuItem});
 			this.Tasual_MenuStrip_Item.Name = "Tasual_MenuStrip_Item";
 			this.Tasual_MenuStrip_Item.Size = new System.Drawing.Size(125, 92);
 			// 

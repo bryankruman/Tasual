@@ -902,6 +902,8 @@ namespace Tasual
 			Tasual_ListView.UseCustomSelectionColors = true;
 			Tasual_ListView.SelectedBackColor = Color.FromArgb(255, 222, 232, 246);
 			Tasual_ListView.SelectedForeColor = Color.FromArgb(255, 36, 90, 150);
+			Tasual_ListView.UnfocusedSelectedBackColor = Color.FromArgb(255, 222, 232, 246);
+			Tasual_ListView.UnfocusedSelectedForeColor = Color.FromArgb(255, 36, 90, 150);
 			Tasual_ListView.FormatRow += new EventHandler<FormatRowEventArgs>(Tasual_ListView_FormatRow);
 			//Tasual_ListView.TintSortColumn = false; // TODO: Add settings choice for this
 			//Tasual_ListView.SelectedColumnTint = Color.FromArgb(255, 230, 230, 255);
