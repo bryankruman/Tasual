@@ -338,7 +338,7 @@ namespace Tasual
 			DescriptionColumn.IsVisible = true;
 			DescriptionColumn.IsEditable = true;
 			//DescriptionColumn.HasFilterIndicator = false;
-			DescriptionColumn.Sortable = true;
+			DescriptionColumn.Sortable = false;
 			DescriptionColumn.DisplayIndex = 1;
 			DescriptionColumn.LastDisplayIndex = 1;
 			//DescriptionColumn.header = false;
@@ -389,14 +389,38 @@ namespace Tasual
 			CategoryColumn.IsEditable = true;
 			CategoryColumn.DisplayIndex = 3;
 			CategoryColumn.LastDisplayIndex = 3;
-			//DescriptionColumn.AspectToStringConverter = 
+			CategoryColumn.GroupKeyGetter = delegate (object Input)
+			{
+				Task Task = (Task)Input;
+
+				if (Task.Checked) // TODO: && settings.showcompletedblah
+				{
+					return "Completed";
+				}
+				else if (DateTime.Now > Task.Time.Start) // TODO: && settings.showoverdueblah
+				{
+					return "Overdue";
+				}
+				else
+				{
+					// if (settings.showtodayblah)
+					// {
+					DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
+					DateTime TargetDay = Task.Time.Start - Task.Time.Start.TimeOfDay;
+					if (TargetDay.Day == Today.Day)
+					{
+						return "Today";
+					}
+					// }
+					return Task.Group;
+				}
+			};
 			CategoryColumn.TextAlign = HorizontalAlignment.Center;
 			CategoryColumn.HeaderTextAlign = HorizontalAlignment.Center;
 			Tasual_ListView.AllColumns.Add(CategoryColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { CategoryColumn });
 
 			OLVColumn DueColumn = new OLVColumn("Due", "Time");
-			//TimeColumn.Width = -1;
 			DueColumn.MinimumWidth = 80;
 			DueColumn.IsVisible = false;
 			DueColumn.IsEditable = false;
@@ -404,10 +428,131 @@ namespace Tasual
 			DueColumn.LastDisplayIndex = 4;
 			DueColumn.TextAlign = HorizontalAlignment.Center;
 			DueColumn.HeaderTextAlign = HorizontalAlignment.Center;
+			//DueColumn.AspectName = "Time";
 			DueColumn.AspectToStringConverter = delegate (object Input)
 			{
-				TimeInfo Time = (TimeInfo)Input;
-				return Tasual_ListView_FormatTime(Time.Start.ToLocalTime(), Setting.TimeFormat.Due);
+				TimeInfo TimeInfo = (TimeInfo)Input;
+				DateTime Time = TimeInfo.Start.ToLocalTime();
+				if (DateTime.Now > Time)
+				{
+					return "Overdue";
+				}
+				else
+				{
+					DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
+					DateTime TargetDay = Time - Time.TimeOfDay;
+					TimeSpan Span = TargetDay - Today;
+					if (TargetDay.Day == Today.Day)
+					{
+						return "Today";
+					}
+					else if (Span.Days <= 1)
+					{
+						return "Tomorrow";
+					}
+					else if (Span.Days <= 7)
+					{
+						return Time.DayOfWeek.ToString();
+					}
+					else if (Span.Days <= 14)
+					{
+						return "Next Week";
+					}
+					else if (Span.Days <= 21)
+					{
+						return "2 Weeks";
+					}
+					else if (Span.Days <= 30)
+					{
+						return "3 Weeks";
+					}
+					else if (TargetDay.Month == Today.AddMonths(1).Month)
+					{
+						return "Next Month";
+					}
+					else
+					{
+						return "Future";
+					}
+				}
+			};
+			DueColumn.GroupKeyGetter = delegate (object Input)
+			{
+				//Console.WriteLine("This is still run!");
+				Task Task = (Task)Input;
+				DateTime Time = Task.Time.Start.ToLocalTime();
+				//TimeInfo Time = (TimeInfo)Input;
+				if (Task.Checked)
+				{
+					return 16; // "Completed";
+				}
+				else if (DateTime.Now > Time)
+				{
+					return 1; // "Overdue";
+				}
+				else
+				{
+					DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
+					DateTime TargetDay = Time - Time.TimeOfDay;
+					TimeSpan Span = TargetDay - Today;
+					if (TargetDay.Day == Today.Day)
+					{
+						return 2; // "Today";
+					}
+					else if (Span.Days <= 1)
+					{
+						return 3; //  "Tomorrow";
+					}
+					else if (Span.Days <= 7)
+					{
+						return 4 + (int)Time.DayOfWeek; //Time.DayOfWeek.ToString();
+					}
+					else if (Span.Days <= 14)
+					{
+						return 11; //"Next Week";
+					}
+					else if (Span.Days <= 21)
+					{
+						return 12; // "2 Weeks";
+					}
+					else if (Span.Days <= 30)
+					{
+						return 13; // "3 Weeks";
+					}
+					else if (TargetDay.Month == Today.AddMonths(1).Month)
+					{
+						return 14; // "Next Month";
+					}
+					else
+					{
+						return 15; // "Future";
+					}
+				}
+			};
+			DueColumn.GroupKeyToTitleConverter = delegate (object Input)
+			{
+				int Key = (int)Input;
+
+				switch (Key)
+				{
+					case 1: return "Overdue";
+					case 2: return "Today";
+					case 3: return "Tomorrow";
+					case 4: return "Sunday";
+					case 5: return "Monday";
+					case 6: return "Tuesday";
+					case 7: return "Wednesday";
+					case 8: return "Thursday";
+					case 9: return "Friday";
+					case 10: return "Saturday";
+					case 11: return "Next Week";
+					case 12: return "2 Weeks";
+					case 13: return "3 Weeks";
+					case 14: return "Next Month";
+					case 15: return "Future";
+					case 16: return "Completed";
+					default: return "Broken!";
+				}
 			};
 			Tasual_ListView.AllColumns.Add(DueColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { DueColumn });
@@ -431,7 +576,11 @@ namespace Tasual
 			Tasual_ListView.AllColumns.Add(TimeColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { TimeColumn });
 
-			Tasual_ListView.AlwaysGroupByColumn = CategoryColumn;
+			Tasual_ListView.AlwaysGroupByColumn = CategoryColumn; //CategoryColumn DueColumn
+			Tasual_ListView.PrimarySortColumn = CategoryColumn;// CategoryColumn DueColumn
+			Tasual_ListView.SortGroupItemsByPrimaryColumn = true;
+			Tasual_ListView.PrimarySortOrder = SortOrder.Ascending;
+			Tasual_ListView.SecondarySortColumn = DescriptionColumn;
 		}
 
 		public string Tasual_ListView_FormatTime(DateTime Time, Setting.TimeFormat Format)
@@ -945,6 +1094,7 @@ namespace Tasual
 		private void Tasual_ListView_ItemChecked(object sender, ItemCheckedEventArgs e)
 		{
 			Tasual_Array_Save_Text();
+			Tasual_ListView.BuildList();
 			Tasual_StatusLabel_UpdateCounts();
 		}
 
@@ -1017,13 +1167,13 @@ namespace Tasual
 		{
 			foreach (OLVGroup Group in e.Groups)
 			{
-				int GroupItems = 0;
 				Group.Name = Group.Header;
-				foreach (OLVListItem Item in Group.Items)
-				{
-					++GroupItems;
-				}
-				Group.Header = String.Format("{0} ({1} items)", Group.Name, GroupItems.ToString());
+				Group.Header = String.Format(
+					"{0} ({1} item{2})", 
+					Group.Name, 
+					Group.Items.Count(), 
+					((Group.Items.Count() > 1) ? "s" : "")
+				);
 			}
 		}
 	}

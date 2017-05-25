@@ -367,7 +367,7 @@
             this.Tasual_MenuStrip_Group_MoveTasks,
             this.deleteToolStripMenuItem1});
 			this.Tasual_MenuStrip_Group.Name = "Tasual_MenuStrip_Header";
-			this.Tasual_MenuStrip_Group.Size = new System.Drawing.Size(153, 148);
+			this.Tasual_MenuStrip_Group.Size = new System.Drawing.Size(140, 126);
 			// 
 			// createToolStripMenuItem
 			// 
@@ -375,7 +375,7 @@
             this.quickToolStripMenuItem,
             this.advancedToolStripMenuItem});
 			this.createToolStripMenuItem.Name = "createToolStripMenuItem";
-			this.createToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.createToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
 			this.createToolStripMenuItem.Text = "Create";
 			// 
 			// quickToolStripMenuItem
@@ -393,39 +393,39 @@
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(136, 6);
 			// 
 			// hideToolStripMenuItem
 			// 
 			this.hideToolStripMenuItem.Name = "hideToolStripMenuItem";
-			this.hideToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.hideToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
 			this.hideToolStripMenuItem.Text = "Hide";
 			this.hideToolStripMenuItem.Visible = false;
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(136, 6);
 			this.toolStripSeparator2.Visible = false;
 			// 
 			// editToolStripMenuItem
 			// 
 			this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-			this.editToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.editToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
 			this.editToolStripMenuItem.Text = "Rename";
 			// 
 			// Tasual_MenuStrip_Group_MoveTasks
 			// 
 			this.Tasual_MenuStrip_Group_MoveTasks.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.Tasual_MenuStrip_Group_MoveTasks.Name = "Tasual_MenuStrip_Group_MoveTasks";
-			this.Tasual_MenuStrip_Group_MoveTasks.Size = new System.Drawing.Size(152, 22);
+			this.Tasual_MenuStrip_Group_MoveTasks.Size = new System.Drawing.Size(139, 22);
 			this.Tasual_MenuStrip_Group_MoveTasks.Text = "Move Tasks";
 			this.Tasual_MenuStrip_Group_MoveTasks.DropDownOpening += new System.EventHandler(this.moveTasksToolStripMenuItem_DropDownOpening);
 			// 
 			// deleteToolStripMenuItem1
 			// 
 			this.deleteToolStripMenuItem1.Name = "deleteToolStripMenuItem1";
-			this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+			this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(139, 22);
 			this.deleteToolStripMenuItem1.Text = "Delete Tasks";
 			// 
 			// Tasual_MenuStrip_Item
