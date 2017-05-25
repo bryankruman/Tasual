@@ -351,26 +351,26 @@ namespace Tasual
 			Tasual_ListView.AllColumns.Add(DescriptionColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { DescriptionColumn });
 
-			OLVColumn IconColumn = new OLVColumn("Icons", "");
+			OLVColumn IconColumn = new OLVColumn("Icons", "Icons");
 			IconColumn.Renderer = new ImageRenderer();
 			IconColumn.AspectGetter = delegate (object Input)
 			{
 				Task Task = (Task)Input;
-				int[] Images = new int[3];
+				int[] Images = new int[3] { -1, -1, -1 };
 
 				if (Task.Location != null) { Images[0] = 1; }
 				if (Task.Link != null) { Images[1] = 2; }
 				if (Task.Notes != null) { Images[2] = 3; }
 
-				// TODO: Make this work
-				if (Images.Count() == 0)
+				if ((Images[0] + Images[1] + Images[2]) == -3)
 				{
-					Images[0] = 1;
+					Images[0] = 0;
 				}
 
 				return Images;
 			};
-			IconColumn.MinimumWidth = 30;
+			IconColumn.MinimumWidth = 50;
+			IconColumn.MaximumWidth = 50;
 			IconColumn.IsVisible = true;
 			IconColumn.IsEditable = false;
 			IconColumn.Sortable = false;
@@ -383,14 +383,11 @@ namespace Tasual
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { IconColumn });
 
 			OLVColumn CategoryColumn = new OLVColumn("Category", "Group");
-			//CategoryColumn.AspectName = "Group";
-			//CategoryColumn.Sortable = false;
 			CategoryColumn.MinimumWidth = 100;
 			CategoryColumn.IsVisible = false;
 			CategoryColumn.IsEditable = true;
 			CategoryColumn.DisplayIndex = 3;
 			CategoryColumn.LastDisplayIndex = 3;
-			//DescriptionColumn.
 			//DescriptionColumn.AspectToStringConverter = 
 			CategoryColumn.TextAlign = HorizontalAlignment.Center;
 			CategoryColumn.HeaderTextAlign = HorizontalAlignment.Center;
@@ -398,8 +395,6 @@ namespace Tasual
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { CategoryColumn });
 
 			OLVColumn DueColumn = new OLVColumn("Due", "Time");
-			//TimeColumn.AspectName = "Time";
-			//TimeColumn.Sortable = false;
 			//TimeColumn.Width = -1;
 			DueColumn.MinimumWidth = 80;
 			DueColumn.IsVisible = false;
@@ -765,82 +760,62 @@ namespace Tasual
 			}
 			else if (Info.Item != null)
 			{
-				switch (e.Button)
+				if (Tasual_Timer_ListViewClick.Enabled && (e.Button == MouseButtons.Left)) // second click
 				{
-					case MouseButtons.Left:
-						{
-							if (Tasual_Timer_ListViewClick.Enabled) // second click
+					Tasual_ListView_DoubleClick(e);
+					Tasual_ListView_PreviouslySelected = false;
+					Tasual_ListView_FirstClickInfo = null;
+					Tasual_Timer_ListViewClick.Stop();
+				}
+				else // first click
+				{
+					switch (Info.Column.AspectName)
+					{
+						case "Description":
 							{
-								Tasual_ListView_DoubleClick(e);
-								Tasual_ListView_PreviouslySelected = false;
-								Tasual_ListView_FirstClickInfo = null;
-								Tasual_Timer_ListViewClick.Stop();
-							}
-							else // first click
-							{
-								switch (Info.Column.AspectName)
+								if (e.Button == MouseButtons.Left)
 								{
-									case "Description":
-										{
-											Tasual_Timer_ListViewClick.Start();
+									Tasual_Timer_ListViewClick.Start();
 
-											if (Tasual_ListView.SelectedItem == Info.Item)
-											{
-												Tasual_ListView_PreviouslySelected = true;
-											}
+									if (Tasual_ListView.SelectedItem == Info.Item)
+									{
+										Tasual_ListView_PreviouslySelected = true;
+									}
 
-											Tasual_ListView_FirstClickInfo = Info;
-											Tasual_Timer_ListViewClick.Tag = e;
-											break;
-										}
-									case "Group":
-										{
-											Console.WriteLine("Clicked on a category!");
-											break;
-										}
-									case "Time":
-										{
-											if (Info.SubItem != null)
-											{
-												if (CalendarPopout == null)
-												{
-													CalendarPopout = Info;
-												}
-												else { CalendarPopout = null; }
-											}
-											break;
-										}
+									Tasual_ListView_FirstClickInfo = Info;
+									Tasual_Timer_ListViewClick.Tag = e;
 								}
-								/*if (e.X <= 20) // clicked checkbox area
+								else
 								{
-									ListViewItem SelectedItem = Info.Item;
-									//Tasual_ListView_ChangeStatus(ref SelectedItem, (int)Task.Statuses.Toggle);
-									Tasual_StatusLabel_UpdateCounts();
-									Tasual_Array_Save_Text();
-								}*/
+									Tasual_MenuStrip_Item.Tag = Info.Item.RowObject;
+									Tasual_MenuStrip_Item.Show(Cursor.Position.X, Cursor.Position.Y);
+								}
+								break;
 							}
-							break;
-						}
-
-					case MouseButtons.Right:
-						{
-							Tasual_MenuStrip_Item.Tag = Info.Item.RowObject;
-							Tasual_MenuStrip_Item.Show(Cursor.Position.X, Cursor.Position.Y);
-							break;
-						}
-
-					case MouseButtons.Middle:
-						{
-							// todo: perhaps duplicate item if middle clicked?
-							break;
-						}
-
-					default:
-						{
-							// can this even happen?
-							Console.WriteLine("unknown button");
-							break;
-						}
+						case "Icons":
+							{
+								Tasual_MenuStrip_Icon.Tag = Info.Item.RowObject;
+								Tasual_MenuStrip_Icon.Show(Cursor.Position.X, Cursor.Position.Y);
+								break;
+							}
+						case "Group":
+							{
+								Console.WriteLine("Clicked on a category!");
+								break;
+							}
+						case "Time":
+							{
+								if (Info.SubItem != null)
+								{
+									if (CalendarPopout == null)
+									{
+										CalendarPopout = Info;
+									}
+									else { CalendarPopout = null; }
+								}
+								break;
+							}
+					}
 				}
 			}
 			/* else if (Info != null)
@@ -1009,6 +984,13 @@ namespace Tasual
 			{
 				Tasual_MenuStrip_Edit.Enabled = false;
 			}
+		}
+
+		private void viewNotesToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
+			Tasual_Notes NotesForm = new Tasual_Notes(Task.Notes);
+			NotesForm.ShowDialog(this);
 		}
 	}
 }
