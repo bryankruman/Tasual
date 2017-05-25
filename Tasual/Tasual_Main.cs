@@ -1212,5 +1212,85 @@ namespace Tasual
 				Tasual_MenuStrip_Icon_Notes.Visible = false;
 			}
 		}
+
+		private void Tasual_MenuStrip_Group_Opening(object sender, CancelEventArgs e)
+		{
+			OLVGroup Group = (OLVGroup)Tasual_MenuStrip_Group.Tag;
+
+			if (Group.Collapsed)
+			{
+				Tasual_MenuStrip_Group_Show.Visible = true;
+				Tasual_MenuStrip_Group_Hide.Visible = false;
+			}
+			else
+			{
+				Tasual_MenuStrip_Group_Show.Visible = false;
+				Tasual_MenuStrip_Group_Hide.Visible = true;
+			}
+		}
+
+		private void Tasual_MenuStrip_Group_Show_Click(object sender, EventArgs e)
+		{
+			OLVGroup Group = (OLVGroup)Tasual_MenuStrip_Group.Tag;
+
+			Group.Collapsed = false;
+		}
+
+		private void Tasual_MenuStrip_Group_Hide_Click(object sender, EventArgs e)
+		{
+			OLVGroup Group = (OLVGroup)Tasual_MenuStrip_Group.Tag;
+
+			Group.Collapsed = true;
+		}
+
+		private void Tasual_MenuStrip_Group_Delete_Click(object sender, EventArgs e)
+		{
+			OLVGroup Group = (OLVGroup)Tasual_MenuStrip_Group.Tag;
+			List<Task> RemovalList = new List<Task>();
+
+			// TODO: use a common function with the column creation function so that these always match
+			
+			foreach (Task Task in TaskArray)
+			{
+				string TaskGroup = "";
+				if (Task.Checked) // TODO: && settings.showcompletedblah
+				{
+					TaskGroup = "Completed";
+				}
+				else if (DateTime.Now > Task.Time.Start) // TODO: && settings.showoverdueblah
+				{
+					TaskGroup = "Overdue";
+				}
+				else
+				{
+					// if (settings.showtodayblah)
+					// {
+					DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
+					DateTime TargetDay = Task.Time.Start - Task.Time.Start.TimeOfDay;
+					if (TargetDay.Day == Today.Day)
+					{
+						TaskGroup = "Today";
+					}
+					else
+					{
+						TaskGroup = Task.Group;
+					}
+				}
+
+				if(TaskGroup == Group.Name)
+				{
+					RemovalList.Add(Task);
+				}
+			}
+
+			foreach (Task RemoveTask in RemovalList)
+			{
+				TaskArray.Remove(RemoveTask);
+			}
+
+			Tasual_Array_Save_Text();
+			Tasual_ListView.BuildList();
+			Tasual_StatusLabel_UpdateCounts();
+		}
 	}
 }
