@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Tasual
@@ -14,35 +7,48 @@ namespace Tasual
 	{
 		private readonly Tasual_Create _Tasual_Create;
 		private readonly Tasual_Main _Tasual_Main;
-
-		private int Index; 
-
-		//private string Notes;
-
-		private int Origination; // 1 = Main, 2 = Create
+		private readonly Task Task;
+		private readonly int Origination; // 1 = Main, 2 = Create
 
 		public Tasual_Notes(Tasual_Main PassedForm, int PassedIndex)
 		{
-			InitializeComponent();
-			_Tasual_Main = PassedForm;
-			Index = PassedIndex;
-			Tasual_Notes_TextBox.Text = _Tasual_Main.TaskArray[Index].Notes;
-			Origination = 1;
-			Console.WriteLine("Notes_Main: '{0}'", Tasual_Notes_TextBox.Text);
+			try
+			{
+				InitializeComponent();
+
+				Origination = 1;
+				_Tasual_Main = PassedForm;
+				Task = _Tasual_Main.TaskArray[PassedIndex];
+
+				Tasual_Notes_TextBox.Text = Task.Notes;
+				
+				Console.WriteLine("Notes_Main: '{0}'", Tasual_Notes_TextBox.Text);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				this.Close();
+			}
 		}
 
 		public Tasual_Notes(Tasual_Create PassedForm)
 		{
-			InitializeComponent();
-			_Tasual_Create = PassedForm;
-			Tasual_Notes_TextBox.Text = _Tasual_Create.Notes;
-			Origination = 2;
-			Console.WriteLine("Notes_Create: '{0}'", Tasual_Notes_TextBox.Text);
-		}
+			try
+			{
+				InitializeComponent();
 
-		private void Tasual_Notes_Load(object sender, EventArgs e)
-		{
-			//
+				Origination = 2;
+				_Tasual_Create = PassedForm;
+
+				Tasual_Notes_TextBox.Text = _Tasual_Create.Notes;
+				
+				Console.WriteLine("Notes_Create: '{0}'", Tasual_Notes_TextBox.Text);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				this.Close();
+			}
 		}
 
 		private void Tasual_Notes_Done_Click(object sender, EventArgs e)
@@ -51,8 +57,15 @@ namespace Tasual
 			{
 				if (Origination == 1)
 				{
-					_Tasual_Main.TaskArray[Index].Notes = Tasual_Notes_TextBox.Text;
-					_Tasual_Main.Tasual_Array_Save_Text();
+					if (Task != null)
+					{
+						Task.Notes = Tasual_Notes_TextBox.Text;
+						_Tasual_Main.Tasual_Array_Save_Text();
+					}
+					else
+					{
+						Console.WriteLine("Tasual_Notes_Done_Click(): Somehow Task was null!");
+					}
 				}
 				else
 				{
