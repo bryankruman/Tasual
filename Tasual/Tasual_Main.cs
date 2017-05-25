@@ -1232,14 +1232,12 @@ namespace Tasual
 		private void Tasual_MenuStrip_Group_Show_Click(object sender, EventArgs e)
 		{
 			OLVGroup Group = (OLVGroup)Tasual_MenuStrip_Group.Tag;
-
 			Group.Collapsed = false;
 		}
 
 		private void Tasual_MenuStrip_Group_Hide_Click(object sender, EventArgs e)
 		{
 			OLVGroup Group = (OLVGroup)Tasual_MenuStrip_Group.Tag;
-
 			Group.Collapsed = true;
 		}
 
