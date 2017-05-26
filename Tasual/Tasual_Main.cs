@@ -2,16 +2,9 @@
 using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
-using System.Reflection;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using BrightIdeasSoftware;
 
@@ -137,7 +130,6 @@ namespace Tasual
 						string Line;
 						Line = Task.Checked.ToString();
 						Line = Line + (char)29 + Task.Priority.ToString();
-						//Line = Line + (char)29 + Task.Status.ToString();
 						Line = Line + (char)29 + Task.Group;
 						Line = Line + (char)29 + Task.Description;
 
@@ -198,63 +190,65 @@ namespace Tasual
 
 				using (StreamReader InputFile = new StreamReader(Settings.TextFile))
 				{
-					int counter = 0;
+					int Counter = 0;
 					string Line;
 
 					while ((Line = InputFile.ReadLine()) != null)
 					{
 						Task NewItem = new Task();
-						//NewItem.Time = new Task.TimeInfo();
-						int argtype = 0;
-						string[] segments = Line.Split((char)29);
+						int ArgType = 0;
+						string[] Segments = Line.Split((char)29);
 						double UnixTime;
 
-						foreach (string token in segments)
+						foreach (string Token in Segments)
 						{
 							// lets do something with this data now
 							int Temp = 0;
-								bool TempBool = false;
-							switch (argtype)
+							bool TempBool = false;
+
+							switch (ArgType)
 							{
-								case (int)Task.Arguments.Checked: { Boolean.TryParse(token, out TempBool); NewItem.Checked = TempBool; break; }
-								case (int)Task.Arguments.Priority: { Int32.TryParse(token, out Temp); NewItem.Priority = Temp; break; }
-								//case (int)Task.Arguments.Status: { Int32.TryParse(token, out Temp); NewItem.Status = Temp; break; }
-								case (int)Task.Arguments.Group: { NewItem.Group = token; break; }
-								case (int)Task.Arguments.Description: { NewItem.Description = token; break; }
+								case (int)Task.Arguments.Checked: { Boolean.TryParse(Token, out TempBool); NewItem.Checked = TempBool; break; }
+								case (int)Task.Arguments.Priority: { Int32.TryParse(Token, out Temp); NewItem.Priority = Temp; break; }
+								case (int)Task.Arguments.Group: { NewItem.Group = Token; break; }
+								case (int)Task.Arguments.Description: { NewItem.Description = Token; break; }
 								case (int)Task.Arguments.Created:
 									{
-										Double.TryParse(token, out UnixTime);
-										NewItem.Time.Start = DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
+										Double.TryParse(Token, out UnixTime);
+										NewItem.Time.Start = 
+											DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
 										break;
 									}
 								case (int)Task.Arguments.Ending:
 									{
-										Double.TryParse(token, out UnixTime);
-										NewItem.Time.End = DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
+										Double.TryParse(Token, out UnixTime);
+										NewItem.Time.End = 
+											DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
 										break;
 									}
 								case (int)Task.Arguments.Next:
 									{
-										Double.TryParse(token, out UnixTime);
-										NewItem.Time.Next = DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
+										Double.TryParse(Token, out UnixTime);
+										NewItem.Time.Next = 
+											DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
 										break;
 									}
 								default:
 									{
-										Console.WriteLine("TOO MANY ARGUMENTS IN FILE !!!!!!");
+										Console.WriteLine("Too many arguments in file!");
 										break;
 									}
 							}
 
-							++argtype;
-							//Console.WriteLine(token);
+							++ArgType;
 						}
 
-						if (argtype == (int)Task.Arguments.Count)
+						if (ArgType == (int)Task.Arguments.Count)
+						{
 							TaskArray.Add(NewItem);
+						}
 
-						//Console.WriteLine(line);
-						counter++;
+						Counter++;
 					}
 				}
 
