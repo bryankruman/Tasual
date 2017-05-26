@@ -55,16 +55,9 @@ namespace Tasual
 			Tasual_ListView.BuildList();
 		}
 
-		private void Tasual_Array_ReAssignGroup(string OldTaskGroup, string NewTaskGroup)
+		public static Tasual_Main ReturnFormInstance()
 		{
-			foreach (Task Task in TaskArray)
-			{
-				if (Task == null) { break; }
-				if (Task.Group == OldTaskGroup)
-				{
-					Task.Group = NewTaskGroup;
-				}
-			}
+			return Application.OpenForms[0] as Tasual_Main;
 		}
 
 		public void Tasual_PrintTaskToConsole(Task TaskItem)
@@ -108,6 +101,27 @@ namespace Tasual
 		//  Array Functions
 		// =================
 
+		private void Tasual_Array_ReAssignGroup(string OldTaskGroup, string NewTaskGroup)
+		{
+			foreach (Task Task in TaskArray)
+			{
+				if (Task == null) { break; }
+				if (Task.Group == OldTaskGroup)
+				{
+					Task.Group = NewTaskGroup;
+				}
+			}
+		}
+
+		public void Tasual_Array_Save()
+		{
+			switch (Settings.Protocol)
+			{
+				case Setting.Protocols.Text: Tasual_Array_Save_Text(); break;
+				case Setting.Protocols.JSON: Tasual_Array_Save_JSON(); break;
+			}
+		}
+
 		public void Tasual_Array_Save_JSON()
 		{
 			try
@@ -129,26 +143,6 @@ namespace Tasual
 			catch (Exception e)
 			{
 				Console.WriteLine("Tasual_Array_Save_JSON(): {0}\nTrace: {1}", e.Message, e.StackTrace);
-			}
-		}
-
-		public void Tasual_Array_Load_JSON()
-		{
-			try
-			{
-				TaskArray.Clear();
-
-				using (StreamReader InputFile = File.OpenText("local.json"))
-				using (JsonReader InputJson = new JsonTextReader(InputFile))
-				{
-					JsonSerializer Serializer = new JsonSerializer();
-					TaskArray = (List<Task>)Serializer.Deserialize(InputJson, typeof(List<Task>));
-					Tasual_ListView.SetObjects(TaskArray);
-				}
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine("Tasual_Array_Load_JSON(): {0}\nTrace: {1}", e.Message, e.StackTrace);
 			}
 		}
 
@@ -187,10 +181,39 @@ namespace Tasual
 			}
 		}
 
+		public void Tasual_Array_Load()
+		{
+			switch (Settings.Protocol)
+			{
+				case Setting.Protocols.Text: Tasual_Array_Load_Text(); break;
+				case Setting.Protocols.JSON: Tasual_Array_Load_JSON(); break;
+			}
+		}
+
+		public void Tasual_Array_Load_JSON()
+		{
+			try
+			{
+				TaskArray.Clear();
+
+				using (StreamReader InputFile = File.OpenText("local.json"))
+				using (JsonReader InputJson = new JsonTextReader(InputFile))
+				{
+					JsonSerializer Serializer = new JsonSerializer();
+					TaskArray = (List<Task>)Serializer.Deserialize(InputJson, typeof(List<Task>));
+					Tasual_ListView.SetObjects(TaskArray);
+				}
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine("Tasual_Array_Load_JSON(): {0}\nTrace: {1}", e.Message, e.StackTrace);
+			}
+		}
+
 		public void Tasual_Array_Load_Text()
 		{
-				Console.WriteLine("Tasual_Array_Load_Text();");
-				try
+			Console.WriteLine("Tasual_Array_Load_Text();");
+			try
 			{
 				TaskArray.Clear();
 
@@ -260,24 +283,6 @@ namespace Tasual
 			catch (Exception e)
 			{
 				Console.WriteLine("Tasual_Array_Load_Text(): {0}\nTrace: {1}", e.Message, e.StackTrace);
-			}
-		}
-
-		public void Tasual_Array_Save()
-		{
-			switch (Settings.Protocol)
-			{
-				case Setting.Protocols.Text: Tasual_Array_Save_Text(); break;
-				case Setting.Protocols.JSON: Tasual_Array_Save_JSON(); break;
-			}
-		}
-
-		public void Tasual_Array_Load()
-		{
-			switch (Settings.Protocol)
-			{
-				case Setting.Protocols.Text: Tasual_Array_Load_Text(); break;
-				case Setting.Protocols.JSON: Tasual_Array_Load_JSON(); break;
 			}
 		}
 
@@ -776,9 +781,9 @@ namespace Tasual
 		}
 
 
-		// ================
-		//  MenuStrip Code
-		// ================
+		// ====================
+		//  MenuStrip Handlers
+		// ====================
 
 		// Tasual_Main: "Create"
 		private void Tasual_MenuStrip_Create_Advanced_Click(object sender, EventArgs e)
@@ -1035,7 +1040,7 @@ namespace Tasual
 
 
 		// ================
-		//  Event Handlers
+		//  Other Handlers
 		// ================
 
 		// Main Form
@@ -1093,12 +1098,7 @@ namespace Tasual
 			AboutForm.ShowDialog(this);
 		}
 
-		// ListView
-		private void Tasual_ListView_CellEditFinished(object sender, CellEditEventArgs e)
-		{
-			Tasual_Array_Save();
-		}
-
+		// Tasual_ListView: Misc handlers
 		private void Tasual_ListView_AboutToCreateGroups(object sender, CreateGroupsEventArgs e)
 		{
 			foreach (OLVGroup Group in e.Groups)
@@ -1112,6 +1112,10 @@ namespace Tasual
 				);
 			}
 		}
+		private void Tasual_ListView_CellEditFinished(object sender, CellEditEventArgs e)
+		{
+			Tasual_Array_Save();
+		}
 
 		private void Tasual_ListView_ItemChecked(object sender, ItemCheckedEventArgs e)
 		{
@@ -1120,6 +1124,19 @@ namespace Tasual
 			Tasual_StatusLabel_UpdateCounts();
 		}
 
+		private void Tasual_ListView_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (Tasual_ListView.SelectedItem != null)
+			{
+				Tasual_MenuStrip_Edit.Enabled = true;
+			}
+			else
+			{
+				Tasual_MenuStrip_Edit.Enabled = false;
+			}
+		}
+
+		// Tasual_ListView: Click handlers
 		private void Tasual_ListView_SingleClick(MouseEventArgs e)
 		{
 			if (Tasual_ListView_PreviouslySelected == true)
@@ -1256,28 +1273,6 @@ namespace Tasual
 				Calendar.Show(this);
 
 				CalendarPopout = null;
-			}
-		}
-
-
-		// ================
-		//  Core Functions
-		// ================
-
-		public static Tasual_Main ReturnFormInstance()
-		{
-			return Application.OpenForms[0] as Tasual_Main;
-		}
-
-		private void Tasual_ListView_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (Tasual_ListView.SelectedItem != null)
-			{
-				Tasual_MenuStrip_Edit.Enabled = true;
-			}
-			else
-			{
-				Tasual_MenuStrip_Edit.Enabled = false;
 			}
 		}
 	}
