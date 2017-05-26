@@ -73,6 +73,46 @@ namespace Tasual
 		//  Array Functions
 		// =================
 
+		public void Tasual_Settings_Save()
+		{
+			try
+			{
+				using (FileStream OutputFile = File.Open("settings.cfg", FileMode.Create))
+				using (StreamWriter OutputStream = new StreamWriter(OutputFile))
+				using (JsonWriter OutputJson = new JsonTextWriter(OutputStream))
+				{
+					OutputJson.Formatting = Formatting.Indented;
+
+					JsonSerializer Serializer = new JsonSerializer();
+					Serializer.Serialize(OutputJson, Settings);
+				}
+
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine("Tasual_Settings_Save(): {0}\nTrace: {1}", e.Message, e.StackTrace);
+			}
+		}
+
+		public void Tasual_Settings_Load()
+		{
+			try
+			{
+				TaskArray.Clear();
+
+				using (StreamReader InputFile = File.OpenText("settings.cfg"))
+				using (JsonReader InputJson = new JsonTextReader(InputFile))
+				{
+					JsonSerializer Serializer = new JsonSerializer();
+					Settings = (Setting)Serializer.Deserialize(InputJson, typeof(Setting));
+				}
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine("Tasual_Settings_Load(): {0}\nTrace: {1}", e.Message, e.StackTrace);
+			}
+		}
+
 		private void Tasual_Array_ReAssignGroup(string OldTaskGroup, string NewTaskGroup)
 		{
 			foreach (Task Task in TaskArray)
@@ -98,10 +138,7 @@ namespace Tasual
 		{
 			try
 			{
-				string Output = JsonConvert.SerializeObject(TaskArray, Formatting.Indented);
-				//Console.WriteLine("{0}", Output);
-
-				using (FileStream OutputFile = File.Open("local.json", FileMode.Create))
+				using (FileStream OutputFile = File.Open(Settings.TextFile, FileMode.Create))
 				using (StreamWriter OutputStream = new StreamWriter(OutputFile))
 				using (JsonWriter OutputJson = new JsonTextWriter(OutputStream))
 				{
@@ -167,7 +204,7 @@ namespace Tasual
 			{
 				TaskArray.Clear();
 
-				using (StreamReader InputFile = File.OpenText("local.json"))
+				using (StreamReader InputFile = File.OpenText(Settings.TextFile))
 				using (JsonReader InputJson = new JsonTextReader(InputFile))
 				{
 					JsonSerializer Serializer = new JsonSerializer();
@@ -661,16 +698,8 @@ namespace Tasual
 		// Main Form
 		private void Tasual_Main_Load(object sender, EventArgs e)
 		{
-			// TODO: Load settings from json file
-			Settings.AlwaysOnTop = false; // currently unused
-			Settings.PromptClear = true; // currently unused
-			Settings.PromptDelete = true; // currently unused
-			Settings.Protocol = Setting.Protocols.JSON;
-			Settings.TextFile = "localdb.txt";
-			Settings.AlwaysShowCompletedGroup = true;
-			Settings.AlwaysShowOverdueGroup = true;
-			Settings.AlwaysShowTodayGroup = true;
-			Settings.ShowItemCounts = true;
+			// load settings 
+			Tasual_Settings_Load();
 
 			// load task array
 			Tasual_Array_Load();
