@@ -670,6 +670,7 @@ namespace Tasual
 			Settings.AlwaysShowCompletedGroup = true;
 			Settings.AlwaysShowOverdueGroup = true;
 			Settings.AlwaysShowTodayGroup = true;
+			Settings.ShowItemCounts = true;
 
 			// load task array
 			Tasual_Array_Load();
@@ -721,14 +722,18 @@ namespace Tasual
 			foreach (OLVGroup Group in e.Groups)
 			{
 				Group.Name = Group.Header;
-				Group.Header = String.Format(
-					"{0} ({1} {2})",
-					Group.Name,
-					Group.Items.Count(),
-					((Group.Items.Count() > 1) ? "items" : "item")
-				);
+				if (Settings.ShowItemCounts)
+				{
+					Group.Header = String.Format(
+						"{0} ({1} {2})",
+						Group.Name,
+						Group.Items.Count(),
+						((Group.Items.Count() > 1) ? "items" : "item")
+					);
+				}
 			}
 		}
+
 		private void Tasual_ListView_CellEditFinished(object sender, CellEditEventArgs e)
 		{
 			Tasual_Array_Save();

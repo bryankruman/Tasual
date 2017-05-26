@@ -44,6 +44,10 @@ namespace Tasual
 		[JsonProperty("alwaysshowtodaygroup")]
 		public bool AlwaysShowTodayGroup { get; set; }
 
+		[JsonProperty("showitemcounts")]
+		public bool ShowItemCounts { get; set; }
+
+
 		[Flags]
 		public enum Columns
 		{

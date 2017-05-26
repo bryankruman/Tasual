@@ -40,10 +40,11 @@
 			this.GroupBox1 = new System.Windows.Forms.GroupBox();
 			this.checkBox9 = new System.Windows.Forms.CheckBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.label1 = new System.Windows.Forms.Label();
 			this.listBox1 = new System.Windows.Forms.ListBox();
+			this.label1 = new System.Windows.Forms.Label();
 			this.Tasual_Settings_Button_Accept = new System.Windows.Forms.Button();
 			this.Tasual_Settings_Button_Cancel = new System.Windows.Forms.Button();
+			this.checkBox10 = new System.Windows.Forms.CheckBox();
 			this.GroupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
@@ -171,6 +172,7 @@
 			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox2.Controls.Add(this.checkBox10);
 			this.groupBox2.Controls.Add(this.listBox1);
 			this.groupBox2.Controls.Add(this.label1);
 			this.groupBox2.Controls.Add(this.checkBox1);
@@ -180,19 +182,10 @@
 			this.groupBox2.Controls.Add(this.checkBox4);
 			this.groupBox2.Location = new System.Drawing.Point(13, 170);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(391, 145);
+			this.groupBox2.Size = new System.Drawing.Size(391, 155);
 			this.groupBox2.TabIndex = 10;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Display";
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(311, 19);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(47, 13);
-			this.label1.TabIndex = 5;
-			this.label1.Text = "Columns";
 			// 
 			// listBox1
 			// 
@@ -203,16 +196,25 @@
             "Category",
             "Due",
             "Time"});
-			this.listBox1.Location = new System.Drawing.Point(292, 34);
+			this.listBox1.Location = new System.Drawing.Point(292, 40);
 			this.listBox1.Name = "listBox1";
 			this.listBox1.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
 			this.listBox1.Size = new System.Drawing.Size(82, 95);
 			this.listBox1.TabIndex = 6;
 			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(311, 22);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(47, 13);
+			this.label1.TabIndex = 5;
+			this.label1.Text = "Columns";
+			// 
 			// Tasual_Settings_Button_Accept
 			// 
 			this.Tasual_Settings_Button_Accept.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.Tasual_Settings_Button_Accept.Location = new System.Drawing.Point(248, 321);
+			this.Tasual_Settings_Button_Accept.Location = new System.Drawing.Point(248, 331);
 			this.Tasual_Settings_Button_Accept.Name = "Tasual_Settings_Button_Accept";
 			this.Tasual_Settings_Button_Accept.Size = new System.Drawing.Size(75, 23);
 			this.Tasual_Settings_Button_Accept.TabIndex = 11;
@@ -223,12 +225,22 @@
 			// 
 			this.Tasual_Settings_Button_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.Tasual_Settings_Button_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.Tasual_Settings_Button_Cancel.Location = new System.Drawing.Point(329, 321);
+			this.Tasual_Settings_Button_Cancel.Location = new System.Drawing.Point(329, 331);
 			this.Tasual_Settings_Button_Cancel.Name = "Tasual_Settings_Button_Cancel";
 			this.Tasual_Settings_Button_Cancel.Size = new System.Drawing.Size(75, 23);
 			this.Tasual_Settings_Button_Cancel.TabIndex = 12;
 			this.Tasual_Settings_Button_Cancel.Text = "Cancel";
 			this.Tasual_Settings_Button_Cancel.UseVisualStyleBackColor = true;
+			// 
+			// checkBox10
+			// 
+			this.checkBox10.AutoSize = true;
+			this.checkBox10.Location = new System.Drawing.Point(26, 127);
+			this.checkBox10.Name = "checkBox10";
+			this.checkBox10.Size = new System.Drawing.Size(211, 17);
+			this.checkBox10.TabIndex = 7;
+			this.checkBox10.Text = "Show item counts next to group header";
+			this.checkBox10.UseVisualStyleBackColor = true;
 			// 
 			// Tasual_Settings
 			// 
@@ -236,7 +248,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.Tasual_Settings_Button_Cancel;
-			this.ClientSize = new System.Drawing.Size(416, 356);
+			this.ClientSize = new System.Drawing.Size(416, 366);
 			this.Controls.Add(this.Tasual_Settings_Button_Cancel);
 			this.Controls.Add(this.Tasual_Settings_Button_Accept);
 			this.Controls.Add(this.groupBox2);
@@ -275,5 +287,6 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Button Tasual_Settings_Button_Accept;
 		private System.Windows.Forms.Button Tasual_Settings_Button_Cancel;
+		private System.Windows.Forms.CheckBox checkBox10;
 	}
 }
