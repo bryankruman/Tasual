@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace Tasual
 {
@@ -49,27 +50,58 @@ namespace Tasual
 		}
 
 		// for all tasks
+		[JsonProperty("created")]
 		public DateTime Created; // date of creation
+
+		[JsonProperty("start")]
 		public DateTime Start; // date of first occurence
 
+
 		// for recurring tasks
+		[JsonProperty("next")]
 		public DateTime Next; // date of next occurence
+
+		[JsonProperty("end")]
 		public DateTime End; // date when task stops recurring
+
+		[JsonProperty("iterations")]
 		public int Iterations; // number of total occurences allowed 
+
+		[JsonProperty("count")]
 		public int Count; // instance count of this task (starts at 1)
+
+		[JsonProperty("dismiss")]
 		public int Dismiss; // time in seconds after due date ("Next") to remove task (-1 for instant)
 
+
 		// simple recurring tasks
+		[JsonProperty("yearly")]
 		public int Yearly;
+
+		[JsonProperty("monthly")]
 		public int Monthly;
+
+		[JsonProperty("weekly")]
 		public int Weekly;
+
+		[JsonProperty("daily")]
 		public int Daily;
 
+
 		// complex recurring tasks
+		[JsonProperty("timeofday")]
 		public TimeSpan TimeOfDay;
+
+		[JsonProperty("monthfilter")]
 		public MonthFlag MonthFilter;
+
+		[JsonProperty("weekfilter")]
 		public WeekFlag WeekFilter;
+
+		[JsonProperty("dayfilter")]
 		public DayFlag DayFilter;
+
+		[JsonProperty("specificday")]
 		public int SpecificDay;
 
 		// blank constructor

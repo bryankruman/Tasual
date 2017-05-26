@@ -38,8 +38,8 @@ namespace Tasual
 		public void Tasual_ClearAll()
 		{
 			TaskArray.Clear();
-			Tasual_Array_Save_Text();
-			Tasual_Array_Load_Text();
+			Tasual_Array_Save();
+			Tasual_Array_Load();
 			Tasual_ListView.BuildList();
 		}
 
@@ -58,7 +58,13 @@ namespace Tasual
 
 		public void Tasual_PrintTaskToConsole(Task TaskItem)
 		{
-			Console.WriteLine(
+			foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(TaskItem))
+			{
+				string name = descriptor.Name;
+				object value = descriptor.GetValue(TaskItem);
+				Console.WriteLine("{0}={1}", name, value);
+			}
+			/*Console.WriteLine(
 				"TaskItem: '{0}', '{1}', '{2}', '{3}', '{4}', ('{5}', '{6}', '{7}')",
 				TaskItem.Checked,
 				TaskItem.Priority,
@@ -68,7 +74,7 @@ namespace Tasual
 				TaskItem.Time.Start,
 				TaskItem.Time.End,
 				TaskItem.Time.Next
-			);
+			);*/
 		}
 
 		public void Tasual_StatusLabel_UpdateCounts()
@@ -99,7 +105,7 @@ namespace Tasual
 				string Output = JsonConvert.SerializeObject(TaskArray, Formatting.Indented);
 				//Console.WriteLine("{0}", Output);
 
-				using (FileStream OutputFile = File.Open("local.json", FileMode.CreateNew))
+				using (FileStream OutputFile = File.Open("local.json", FileMode.Create))
 				using (StreamWriter OutputStream = new StreamWriter(OutputFile))
 				using (JsonWriter OutputJson = new JsonTextWriter(OutputStream))
 				{
@@ -123,9 +129,11 @@ namespace Tasual
 				TaskArray.Clear();
 
 				using (StreamReader InputFile = File.OpenText("local.json"))
+				using (JsonReader InputJson = new JsonTextReader(InputFile))
 				{
 					JsonSerializer Serializer = new JsonSerializer();
-					//TaskArray = (List<Task>)Serializer.Deserialize(InputFile);
+					TaskArray = (List<Task>)Serializer.Deserialize(InputJson, typeof(List<Task>));
+					Tasual_ListView.SetObjects(TaskArray);
 				}
 			}
 			catch (Exception e)
@@ -245,6 +253,23 @@ namespace Tasual
 			}
 		}
 
+		public void Tasual_Array_Save()
+		{
+			switch (Settings.Protocol)
+			{
+				case Setting.Protocols.Text: Tasual_Array_Save_Text(); break;
+				case Setting.Protocols.JSON: Tasual_Array_Save_JSON(); break;
+			}
+		}
+
+		public void Tasual_Array_Load()
+		{
+			switch (Settings.Protocol)
+			{
+				case Setting.Protocols.Text: Tasual_Array_Load_Text(); break;
+				case Setting.Protocols.JSON: Tasual_Array_Load_JSON(); break;
+			}
+		}
 
 		// ====================
 		//  ListView Functions
@@ -769,7 +794,7 @@ namespace Tasual
 			);
 
 			TaskArray.Add(Task);
-			Tasual_Array_Save_Text();
+			Tasual_Array_Save();
 			Tasual_ListView.BuildList();
 			Tasual_StatusLabel_UpdateCounts();
 			Tasual_ListView.EditModel(Task);
@@ -785,15 +810,20 @@ namespace Tasual
 
 		private void Tasual_MenuStrip_Settings_AlwaysOnTop_Click(object sender, EventArgs e)
 		{
+			Tasual_Array_Save_JSON();
+			Tasual_Array_Load_JSON();
 			//Tasual_ReAssignGroup("Testing", "");
-			Tasual_Array_Save_Text();
-			Tasual_Array_Load_Text();
-			Tasual_ListView.BuildList();
+			//Tasual_Array_Save();
+			//Tasual_Array_Load();
+			//Tasual_ListView.BuildList();
 		}
 
 		private void Tasual_MenuStrip_Sources_Click(object sender, EventArgs e)
 		{
 			Tasual_Array_Save_JSON();
+			Tasual_Array_Load_JSON();
+			Tasual_ListView.SetObjects(TaskArray);
+			Tasual_ListView.BuildList();
 		}
 
 		private void Tasual_StatusLabel_MenuStrip_Clear_Click(object sender, EventArgs e)
@@ -1021,7 +1051,7 @@ namespace Tasual
 			Settings.ConfirmClear = true; // currently unused
 			Settings.ConfirmDelete = true; // currently unused
 			Settings.Style = Setting.Styles.Custom; // currently unused
-			Settings.Protocol = Setting.Protocols.Text;
+			Settings.Protocol = Setting.Protocols.JSON;
 			Settings.TextFile = "localdb.txt";
 
 			// load task array
@@ -1086,14 +1116,14 @@ namespace Tasual
 		{
 			//ListViewGroup OldGroup = Item.Group;
 			TaskArray.Remove((Task)Tasual_MenuStrip_Item.Tag);
-			Tasual_Array_Save_Text();
+			Tasual_Array_Save();
 			Tasual_ListView.BuildList();
 			Tasual_StatusLabel_UpdateCounts();
 		}
 
 		private void Tasual_ListView_ItemChecked(object sender, ItemCheckedEventArgs e)
 		{
-			Tasual_Array_Save_Text();
+			Tasual_Array_Save();
 			Tasual_ListView.BuildList();
 			Tasual_StatusLabel_UpdateCounts();
 		}
@@ -1124,7 +1154,7 @@ namespace Tasual
 
 		private void Tasual_ListView_CellEditFinished(object sender, CellEditEventArgs e)
 		{
-			Tasual_Array_Save_Text();
+			Tasual_Array_Save();
 		}
 
 		private void Tasual_MenuStrip_Settings_Click(object sender, EventArgs e)
@@ -1286,7 +1316,7 @@ namespace Tasual
 				TaskArray.Remove(RemoveTask);
 			}
 
-			Tasual_Array_Save_Text();
+			Tasual_Array_Save();
 			Tasual_ListView.BuildList();
 			Tasual_StatusLabel_UpdateCounts();
 		}
