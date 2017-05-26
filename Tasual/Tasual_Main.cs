@@ -31,6 +31,18 @@ namespace Tasual
 		bool Tasual_ListView_PreviouslySelected = false;
 
 
+		// ================
+		//  Initialization
+		// ================
+
+		public Tasual_Main()
+		{
+			InitializeComponent();
+
+			Tasual_Timer_ListViewClick.Interval = SystemInformation.DoubleClickTime;
+		}
+
+
 		// =============================
 		//  Common/Supporting Functions
 		// =============================
@@ -51,7 +63,6 @@ namespace Tasual
 				if (Task.Group == OldTaskGroup)
 				{
 					Task.Group = NewTaskGroup;
-					//Tasual_ListView_AssignGroup(NewTaskGroup, ref Task.Item);
 				}
 			}
 		}
@@ -96,7 +107,6 @@ namespace Tasual
 		// =================
 		//  Array Functions
 		// =================
-
 
 		public void Tasual_Array_Save_JSON()
 		{
@@ -271,6 +281,7 @@ namespace Tasual
 			}
 		}
 
+
 		// ====================
 		//  ListView Functions
 		// ====================
@@ -308,6 +319,50 @@ namespace Tasual
 				}
 			}
 			return String.Format("{0}{1}", number, suffix);
+		}
+
+		private void Tasual_ListView_FormatRow(object sender, FormatRowEventArgs e)
+		{
+			if (e.Item.Checked)
+			{
+				e.Item.ForeColor = Color.FromArgb(255, 189, 208, 230);
+			}
+			else
+			{
+				e.Item.ForeColor = Color.FromArgb(255, 36, 90, 150);
+			}
+		}
+
+		private void Tasual_ListView_Setup()
+		{
+			Tasual_ListView.ShowGroups = true;
+			Tasual_ListView.ShowItemCountOnGroups = false;
+			//Tasual_ListView.HotItemStyle = new HotItemStyle();
+			//Tasual_ListView.HotItemStyle.FontStyle = FontStyle.Underline;
+			Tasual_ListView.UseCustomSelectionColors = true;
+			Tasual_ListView.SelectedBackColor = Color.FromArgb(255, 222, 232, 246);
+			Tasual_ListView.SelectedForeColor = Color.FromArgb(255, 36, 90, 150);
+			Tasual_ListView.UnfocusedSelectedBackColor = Color.FromArgb(255, 222, 232, 246);
+			Tasual_ListView.UnfocusedSelectedForeColor = Color.FromArgb(255, 36, 90, 150);
+			Tasual_ListView.FormatRow += new EventHandler<FormatRowEventArgs>(Tasual_ListView_FormatRow);
+			//Tasual_ListView.TintSortColumn = false; // TODO: Add settings choice for this
+			//Tasual_ListView.SelectedColumnTint = Color.FromArgb(255, 230, 230, 255);
+			HeaderFormatStyle FormatStyle = new HeaderFormatStyle();
+			FormatStyle.Normal.ForeColor = Color.FromArgb(255, 36, 90, 150);
+			FormatStyle.Normal.BackColor = Color.FromArgb(255, 222, 232, 246);
+			FormatStyle.Hot.ForeColor = Color.FromArgb(255, 36, 90, 150);
+			FormatStyle.Hot.BackColor = Color.FromArgb(255, 240, 240, 255);
+			FormatStyle.Pressed.ForeColor = Color.FromArgb(255, 36, 90, 150);
+			FormatStyle.Pressed.BackColor = Color.FromArgb(255, 240, 240, 255);
+			Tasual_ListView.HeaderUsesThemes = false;
+			Tasual_ListView.HeaderFormatStyle = FormatStyle;
+			Tasual_ListView.PersistentCheckBoxes = true;
+			Tasual_ListView.CheckBoxes = true;
+			Tasual_ListView.CheckedAspectName = "Checked";
+			Tasual_ListView.CellEditUseWholeCell = true;
+
+			Tasual_ListView.IsSimpleDragSource = true;
+			Tasual_ListView.IsSimpleDropSink = true;
 		}
 
 		private void Tasual_ListView_AddColumns()
@@ -722,10 +777,10 @@ namespace Tasual
 
 
 		// ================
-		//  Event Handlers
+		//  MenuStrip Code
 		// ================
 
-		// MenuStrips
+		// Tasual_Main: "Create"
 		private void Tasual_MenuStrip_Create_Advanced_Click(object sender, EventArgs e)
 		{
 			Tasual_Create TaskForm = new Tasual_Create(this);
@@ -757,6 +812,7 @@ namespace Tasual
 			Tasual_ListView.EditModel(Task);
 		}
 
+		// Tasual_Main: "Edit"
 		private void Tasual_MenuStrip_Edit_Click(object sender, EventArgs e)
 		{
 			if (Tasual_ListView.SelectedItem != null)
@@ -765,16 +821,14 @@ namespace Tasual
 			}
 		}
 
-		private void Tasual_MenuStrip_Settings_AlwaysOnTop_Click(object sender, EventArgs e)
+		// Tasual_Main: "Settings"
+		private void Tasual_MenuStrip_Settings_Click(object sender, EventArgs e)
 		{
-			Tasual_Array_Save_JSON();
-			Tasual_Array_Load_JSON();
-			//Tasual_ReAssignGroup("Testing", "");
-			//Tasual_Array_Save();
-			//Tasual_Array_Load();
-			//Tasual_ListView.BuildList();
+			Tasual_Settings SettingsForm = new Tasual_Settings();
+			SettingsForm.ShowDialog(this);
 		}
 
+		// Tasual_Main: "Sources"
 		private void Tasual_MenuStrip_Sources_Click(object sender, EventArgs e)
 		{
 			Tasual_Array_Save_JSON();
@@ -783,16 +837,248 @@ namespace Tasual
 			Tasual_ListView.BuildList();
 		}
 
-		private void Tasual_StatusLabel_MenuStrip_Clear_Click(object sender, EventArgs e)
+		// Tasual_ListView: "Group"
+		private void Tasual_MenuStrip_Group_Delete_Click(object sender, EventArgs e)
+		{
+			OLVGroup Group = (OLVGroup)Tasual_MenuStrip_Group.Tag;
+			List<Task> RemovalList = new List<Task>();
+
+			// TODO: use a common function with the column creation function so that these always match
+
+			foreach (Task Task in TaskArray)
+			{
+				string TaskGroup = "";
+				if (Task.Checked) // TODO: && settings.showcompletedblah
+				{
+					TaskGroup = "Completed";
+				}
+				else if (DateTime.Now > Task.Time.Start) // TODO: && settings.showoverdueblah
+				{
+					TaskGroup = "Overdue";
+				}
+				else
+				{
+					// if (settings.showtodayblah)
+					// {
+					DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
+					DateTime TargetDay = Task.Time.Start - Task.Time.Start.TimeOfDay;
+					if (TargetDay == Today)
+					{
+						TaskGroup = "Today";
+					}
+					else
+					{
+						TaskGroup = Task.Group;
+					}
+				}
+
+				if (TaskGroup == Group.Name)
+				{
+					RemovalList.Add(Task);
+				}
+			}
+
+			foreach (Task RemoveTask in RemovalList)
+			{
+				TaskArray.Remove(RemoveTask);
+			}
+
+			Tasual_Array_Save();
+			Tasual_ListView.BuildList();
+			Tasual_StatusLabel_UpdateCounts();
+		}
+
+		private void Tasual_MenuStrip_Group_Hide_Click(object sender, EventArgs e)
+		{
+			OLVGroup Group = (OLVGroup)Tasual_MenuStrip_Group.Tag;
+			Group.Collapsed = true;
+		}
+
+		private void Tasual_MenuStrip_Group_MoveTasks_ClickHandler(object sender, EventArgs e)
+		{
+			ToolStripDropDownItem Item = (ToolStripDropDownItem)sender;
+			OLVGroup Group = (OLVGroup)Tasual_MenuStrip_Group.Tag;
+			Tasual_Array_ReAssignGroup(Group.Name, Item.Text);
+			Tasual_ListView.BuildList();
+		}
+
+		private void Tasual_MenuStrip_Group_MoveTasks_DropDownOpening(object sender, EventArgs e)
+		{
+			OLVGroup Group = (OLVGroup)Tasual_MenuStrip_Group.Tag;
+			List<string> AlreadySelectedGroups = new List<string>();
+
+			Tasual_MenuStrip_Group_MoveTasks.DropDownItems.Clear();
+			Tasual_MenuStrip_Group_MoveTasks.DropDownItems.Add("(No other groups available)");
+			Tasual_MenuStrip_Group_MoveTasks.DropDownItems[0].Enabled = false;
+
+			foreach (Task Task in TaskArray)
+			{
+				if (!AlreadySelectedGroups.Contains(Task.Group) && (Group.Name != Task.Group))
+				{
+					Tasual_MenuStrip_Group_MoveTasks.DropDownItems.Add(Task.Group, null, Tasual_MenuStrip_Group_MoveTasks_ClickHandler);
+					AlreadySelectedGroups.Add(Task.Group);
+					Tasual_MenuStrip_Group_MoveTasks.DropDownItems[0].Visible = false;
+				}
+			}
+		}
+
+		private void Tasual_MenuStrip_Group_Opening(object sender, CancelEventArgs e)
+		{
+			OLVGroup Group = (OLVGroup)Tasual_MenuStrip_Group.Tag;
+
+			if (Group.Collapsed)
+			{
+				Tasual_MenuStrip_Group_Show.Visible = true;
+				Tasual_MenuStrip_Group_Hide.Visible = false;
+			}
+			else
+			{
+				Tasual_MenuStrip_Group_Show.Visible = false;
+				Tasual_MenuStrip_Group_Hide.Visible = true;
+			}
+		}
+
+		private void Tasual_MenuStrip_Group_Show_Click(object sender, EventArgs e)
+		{
+			OLVGroup Group = (OLVGroup)Tasual_MenuStrip_Group.Tag;
+			Group.Collapsed = false;
+		}
+
+		// Tasual_ListView: "Icon"
+		private void Tasual_MenuStrip_Icon_Notes_Edit_Click(object sender, EventArgs e)
+		{
+			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
+			Tasual_Notes NotesForm = new Tasual_Notes(this, TaskArray.IndexOf(Task));
+			NotesForm.ShowDialog(this);
+		}
+
+		private void Tasual_MenuStrip_Icon_Opening(object sender, CancelEventArgs e)
+		{
+			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
+
+			if (Task.Location != null)
+			{
+				Tasual_MenuStrip_Icon_AddLocation.Visible = false;
+				Tasual_MenuStrip_Icon_Location.Visible = true;
+			}
+			else
+			{
+				Tasual_MenuStrip_Icon_AddLocation.Visible = true;
+				Tasual_MenuStrip_Icon_Location.Visible = false;
+			}
+			if (Task.Link != null)
+			{
+				Tasual_MenuStrip_Icon_AddLink.Visible = false;
+				Tasual_MenuStrip_Icon_Link.Visible = true;
+			}
+			else
+			{
+				Tasual_MenuStrip_Icon_AddLink.Visible = true;
+				Tasual_MenuStrip_Icon_Link.Visible = false;
+			}
+			if (Task.Notes != null)
+			{
+				Tasual_MenuStrip_Icon_AddNotes.Visible = false;
+				Tasual_MenuStrip_Icon_Notes.Visible = true;
+			}
+			else
+			{
+				Tasual_MenuStrip_Icon_AddNotes.Visible = true;
+				Tasual_MenuStrip_Icon_Notes.Visible = false;
+			}
+		}
+
+		private void Tasual_MenuStrip_Icon_AddNotes_Click(object sender, EventArgs e)
+		{
+			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
+			Tasual_Notes NotesForm = new Tasual_Notes(this, TaskArray.IndexOf(Task));
+			NotesForm.ShowDialog(this);
+		}
+
+		// Tasual_ListView: "Item"
+		private void Tasual_MenuStrip_Item_Delete_Click(object sender, EventArgs e)
+		{
+			TaskArray.Remove((Task)Tasual_MenuStrip_Item.Tag);
+			Tasual_Array_Save();
+			Tasual_ListView.BuildList();
+			Tasual_StatusLabel_UpdateCounts();
+		}
+
+		private void Tasual_MenuStrip_Item_Edit_Click(object sender, EventArgs e)
+		{
+			Tasual_ListView.EditModel((Task)Tasual_MenuStrip_Item.Tag);
+		}
+
+		// Tasual_Notify: "Notify"
+		private void Tasual_MenuStrip_Notify_Show_Click(object sender, EventArgs e)
+		{
+			BringToFront();
+		}
+
+		private void Tasual_MenuStrip_Notify_Settings_Click(object sender, EventArgs e)
+		{
+			Tasual_Settings SettingsForm = new Tasual_Settings();
+			SettingsForm.ShowDialog(ReturnFormInstance());
+		}
+
+		private void Tasual_MenuStrip_Notify_Quit_Click(object sender, EventArgs e)
+		{
+			Close();
+		}
+
+		// Tasual_StatusLabel: "Status"
+		private void Tasual_MenuStrip_Status_Clear_Click(object sender, EventArgs e)
 		{
 			Tasual_Confirm_Clear ConfirmForm = new Tasual_Confirm_Clear(this);
 			ConfirmForm.ShowDialog(this);
 		}
 
-		// Notification Icon
-		private void Tasual_Notify_Click(object sender, EventArgs e)
+
+		// ================
+		//  Event Handlers
+		// ================
+
+		// Main Form
+		private void Tasual_Main_Load(object sender, EventArgs e)
 		{
-			ReturnFormInstance().Activate();
+			// TODO: Load settings from json file
+			Settings.AlwaysOnTop = false; // currently unused
+			Settings.ConfirmClear = true; // currently unused
+			Settings.ConfirmDelete = true; // currently unused
+			Settings.Style = Setting.Styles.Custom; // currently unused
+			Settings.Protocol = Setting.Protocols.JSON;
+			Settings.TextFile = "localdb.txt";
+
+			// load task array
+			Tasual_Array_Load();
+
+			// set up objectlistview
+			Tasual_ListView_Setup();
+			Tasual_ListView_AddColumns();
+			Tasual_ListView.SetObjects(TaskArray);
+			Tasual_ListView.RebuildColumns();
+			//Tasual_ListView.AutoResizeColumns();
+
+			// update status label to reflect item counts
+			Tasual_StatusLabel_UpdateCounts();
+		}
+
+		private void Tasual_Main_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			Tasual_Notify.Dispose();
+		}
+
+		// Notification Icon
+		private void Tasual_Notify_MouseClick(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+			{
+				ReturnFormInstance().Activate();
+			}
+			else if (e.Button == MouseButtons.Right)
+			{
+				Tasual_MenuStrip_Notify.Show(Cursor.Position);
+			}
 		}
 
 		// Labels
@@ -808,10 +1094,30 @@ namespace Tasual
 		}
 
 		// ListView
-		private void Tasual_ListView_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
+		private void Tasual_ListView_CellEditFinished(object sender, CellEditEventArgs e)
 		{
-			//e.NewWidth = this.Tasual_ListView.Columns[e.ColumnIndex].Width;
-			//e.Cancel = true;
+			Tasual_Array_Save();
+		}
+
+		private void Tasual_ListView_AboutToCreateGroups(object sender, CreateGroupsEventArgs e)
+		{
+			foreach (OLVGroup Group in e.Groups)
+			{
+				Group.Name = Group.Header;
+				Group.Header = String.Format(
+					"{0} ({1} item{2})",
+					Group.Name,
+					Group.Items.Count(),
+					((Group.Items.Count() > 1) ? "s" : "")
+				);
+			}
+		}
+
+		private void Tasual_ListView_ItemChecked(object sender, ItemCheckedEventArgs e)
+		{
+			Tasual_Array_Save();
+			Tasual_ListView.BuildList();
+			Tasual_StatusLabel_UpdateCounts();
 		}
 
 		private void Tasual_ListView_SingleClick(MouseEventArgs e)
@@ -865,11 +1171,12 @@ namespace Tasual
 
 			if (Info.Group != null)
 			{
+				//Console.WriteLine("Item: {0}", (Info.Column != null) ? Info.Column.Name : "foobar");
 				// TODO: Fix the issue where clicking blank space inside of the group still triggers the group
 				if (e.Button == MouseButtons.Right)
 				{
 					Tasual_MenuStrip_Group.Tag = Info.Group;
-					Tasual_MenuStrip_Group.Show(Cursor.Position.X, Cursor.Position.Y);
+					Tasual_MenuStrip_Group.Show(Cursor.Position);
 				}
 			}
 			else if (Info.Item != null)
@@ -952,142 +1259,14 @@ namespace Tasual
 			}
 		}
 
-#if false
-		ListViewItem UnderlinedItem;
-		private void Tasual_ListView_MouseMove(object sender, MouseEventArgs e)
-		{
-			ListViewHitTestInfo Info = Tasual_ListView.HitTest(e.X, e.Y);
-
-			if (Info.Item != null)
-			{
-				Tasual_ListView.Cursor = Cursors.Hand;
-				if (Info.Item != UnderlinedItem)
-				{
-					if (UnderlinedItem != null)
-						{ UnderlinedItem.Font = new Font(UnderlinedItem.Font.Name, 9); }
-
-					Info.Item.Font = new Font(Info.Item.Font.Name, 9, FontStyle.Underline);
-					UnderlinedItem = Info.Item;
-				}
-			}
-			else
-			{
-				Tasual_ListView.Cursor = Cursors.Default;
-			}
-		}
-#endif
-
 
 		// ================
 		//  Core Functions
 		// ================
 
-		public Tasual_Main()
-		{
-			InitializeComponent();
-
-			Tasual_Timer_ListViewClick.Interval = SystemInformation.DoubleClickTime;
-		}
-
-		private void Tasual_ListView_FormatRow(object sender, FormatRowEventArgs e)
-		{
-			if (e.Item.Checked)
-			{
-				e.Item.ForeColor = Color.FromArgb(255, 189, 208, 230);
-			}
-			else
-			{
-				e.Item.ForeColor = Color.FromArgb(255, 36, 90, 150);
-			}
-		}
-
-		private void Tasual_Main_Load(object sender, EventArgs e)
-		{
-			// TODO: Load settings from json file
-			Settings.AlwaysOnTop = false; // currently unused
-			Settings.ConfirmClear = true; // currently unused
-			Settings.ConfirmDelete = true; // currently unused
-			Settings.Style = Setting.Styles.Custom; // currently unused
-			Settings.Protocol = Setting.Protocols.JSON;
-			Settings.TextFile = "localdb.txt";
-
-			// load task array
-			switch (Settings.Protocol)
-			{
-				case Setting.Protocols.JSON: { Tasual_Array_Load_JSON(); break; }
-
-				default:
-				case Setting.Protocols.Text: { Tasual_Array_Load_Text(); break; }
-			}
-
-			Tasual_ListView.ShowGroups = true;
-			Tasual_ListView.ShowItemCountOnGroups = false;
-			//Tasual_ListView.HotItemStyle = new HotItemStyle();
-			//Tasual_ListView.HotItemStyle.FontStyle = FontStyle.Underline;
-			Tasual_ListView.UseCustomSelectionColors = true;
-			Tasual_ListView.SelectedBackColor = Color.FromArgb(255, 222, 232, 246);
-			Tasual_ListView.SelectedForeColor = Color.FromArgb(255, 36, 90, 150);
-			Tasual_ListView.UnfocusedSelectedBackColor = Color.FromArgb(255, 222, 232, 246);
-			Tasual_ListView.UnfocusedSelectedForeColor = Color.FromArgb(255, 36, 90, 150);
-			Tasual_ListView.FormatRow += new EventHandler<FormatRowEventArgs>(Tasual_ListView_FormatRow);
-			//Tasual_ListView.TintSortColumn = false; // TODO: Add settings choice for this
-			//Tasual_ListView.SelectedColumnTint = Color.FromArgb(255, 230, 230, 255);
-			HeaderFormatStyle FormatStyle = new HeaderFormatStyle();
-			FormatStyle.Normal.ForeColor = Color.FromArgb(255, 36, 90, 150);
-			FormatStyle.Normal.BackColor = Color.FromArgb(255, 222, 232, 246);
-			FormatStyle.Hot.ForeColor = Color.FromArgb(255, 36, 90, 150);
-			FormatStyle.Hot.BackColor = Color.FromArgb(255, 240, 240, 255);
-			FormatStyle.Pressed.ForeColor = Color.FromArgb(255, 36, 90, 150);
-			FormatStyle.Pressed.BackColor = Color.FromArgb(255, 240, 240, 255);
-			Tasual_ListView.HeaderUsesThemes = false;
-			Tasual_ListView.HeaderFormatStyle = FormatStyle;
-			Tasual_ListView.PersistentCheckBoxes = true;
-			Tasual_ListView.CheckBoxes = true;
-			Tasual_ListView.CheckedAspectName = "Checked";
-			Tasual_ListView.CellEditUseWholeCell = true;
-			//Tasual_ListView.CellEditActivation = ObjectListView.CellEditActivateMode.DoubleClick;
-
-			Tasual_ListView.IsSimpleDragSource = true;
-			Tasual_ListView.IsSimpleDropSink = true;
-
-			Tasual_ListView_AddColumns();
-
-			Tasual_ListView.SetObjects(TaskArray);
-			Tasual_ListView.RebuildColumns();
-			//Tasual_ListView.AutoResizeColumns();
-
-			Tasual_StatusLabel_UpdateCounts();
-		}
-
 		public static Tasual_Main ReturnFormInstance()
 		{
 			return Application.OpenForms[0] as Tasual_Main;
-		}
-
-		private void Tasual_Main_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			Tasual_Notify.Dispose();
-		}
-
-		private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			//ListViewGroup OldGroup = Item.Group;
-			TaskArray.Remove((Task)Tasual_MenuStrip_Item.Tag);
-			Tasual_Array_Save();
-			Tasual_ListView.BuildList();
-			Tasual_StatusLabel_UpdateCounts();
-		}
-
-		private void Tasual_ListView_ItemChecked(object sender, ItemCheckedEventArgs e)
-		{
-			Tasual_Array_Save();
-			Tasual_ListView.BuildList();
-			Tasual_StatusLabel_UpdateCounts();
-		}
-
-		private void editToolStripMenuItem1_Click(object sender, EventArgs e)
-		{
-			Tasual_ListView.EditModel((Task)Tasual_MenuStrip_Item.Tag);
 		}
 
 		private void Tasual_ListView_SelectedIndexChanged(object sender, EventArgs e)
@@ -1100,189 +1279,6 @@ namespace Tasual
 			{
 				Tasual_MenuStrip_Edit.Enabled = false;
 			}
-		}
-
-		private void viewNotesToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
-			Tasual_Notes NotesForm = new Tasual_Notes(this, TaskArray.IndexOf(Task));
-			NotesForm.ShowDialog(this);
-		}
-
-		private void Tasual_ListView_CellEditFinished(object sender, CellEditEventArgs e)
-		{
-			Tasual_Array_Save();
-		}
-
-		private void Tasual_MenuStrip_Settings_Click(object sender, EventArgs e)
-		{
-			Tasual_Settings SettingsForm = new Tasual_Settings();
-			SettingsForm.ShowDialog(this);
-		}
-
-		private void Tasual_MenuStrip_Group_MoveTasks_ClickHandler(object sender, EventArgs e)
-		{
-			ToolStripDropDownItem Item = (ToolStripDropDownItem)sender;
-			OLVGroup Group = (OLVGroup)Tasual_MenuStrip_Group.Tag;
-			//Task Task = (Task)Tasual_MenuStrip
-			Tasual_Array_ReAssignGroup(Group.Name, Item.Text);
-			Tasual_ListView.BuildList();
-			//Console.WriteLine("Tasual_Array_ReAssignGroup({0}, {1});", Group.Name, Item.Text);
-		}
-
-		private void moveTasksToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
-		{
-			OLVGroup Group = (OLVGroup)Tasual_MenuStrip_Group.Tag;
-			List<string> AlreadySelectedGroups = new List<string>();
-
-			Tasual_MenuStrip_Group_MoveTasks.DropDownItems.Clear();
-			Tasual_MenuStrip_Group_MoveTasks.DropDownItems.Add("(No other groups available)");
-			Tasual_MenuStrip_Group_MoveTasks.DropDownItems[0].Enabled = false;
-
-			foreach (Task Task in TaskArray)
-			{
-				if (!AlreadySelectedGroups.Contains(Task.Group) && (Group.Name != Task.Group))
-				{
-					Tasual_MenuStrip_Group_MoveTasks.DropDownItems.Add(Task.Group, null, Tasual_MenuStrip_Group_MoveTasks_ClickHandler);
-					AlreadySelectedGroups.Add(Task.Group);
-					Tasual_MenuStrip_Group_MoveTasks.DropDownItems[0].Visible = false;
-				}
-			}
-		}
-
-		private void Tasual_ListView_AboutToCreateGroups(object sender, CreateGroupsEventArgs e)
-		{
-			foreach (OLVGroup Group in e.Groups)
-			{
-				Group.Name = Group.Header;
-				Group.Header = String.Format(
-					"{0} ({1} item{2})", 
-					Group.Name, 
-					Group.Items.Count(), 
-					((Group.Items.Count() > 1) ? "s" : "")
-				);
-			}
-		}
-
-		private void Tasual_MenuStrip_Icon_Opening(object sender, CancelEventArgs e)
-		{
-			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
-
-			if (Task.Location != null)
-			{
-				Tasual_MenuStrip_Icon_AddLocation.Visible = false;
-				Tasual_MenuStrip_Icon_Location.Visible = true;
-			}
-			else
-			{
-				Tasual_MenuStrip_Icon_AddLocation.Visible = true;
-				Tasual_MenuStrip_Icon_Location.Visible = false;
-			}
-			if (Task.Link != null)
-			{
-				Tasual_MenuStrip_Icon_AddLink.Visible = false;
-				Tasual_MenuStrip_Icon_Link.Visible = true;
-			}
-			else
-			{
-				Tasual_MenuStrip_Icon_AddLink.Visible = true;
-				Tasual_MenuStrip_Icon_Link.Visible = false;
-			}
-			if (Task.Notes != null)
-			{
-				Tasual_MenuStrip_Icon_AddNotes.Visible = false;
-				Tasual_MenuStrip_Icon_Notes.Visible = true;
-			}
-			else
-			{
-				Tasual_MenuStrip_Icon_AddNotes.Visible = true;
-				Tasual_MenuStrip_Icon_Notes.Visible = false;
-			}
-		}
-
-		private void Tasual_MenuStrip_Group_Opening(object sender, CancelEventArgs e)
-		{
-			OLVGroup Group = (OLVGroup)Tasual_MenuStrip_Group.Tag;
-
-			if (Group.Collapsed)
-			{
-				Tasual_MenuStrip_Group_Show.Visible = true;
-				Tasual_MenuStrip_Group_Hide.Visible = false;
-			}
-			else
-			{
-				Tasual_MenuStrip_Group_Show.Visible = false;
-				Tasual_MenuStrip_Group_Hide.Visible = true;
-			}
-		}
-
-		private void Tasual_MenuStrip_Group_Show_Click(object sender, EventArgs e)
-		{
-			OLVGroup Group = (OLVGroup)Tasual_MenuStrip_Group.Tag;
-			Group.Collapsed = false;
-		}
-
-		private void Tasual_MenuStrip_Group_Hide_Click(object sender, EventArgs e)
-		{
-			OLVGroup Group = (OLVGroup)Tasual_MenuStrip_Group.Tag;
-			Group.Collapsed = true;
-		}
-
-		private void Tasual_MenuStrip_Group_Delete_Click(object sender, EventArgs e)
-		{
-			OLVGroup Group = (OLVGroup)Tasual_MenuStrip_Group.Tag;
-			List<Task> RemovalList = new List<Task>();
-
-			// TODO: use a common function with the column creation function so that these always match
-			
-			foreach (Task Task in TaskArray)
-			{
-				string TaskGroup = "";
-				if (Task.Checked) // TODO: && settings.showcompletedblah
-				{
-					TaskGroup = "Completed";
-				}
-				else if (DateTime.Now > Task.Time.Start) // TODO: && settings.showoverdueblah
-				{
-					TaskGroup = "Overdue";
-				}
-				else
-				{
-					// if (settings.showtodayblah)
-					// {
-					DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
-					DateTime TargetDay = Task.Time.Start - Task.Time.Start.TimeOfDay;
-					if (TargetDay == Today)
-					{
-						TaskGroup = "Today";
-					}
-					else
-					{
-						TaskGroup = Task.Group;
-					}
-				}
-
-				if(TaskGroup == Group.Name)
-				{
-					RemovalList.Add(Task);
-				}
-			}
-
-			foreach (Task RemoveTask in RemovalList)
-			{
-				TaskArray.Remove(RemoveTask);
-			}
-
-			Tasual_Array_Save();
-			Tasual_ListView.BuildList();
-			Tasual_StatusLabel_UpdateCounts();
-		}
-
-		private void Tasual_MenuStrip_Icon_AddNotes_Click(object sender, EventArgs e)
-		{
-			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
-			Tasual_Notes NotesForm = new Tasual_Notes(this, TaskArray.IndexOf(Task));
-			NotesForm.ShowDialog(this);
 		}
 	}
 }
