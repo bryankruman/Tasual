@@ -586,7 +586,7 @@ namespace Tasual
 			TimeColumn.AspectToStringConverter = delegate(object Input)
 			{
 				TimeInfo Time = (TimeInfo)Input;
-				return Tasual_ListView_FormatTime(Time.Start.ToLocalTime(), Setting.TimeFormat.Short);
+				return Tasual_ListView_FormatTime(Time.Start.ToLocalTime(), TimeInfo.TimeFormat.Short);
 			};
 			Tasual_ListView.AllColumns.Add(TimeColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { TimeColumn });
@@ -598,11 +598,11 @@ namespace Tasual
 			Tasual_ListView.SecondarySortColumn = DescriptionColumn;
 		}
 
-		public string Tasual_ListView_FormatTime(DateTime Time, Setting.TimeFormat Format)
+		public string Tasual_ListView_FormatTime(DateTime Time, TimeInfo.TimeFormat Format)
 		{
 			switch (Format)
 			{
-				case Setting.TimeFormat.Elapsed:
+				case TimeInfo.TimeFormat.Elapsed:
 					{
 						TimeSpan TS = DateTime.Now - Time;
 						int intYears = DateTime.Now.Year - Time.Year;
@@ -624,7 +624,7 @@ namespace Tasual
 						}
 					}
 
-				case Setting.TimeFormat.Due:
+				case TimeInfo.TimeFormat.Due:
 					{
 						// Overdue
 						// Today
@@ -679,7 +679,7 @@ namespace Tasual
 						}
 					}
 
-				case Setting.TimeFormat.Short: // "6/6 - Tue 10pm"
+				case TimeInfo.TimeFormat.Short: // "6/6 - Tue 10pm"
 					{
 						string TimeStamp = "";
 						if (Time.TimeOfDay != TimeSpan.Zero)
@@ -705,7 +705,7 @@ namespace Tasual
 							TimeStamp);
 					}
 
-				case Setting.TimeFormat.Medium: // "Sat, Jun 6th at 10:00pm"
+				case TimeInfo.TimeFormat.Medium: // "Sat, Jun 6th at 10:00pm"
 					{
 						string TimeStamp;
 						if (Time.TimeOfDay == TimeSpan.Zero)
@@ -727,7 +727,7 @@ namespace Tasual
 							TimeStamp);
 					}
 
-				case Setting.TimeFormat.Long: // "Tuesday, June 6th at 10:00pm"
+				case TimeInfo.TimeFormat.Long: // "Tuesday, June 6th at 10:00pm"
 					{
 						string TimeStamp;
 						if (Time.TimeOfDay == TimeSpan.Zero)
@@ -1021,9 +1021,8 @@ namespace Tasual
 		{
 			// TODO: Load settings from json file
 			Settings.AlwaysOnTop = false; // currently unused
-			Settings.ConfirmClear = true; // currently unused
-			Settings.ConfirmDelete = true; // currently unused
-			Settings.Style = Setting.Styles.Custom; // currently unused
+			Settings.PromptClear = true; // currently unused
+			Settings.PromptDelete = true; // currently unused
 			Settings.Protocol = Setting.Protocols.JSON;
 			Settings.TextFile = "localdb.txt";
 

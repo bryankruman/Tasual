@@ -49,6 +49,15 @@ namespace Tasual
 			Everyday = 127
 		}
 
+		public enum TimeFormat
+		{
+			Elapsed,
+			Due,
+			Short,
+			Medium,
+			Long
+		}
+
 		// for all tasks
 		[JsonProperty("created")]
 		public DateTime Created; // date of creation
