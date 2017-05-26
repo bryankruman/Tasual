@@ -432,7 +432,7 @@ namespace Tasual
 					// {
 					DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
 					DateTime TargetDay = Task.Time.Start - Task.Time.Start.TimeOfDay;
-					if (TargetDay.Day == Today.Day)
+					if (TargetDay == Today)
 					{
 						return "Today";
 					}
@@ -467,7 +467,7 @@ namespace Tasual
 					DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
 					DateTime TargetDay = Time - Time.TimeOfDay;
 					TimeSpan Span = TargetDay - Today;
-					if (TargetDay.Day == Today.Day)
+					if (TargetDay == Today)
 					{
 						return "Today";
 					}
@@ -654,7 +654,7 @@ namespace Tasual
 							DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
 							DateTime TargetDay = Time - Time.TimeOfDay;
 							TimeSpan Span = TargetDay - Today;
-							if (TargetDay.Day == Today.Day)
+							if (TargetDay == Today)
 							{
 								return "Today";
 							}
@@ -1295,7 +1295,7 @@ namespace Tasual
 					// {
 					DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
 					DateTime TargetDay = Task.Time.Start - Task.Time.Start.TimeOfDay;
-					if (TargetDay.Day == Today.Day)
+					if (TargetDay == Today)
 					{
 						TaskGroup = "Today";
 					}
