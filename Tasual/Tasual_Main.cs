@@ -602,6 +602,30 @@ namespace Tasual
 		}
 
 		// Tasual_ListView: "Icon"
+		private void Tasual_MenuStrip_Icon_AddLink_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void Tasual_MenuStrip_Icon_AddLocation_Click(object sender, EventArgs e)
+		{
+			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
+			Tasual_Location LocationForm = new Tasual_Location(this, TaskArray.IndexOf(Task));
+			LocationForm.ShowDialog(this);
+		}
+
+		private void Tasual_MenuStrip_Icon_AddNotes_Click(object sender, EventArgs e)
+		{
+			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
+			Tasual_Notes NotesForm = new Tasual_Notes(this, TaskArray.IndexOf(Task));
+			NotesForm.ShowDialog(this);
+		}
+
+		private void Tasual_MenuStrip_Icon_Link_Edit_Click(object sender, EventArgs e)
+		{
+
+		}
+
 		private void Tasual_MenuStrip_Icon_Notes_Edit_Click(object sender, EventArgs e)
 		{
 			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
@@ -643,13 +667,6 @@ namespace Tasual
 				Tasual_MenuStrip_Icon_AddNotes.Visible = true;
 				Tasual_MenuStrip_Icon_Notes.Visible = false;
 			}
-		}
-
-		private void Tasual_MenuStrip_Icon_AddNotes_Click(object sender, EventArgs e)
-		{
-			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
-			Tasual_Notes NotesForm = new Tasual_Notes(this, TaskArray.IndexOf(Task));
-			NotesForm.ShowDialog(this);
 		}
 
 		// Tasual_ListView: "Item"
