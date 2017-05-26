@@ -60,27 +60,6 @@ namespace Tasual
 			return Application.OpenForms[0] as Tasual_Main;
 		}
 
-		public void Tasual_PrintTaskToConsole(Task TaskItem)
-		{
-			foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(TaskItem))
-			{
-				string name = descriptor.Name;
-				object value = descriptor.GetValue(TaskItem);
-				Console.WriteLine("{0}={1}", name, value);
-			}
-			/*Console.WriteLine(
-				"TaskItem: '{0}', '{1}', '{2}', '{3}', '{4}', ('{5}', '{6}', '{7}')",
-				TaskItem.Checked,
-				TaskItem.Priority,
-				TaskItem.Status,
-				TaskItem.Group,
-				TaskItem.Description,
-				TaskItem.Time.Start,
-				TaskItem.Time.End,
-				TaskItem.Time.Next
-			);*/
-		}
-
 		public void Tasual_StatusLabel_UpdateCounts()
 		{
 			int Complete = Tasual_ListView.CheckedItems.Count;
@@ -158,7 +137,7 @@ namespace Tasual
 						string Line;
 						Line = Task.Checked.ToString();
 						Line = Line + (char)29 + Task.Priority.ToString();
-						Line = Line + (char)29 + Task.Status.ToString();
+						//Line = Line + (char)29 + Task.Status.ToString();
 						Line = Line + (char)29 + Task.Group;
 						Line = Line + (char)29 + Task.Description;
 
@@ -239,7 +218,7 @@ namespace Tasual
 							{
 								case (int)Task.Arguments.Checked: { Boolean.TryParse(token, out TempBool); NewItem.Checked = TempBool; break; }
 								case (int)Task.Arguments.Priority: { Int32.TryParse(token, out Temp); NewItem.Priority = Temp; break; }
-								case (int)Task.Arguments.Status: { Int32.TryParse(token, out Temp); NewItem.Status = Temp; break; }
+								//case (int)Task.Arguments.Status: { Int32.TryParse(token, out Temp); NewItem.Status = Temp; break; }
 								case (int)Task.Arguments.Group: { NewItem.Group = token; break; }
 								case (int)Task.Arguments.Description: { NewItem.Description = token; break; }
 								case (int)Task.Arguments.Created:

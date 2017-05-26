@@ -581,7 +581,7 @@ namespace Tasual
 		private void Tasual_Create_Button_Create_Click(object sender, EventArgs e)
 		{
 			Task Task = new Task();
-			Task.Status = (int)Task.Statuses.New;
+			//Task.Status = (int)Task.Statuses.New;
 			//Task.Checked = (int)Task.Types.TYPE_USER_SINGLE;
 
 			if (

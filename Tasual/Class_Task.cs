@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using System.ComponentModel;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace Tasual
 {
@@ -10,9 +12,6 @@ namespace Tasual
 
 		[JsonProperty("priority")]
 		public int Priority { get; set; }
-
-		[JsonProperty("status")]
-		public int Status { get; set; }
 
 		[JsonProperty("group")]
 		public string Group { get; set; }
@@ -35,27 +34,10 @@ namespace Tasual
 		[JsonProperty("timer")]
 		public Timer Timer { get; set; }
 
-
-/*		public void PrintToConsole(Task Task)
-		{
-			Console.WriteLine(
-				"TaskItem: '{0}', '{1}', '{2}', '{3}', '{4}', ('{5}', '{6}', '{7}')",
-				TaskItem.Checked,
-				TaskItem.Priority,
-				TaskItem.Status,
-				TaskItem.Group,
-				TaskItem.Description,
-				TaskItem.Time.Start,
-				TaskItem.Time.End,
-				TaskItem.Time.Next
-			);
-		}*/
-
 		public enum Arguments
 		{
 			Checked,
 			Priority,
-			Status,
 			Group,
 			Description,
 			Created,
@@ -88,7 +70,7 @@ namespace Tasual
 			Toggle
 		}
 
-		// blank constructor
+		// Blank Constructor
 		public Task()
 		{
 			Checked = false;
@@ -96,7 +78,7 @@ namespace Tasual
 			Time = new TimeInfo();
 		}
 
-		// specific constructor
+		// Specific Constructor
 		public Task(
 			bool Checked,
 			int Priority,
@@ -109,11 +91,35 @@ namespace Tasual
 
 			this.Checked = Checked;
 			this.Priority = Priority;
-			this.Status = Status;
 			this.Group = Group;
 			this.Description = Description;
 			this.Time = Time;
 			this.Timer = Timer;
+		}
+
+		// Supporting Functions
+		public void PrintToConsoleBasic(Task Task)
+		{
+			Console.WriteLine(
+				"TaskItem: '{0}', '{1}', '{2}', '{3}', ('{4}', '{5}', '{6}')",
+				Task.Checked,
+				Task.Priority,
+				Task.Group,
+				Task.Description,
+				Task.Time.Start,
+				Task.Time.End,
+				Task.Time.Next
+			);
+		}
+
+		public void PrintToConsoleDetailed(Task Task)
+		{
+			foreach (PropertyDescriptor Descriptor in TypeDescriptor.GetProperties(Task))
+			{
+				string Name = Descriptor.Name;
+				object Value = Descriptor.GetValue(Task);
+				Console.WriteLine("[{0}] = '{1}'", Name, Value);
+			}
 		}
 	}
 }
