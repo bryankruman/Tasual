@@ -364,6 +364,10 @@ namespace Tasual
 				Task Task = (Task)Input;
 				return TimeInfo.GetGroupStringFromTask(Task, Settings);
 			};
+			CategoryColumn.GroupKeyToTitleConverter = delegate (object Input)
+			{
+				return ((string)Input).Remove(0, 1);
+			};
 			CategoryColumn.TextAlign = HorizontalAlignment.Center;
 			CategoryColumn.HeaderTextAlign = HorizontalAlignment.Center;
 			Tasual_ListView.AllColumns.Add(CategoryColumn);
@@ -411,8 +415,8 @@ namespace Tasual
 			Tasual_ListView.AllColumns.Add(TimeColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { TimeColumn });
 
-			Tasual_ListView.AlwaysGroupByColumn = DueColumn; //CategoryColumn DueColumn
-			Tasual_ListView.PrimarySortColumn = DueColumn;// CategoryColumn DueColumn
+			Tasual_ListView.AlwaysGroupByColumn = CategoryColumn; //CategoryColumn DueColumn
+			Tasual_ListView.PrimarySortColumn = CategoryColumn;// CategoryColumn DueColumn
 			Tasual_ListView.SortGroupItemsByPrimaryColumn = true;
 			Tasual_ListView.PrimarySortOrder = SortOrder.Ascending;
 			Tasual_ListView.SecondarySortColumn = DescriptionColumn;
@@ -718,10 +722,10 @@ namespace Tasual
 			{
 				Group.Name = Group.Header;
 				Group.Header = String.Format(
-					"{0} ({1} item{2})",
+					"{0} ({1} {2})",
 					Group.Name,
 					Group.Items.Count(),
-					((Group.Items.Count() > 1) ? "s" : "")
+					((Group.Items.Count() > 1) ? "items" : "item")
 				);
 			}
 		}

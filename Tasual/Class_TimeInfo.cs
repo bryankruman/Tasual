@@ -361,11 +361,11 @@ namespace Tasual
 		{
 			if (Task.Checked && Settings.AlwaysShowCompletedGroup)
 			{
-				return "Completed";
+				return "4Completed";
 			}
 			else if ((DateTime.Now > Task.Time.Start) && Settings.AlwaysShowOverdueGroup)
 			{
-				return "Overdue";
+				return "1Overdue";
 			}
 			else if (Settings.AlwaysShowTodayGroup)
 			{
@@ -373,16 +373,16 @@ namespace Tasual
 				DateTime TargetDay = Task.Time.Start - Task.Time.Start.TimeOfDay;
 				if (TargetDay == Today)
 				{
-					return "Today";
+					return "2Today";
 				}
 				else
 				{
-					return Task.Group;
+					return String.Format("3{0}", Task.Group);
 				}
 			}
 			else
 			{
-				return Task.Group;
+				return String.Format("3{0}", Task.Group);
 			}
 		}
 
