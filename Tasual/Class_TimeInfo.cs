@@ -274,6 +274,41 @@ namespace Tasual
 			SpecificDay = _SpecificDay;
 		}
 
+		public static string Ordinal(int number)
+		{
+			string suffix = String.Empty;
+
+			int ones = number % 10;
+			int tens = (int)Math.Floor(number / 10M) % 10;
+
+			if (tens == 1)
+			{
+				suffix = "th";
+			}
+			else
+			{
+				switch (ones)
+				{
+					case 1:
+						suffix = "st";
+						break;
+
+					case 2:
+						suffix = "nd";
+						break;
+
+					case 3:
+						suffix = "rd";
+						break;
+
+					default:
+						suffix = "th";
+						break;
+				}
+			}
+			return String.Format("{0}{1}", number, suffix);
+		}
+
 		private static MonthFlag FromMonthToFlag(int Input)
 		{
 			switch (Input)
@@ -319,6 +354,313 @@ namespace Tasual
 				case DayOfWeek.Saturday: return DayFlag.Saturday;
 				case DayOfWeek.Sunday: return DayFlag.Sunday;
 				default: return 0;
+			}
+		}
+
+		public static string GetGroupStringFromTask(Task Task, Setting Settings)
+		{
+			if (Task.Checked && Settings.AlwaysShowCompletedGroup)
+			{
+				return "Completed";
+			}
+			else if ((DateTime.Now > Task.Time.Start) && Settings.AlwaysShowOverdueGroup)
+			{
+				return "Overdue";
+			}
+			else if (Settings.AlwaysShowTodayGroup)
+			{
+				DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
+				DateTime TargetDay = Task.Time.Start - Task.Time.Start.TimeOfDay;
+				if (TargetDay == Today)
+				{
+					return "Today";
+				}
+				else
+				{
+					return Task.Group;
+				}
+			}
+			else
+			{
+				return Task.Group;
+			}
+		}
+
+		public static string GetDueStringFromTimeInfo(TimeInfo TimeInfo)
+		{
+			DateTime Time = TimeInfo.Start.ToLocalTime();
+			if (DateTime.Now > Time)
+			{
+				return "Overdue";
+			}
+			else
+			{
+				DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
+				DateTime TargetDay = Time - Time.TimeOfDay;
+				TimeSpan Span = TargetDay - Today;
+				if (TargetDay == Today)
+				{
+					return "Today";
+				}
+				else if (Span.Days <= 1)
+				{
+					return "Tomorrow";
+				}
+				else if (Span.Days <= 7)
+				{
+					return Time.DayOfWeek.ToString();
+				}
+				else if (Span.Days <= 14)
+				{
+					return "Next Week";
+				}
+				else if (Span.Days <= 21)
+				{
+					return "2 Weeks";
+				}
+				else if (Span.Days <= 30)
+				{
+					return "3 Weeks";
+				}
+				else if (TargetDay.Month == Today.AddMonths(1).Month)
+				{
+					return "Next Month";
+				}
+				else
+				{
+					return "Future";
+				}
+			}
+		}
+
+		public static string GetDueStringFromInt(int Key)
+		{
+			switch (Key)
+			{
+				case 1: return "Overdue";
+				case 2: return "Today";
+				case 3: return "Tomorrow";
+				case 4: return "Sunday";
+				case 5: return "Monday";
+				case 6: return "Tuesday";
+				case 7: return "Wednesday";
+				case 8: return "Thursday";
+				case 9: return "Friday";
+				case 10: return "Saturday";
+				case 11: return "Next Week";
+				case 12: return "2 Weeks";
+				case 13: return "3 Weeks";
+				case 14: return "Next Month";
+				case 15: return "Future";
+				case 16: return "Completed";
+				default: return "Broken!";
+			}
+		}
+
+		public static int GetDueIntFromTask(Task Task)
+		{
+			DateTime Time = Task.Time.Start.ToLocalTime();
+			//TimeInfo Time = (TimeInfo)Input;
+			if (Task.Checked)
+			{
+				return 16; // "Completed";
+			}
+			else if (DateTime.Now > Time)
+			{
+				return 1; // "Overdue";
+			}
+			else
+			{
+				DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
+				DateTime TargetDay = Time - Time.TimeOfDay;
+				TimeSpan Span = TargetDay - Today;
+				if (TargetDay == Today)
+				{
+					return 2; // "Today";
+				}
+				else if (Span.Days <= 1)
+				{
+					return 3; //  "Tomorrow";
+				}
+				else if (Span.Days <= 7)
+				{
+					return 4 + (int)Time.DayOfWeek; //Time.DayOfWeek.ToString();
+				}
+				else if (Span.Days <= 14)
+				{
+					return 11; //"Next Week";
+				}
+				else if (Span.Days <= 21)
+				{
+					return 12; // "2 Weeks";
+				}
+				else if (Span.Days <= 30)
+				{
+					return 13; // "3 Weeks";
+				}
+				else if (TargetDay.Month == Today.AddMonths(1).Month)
+				{
+					return 14; // "Next Month";
+				}
+				else
+				{
+					return 15; // "Future";
+				}
+			}
+		}
+
+		public static string FormatTime(DateTime Time, TimeFormat Format)
+		{
+			switch (Format)
+			{
+				case TimeFormat.Elapsed:
+					{
+						TimeSpan TS = DateTime.Now - Time;
+						int intYears = DateTime.Now.Year - Time.Year;
+						int intMonths = DateTime.Now.Month - Time.Month;
+						int intDays = DateTime.Now.Day - Time.Day;
+						int intHours = DateTime.Now.Hour - Time.Hour;
+						int intMinutes = DateTime.Now.Minute - Time.Minute;
+						int intSeconds = DateTime.Now.Second - Time.Second;
+						if (intYears > 0) return String.Format("{0} {1} ago", intYears, (intYears == 1) ? "year" : "years");
+						else if (intMonths > 0) return String.Format("{0} {1} ago", intMonths, (intMonths == 1) ? "month" : "months");
+						else if (intDays > 0) return String.Format("{0} {1} ago", intDays, (intDays == 1) ? "day" : "days");
+						else if (intHours > 0) return String.Format("{0} {1} ago", intHours, (intHours == 1) ? "hour" : "hours");
+						else if (intMinutes > 0) return String.Format("{0} {1} ago", intMinutes, (intMinutes == 1) ? "minute" : "minutes");
+						else if (intSeconds > 1) return String.Format("{0} {1} ago", intSeconds, (intSeconds == 1) ? "second" : "seconds");
+						else if (intSeconds >= 0) return "Just now";
+						else
+						{
+							return String.Format("{0} {1}", Time.ToShortDateString(), Time.ToShortTimeString());
+						}
+					}
+
+				case TimeFormat.Due:
+					{
+						// Overdue
+						// Today
+						// Tomorrow
+						// Friday
+						// Next Week
+						// 2 Weeks
+						// Next Month
+						// Future
+
+						if (DateTime.Now > Time)
+						{
+							return "Overdue";
+						}
+						else
+						{
+							DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
+							DateTime TargetDay = Time - Time.TimeOfDay;
+							TimeSpan Span = TargetDay - Today;
+							if (TargetDay == Today)
+							{
+								return "Today";
+							}
+							else if (Span.Days <= 1)
+							{
+								return "Tomorrow";
+							}
+							else if (Span.Days <= 7)
+							{
+								return Time.DayOfWeek.ToString();
+							}
+							else if (Span.Days <= 14)
+							{
+								return "Next Week";
+							}
+							else if (Span.Days <= 21)
+							{
+								return "2 Weeks";
+							}
+							else if (Span.Days <= 30)
+							{
+								return "3 Weeks";
+							}
+							else if (TargetDay.Month == Today.AddMonths(1).Month)
+							{
+								return "Next Month";
+							}
+							else
+							{
+								return "Future";
+							}
+						}
+					}
+
+				case TimeFormat.Short: // "6/6 - Tue 10pm"
+					{
+						string TimeStamp = "";
+						if (Time.TimeOfDay != TimeSpan.Zero)
+						{
+							string Minutes = "";
+							if (Time.Minute != 0) { Minutes = ":" + Time.Minute.ToString("00"); }
+
+							if (Time.Hour > 12)
+							{
+								TimeStamp = " - " + (Time.Hour - 12).ToString();
+								TimeStamp = TimeStamp + Minutes + "pm";
+							}
+							else
+							{
+								TimeStamp = " - " + Time.Hour.ToString();
+								TimeStamp = TimeStamp + Minutes + "am";
+							}
+						}
+
+						return String.Format(
+							"{0}{1}",
+							Time.ToString("M/d - ddd"),
+							TimeStamp);
+					}
+
+				case TimeFormat.Medium: // "Sat, Jun 6th at 10:00pm"
+					{
+						string TimeStamp;
+						if (Time.TimeOfDay == TimeSpan.Zero)
+						{
+							TimeStamp = "";
+						}
+						else
+						{
+							TimeStamp = "at ";
+							TimeStamp = TimeStamp + Time.Hour.ToString() + ":" + Time.Minute.ToString();
+							if (Time.Hour <= 12) { TimeStamp = TimeStamp + "am"; }
+							else { TimeStamp = TimeStamp + "pm"; }
+						}
+
+						return String.Format(
+							"{0} {1} {2}",
+							Time.ToString("ddd, MMM"),
+							Ordinal(Time.Day),
+							TimeStamp);
+					}
+
+				case TimeFormat.Long: // "Tuesday, June 6th at 10:00pm"
+					{
+						string TimeStamp;
+						if (Time.TimeOfDay == TimeSpan.Zero)
+						{
+							TimeStamp = "";
+						}
+						else
+						{
+							TimeStamp = "at ";
+							TimeStamp = TimeStamp + Time.Hour.ToString() + ":" + Time.Minute.ToString();
+							if (Time.Hour <= 12) { TimeStamp = TimeStamp + "am"; }
+							else { TimeStamp = TimeStamp + "pm"; }
+						}
+
+						return String.Format(
+							"{0} {1} {2}",
+							Time.ToString("dddd, MMMM"),
+							Ordinal(Time.Day),
+							TimeStamp);
+					}
+
+				default: return "";
 			}
 		}
 

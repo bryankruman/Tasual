@@ -453,7 +453,7 @@ namespace Tasual
 				Tasual_Create_Label_Summary.Text = String.Format(
 					"Scheduled for {0} {1}{2}{3}",
 					StartDate.ToString("ddd, MMM"),
-					Tasual_Main.Ordinal(StartDate.Day),
+					TimeInfo.Ordinal(StartDate.Day),
 					StartYearInsert,
 					TimeInsert
 				);
@@ -489,7 +489,7 @@ namespace Tasual
 					EndsInsert = String.Format(
 						" until {0} {1}{2}",
 						EndDate.ToString("ddd, MMM"),
-						Tasual_Main.Ordinal(EndDate.Day),
+						TimeInfo.Ordinal(EndDate.Day),
 						EndsYearInsert);
 				}
 
@@ -526,7 +526,7 @@ namespace Tasual
 						EveryOrOnce,
 						IncrementInsert,
 						StartDate.ToString("ddd, MMM"),
-						Tasual_Main.Ordinal(StartDate.Day),
+						TimeInfo.Ordinal(StartDate.Day),
 						StartYearInsert,
 						TimeInsert,
 						EndsInsert

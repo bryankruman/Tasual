@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace Tasual
 {
@@ -43,6 +44,15 @@ namespace Tasual
 		[JsonProperty("alwaysshowtodaygroup")]
 		public bool AlwaysShowTodayGroup { get; set; }
 
+		[Flags]
+		public enum Columns
+		{
+			Description = 1,
+			Notes = 2,
+			Category = 4,
+			Due = 8,
+			Time = 16
+		}
 
 		public enum Protocols
 		{
