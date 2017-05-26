@@ -315,16 +315,13 @@ namespace Tasual
 		{
 			Tasual_ListView.ShowGroups = true;
 			Tasual_ListView.ShowItemCountOnGroups = false;
-			//Tasual_ListView.HotItemStyle = new HotItemStyle();
-			//Tasual_ListView.HotItemStyle.FontStyle = FontStyle.Underline;
 			Tasual_ListView.UseCustomSelectionColors = true;
 			Tasual_ListView.SelectedBackColor = Color.FromArgb(255, 222, 232, 246);
 			Tasual_ListView.SelectedForeColor = Color.FromArgb(255, 36, 90, 150);
 			Tasual_ListView.UnfocusedSelectedBackColor = Color.FromArgb(255, 222, 232, 246);
 			Tasual_ListView.UnfocusedSelectedForeColor = Color.FromArgb(255, 36, 90, 150);
 			Tasual_ListView.FormatRow += new EventHandler<FormatRowEventArgs>(Tasual_ListView_FormatRow);
-			//Tasual_ListView.TintSortColumn = false; // TODO: Add settings choice for this
-			//Tasual_ListView.SelectedColumnTint = Color.FromArgb(255, 230, 230, 255);
+
 			HeaderFormatStyle FormatStyle = new HeaderFormatStyle();
 			FormatStyle.Normal.ForeColor = Color.FromArgb(255, 36, 90, 150);
 			FormatStyle.Normal.BackColor = Color.FromArgb(255, 222, 232, 246);
@@ -334,6 +331,7 @@ namespace Tasual
 			FormatStyle.Pressed.BackColor = Color.FromArgb(255, 240, 240, 255);
 			Tasual_ListView.HeaderUsesThemes = false;
 			Tasual_ListView.HeaderFormatStyle = FormatStyle;
+
 			Tasual_ListView.PersistentCheckBoxes = true;
 			Tasual_ListView.CheckBoxes = true;
 			Tasual_ListView.CheckedAspectName = "Checked";
@@ -346,21 +344,13 @@ namespace Tasual
 		private void Tasual_ListView_AddColumns()
 		{
 			OLVColumn DescriptionColumn = new OLVColumn("Description", "Description");
-			//DescriptionColumn.AspectName = "Description";
-			//DescriptionColumn.Sortable = true;
 			DescriptionColumn.MinimumWidth = 100;
 			DescriptionColumn.FillsFreeSpace = true;
 			DescriptionColumn.IsVisible = true;
 			DescriptionColumn.IsEditable = true;
-			//DescriptionColumn.HasFilterIndicator = false;
 			DescriptionColumn.Sortable = false;
 			DescriptionColumn.DisplayIndex = 1;
 			DescriptionColumn.LastDisplayIndex = 1;
-			//DescriptionColumn.header = false;
-			//DescriptionColumn.IsEditable = false;
-			//DescriptionColumn.Edit
-			//DescriptionColumn.ImageGetter = new
-			//DescriptionColumn.AspectToStringConverter = 
 			DescriptionColumn.HeaderTextAlign = HorizontalAlignment.Center;
 			Tasual_ListView.AllColumns.Add(DescriptionColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { DescriptionColumn });
@@ -408,25 +398,31 @@ namespace Tasual
 			{
 				Task Task = (Task)Input;
 
-				if (Task.Checked) // TODO: && settings.showcompletedblah
+				// ACEINTHEHOLE
+
+				if (Task.Checked && Settings.AlwaysShowCompletedGroup)
 				{
 					return "Completed";
 				}
-				else if (DateTime.Now > Task.Time.Start) // TODO: && settings.showoverdueblah
+				else if ((DateTime.Now > Task.Time.Start) && Settings.AlwaysShowOverdueGroup)
 				{
 					return "Overdue";
 				}
-				else
+				else if (Settings.AlwaysShowTodayGroup)
 				{
-					// if (settings.showtodayblah)
-					// {
 					DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
 					DateTime TargetDay = Task.Time.Start - Task.Time.Start.TimeOfDay;
 					if (TargetDay == Today)
 					{
 						return "Today";
 					}
-					// }
+					else
+					{
+						return Task.Group;
+					}
+				}
+				else
+				{
 					return Task.Group;
 				}
 			};
@@ -443,7 +439,6 @@ namespace Tasual
 			DueColumn.LastDisplayIndex = 4;
 			DueColumn.TextAlign = HorizontalAlignment.Center;
 			DueColumn.HeaderTextAlign = HorizontalAlignment.Center;
-			//DueColumn.AspectName = "Time";
 			DueColumn.AspectToStringConverter = delegate (object Input)
 			{
 				TimeInfo TimeInfo = (TimeInfo)Input;
@@ -573,9 +568,6 @@ namespace Tasual
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { DueColumn });
 
 			OLVColumn TimeColumn = new OLVColumn("Time", "Time");
-			//TimeColumn.AspectName = "Time";
-			//TimeColumn.Sortable = false;
-			//TimeColumn.Width = -1;
 			TimeColumn.MinimumWidth = 130;
 			TimeColumn.IsVisible = true;
 			TimeColumn.IsEditable = false;
@@ -823,21 +815,22 @@ namespace Tasual
 
 			// TODO: use a common function with the column creation function so that these always match
 
+			// ACEINTHEHOLE
+
 			foreach (Task Task in TaskArray)
 			{
 				string TaskGroup = "";
-				if (Task.Checked) // TODO: && settings.showcompletedblah
+
+				if (Task.Checked && Settings.AlwaysShowCompletedGroup)
 				{
 					TaskGroup = "Completed";
 				}
-				else if (DateTime.Now > Task.Time.Start) // TODO: && settings.showoverdueblah
+				else if ((DateTime.Now > Task.Time.Start) && Settings.AlwaysShowOverdueGroup)
 				{
 					TaskGroup = "Overdue";
 				}
-				else
+				else if (Settings.AlwaysShowTodayGroup)
 				{
-					// if (settings.showtodayblah)
-					// {
 					DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
 					DateTime TargetDay = Task.Time.Start - Task.Time.Start.TimeOfDay;
 					if (TargetDay == Today)
@@ -848,6 +841,10 @@ namespace Tasual
 					{
 						TaskGroup = Task.Group;
 					}
+				}
+				else
+				{
+					TaskGroup = Task.Group;
 				}
 
 				if (TaskGroup == Group.Name)
