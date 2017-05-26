@@ -21,8 +21,6 @@ namespace Tasual
 				Task = _Tasual_Main.TaskArray[PassedIndex];
 
 				Tasual_Notes_TextBox.Text = Task.Notes;
-				
-				Console.WriteLine("Notes_Main: '{0}'", Tasual_Notes_TextBox.Text);
 			}
 			catch (Exception e)
 			{
@@ -41,8 +39,6 @@ namespace Tasual
 				_Tasual_Create = PassedForm;
 
 				Tasual_Notes_TextBox.Text = _Tasual_Create.Notes;
-				
-				Console.WriteLine("Notes_Create: '{0}'", Tasual_Notes_TextBox.Text);
 			}
 			catch (Exception e)
 			{
@@ -60,7 +56,7 @@ namespace Tasual
 					if (Task != null)
 					{
 						Task.Notes = Tasual_Notes_TextBox.Text;
-						_Tasual_Main.Tasual_Array_Save_Text();
+						_Tasual_Main.Tasual_Array_Save();
 					}
 					else
 					{

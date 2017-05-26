@@ -1277,5 +1277,12 @@ namespace Tasual
 			Tasual_ListView.BuildList();
 			Tasual_StatusLabel_UpdateCounts();
 		}
+
+		private void Tasual_MenuStrip_Icon_AddNotes_Click(object sender, EventArgs e)
+		{
+			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
+			Tasual_Notes NotesForm = new Tasual_Notes(this, TaskArray.IndexOf(Task));
+			NotesForm.ShowDialog(this);
+		}
 	}
 }
