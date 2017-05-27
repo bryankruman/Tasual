@@ -328,7 +328,7 @@ namespace Tasual
 			TaskForm.ShowDialog(this);
 		}
 
-		private void Tasual_MenuStrip_Create_Quick_Click(object sender, EventArgs e)
+		private void Tasual_QuickCreate()
 		{
 			string GroupName = "Tasks";
 			// defaults to the first group it finds OR the last selected group
@@ -362,8 +362,14 @@ namespace Tasual
 			ArrayHandler.Save(ref TaskArray, Settings);
 			Tasual_ListView.BuildList();
 			Tasual_StatusLabel_UpdateCounts();
+			Tasual_ListView.PossibleFinishCellEditing();
 			Tasual_ListView.EnsureModelVisible(Task);
 			Tasual_ListView.EditModel(Task);
+		}
+
+		private void Tasual_MenuStrip_Create_Quick_Click(object sender, EventArgs e)
+		{
+			Tasual_QuickCreate();
 		}
 
 		// Tasual_Main: "Edit"
@@ -371,7 +377,10 @@ namespace Tasual
 		{
 			if (Tasual_ListView.SelectedItem != null)
 			{
-				Tasual_ListView.EditModel(Tasual_ListView.SelectedItem.RowObject);
+				Task Task = (Task)Tasual_ListView.SelectedItem.RowObject;
+				Tasual_ListView.PossibleFinishCellEditing();
+				Tasual_ListView.EnsureModelVisible(Task);
+				Tasual_ListView.EditModel(Task);
 			}
 		}
 
@@ -761,6 +770,7 @@ namespace Tasual
 		private void Tasual_ListView_CellEditFinished(object sender, CellEditEventArgs e)
 		{
 			ArrayHandler.Save(ref TaskArray, Settings);
+			Tasual_MenuStrip_Edit.Enabled = false;
 		}
 
 		private void Tasual_ListView_ItemChecked(object sender, ItemCheckedEventArgs e)
@@ -920,6 +930,31 @@ namespace Tasual
 				Calendar.Show(this);
 
 				CalendarPopout = null;
+			}
+		}
+
+		private void Tasual_ListView_KeyDown(object sender, KeyEventArgs e)
+		{
+			switch (e.KeyCode)
+			{
+				case Keys.Delete:
+					{
+						if (Tasual_ListView.SelectedItem != null)
+						{
+							Task Task = (Task)Tasual_ListView.SelectedItem.RowObject;
+							TaskArray.Remove(Task);
+							ArrayHandler.Save(ref TaskArray, Settings);
+							Tasual_ListView.BuildList();
+							Tasual_StatusLabel_UpdateCounts();
+						}
+						break;
+					}
+
+				case Keys.Enter:
+					{
+						Tasual_QuickCreate();
+						break;
+					}
 			}
 		}
 	}

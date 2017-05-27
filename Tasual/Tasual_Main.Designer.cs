@@ -200,6 +200,7 @@
 			this.Tasual_ListView.CellEditFinished += new BrightIdeasSoftware.CellEditEventHandler(this.Tasual_ListView_CellEditFinished);
 			this.Tasual_ListView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.Tasual_ListView_ItemChecked);
 			this.Tasual_ListView.SelectedIndexChanged += new System.EventHandler(this.Tasual_ListView_SelectedIndexChanged);
+			this.Tasual_ListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Tasual_ListView_KeyDown);
 			this.Tasual_ListView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Tasual_ListView_MouseDown);
 			this.Tasual_ListView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Tasual_ListView_MouseUp);
 			// 
