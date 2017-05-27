@@ -36,8 +36,26 @@ namespace Tasual
 
 		public Tasual_Main()
 		{
+			// Initialize interface objects
 			InitializeComponent();
 
+			// Load Settings
+			Setting.Load(ref Settings);
+			Tasual_Settings_Apply();
+
+			// Load TaskArray
+			ArrayHandler.Load(ref TaskArray, Settings);
+			Tasual_ListView.SetObjects(TaskArray);
+
+			// Setup ObjectListView
+			Tasual_ListView_Setup();
+			Tasual_ListView_AddColumns();
+			Tasual_ListView.RebuildColumns();
+
+			// Update StatusLabel to reflect item counts
+			Tasual_StatusLabel_UpdateCounts();
+
+			// Other initialization
 			Tasual_Timer_ListViewClick.Interval = SystemInformation.DoubleClickTime;
 		}
 
@@ -624,30 +642,33 @@ namespace Tasual
 		// ================
 
 		// Main Form
-		private void Tasual_Main_Load(object sender, EventArgs e)
-		{
-			// load settings 
-			Setting.Load(ref Settings);
-			Tasual_Settings_Apply();
-
-			// load task array
-			ArrayHandler.Load(ref TaskArray, Settings);
-			Tasual_ListView.SetObjects(TaskArray);
-
-			// set up objectlistview
-			Tasual_ListView_Setup();
-			Tasual_ListView_AddColumns();
-			Tasual_ListView.SetObjects(TaskArray);
-			Tasual_ListView.RebuildColumns();
-			//Tasual_ListView.AutoResizeColumns();
-
-			// update status label to reflect item counts
-			Tasual_StatusLabel_UpdateCounts();
-		}
-
 		private void Tasual_Main_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			Tasual_Notify.Dispose();
+		}
+
+		private void Tasual_Main_Resize(object sender, EventArgs e)
+		{
+			if (Settings.MinimizeToTray)
+			{
+				if (WindowState == FormWindowState.Minimized)
+				{
+					this.ShowInTaskbar = false;
+				}
+				else
+				{
+					this.ShowInTaskbar = true;
+				}
+			}
+			else
+			{
+				this.ShowInTaskbar = true;
+			}
+		}
+
+		private void Tasual_Main_Move(object sender, EventArgs e)
+		{
+
 		}
 
 		// Notification Icon
@@ -860,30 +881,6 @@ namespace Tasual
 
 				CalendarPopout = null;
 			}
-		}
-
-		private void Tasual_Main_Resize(object sender, EventArgs e)
-		{
-			if (Settings.MinimizeToTray)
-			{
-				if (WindowState == FormWindowState.Minimized)
-				{
-					this.ShowInTaskbar = false;
-				}
-				else
-				{
-					this.ShowInTaskbar = true;
-				}
-			}
-			else
-			{
-				this.ShowInTaskbar = true;
-			}
-		}
-
-		private void Tasual_Main_Move(object sender, EventArgs e)
-		{
-
 		}
 	}
 }
