@@ -748,7 +748,11 @@ namespace Tasual
 		// Tasual_Notify: "Notify"
 		private void Tasual_MenuStrip_Notify_Show_Click(object sender, EventArgs e)
 		{
-			BringToFront();
+			if (this.WindowState == FormWindowState.Minimized)
+			{
+				this.WindowState = FormWindowState.Normal;
+			}
+			this.Activate();
 		}
 
 		private void Tasual_MenuStrip_Notify_Settings_Click(object sender, EventArgs e)
@@ -774,11 +778,19 @@ namespace Tasual
 		//  Other Handlers
 		// ================
 
+		public void Tasual_ApplySettings()
+		{
+			this.TopMost = Settings.AlwaysOnTop;
+			// todo: add startup manager
+		}
+
 		// Main Form
 		private void Tasual_Main_Load(object sender, EventArgs e)
 		{
 			// load settings 
 			Tasual_Settings_Load();
+
+			Tasual_ApplySettings();
 
 			// load task array
 			Tasual_Array_Load();
@@ -804,7 +816,11 @@ namespace Tasual
 		{
 			if (e.Button == MouseButtons.Left)
 			{
-				ReturnFormInstance().Activate();
+				if (this.WindowState == FormWindowState.Minimized)
+				{
+					this.WindowState = FormWindowState.Normal;
+				}
+				this.Activate();
 			}
 			else if (e.Button == MouseButtons.Right)
 			{
@@ -1004,6 +1020,30 @@ namespace Tasual
 
 				CalendarPopout = null;
 			}
+		}
+
+		private void Tasual_Main_Resize(object sender, EventArgs e)
+		{
+			if (Settings.MinimizeToTray)
+			{
+				if (WindowState == FormWindowState.Minimized)
+				{
+					this.ShowInTaskbar = false;
+				}
+				else
+				{
+					this.ShowInTaskbar = true;
+				}
+			}
+			else
+			{
+				this.ShowInTaskbar = true;
+			}
+		}
+
+		private void Tasual_Main_Move(object sender, EventArgs e)
+		{
+
 		}
 	}
 }

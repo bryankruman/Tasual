@@ -639,6 +639,8 @@
 			this.Text = "Tasual";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Tasual_Main_FormClosing);
 			this.Load += new System.EventHandler(this.Tasual_Main_Load);
+			this.Move += new System.EventHandler(this.Tasual_Main_Move);
+			this.Resize += new System.EventHandler(this.Tasual_Main_Resize);
 			this.Tasual_MenuStrip.ResumeLayout(false);
 			this.Tasual_MenuStrip.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Tasual_ListView)).EndInit();
