@@ -25,7 +25,7 @@ namespace Tasual
 		public Tasual_Create(Tasual_Main Tasual_Main)
 		{
 			InitializeComponent();
-			this._Tasual_Main = Tasual_Main;
+			_Tasual_Main = Tasual_Main;
 		}
 
 		private void Tasual_Create_Load(object sender, EventArgs e)
@@ -65,9 +65,12 @@ namespace Tasual
 
 			foreach (Task Task in _Tasual_Main.TaskArray)
 			{
-				if (!Tasual_Create_ComboBox_Category.Items.Contains(Task.Group))
+				if (!string.IsNullOrEmpty(Task.Group))
 				{
-					Tasual_Create_ComboBox_Category.Items.Add(Task.Group);
+					if (!Tasual_Create_ComboBox_Category.Items.Contains(Task.Group))
+					{
+						Tasual_Create_ComboBox_Category.Items.Add(Task.Group);
+					}
 				}
 			}
 			if (Tasual_Create_ComboBox_Category.Items.Count == 0)
@@ -607,7 +610,8 @@ namespace Tasual
 			}
 
 			Task.Priority = Tasual_Create_ComboBox_Priority.SelectedIndex;
-			Task.Group = ((string)Tasual_Create_ComboBox_Category.SelectedItem);
+			Task.Group = Tasual_Create_ComboBox_Category.Text;
+			Console.WriteLine("Group: {0}", Task.Group);
 
 			Task.Notes = Notes;
 			if (Tasual_Create_TextBox_Link.Text != Tasual_Create_TextBox_Link.WatermarkText)
