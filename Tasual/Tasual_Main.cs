@@ -510,7 +510,7 @@ namespace Tasual
 		// Tasual_Main: "Settings"
 		private void Tasual_MenuStrip_Settings_Click(object sender, EventArgs e)
 		{
-			Tasual_Settings SettingsForm = new Tasual_Settings();
+			Tasual_Settings SettingsForm = new Tasual_Settings(this);
 			SettingsForm.ShowDialog(this);
 		}
 
@@ -728,7 +728,7 @@ namespace Tasual
 
 		private void Tasual_MenuStrip_Notify_Settings_Click(object sender, EventArgs e)
 		{
-			Tasual_Settings SettingsForm = new Tasual_Settings();
+			Tasual_Settings SettingsForm = new Tasual_Settings(this);
 			SettingsForm.ShowDialog(ReturnFormInstance());
 		}
 

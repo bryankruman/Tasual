@@ -38,6 +38,7 @@
 			this.Tasual_Settings_CheckBox_PromptClear = new System.Windows.Forms.CheckBox();
 			this.Tasual_Settings_CheckBox_PromptDelete = new System.Windows.Forms.CheckBox();
 			this.Tasual_Settings_GroupBox_Application = new System.Windows.Forms.GroupBox();
+			this.Tasual_Settings_CheckBox_EnterToSave = new System.Windows.Forms.CheckBox();
 			this.Tasual_Settings_CheckBox_AlwaysOnTop = new System.Windows.Forms.CheckBox();
 			this.Tasual_Settings_GroupBox_Display = new System.Windows.Forms.GroupBox();
 			this.Tasual_Settings_CheckBox_ShowItemCounts = new System.Windows.Forms.CheckBox();
@@ -45,7 +46,6 @@
 			this.Tasual_Settings_Label_Columns = new System.Windows.Forms.Label();
 			this.Tasual_Settings_Button_Save = new System.Windows.Forms.Button();
 			this.Tasual_Settings_Button_Cancel = new System.Windows.Forms.Button();
-			this.Tasual_Settings_CheckBox_EnterToSave = new System.Windows.Forms.CheckBox();
 			this.Tasual_Settings_GroupBox_Application.SuspendLayout();
 			this.Tasual_Settings_GroupBox_Display.SuspendLayout();
 			this.SuspendLayout();
@@ -168,6 +168,17 @@
 			this.Tasual_Settings_GroupBox_Application.TabStop = false;
 			this.Tasual_Settings_GroupBox_Application.Text = "Application";
 			// 
+			// Tasual_Settings_CheckBox_EnterToSave
+			// 
+			this.Tasual_Settings_CheckBox_EnterToSave.AutoSize = true;
+			this.Tasual_Settings_CheckBox_EnterToSave.Location = new System.Drawing.Point(12, 146);
+			this.Tasual_Settings_CheckBox_EnterToSave.Name = "Tasual_Settings_CheckBox_EnterToSave";
+			this.Tasual_Settings_CheckBox_EnterToSave.Size = new System.Drawing.Size(208, 17);
+			this.Tasual_Settings_CheckBox_EnterToSave.TabIndex = 9;
+			this.Tasual_Settings_CheckBox_EnterToSave.Text = "Press Enter to save while editing notes";
+			this.Tasual_Settings_CheckBox_EnterToSave.UseVisualStyleBackColor = true;
+			this.Tasual_Settings_CheckBox_EnterToSave.CheckedChanged += new System.EventHandler(this.Tasual_Settings_CheckBox_EnterToSave_CheckedChanged);
+			// 
 			// Tasual_Settings_CheckBox_AlwaysOnTop
 			// 
 			this.Tasual_Settings_CheckBox_AlwaysOnTop.AutoSize = true;
@@ -214,7 +225,6 @@
 			// 
 			this.Tasual_Settings_ListBox_EnabledColumns.FormattingEnabled = true;
 			this.Tasual_Settings_ListBox_EnabledColumns.Items.AddRange(new object[] {
-            "Description",
             "Notes",
             "Category",
             "Due",
@@ -257,17 +267,6 @@
 			this.Tasual_Settings_Button_Cancel.TabIndex = 12;
 			this.Tasual_Settings_Button_Cancel.Text = "Cancel";
 			this.Tasual_Settings_Button_Cancel.UseVisualStyleBackColor = true;
-			// 
-			// Tasual_Settings_CheckBox_EnterToSave
-			// 
-			this.Tasual_Settings_CheckBox_EnterToSave.AutoSize = true;
-			this.Tasual_Settings_CheckBox_EnterToSave.Location = new System.Drawing.Point(12, 146);
-			this.Tasual_Settings_CheckBox_EnterToSave.Name = "Tasual_Settings_CheckBox_EnterToSave";
-			this.Tasual_Settings_CheckBox_EnterToSave.Size = new System.Drawing.Size(208, 17);
-			this.Tasual_Settings_CheckBox_EnterToSave.TabIndex = 9;
-			this.Tasual_Settings_CheckBox_EnterToSave.Text = "Press Enter to save while editing notes";
-			this.Tasual_Settings_CheckBox_EnterToSave.UseVisualStyleBackColor = true;
-			this.Tasual_Settings_CheckBox_EnterToSave.CheckedChanged += new System.EventHandler(this.Tasual_Settings_CheckBox_EnterToSave_CheckedChanged);
 			// 
 			// Tasual_Settings
 			// 
