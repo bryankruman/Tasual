@@ -317,7 +317,6 @@ namespace Tasual
 
 		private void Tasual_ListView_Setup()
 		{
-			Tasual_ListView.ShowGroups = true;
 			Tasual_ListView.ShowItemCountOnGroups = false;
 			Tasual_ListView.UseCustomSelectionColors = true;
 			Tasual_ListView.SelectedBackColor = Color.FromArgb(255, 222, 232, 246);
@@ -345,9 +344,36 @@ namespace Tasual
 			Tasual_ListView.IsSimpleDropSink = true;
 		}
 
+		public void Tasual_ListView_UpdateColumnSettings()
+		{
+			Tasual_ListView.ShowGroups = Settings.GroupTasks;
+			IconColumn.IsVisible = ((Settings.EnabledColumns & Setting.Columns.Notes) != 0);
+			CategoryColumn.IsVisible = ((Settings.EnabledColumns & Setting.Columns.Category) != 0);
+			DueColumn.IsVisible = ((Settings.EnabledColumns & Setting.Columns.Due) != 0);
+			TimeColumn.IsVisible = ((Settings.EnabledColumns & Setting.Columns.Time) != 0);
+
+			OLVColumn SelectedColumn = null;
+			if (Settings.GroupStyle == Setting.GroupStyles.Category)
+			{
+				SelectedColumn = CategoryColumn;
+			}
+			else
+			{
+				SelectedColumn = DueColumn;
+			}
+			Tasual_ListView.AlwaysGroupByColumn = SelectedColumn; //CategoryColumn DueColumn
+			Tasual_ListView.PrimarySortColumn = SelectedColumn;// CategoryColumn DueColumn
+		}
+
+		OLVColumn DescriptionColumn;
+		OLVColumn IconColumn;
+		OLVColumn CategoryColumn;
+		OLVColumn DueColumn;
+		OLVColumn TimeColumn;
+
 		private void Tasual_ListView_AddColumns()
 		{
-			OLVColumn DescriptionColumn = new OLVColumn("Description", "Description");
+			DescriptionColumn = new OLVColumn("Description", "Description");
 			DescriptionColumn.MinimumWidth = 100;
 			DescriptionColumn.FillsFreeSpace = true;
 			DescriptionColumn.IsVisible = true;
@@ -359,7 +385,7 @@ namespace Tasual
 			Tasual_ListView.AllColumns.Add(DescriptionColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { DescriptionColumn });
 
-			OLVColumn IconColumn = new OLVColumn("Icons", "Icons");
+			IconColumn = new OLVColumn("Icons", "Icons");
 			IconColumn.Renderer = new ImageRenderer();
 			IconColumn.AspectGetter = delegate (object Input)
 			{
@@ -392,7 +418,7 @@ namespace Tasual
 			Tasual_ListView.AllColumns.Add(IconColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { IconColumn });
 
-			OLVColumn CategoryColumn = new OLVColumn("Category", "Group");
+			CategoryColumn = new OLVColumn("Category", "Group");
 			CategoryColumn.MinimumWidth = 100;
 			CategoryColumn.IsVisible = false;
 			CategoryColumn.IsEditable = true;
@@ -412,7 +438,7 @@ namespace Tasual
 			Tasual_ListView.AllColumns.Add(CategoryColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { CategoryColumn });
 
-			OLVColumn DueColumn = new OLVColumn("Due", "Time");
+			DueColumn = new OLVColumn("Due", "Time");
 			DueColumn.MinimumWidth = 80;
 			DueColumn.IsVisible = false;
 			DueColumn.IsEditable = false;
@@ -438,7 +464,7 @@ namespace Tasual
 			Tasual_ListView.AllColumns.Add(DueColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { DueColumn });
 
-			OLVColumn TimeColumn = new OLVColumn("Time", "Time");
+			TimeColumn = new OLVColumn("Time", "Time");
 			TimeColumn.MinimumWidth = 130;
 			TimeColumn.IsVisible = true;
 			TimeColumn.IsEditable = false;
@@ -454,8 +480,7 @@ namespace Tasual
 			Tasual_ListView.AllColumns.Add(TimeColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { TimeColumn });
 
-			Tasual_ListView.AlwaysGroupByColumn = CategoryColumn; //CategoryColumn DueColumn
-			Tasual_ListView.PrimarySortColumn = CategoryColumn;// CategoryColumn DueColumn
+			Tasual_ListView_UpdateColumnSettings();
 			Tasual_ListView.SortGroupItemsByPrimaryColumn = true;
 			Tasual_ListView.PrimarySortOrder = SortOrder.Ascending;
 			Tasual_ListView.SecondarySortColumn = DescriptionColumn;

@@ -124,6 +124,9 @@ namespace Tasual
 			}
 
 			_Tasual_Main.Tasual_Settings_Save();
+			_Tasual_Main.Tasual_ListView_UpdateColumnSettings();
+			_Tasual_Main.Tasual_ListView.BuildList();
+			_Tasual_Main.Tasual_ListView.RebuildColumns();
 		}
 	}
 }
