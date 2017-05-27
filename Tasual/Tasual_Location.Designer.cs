@@ -42,11 +42,12 @@
 			this.Tasual_Location_TextBox.Name = "Tasual_Location_TextBox";
 			this.Tasual_Location_TextBox.Size = new System.Drawing.Size(353, 20);
 			this.Tasual_Location_TextBox.TabIndex = 0;
-			this.Tasual_Location_TextBox.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+			this.Tasual_Location_TextBox.TextChanged += new System.EventHandler(this.Tasual_Location_TextBox_TextChanged);
 			// 
 			// Tasual_Location_Button_GoogleMaps
 			// 
 			this.Tasual_Location_Button_GoogleMaps.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.Tasual_Location_Button_GoogleMaps.Enabled = false;
 			this.Tasual_Location_Button_GoogleMaps.Location = new System.Drawing.Point(13, 39);
 			this.Tasual_Location_Button_GoogleMaps.Name = "Tasual_Location_Button_GoogleMaps";
 			this.Tasual_Location_Button_GoogleMaps.Size = new System.Drawing.Size(99, 23);
@@ -57,7 +58,7 @@
 			// Tasual_Location_Button_Save
 			// 
 			this.Tasual_Location_Button_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.Tasual_Location_Button_Save.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.Tasual_Location_Button_Save.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.Tasual_Location_Button_Save.Location = new System.Drawing.Point(210, 39);
 			this.Tasual_Location_Button_Save.Name = "Tasual_Location_Button_Save";
 			this.Tasual_Location_Button_Save.Size = new System.Drawing.Size(75, 23);

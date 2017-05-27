@@ -47,7 +47,7 @@ namespace Tasual
 			}
 		}
 
-		private void Tasual_Notes_Done_Click(object sender, EventArgs e)
+		private void Tasual_Notes_Save_Click(object sender, EventArgs e)
 		{
 			if (Origination == 1)
 			{

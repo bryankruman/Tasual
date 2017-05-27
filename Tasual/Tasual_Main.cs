@@ -368,9 +368,9 @@ namespace Tasual
 				int CheckedOffset = 0;
 				if (Task.Checked) { CheckedOffset = 3; }
 
-				if (Task.Location != null) { Images[0] = 1 + CheckedOffset; }
-				if (Task.Link != null) { Images[1] = 2 + CheckedOffset; }
-				if (Task.Notes != null) { Images[2] = 3 + CheckedOffset; }
+				if (!string.IsNullOrEmpty(Task.Location)) { Images[0] = 1 + CheckedOffset; }
+				if (!string.IsNullOrEmpty(Task.Link)) { Images[1] = 2 + CheckedOffset; }
+				if (!string.IsNullOrEmpty(Task.Notes)) { Images[2] = 3 + CheckedOffset; }
 
 				if ((Images[0] + Images[1] + Images[2]) == -3)
 				{
@@ -606,7 +606,9 @@ namespace Tasual
 		// Tasual_ListView: "Icon"
 		private void Tasual_MenuStrip_Icon_AddLink_Click(object sender, EventArgs e)
 		{
-
+			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
+			Tasual_Link LinkForm = new Tasual_Link(this, TaskArray.IndexOf(Task));
+			LinkForm.ShowDialog(this);
 		}
 
 		private void Tasual_MenuStrip_Icon_AddLocation_Click(object sender, EventArgs e)
@@ -625,7 +627,32 @@ namespace Tasual
 
 		private void Tasual_MenuStrip_Icon_Link_Edit_Click(object sender, EventArgs e)
 		{
+			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
+			Tasual_Link LinkForm = new Tasual_Link(this, TaskArray.IndexOf(Task));
+			LinkForm.ShowDialog(this);
+		}
 
+		private void Tasual_MenuStrip_Icon_Link_Remove_Click(object sender, EventArgs e)
+		{
+			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
+			Task.Link = "";
+			Tasual_Array_Save();
+			Tasual_ListView.BuildList();
+		}
+
+		private void Tasual_MenuStrip_Icon_Location_Edit_Click(object sender, EventArgs e)
+		{
+			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
+			Tasual_Location LocationForm = new Tasual_Location(this, TaskArray.IndexOf(Task));
+			LocationForm.ShowDialog(this);
+		}
+
+		private void Tasual_MenuStrip_Icon_Location_Remove_Click(object sender, EventArgs e)
+		{
+			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
+			Task.Location = "";
+			Tasual_Array_Save();
+			Tasual_ListView.BuildList();
 		}
 
 		private void Tasual_MenuStrip_Icon_Notes_Edit_Click(object sender, EventArgs e)
@@ -635,11 +662,19 @@ namespace Tasual
 			NotesForm.ShowDialog(this);
 		}
 
+		private void Tasual_MenuStrip_Icon_Notes_Remove_Click(object sender, EventArgs e)
+		{
+			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
+			Task.Notes = "";
+			Tasual_Array_Save();
+			Tasual_ListView.BuildList();
+		}
+
 		private void Tasual_MenuStrip_Icon_Opening(object sender, CancelEventArgs e)
 		{
 			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
 
-			if (Task.Location != null)
+			if (!string.IsNullOrEmpty(Task.Location))
 			{
 				Tasual_MenuStrip_Icon_AddLocation.Visible = false;
 				Tasual_MenuStrip_Icon_Location.Visible = true;
@@ -649,7 +684,7 @@ namespace Tasual
 				Tasual_MenuStrip_Icon_AddLocation.Visible = true;
 				Tasual_MenuStrip_Icon_Location.Visible = false;
 			}
-			if (Task.Link != null)
+			if (!string.IsNullOrEmpty(Task.Link))
 			{
 				Tasual_MenuStrip_Icon_AddLink.Visible = false;
 				Tasual_MenuStrip_Icon_Link.Visible = true;
@@ -659,7 +694,7 @@ namespace Tasual
 				Tasual_MenuStrip_Icon_AddLink.Visible = true;
 				Tasual_MenuStrip_Icon_Link.Visible = false;
 			}
-			if (Task.Notes != null)
+			if (!string.IsNullOrEmpty(Task.Notes))
 			{
 				Tasual_MenuStrip_Icon_AddNotes.Visible = false;
 				Tasual_MenuStrip_Icon_Notes.Visible = true;

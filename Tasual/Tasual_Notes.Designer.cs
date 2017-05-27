@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.Tasual_Notes_Cancel = new System.Windows.Forms.Button();
-			this.Tasual_Notes_Done = new System.Windows.Forms.Button();
+			this.Tasual_Notes_Save = new System.Windows.Forms.Button();
 			this.Tasual_Notes_TextBox = new System.Windows.Forms.TextBox();
 			this.SuspendLayout();
 			// 
@@ -44,17 +44,17 @@
 			this.Tasual_Notes_Cancel.Text = "Cancel";
 			this.Tasual_Notes_Cancel.UseVisualStyleBackColor = true;
 			// 
-			// Tasual_Notes_Done
+			// Tasual_Notes_Save
 			// 
-			this.Tasual_Notes_Done.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.Tasual_Notes_Done.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.Tasual_Notes_Done.Location = new System.Drawing.Point(193, 173);
-			this.Tasual_Notes_Done.Name = "Tasual_Notes_Done";
-			this.Tasual_Notes_Done.Size = new System.Drawing.Size(75, 23);
-			this.Tasual_Notes_Done.TabIndex = 2;
-			this.Tasual_Notes_Done.Text = "Done";
-			this.Tasual_Notes_Done.UseVisualStyleBackColor = true;
-			this.Tasual_Notes_Done.Click += new System.EventHandler(this.Tasual_Notes_Done_Click);
+			this.Tasual_Notes_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.Tasual_Notes_Save.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.Tasual_Notes_Save.Location = new System.Drawing.Point(193, 173);
+			this.Tasual_Notes_Save.Name = "Tasual_Notes_Save";
+			this.Tasual_Notes_Save.Size = new System.Drawing.Size(75, 23);
+			this.Tasual_Notes_Save.TabIndex = 2;
+			this.Tasual_Notes_Save.Text = "Save";
+			this.Tasual_Notes_Save.UseVisualStyleBackColor = true;
+			this.Tasual_Notes_Save.Click += new System.EventHandler(this.Tasual_Notes_Save_Click);
 			// 
 			// Tasual_Notes_TextBox
 			// 
@@ -74,12 +74,12 @@
 			// 
 			// Tasual_Notes
 			// 
-			this.AcceptButton = this.Tasual_Notes_Done;
+			this.AcceptButton = this.Tasual_Notes_Save;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.Tasual_Notes_Cancel;
 			this.ClientSize = new System.Drawing.Size(361, 208);
-			this.Controls.Add(this.Tasual_Notes_Done);
+			this.Controls.Add(this.Tasual_Notes_Save);
 			this.Controls.Add(this.Tasual_Notes_Cancel);
 			this.Controls.Add(this.Tasual_Notes_TextBox);
 			this.Name = "Tasual_Notes";
@@ -95,7 +95,7 @@
 
 		#endregion
 		private System.Windows.Forms.Button Tasual_Notes_Cancel;
-		private System.Windows.Forms.Button Tasual_Notes_Done;
+		private System.Windows.Forms.Button Tasual_Notes_Save;
 		private System.Windows.Forms.TextBox Tasual_Notes_TextBox;
 	}
 }
