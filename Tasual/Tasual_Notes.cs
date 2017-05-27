@@ -71,7 +71,7 @@ namespace Tasual
 		{
 			Tasual_Notes_TextBox.AcceptsReturn = !Tasual_Notes_CheckBox.Checked;
 			_Tasual_Main.Settings.EnterToSave = Tasual_Notes_CheckBox.Checked;
-			_Tasual_Main.Tasual_Settings_Save();
+			Setting.Save(_Tasual_Main.Settings);
 		}
 
 		private void Tasual_Notes_Load(object sender, EventArgs e)

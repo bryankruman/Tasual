@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Newtonsoft.Json;
 
 namespace Tasual
@@ -79,6 +80,49 @@ namespace Tasual
 		{
 			Category,
 			DueTime
+		}
+
+		public static void Save(Setting Settings)
+		{
+			try
+			{
+				using (FileStream OutputFile = File.Open("settings.cfg", FileMode.Create))
+				using (StreamWriter OutputStream = new StreamWriter(OutputFile))
+				using (JsonWriter OutputJson = new JsonTextWriter(OutputStream))
+				{
+					OutputJson.Formatting = Formatting.Indented;
+					JsonSerializer Serializer = new JsonSerializer();
+					Serializer.Serialize(OutputJson, Settings);
+				}
+
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine("Could not write to settings.cfg! Message: {0}", e.Message);
+			}
+		}
+
+		public static void Load(Setting Settings)
+		{
+			try
+			{
+				using (StreamReader InputFile = File.OpenText("settings.cfg"))
+				using (JsonReader InputJson = new JsonTextReader(InputFile))
+				{
+					JsonSerializer Serializer = new JsonSerializer();
+					Settings = (Setting)Serializer.Deserialize(InputJson, typeof(Setting));
+				}
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(
+					"Could not load settings.cfg! " +
+					"Proceeding with defaults and writing blank new config! " +
+					"Message: {0}",
+					e.Message
+				);
+				Save(Settings);
+			}
 		}
 	}
 }

@@ -23,6 +23,12 @@ namespace Tasual
 		OlvListViewHitTestInfo Tasual_ListView_FirstClickInfo = null;
 		bool Tasual_ListView_PreviouslySelected = false;
 
+		OLVColumn DescriptionColumn;
+		OLVColumn IconColumn;
+		OLVColumn CategoryColumn;
+		OLVColumn DueColumn;
+		OLVColumn TimeColumn;
+
 
 		// ================
 		//  Initialization
@@ -39,6 +45,12 @@ namespace Tasual
 		// =============================
 		//  Common/Supporting Functions
 		// =============================
+
+		public void Tasual_ApplySettings()
+		{
+			this.TopMost = Settings.AlwaysOnTop;
+			StartupManager.SetStartupStatus(Settings.LaunchOnStartup);
+		}
 
 		public void Tasual_ClearAll()
 		{
@@ -72,56 +84,6 @@ namespace Tasual
 		// =================
 		//  Array Functions
 		// =================
-
-		public void Tasual_Settings_Apply()
-		{
-			this.TopMost = Settings.AlwaysOnTop;
-			StartupManager.SetStartupStatus(Settings.LaunchOnStartup);
-		}
-
-		public void Tasual_Settings_Save()
-		{
-			try
-			{
-				using (FileStream OutputFile = File.Open("settings.cfg", FileMode.Create))
-				using (StreamWriter OutputStream = new StreamWriter(OutputFile))
-				using (JsonWriter OutputJson = new JsonTextWriter(OutputStream))
-				{
-					OutputJson.Formatting = Formatting.Indented;
-					JsonSerializer Serializer = new JsonSerializer();
-					Serializer.Serialize(OutputJson, Settings);
-				}
-
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine("Could not write to settings.cfg! Message: {0}", e.Message);
-			}
-		}
-
-		public void Tasual_Settings_Load()
-		{
-			try
-			{
-				using (StreamReader InputFile = File.OpenText("settings.cfg"))
-				using (JsonReader InputJson = new JsonTextReader(InputFile))
-				{
-					TaskArray.Clear();
-					JsonSerializer Serializer = new JsonSerializer();
-					Settings = (Setting)Serializer.Deserialize(InputJson, typeof(Setting));
-				}
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(
-					"Could not load settings.cfg! " +
-					"Proceeding with defaults and writing blank new config! " +
-					"Message: {0}", 
-					e.Message
-				);
-				Tasual_Settings_Save();
-			}
-		}
 
 		private void Tasual_Array_ReAssignGroup(string OldTaskGroup, string NewTaskGroup)
 		{
@@ -370,12 +332,6 @@ namespace Tasual
 			Tasual_ListView.AlwaysGroupByColumn = SelectedColumn; //CategoryColumn DueColumn
 			Tasual_ListView.PrimarySortColumn = SelectedColumn;// CategoryColumn DueColumn
 		}
-
-		OLVColumn DescriptionColumn;
-		OLVColumn IconColumn;
-		OLVColumn CategoryColumn;
-		OLVColumn DueColumn;
-		OLVColumn TimeColumn;
 
 		private void Tasual_ListView_AddColumns()
 		{
@@ -827,8 +783,8 @@ namespace Tasual
 		private void Tasual_Main_Load(object sender, EventArgs e)
 		{
 			// load settings 
-			Tasual_Settings_Load();
-			Tasual_Settings_Apply();
+			Setting.Load(Settings);
+			Tasual_ApplySettings();
 
 			// load task array
 			Tasual_Array_Load();
