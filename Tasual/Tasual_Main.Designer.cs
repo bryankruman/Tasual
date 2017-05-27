@@ -110,7 +110,7 @@
             this.Tasual_MenuStrip_Sources});
 			this.Tasual_MenuStrip.Location = new System.Drawing.Point(0, 0);
 			this.Tasual_MenuStrip.Name = "Tasual_MenuStrip";
-			this.Tasual_MenuStrip.Size = new System.Drawing.Size(489, 24);
+			this.Tasual_MenuStrip.Size = new System.Drawing.Size(513, 24);
 			this.Tasual_MenuStrip.TabIndex = 1;
 			this.Tasual_MenuStrip.Text = "menuStrip1";
 			// 
@@ -191,7 +191,7 @@
 			this.Tasual_ListView.Margin = new System.Windows.Forms.Padding(0);
 			this.Tasual_ListView.MultiSelect = false;
 			this.Tasual_ListView.Name = "Tasual_ListView";
-			this.Tasual_ListView.Size = new System.Drawing.Size(489, 456);
+			this.Tasual_ListView.Size = new System.Drawing.Size(513, 471);
 			this.Tasual_ListView.SmallImageList = this.Tasual_TaskIcons;
 			this.Tasual_ListView.TabIndex = 0;
 			this.Tasual_ListView.UseCompatibleStateImageBehavior = false;
@@ -261,10 +261,10 @@
 			this.Tasual_StatusLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Tasual_StatusLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
 			this.Tasual_StatusLabel.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
-			this.Tasual_StatusLabel.Location = new System.Drawing.Point(0, 480);
+			this.Tasual_StatusLabel.Location = new System.Drawing.Point(0, 495);
 			this.Tasual_StatusLabel.Name = "Tasual_StatusLabel";
 			this.Tasual_StatusLabel.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-			this.Tasual_StatusLabel.Size = new System.Drawing.Size(420, 21);
+			this.Tasual_StatusLabel.Size = new System.Drawing.Size(444, 21);
 			this.Tasual_StatusLabel.TabIndex = 2;
 			this.Tasual_StatusLabel.TabStop = true;
 			this.Tasual_StatusLabel.Text = "All tasks complete";
@@ -279,7 +279,7 @@
 			this.Tasual_AboutLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
 			this.Tasual_AboutLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
 			this.Tasual_AboutLabel.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
-			this.Tasual_AboutLabel.Location = new System.Drawing.Point(426, 480);
+			this.Tasual_AboutLabel.Location = new System.Drawing.Point(450, 495);
 			this.Tasual_AboutLabel.Name = "Tasual_AboutLabel";
 			this.Tasual_AboutLabel.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.Tasual_AboutLabel.Size = new System.Drawing.Size(51, 21);
@@ -631,7 +631,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(232)))), ((int)(((byte)(246)))));
-			this.ClientSize = new System.Drawing.Size(489, 501);
+			this.ClientSize = new System.Drawing.Size(513, 516);
 			this.Controls.Add(this.Tasual_AboutLabel);
 			this.Controls.Add(this.Tasual_StatusLabel);
 			this.Controls.Add(this.Tasual_ListView);
