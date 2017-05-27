@@ -83,7 +83,6 @@
 			this.Tasual_Settings_CheckBox_AlwaysShowCompletedGroup.TabIndex = 2;
 			this.Tasual_Settings_CheckBox_AlwaysShowCompletedGroup.Text = "Split completed tasks into separate group";
 			this.Tasual_Settings_CheckBox_AlwaysShowCompletedGroup.UseVisualStyleBackColor = true;
-			this.Tasual_Settings_CheckBox_AlwaysShowCompletedGroup.CheckedChanged += new System.EventHandler(this.Tasual_Settings_CheckBox_AlwaysShowCompletedGroup_CheckedChanged);
 			// 
 			// Tasual_Settings_CheckBox_AlwaysShowOverdueGroup
 			// 
@@ -94,7 +93,6 @@
 			this.Tasual_Settings_CheckBox_AlwaysShowOverdueGroup.TabIndex = 3;
 			this.Tasual_Settings_CheckBox_AlwaysShowOverdueGroup.Text = "Split overdue tasks into separate group";
 			this.Tasual_Settings_CheckBox_AlwaysShowOverdueGroup.UseVisualStyleBackColor = true;
-			this.Tasual_Settings_CheckBox_AlwaysShowOverdueGroup.CheckedChanged += new System.EventHandler(this.Tasual_Settings_CheckBox_AlwaysShowOverdueGroup_CheckedChanged);
 			// 
 			// Tasual_Settings_CheckBox_AlwaysShowTodayGroup
 			// 
@@ -105,7 +103,6 @@
 			this.Tasual_Settings_CheckBox_AlwaysShowTodayGroup.TabIndex = 4;
 			this.Tasual_Settings_CheckBox_AlwaysShowTodayGroup.Text = "Split tasks due today into separate group";
 			this.Tasual_Settings_CheckBox_AlwaysShowTodayGroup.UseVisualStyleBackColor = true;
-			this.Tasual_Settings_CheckBox_AlwaysShowTodayGroup.CheckedChanged += new System.EventHandler(this.Tasual_Settings_CheckBox_AlwaysShowTodayGroup_CheckedChanged);
 			// 
 			// Tasual_Settings_CheckBox_LaunchOnStartup
 			// 
@@ -116,7 +113,6 @@
 			this.Tasual_Settings_CheckBox_LaunchOnStartup.TabIndex = 5;
 			this.Tasual_Settings_CheckBox_LaunchOnStartup.Text = "Start Tasual on system startup";
 			this.Tasual_Settings_CheckBox_LaunchOnStartup.UseVisualStyleBackColor = true;
-			this.Tasual_Settings_CheckBox_LaunchOnStartup.CheckedChanged += new System.EventHandler(this.Tasual_Settings_CheckBox_LaunchOnStartup_CheckedChanged);
 			// 
 			// Tasual_Settings_CheckBox_MinimizeToTray
 			// 
@@ -127,7 +123,6 @@
 			this.Tasual_Settings_CheckBox_MinimizeToTray.TabIndex = 6;
 			this.Tasual_Settings_CheckBox_MinimizeToTray.Text = "Minimize Tasual to tray";
 			this.Tasual_Settings_CheckBox_MinimizeToTray.UseVisualStyleBackColor = true;
-			this.Tasual_Settings_CheckBox_MinimizeToTray.CheckedChanged += new System.EventHandler(this.Tasual_Settings_CheckBox_MinimizeToTray_CheckedChanged);
 			// 
 			// Tasual_Settings_CheckBox_PromptClear
 			// 
@@ -138,7 +133,6 @@
 			this.Tasual_Settings_CheckBox_PromptClear.TabIndex = 7;
 			this.Tasual_Settings_CheckBox_PromptClear.Text = "Prompt when clearing all tasks";
 			this.Tasual_Settings_CheckBox_PromptClear.UseVisualStyleBackColor = true;
-			this.Tasual_Settings_CheckBox_PromptClear.CheckedChanged += new System.EventHandler(this.Tasual_Settings_CheckBox_PromptClear_CheckedChanged);
 			// 
 			// Tasual_Settings_CheckBox_PromptDelete
 			// 
@@ -149,7 +143,6 @@
 			this.Tasual_Settings_CheckBox_PromptDelete.TabIndex = 8;
 			this.Tasual_Settings_CheckBox_PromptDelete.Text = "Prompt when deleting tasks individually";
 			this.Tasual_Settings_CheckBox_PromptDelete.UseVisualStyleBackColor = true;
-			this.Tasual_Settings_CheckBox_PromptDelete.CheckedChanged += new System.EventHandler(this.Tasual_Settings_CheckBox_PromptDelete_CheckedChanged);
 			// 
 			// Tasual_Settings_GroupBox_Application
 			// 
@@ -177,7 +170,6 @@
 			this.Tasual_Settings_CheckBox_EnterToSave.TabIndex = 9;
 			this.Tasual_Settings_CheckBox_EnterToSave.Text = "Press Enter to save while editing notes";
 			this.Tasual_Settings_CheckBox_EnterToSave.UseVisualStyleBackColor = true;
-			this.Tasual_Settings_CheckBox_EnterToSave.CheckedChanged += new System.EventHandler(this.Tasual_Settings_CheckBox_EnterToSave_CheckedChanged);
 			// 
 			// Tasual_Settings_CheckBox_AlwaysOnTop
 			// 
@@ -188,7 +180,6 @@
 			this.Tasual_Settings_CheckBox_AlwaysOnTop.TabIndex = 7;
 			this.Tasual_Settings_CheckBox_AlwaysOnTop.Text = "Keep Tasual always on top";
 			this.Tasual_Settings_CheckBox_AlwaysOnTop.UseVisualStyleBackColor = true;
-			this.Tasual_Settings_CheckBox_AlwaysOnTop.CheckedChanged += new System.EventHandler(this.Tasual_Settings_CheckBox_AlwaysOnTop_CheckedChanged);
 			// 
 			// Tasual_Settings_GroupBox_Display
 			// 
@@ -219,7 +210,6 @@
 			this.Tasual_Settings_CheckBox_ShowItemCounts.TabIndex = 7;
 			this.Tasual_Settings_CheckBox_ShowItemCounts.Text = "Show item counts next to group header";
 			this.Tasual_Settings_CheckBox_ShowItemCounts.UseVisualStyleBackColor = true;
-			this.Tasual_Settings_CheckBox_ShowItemCounts.CheckedChanged += new System.EventHandler(this.Tasual_Settings_CheckBox_ShowItemCounts_CheckedChanged);
 			// 
 			// Tasual_Settings_ListBox_EnabledColumns
 			// 
@@ -234,7 +224,6 @@
 			this.Tasual_Settings_ListBox_EnabledColumns.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
 			this.Tasual_Settings_ListBox_EnabledColumns.Size = new System.Drawing.Size(82, 95);
 			this.Tasual_Settings_ListBox_EnabledColumns.TabIndex = 6;
-			this.Tasual_Settings_ListBox_EnabledColumns.SelectedIndexChanged += new System.EventHandler(this.Tasual_Settings_ListBox_EnabledColumns_SelectedIndexChanged);
 			// 
 			// Tasual_Settings_Label_Columns
 			// 

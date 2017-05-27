@@ -78,36 +78,6 @@ namespace Tasual
 			Tasual_Settings_ListBox_EnabledColumns.SetSelected(3, ((_Tasual_Main.Settings.EnabledColumns & Setting.Columns.Time) != 0));
 		}
 
-		private void Tasual_Settings_CheckBox_LaunchOnStartup_CheckedChanged(object sender, EventArgs e)
-		{
-
-		}
-
-		private void Tasual_Settings_CheckBox_MinimizeToTray_CheckedChanged(object sender, EventArgs e)
-		{
-
-		}
-
-		private void Tasual_Settings_CheckBox_AlwaysOnTop_CheckedChanged(object sender, EventArgs e)
-		{
-
-		}
-
-		private void Tasual_Settings_CheckBox_PromptClear_CheckedChanged(object sender, EventArgs e)
-		{
-
-		}
-
-		private void Tasual_Settings_CheckBox_PromptDelete_CheckedChanged(object sender, EventArgs e)
-		{
-
-		}
-
-		private void Tasual_Settings_CheckBox_EnterToSave_CheckedChanged(object sender, EventArgs e)
-		{
-
-		}
-
 		private void Tasual_Settings_CheckBox_GroupTasks_CheckedChanged(object sender, EventArgs e)
 		{
 			Tasual_Settings_UpdateGroupTasks();
@@ -116,31 +86,6 @@ namespace Tasual
 		private void Tasual_Settings_ComboBox_GroupStyle_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			Tasual_Settings_UpdateGroupTasks();
-		}
-
-		private void Tasual_Settings_CheckBox_AlwaysShowCompletedGroup_CheckedChanged(object sender, EventArgs e)
-		{
-
-		}
-
-		private void Tasual_Settings_CheckBox_AlwaysShowOverdueGroup_CheckedChanged(object sender, EventArgs e)
-		{
-
-		}
-
-		private void Tasual_Settings_CheckBox_AlwaysShowTodayGroup_CheckedChanged(object sender, EventArgs e)
-		{
-
-		}
-
-		private void Tasual_Settings_CheckBox_ShowItemCounts_CheckedChanged(object sender, EventArgs e)
-		{
-
-		}
-
-		private void Tasual_Settings_ListBox_EnabledColumns_SelectedIndexChanged(object sender, EventArgs e)
-		{
-
 		}
 
 		private void Tasual_Settings_Button_Save_Click(object sender, EventArgs e)
