@@ -41,6 +41,7 @@ namespace Tasual
 
 			// Load Settings
 			Setting.Load(ref Settings);
+			Tasual_Settings_Relocate();
 			Tasual_Settings_Apply();
 
 			// Load TaskArray
@@ -88,6 +89,17 @@ namespace Tasual
 		{
 			this.TopMost = Settings.AlwaysOnTop;
 			StartupManager.SetStartupStatus(Settings.LaunchOnStartup);
+		}
+
+		public void Tasual_Settings_Relocate()
+		{
+			if (Settings.SaveWindowPos)
+			{
+				this.StartPosition = FormStartPosition.Manual;
+				this.Location = Settings.Location;
+				this.Size = Settings.Size;
+				this.WindowState = Settings.WindowState;
+			}
 		}
 
 		public void Tasual_Settings_Save()
@@ -644,6 +656,32 @@ namespace Tasual
 		// Main Form
 		private void Tasual_Main_FormClosing(object sender, FormClosingEventArgs e)
 		{
+			if (Settings.SaveWindowPos)
+			{
+				if (WindowState != FormWindowState.Normal)
+				{
+					if (WindowState == FormWindowState.Minimized)
+					{
+						// Always load back up with a normal window state when previously minimized
+						Settings.WindowState = FormWindowState.Normal;
+					}
+					else
+					{
+						Settings.WindowState = FormWindowState.Maximized;
+					}
+					Settings.Location = RestoreBounds.Location;
+					Settings.Size = RestoreBounds.Size;
+				}
+				else
+				{
+					Settings.WindowState = FormWindowState.Normal;
+					Settings.Location = Location;
+					Settings.Size = Size;
+				}
+
+				Setting.Save(ref Settings);
+			}
+
 			Tasual_Notify.Dispose();
 		}
 
@@ -664,11 +702,6 @@ namespace Tasual
 			{
 				this.ShowInTaskbar = true;
 			}
-		}
-
-		private void Tasual_Main_Move(object sender, EventArgs e)
-		{
-
 		}
 
 		// Notification Icon

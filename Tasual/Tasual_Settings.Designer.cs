@@ -46,6 +46,7 @@
 			this.Tasual_Settings_Label_Columns = new System.Windows.Forms.Label();
 			this.Tasual_Settings_Button_Save = new System.Windows.Forms.Button();
 			this.Tasual_Settings_Button_Cancel = new System.Windows.Forms.Button();
+			this.Tasual_Settings_CheckBox_SaveWindowPos = new System.Windows.Forms.CheckBox();
 			this.Tasual_Settings_GroupBox_Application.SuspendLayout();
 			this.Tasual_Settings_GroupBox_Display.SuspendLayout();
 			this.SuspendLayout();
@@ -127,7 +128,7 @@
 			// Tasual_Settings_CheckBox_PromptClear
 			// 
 			this.Tasual_Settings_CheckBox_PromptClear.AutoSize = true;
-			this.Tasual_Settings_CheckBox_PromptClear.Location = new System.Drawing.Point(12, 100);
+			this.Tasual_Settings_CheckBox_PromptClear.Location = new System.Drawing.Point(12, 123);
 			this.Tasual_Settings_CheckBox_PromptClear.Name = "Tasual_Settings_CheckBox_PromptClear";
 			this.Tasual_Settings_CheckBox_PromptClear.Size = new System.Drawing.Size(169, 17);
 			this.Tasual_Settings_CheckBox_PromptClear.TabIndex = 7;
@@ -137,7 +138,7 @@
 			// Tasual_Settings_CheckBox_PromptDelete
 			// 
 			this.Tasual_Settings_CheckBox_PromptDelete.AutoSize = true;
-			this.Tasual_Settings_CheckBox_PromptDelete.Location = new System.Drawing.Point(12, 123);
+			this.Tasual_Settings_CheckBox_PromptDelete.Location = new System.Drawing.Point(12, 146);
 			this.Tasual_Settings_CheckBox_PromptDelete.Name = "Tasual_Settings_CheckBox_PromptDelete";
 			this.Tasual_Settings_CheckBox_PromptDelete.Size = new System.Drawing.Size(210, 17);
 			this.Tasual_Settings_CheckBox_PromptDelete.TabIndex = 8;
@@ -148,6 +149,7 @@
 			// 
 			this.Tasual_Settings_GroupBox_Application.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.Tasual_Settings_GroupBox_Application.Controls.Add(this.Tasual_Settings_CheckBox_SaveWindowPos);
 			this.Tasual_Settings_GroupBox_Application.Controls.Add(this.Tasual_Settings_CheckBox_EnterToSave);
 			this.Tasual_Settings_GroupBox_Application.Controls.Add(this.Tasual_Settings_CheckBox_AlwaysOnTop);
 			this.Tasual_Settings_GroupBox_Application.Controls.Add(this.Tasual_Settings_CheckBox_MinimizeToTray);
@@ -156,7 +158,7 @@
 			this.Tasual_Settings_GroupBox_Application.Controls.Add(this.Tasual_Settings_CheckBox_PromptClear);
 			this.Tasual_Settings_GroupBox_Application.Location = new System.Drawing.Point(13, 13);
 			this.Tasual_Settings_GroupBox_Application.Name = "Tasual_Settings_GroupBox_Application";
-			this.Tasual_Settings_GroupBox_Application.Size = new System.Drawing.Size(391, 172);
+			this.Tasual_Settings_GroupBox_Application.Size = new System.Drawing.Size(391, 197);
 			this.Tasual_Settings_GroupBox_Application.TabIndex = 9;
 			this.Tasual_Settings_GroupBox_Application.TabStop = false;
 			this.Tasual_Settings_GroupBox_Application.Text = "Application";
@@ -164,7 +166,7 @@
 			// Tasual_Settings_CheckBox_EnterToSave
 			// 
 			this.Tasual_Settings_CheckBox_EnterToSave.AutoSize = true;
-			this.Tasual_Settings_CheckBox_EnterToSave.Location = new System.Drawing.Point(12, 146);
+			this.Tasual_Settings_CheckBox_EnterToSave.Location = new System.Drawing.Point(12, 169);
 			this.Tasual_Settings_CheckBox_EnterToSave.Name = "Tasual_Settings_CheckBox_EnterToSave";
 			this.Tasual_Settings_CheckBox_EnterToSave.Size = new System.Drawing.Size(208, 17);
 			this.Tasual_Settings_CheckBox_EnterToSave.TabIndex = 9;
@@ -194,9 +196,9 @@
 			this.Tasual_Settings_GroupBox_Display.Controls.Add(this.Tasual_Settings_CheckBox_AlwaysShowCompletedGroup);
 			this.Tasual_Settings_GroupBox_Display.Controls.Add(this.Tasual_Settings_CheckBox_AlwaysShowOverdueGroup);
 			this.Tasual_Settings_GroupBox_Display.Controls.Add(this.Tasual_Settings_CheckBox_AlwaysShowTodayGroup);
-			this.Tasual_Settings_GroupBox_Display.Location = new System.Drawing.Point(13, 191);
+			this.Tasual_Settings_GroupBox_Display.Location = new System.Drawing.Point(13, 216);
 			this.Tasual_Settings_GroupBox_Display.Name = "Tasual_Settings_GroupBox_Display";
-			this.Tasual_Settings_GroupBox_Display.Size = new System.Drawing.Size(391, 159);
+			this.Tasual_Settings_GroupBox_Display.Size = new System.Drawing.Size(391, 160);
 			this.Tasual_Settings_GroupBox_Display.TabIndex = 10;
 			this.Tasual_Settings_GroupBox_Display.TabStop = false;
 			this.Tasual_Settings_GroupBox_Display.Text = "Display";
@@ -238,7 +240,7 @@
 			// 
 			this.Tasual_Settings_Button_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.Tasual_Settings_Button_Save.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.Tasual_Settings_Button_Save.Location = new System.Drawing.Point(248, 356);
+			this.Tasual_Settings_Button_Save.Location = new System.Drawing.Point(248, 382);
 			this.Tasual_Settings_Button_Save.Name = "Tasual_Settings_Button_Save";
 			this.Tasual_Settings_Button_Save.Size = new System.Drawing.Size(75, 23);
 			this.Tasual_Settings_Button_Save.TabIndex = 11;
@@ -250,12 +252,22 @@
 			// 
 			this.Tasual_Settings_Button_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.Tasual_Settings_Button_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.Tasual_Settings_Button_Cancel.Location = new System.Drawing.Point(329, 356);
+			this.Tasual_Settings_Button_Cancel.Location = new System.Drawing.Point(329, 382);
 			this.Tasual_Settings_Button_Cancel.Name = "Tasual_Settings_Button_Cancel";
 			this.Tasual_Settings_Button_Cancel.Size = new System.Drawing.Size(75, 23);
 			this.Tasual_Settings_Button_Cancel.TabIndex = 12;
 			this.Tasual_Settings_Button_Cancel.Text = "Cancel";
 			this.Tasual_Settings_Button_Cancel.UseVisualStyleBackColor = true;
+			// 
+			// Tasual_Settings_CheckBox_SaveWindowPos
+			// 
+			this.Tasual_Settings_CheckBox_SaveWindowPos.AutoSize = true;
+			this.Tasual_Settings_CheckBox_SaveWindowPos.Location = new System.Drawing.Point(12, 92);
+			this.Tasual_Settings_CheckBox_SaveWindowPos.Name = "Tasual_Settings_CheckBox_SaveWindowPos";
+			this.Tasual_Settings_CheckBox_SaveWindowPos.Size = new System.Drawing.Size(155, 17);
+			this.Tasual_Settings_CheckBox_SaveWindowPos.TabIndex = 10;
+			this.Tasual_Settings_CheckBox_SaveWindowPos.Text = "Remember window position";
+			this.Tasual_Settings_CheckBox_SaveWindowPos.UseVisualStyleBackColor = true;
 			// 
 			// Tasual_Settings
 			// 
@@ -263,7 +275,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.Tasual_Settings_Button_Cancel;
-			this.ClientSize = new System.Drawing.Size(416, 391);
+			this.ClientSize = new System.Drawing.Size(416, 417);
 			this.Controls.Add(this.Tasual_Settings_Button_Cancel);
 			this.Controls.Add(this.Tasual_Settings_Button_Save);
 			this.Controls.Add(this.Tasual_Settings_GroupBox_Display);
@@ -305,5 +317,6 @@
 		private System.Windows.Forms.Button Tasual_Settings_Button_Cancel;
 		private System.Windows.Forms.CheckBox Tasual_Settings_CheckBox_ShowItemCounts;
 		private System.Windows.Forms.CheckBox Tasual_Settings_CheckBox_EnterToSave;
+		private System.Windows.Forms.CheckBox Tasual_Settings_CheckBox_SaveWindowPos;
 	}
 }

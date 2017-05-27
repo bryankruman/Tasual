@@ -59,6 +59,7 @@ namespace Tasual
 			Tasual_Settings_CheckBox_LaunchOnStartup.Checked = _Tasual_Main.Settings.LaunchOnStartup;
 			Tasual_Settings_CheckBox_MinimizeToTray.Checked = _Tasual_Main.Settings.MinimizeToTray;
 			Tasual_Settings_CheckBox_AlwaysOnTop.Checked = _Tasual_Main.Settings.AlwaysOnTop;
+			Tasual_Settings_CheckBox_SaveWindowPos.Checked = _Tasual_Main.Settings.SaveWindowPos;
 			Tasual_Settings_CheckBox_PromptClear.Checked = _Tasual_Main.Settings.PromptClear;
 			Tasual_Settings_CheckBox_PromptDelete.Checked = _Tasual_Main.Settings.PromptDelete;
 			Tasual_Settings_CheckBox_EnterToSave.Checked = _Tasual_Main.Settings.EnterToSave;
@@ -93,6 +94,7 @@ namespace Tasual
 			_Tasual_Main.Settings.LaunchOnStartup = Tasual_Settings_CheckBox_LaunchOnStartup.Checked;
 			_Tasual_Main.Settings.MinimizeToTray = Tasual_Settings_CheckBox_MinimizeToTray.Checked;
 			_Tasual_Main.Settings.AlwaysOnTop = Tasual_Settings_CheckBox_AlwaysOnTop.Checked;
+			_Tasual_Main.Settings.SaveWindowPos = Tasual_Settings_CheckBox_SaveWindowPos.Checked;
 			_Tasual_Main.Settings.PromptClear = Tasual_Settings_CheckBox_PromptClear.Checked;
 			_Tasual_Main.Settings.PromptDelete = Tasual_Settings_CheckBox_PromptDelete.Checked;
 			_Tasual_Main.Settings.EnterToSave = Tasual_Settings_CheckBox_EnterToSave.Checked;

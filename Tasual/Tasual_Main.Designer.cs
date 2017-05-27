@@ -643,7 +643,6 @@
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
 			this.Text = "Tasual";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Tasual_Main_FormClosing);
-			this.Move += new System.EventHandler(this.Tasual_Main_Move);
 			this.Resize += new System.EventHandler(this.Tasual_Main_Resize);
 			this.Tasual_MenuStrip.ResumeLayout(false);
 			this.Tasual_MenuStrip.PerformLayout();

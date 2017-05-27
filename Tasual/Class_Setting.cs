@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using Newtonsoft.Json;
+using System.Windows.Forms;
+using System.Drawing;
 
 namespace Tasual
 {
@@ -21,6 +23,18 @@ namespace Tasual
 
 		[JsonProperty("alwaysontop")]
 		public bool AlwaysOnTop { get; set; } = false;
+
+		[JsonProperty("savewindowpos")]
+		public bool SaveWindowPos { get; set; } = false;
+
+		[JsonProperty("windowstate")]
+		public FormWindowState WindowState { get; set; }
+
+		[JsonProperty("location")]
+		public Point Location { get; set; }
+
+		[JsonProperty("size")]
+		public Size Size { get; set; }
 
 
 		[JsonProperty("promptclear")]
