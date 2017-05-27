@@ -27,7 +27,7 @@ namespace Tasual
 
 		private void Tasual_Confirm_Clear_Button_Confirm_Click(object sender, EventArgs e)
 		{
-			this._Tasual_Main.Tasual_ClearAll();
+			this._Tasual_Main.Tasual_Array_ClearAll();
 			this.Close();
 		}
 	}

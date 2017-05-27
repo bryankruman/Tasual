@@ -123,8 +123,8 @@ namespace Tasual
 				_Tasual_Main.Settings.EnabledColumns |= Setting.Columns.Time;
 			}
 
-			Setting.Save(_Tasual_Main.Settings);
-			_Tasual_Main.Tasual_ApplySettings();
+			_Tasual_Main.Tasual_Settings_Save();
+			_Tasual_Main.Tasual_Settings_Apply();
 			_Tasual_Main.Tasual_ListView_UpdateColumnSettings();
 			_Tasual_Main.Tasual_ListView.BuildList();
 			_Tasual_Main.Tasual_ListView.RebuildColumns();

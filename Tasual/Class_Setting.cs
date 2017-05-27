@@ -82,7 +82,7 @@ namespace Tasual
 			DueTime
 		}
 
-		public static void Save(Setting Settings)
+		public static void Save(ref Setting Settings)
 		{
 			try
 			{
@@ -102,7 +102,7 @@ namespace Tasual
 			}
 		}
 
-		public static void Load(Setting Settings)
+		public static void Load(ref Setting Settings)
 		{
 			try
 			{
@@ -121,7 +121,7 @@ namespace Tasual
 					"Message: {0}",
 					e.Message
 				);
-				Save(Settings);
+				Save(ref Settings);
 			}
 		}
 	}

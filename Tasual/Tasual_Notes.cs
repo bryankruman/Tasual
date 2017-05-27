@@ -54,7 +54,7 @@ namespace Tasual
 				if (Task != null)
 				{
 					Task.Notes = Tasual_Notes_TextBox.Text;
-					_Tasual_Main.Tasual_Main_Save();
+					_Tasual_Main.Tasual_Array_Save();
 					//ArrayHandler.Save(ref _Tasual_Main.TaskArray, _Tasual_Main.Settings);
 					//_Tasual_Main.Tasual_Array_Save();
 				}
@@ -73,7 +73,7 @@ namespace Tasual
 		{
 			Tasual_Notes_TextBox.AcceptsReturn = !Tasual_Notes_CheckBox.Checked;
 			_Tasual_Main.Settings.EnterToSave = Tasual_Notes_CheckBox.Checked;
-			Setting.Save(_Tasual_Main.Settings);
+			_Tasual_Main.Tasual_Settings_Save();
 		}
 
 		private void Tasual_Notes_Load(object sender, EventArgs e)

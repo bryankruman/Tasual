@@ -21,6 +21,7 @@ namespace Tasual
 		OlvListViewHitTestInfo CalendarPopout = null;
 		OlvListViewHitTestInfo Tasual_ListView_FirstClickInfo = null;
 		bool Tasual_ListView_PreviouslySelected = false;
+		string Tasual_LastSelectedGroup;
 
 		OLVColumn DescriptionColumn;
 		OLVColumn IconColumn;
@@ -51,24 +52,29 @@ namespace Tasual
 		// otherwise other functions in the program cease to be able to retrieve data from TaskArray.
 		// TODO: Is this really the right way to handle this? Should we keep the array handling code purely in the 
 		//       Tasual_Main class? Or is there another way to handle it.
-		public void Tasual_Main_Save()
+		public void Tasual_Array_Save()
 		{
 			ArrayHandler.Save(ref TaskArray, Settings);
 		}
 
-		public void Tasual_ApplySettings()
-		{
-			this.TopMost = Settings.AlwaysOnTop;
-			StartupManager.SetStartupStatus(Settings.LaunchOnStartup);
-		}
-
-		public void Tasual_ClearAll()
+		public void Tasual_Array_ClearAll()
 		{
 			TaskArray.Clear();
 			ArrayHandler.Save(ref TaskArray, Settings);
 			ArrayHandler.Load(ref TaskArray, Settings);
 			Tasual_ListView.SetObjects(TaskArray);
 			Tasual_ListView.BuildList();
+		}
+
+		public void Tasual_Settings_Apply()
+		{
+			this.TopMost = Settings.AlwaysOnTop;
+			StartupManager.SetStartupStatus(Settings.LaunchOnStartup);
+		}
+
+		public void Tasual_Settings_Save()
+		{
+			Setting.Save(ref Settings);
 		}
 
 		public static Tasual_Main ReturnFormInstance()
@@ -287,17 +293,29 @@ namespace Tasual
 
 		private void Tasual_MenuStrip_Create_Quick_Click(object sender, EventArgs e)
 		{
-			// TODO: Try to find the "first" group first, if nothing is found then just use the default group of "Tasks"
-			//if (Tasual_ListView.OLVGroups.FirstOrDefault() != null)
-			//{
-			//    GroupName = Tasual_ListView.OLVGroups.FirstOrDefault().Name;
-			//}
+			string GroupName = "Tasks";
+			// defaults to the first group it finds OR the last selected group
+			if (!string.IsNullOrEmpty(Tasual_LastSelectedGroup))
+			{
+				GroupName = Tasual_LastSelectedGroup;
+			}
+			else
+			{
+				foreach (Task Search in TaskArray)
+				{
+					if (!string.IsNullOrEmpty(Search.Group))
+					{
+						GroupName = Search.Group;
+						break;
+					}
+				}
+			}
 
 			Task Task = new Task(
 				false,
 				0,
 				0,
-				"Tasks",
+				GroupName,
 				"New task",
 				new TimeInfo(),
 				new Timer()
@@ -307,6 +325,7 @@ namespace Tasual
 			ArrayHandler.Save(ref TaskArray, Settings);
 			Tasual_ListView.BuildList();
 			Tasual_StatusLabel_UpdateCounts();
+			Tasual_ListView.EnsureModelVisible(Task);
 			Tasual_ListView.EditModel(Task);
 		}
 
@@ -608,8 +627,8 @@ namespace Tasual
 		private void Tasual_Main_Load(object sender, EventArgs e)
 		{
 			// load settings 
-			Setting.Load(Settings);
-			Tasual_ApplySettings();
+			Setting.Load(ref Settings);
+			Tasual_Settings_Apply();
 
 			// load task array
 			ArrayHandler.Load(ref TaskArray, Settings);
@@ -695,6 +714,7 @@ namespace Tasual
 			if (Tasual_ListView.SelectedItem != null)
 			{
 				Tasual_MenuStrip_Edit.Enabled = true;
+				Tasual_LastSelectedGroup = ((Task)Tasual_ListView.SelectedItem.RowObject).Group;
 			}
 			else
 			{

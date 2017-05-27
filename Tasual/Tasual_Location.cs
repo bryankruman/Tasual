@@ -51,7 +51,7 @@ namespace Tasual
 			if (Task != null)
 			{
 				Task.Location = Tasual_Location_TextBox.Text;
-				_Tasual_Main.Tasual_Main_Save();
+				_Tasual_Main.Tasual_Array_Save();
 			}
 			else
 			{
