@@ -82,7 +82,6 @@ namespace Tasual
 				using (JsonWriter OutputJson = new JsonTextWriter(OutputStream))
 				{
 					OutputJson.Formatting = Formatting.Indented;
-
 					JsonSerializer Serializer = new JsonSerializer();
 					Serializer.Serialize(OutputJson, Settings);
 				}
@@ -90,7 +89,7 @@ namespace Tasual
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine("Tasual_Settings_Save(): {0}\nTrace: {1}", e.Message, e.StackTrace);
+				Console.WriteLine("Could not write to settings.cfg! Message: {0}", e.Message);
 			}
 		}
 
@@ -98,18 +97,23 @@ namespace Tasual
 		{
 			try
 			{
-				TaskArray.Clear();
-
 				using (StreamReader InputFile = File.OpenText("settings.cfg"))
 				using (JsonReader InputJson = new JsonTextReader(InputFile))
 				{
+					TaskArray.Clear();
 					JsonSerializer Serializer = new JsonSerializer();
 					Settings = (Setting)Serializer.Deserialize(InputJson, typeof(Setting));
 				}
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine("Tasual_Settings_Load(): {0}\nTrace: {1}", e.Message, e.StackTrace);
+				Console.WriteLine(
+					"Could not load settings.cfg! " +
+					"Proceeding with defaults and writing blank new config! " +
+					"Message: {0}", 
+					e.Message
+				);
+				Tasual_Settings_Save();
 			}
 		}
 
@@ -143,7 +147,6 @@ namespace Tasual
 				using (JsonWriter OutputJson = new JsonTextWriter(OutputStream))
 				{
 					OutputJson.Formatting = Formatting.Indented;
-
 					JsonSerializer Serializer = new JsonSerializer();
 					Serializer.Serialize(OutputJson, TaskArray);
 				}
@@ -202,11 +205,11 @@ namespace Tasual
 		{
 			try
 			{
-				TaskArray.Clear();
-
 				using (StreamReader InputFile = File.OpenText(Settings.TextFile))
 				using (JsonReader InputJson = new JsonTextReader(InputFile))
 				{
+					TaskArray.Clear();
+
 					JsonSerializer Serializer = new JsonSerializer();
 					TaskArray = (List<Task>)Serializer.Deserialize(InputJson, typeof(List<Task>));
 					Tasual_ListView.SetObjects(TaskArray);
@@ -223,10 +226,9 @@ namespace Tasual
 			Console.WriteLine("Tasual_Array_Load_Text();");
 			try
 			{
-				TaskArray.Clear();
-
 				using (StreamReader InputFile = new StreamReader(Settings.TextFile))
 				{
+					TaskArray.Clear();
 					int Counter = 0;
 					string Line;
 
