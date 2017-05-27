@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class_URLExtensions.cs" />
     <Compile Include="Class_Setting.cs" />
     <Compile Include="Class_StartupManager.cs" />
     <Compile Include="Class_Task.cs" />

@@ -656,11 +656,23 @@ namespace Tasual
 			NotesForm.ShowDialog(this);
 		}
 
+		private void Tasual_MenuStrip_Icon_Link_Clipboard_Click(object sender, EventArgs e)
+		{
+			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
+			Clipboard.SetText(Task.Link);
+		}
+
 		private void Tasual_MenuStrip_Icon_Link_Edit_Click(object sender, EventArgs e)
 		{
 			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
 			Tasual_Link LinkForm = new Tasual_Link(this, TaskArray.IndexOf(Task));
 			LinkForm.ShowDialog(this);
+		}
+
+		private void Tasual_MenuStrip_Icon_Link_Follow_Click(object sender, EventArgs e)
+		{
+			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
+			URLExtensions.Follow(Task.Link);
 		}
 
 		private void Tasual_MenuStrip_Icon_Link_Remove_Click(object sender, EventArgs e)
@@ -671,11 +683,23 @@ namespace Tasual
 			Tasual_ListView.BuildList();
 		}
 
+		private void Tasual_MenuStrip_Icon_Location_Clipboard_Click(object sender, EventArgs e)
+		{
+			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
+			Clipboard.SetText(Task.Location);
+		}
+
 		private void Tasual_MenuStrip_Icon_Location_Edit_Click(object sender, EventArgs e)
 		{
 			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
 			Tasual_Location LocationForm = new Tasual_Location(this, TaskArray.IndexOf(Task));
 			LocationForm.ShowDialog(this);
+		}
+
+		private void Tasual_MenuStrip_Icon_Location_Maps_Click(object sender, EventArgs e)
+		{
+			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
+			URLExtensions.Follow(string.Format("http://maps.google.com/?q={0}", Uri.EscapeDataString(Task.Location)));
 		}
 
 		private void Tasual_MenuStrip_Icon_Location_Remove_Click(object sender, EventArgs e)
@@ -684,6 +708,12 @@ namespace Tasual
 			Task.Location = "";
 			Tasual_Array_Save();
 			Tasual_ListView.BuildList();
+		}
+
+		private void Tasual_MenuStrip_Icon_Notes_Clipboard_Click(object sender, EventArgs e)
+		{
+			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
+			Clipboard.SetText(Task.Notes);
 		}
 
 		private void Tasual_MenuStrip_Icon_Notes_Edit_Click(object sender, EventArgs e)
@@ -734,6 +764,15 @@ namespace Tasual
 			{
 				Tasual_MenuStrip_Icon_AddNotes.Visible = true;
 				Tasual_MenuStrip_Icon_Notes.Visible = false;
+			}
+
+			if (URLExtensions.Valid(Task.Link))
+			{
+				Tasual_MenuStrip_Icon_Link_Follow.Enabled = true;
+			}
+			else
+			{
+				Tasual_MenuStrip_Icon_Link_Follow.Enabled = false;
 			}
 		}
 

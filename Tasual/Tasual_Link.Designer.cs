@@ -63,6 +63,7 @@
 			this.Tasual_Link_Button_Follow.TabIndex = 2;
 			this.Tasual_Link_Button_Follow.Text = "Follow Link";
 			this.Tasual_Link_Button_Follow.UseVisualStyleBackColor = true;
+			this.Tasual_Link_Button_Follow.Click += new System.EventHandler(this.Tasual_Link_Button_Follow_Click);
 			// 
 			// Tasual_Link_TextBox
 			// 
@@ -70,6 +71,7 @@
 			this.Tasual_Link_TextBox.Name = "Tasual_Link_TextBox";
 			this.Tasual_Link_TextBox.Size = new System.Drawing.Size(354, 20);
 			this.Tasual_Link_TextBox.TabIndex = 3;
+			this.Tasual_Link_TextBox.TextChanged += new System.EventHandler(this.Tasual_Link_TextBox_TextChanged);
 			// 
 			// Tasual_Link
 			// 

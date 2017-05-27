@@ -492,7 +492,7 @@
             this.Tasual_MenuStrip_Icon_Location,
             this.Tasual_MenuStrip_Icon_AddLocation});
 			this.Tasual_MenuStrip_Icon.Name = "Tasual_MenuStrip_Icon";
-			this.Tasual_MenuStrip_Icon.Size = new System.Drawing.Size(143, 136);
+			this.Tasual_MenuStrip_Icon.Size = new System.Drawing.Size(153, 158);
 			this.Tasual_MenuStrip_Icon.Opening += new System.ComponentModel.CancelEventHandler(this.Tasual_MenuStrip_Icon_Opening);
 			// 
 			// Tasual_MenuStrip_Icon_Notes
@@ -502,7 +502,7 @@
             this.Tasual_MenuStrip_Icon_Notes_Clipboard,
             this.Tasual_MenuStrip_Icon_Notes_Remove});
 			this.Tasual_MenuStrip_Icon_Notes.Name = "Tasual_MenuStrip_Icon_Notes";
-			this.Tasual_MenuStrip_Icon_Notes.Size = new System.Drawing.Size(142, 22);
+			this.Tasual_MenuStrip_Icon_Notes.Size = new System.Drawing.Size(152, 22);
 			this.Tasual_MenuStrip_Icon_Notes.Text = "Notes";
 			// 
 			// Tasual_MenuStrip_Icon_Notes_EditNotes
@@ -517,6 +517,7 @@
 			this.Tasual_MenuStrip_Icon_Notes_Clipboard.Name = "Tasual_MenuStrip_Icon_Notes_Clipboard";
 			this.Tasual_MenuStrip_Icon_Notes_Clipboard.Size = new System.Drawing.Size(169, 22);
 			this.Tasual_MenuStrip_Icon_Notes_Clipboard.Text = "Copy to clipboard";
+			this.Tasual_MenuStrip_Icon_Notes_Clipboard.Click += new System.EventHandler(this.Tasual_MenuStrip_Icon_Notes_Clipboard_Click);
 			// 
 			// Tasual_MenuStrip_Icon_Notes_Remove
 			// 
@@ -528,7 +529,7 @@
 			// Tasual_MenuStrip_Icon_AddNotes
 			// 
 			this.Tasual_MenuStrip_Icon_AddNotes.Name = "Tasual_MenuStrip_Icon_AddNotes";
-			this.Tasual_MenuStrip_Icon_AddNotes.Size = new System.Drawing.Size(142, 22);
+			this.Tasual_MenuStrip_Icon_AddNotes.Size = new System.Drawing.Size(152, 22);
 			this.Tasual_MenuStrip_Icon_AddNotes.Text = "Add notes";
 			this.Tasual_MenuStrip_Icon_AddNotes.Click += new System.EventHandler(this.Tasual_MenuStrip_Icon_AddNotes_Click);
 			// 
@@ -540,7 +541,7 @@
             this.Tasual_MenuStrip_Icon_Link_Follow,
             this.Tasual_MenuStrip_Icon_Link_Remove});
 			this.Tasual_MenuStrip_Icon_Link.Name = "Tasual_MenuStrip_Icon_Link";
-			this.Tasual_MenuStrip_Icon_Link.Size = new System.Drawing.Size(142, 22);
+			this.Tasual_MenuStrip_Icon_Link.Size = new System.Drawing.Size(152, 22);
 			this.Tasual_MenuStrip_Icon_Link.Text = "Link";
 			// 
 			// Tasual_MenuStrip_Icon_Link_Edit
@@ -555,12 +556,14 @@
 			this.Tasual_MenuStrip_Icon_Link_Clipboard.Name = "Tasual_MenuStrip_Icon_Link_Clipboard";
 			this.Tasual_MenuStrip_Icon_Link_Clipboard.Size = new System.Drawing.Size(169, 22);
 			this.Tasual_MenuStrip_Icon_Link_Clipboard.Text = "Copy to clipboard";
+			this.Tasual_MenuStrip_Icon_Link_Clipboard.Click += new System.EventHandler(this.Tasual_MenuStrip_Icon_Link_Clipboard_Click);
 			// 
 			// Tasual_MenuStrip_Icon_Link_Follow
 			// 
 			this.Tasual_MenuStrip_Icon_Link_Follow.Name = "Tasual_MenuStrip_Icon_Link_Follow";
 			this.Tasual_MenuStrip_Icon_Link_Follow.Size = new System.Drawing.Size(169, 22);
 			this.Tasual_MenuStrip_Icon_Link_Follow.Text = "Follow link";
+			this.Tasual_MenuStrip_Icon_Link_Follow.Click += new System.EventHandler(this.Tasual_MenuStrip_Icon_Link_Follow_Click);
 			// 
 			// Tasual_MenuStrip_Icon_Link_Remove
 			// 
@@ -572,7 +575,7 @@
 			// Tasual_MenuStrip_Icon_AddLink
 			// 
 			this.Tasual_MenuStrip_Icon_AddLink.Name = "Tasual_MenuStrip_Icon_AddLink";
-			this.Tasual_MenuStrip_Icon_AddLink.Size = new System.Drawing.Size(142, 22);
+			this.Tasual_MenuStrip_Icon_AddLink.Size = new System.Drawing.Size(152, 22);
 			this.Tasual_MenuStrip_Icon_AddLink.Text = "Add link";
 			this.Tasual_MenuStrip_Icon_AddLink.Click += new System.EventHandler(this.Tasual_MenuStrip_Icon_AddLink_Click);
 			// 
@@ -584,7 +587,7 @@
             this.Tasual_MenuStrip_Icon_Location_Maps,
             this.Tasual_MenuStrip_Icon_Location_Remove});
 			this.Tasual_MenuStrip_Icon_Location.Name = "Tasual_MenuStrip_Icon_Location";
-			this.Tasual_MenuStrip_Icon_Location.Size = new System.Drawing.Size(142, 22);
+			this.Tasual_MenuStrip_Icon_Location.Size = new System.Drawing.Size(152, 22);
 			this.Tasual_MenuStrip_Icon_Location.Text = "Location";
 			// 
 			// Tasual_MenuStrip_Icon_Location_Edit
@@ -599,12 +602,14 @@
 			this.Tasual_MenuStrip_Icon_Location_Clipboard.Name = "Tasual_MenuStrip_Icon_Location_Clipboard";
 			this.Tasual_MenuStrip_Icon_Location_Clipboard.Size = new System.Drawing.Size(176, 22);
 			this.Tasual_MenuStrip_Icon_Location_Clipboard.Text = "Copy to clipboard";
+			this.Tasual_MenuStrip_Icon_Location_Clipboard.Click += new System.EventHandler(this.Tasual_MenuStrip_Icon_Location_Clipboard_Click);
 			// 
 			// Tasual_MenuStrip_Icon_Location_Maps
 			// 
 			this.Tasual_MenuStrip_Icon_Location_Maps.Name = "Tasual_MenuStrip_Icon_Location_Maps";
 			this.Tasual_MenuStrip_Icon_Location_Maps.Size = new System.Drawing.Size(176, 22);
 			this.Tasual_MenuStrip_Icon_Location_Maps.Text = "Open Google Maps";
+			this.Tasual_MenuStrip_Icon_Location_Maps.Click += new System.EventHandler(this.Tasual_MenuStrip_Icon_Location_Maps_Click);
 			// 
 			// Tasual_MenuStrip_Icon_Location_Remove
 			// 
@@ -616,7 +621,7 @@
 			// Tasual_MenuStrip_Icon_AddLocation
 			// 
 			this.Tasual_MenuStrip_Icon_AddLocation.Name = "Tasual_MenuStrip_Icon_AddLocation";
-			this.Tasual_MenuStrip_Icon_AddLocation.Size = new System.Drawing.Size(142, 22);
+			this.Tasual_MenuStrip_Icon_AddLocation.Size = new System.Drawing.Size(152, 22);
 			this.Tasual_MenuStrip_Icon_AddLocation.Text = "Add location";
 			this.Tasual_MenuStrip_Icon_AddLocation.Click += new System.EventHandler(this.Tasual_MenuStrip_Icon_AddLocation_Click);
 			// 
