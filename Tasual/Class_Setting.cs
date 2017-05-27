@@ -28,6 +28,9 @@ namespace Tasual
 		[JsonProperty("promptdelete")]
 		public bool PromptDelete { get; set; } = true;
 
+		[JsonProperty("entertosave")]
+		public bool EnterToSave { get; set; } = true;
+
 
 		[JsonProperty("columns")]
 		public Columns EnabledColumns { get; set; } = Columns.Normal;

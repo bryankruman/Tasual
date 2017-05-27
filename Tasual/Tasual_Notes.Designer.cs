@@ -31,6 +31,7 @@
 			this.Tasual_Notes_Cancel = new System.Windows.Forms.Button();
 			this.Tasual_Notes_Save = new System.Windows.Forms.Button();
 			this.Tasual_Notes_TextBox = new System.Windows.Forms.TextBox();
+			this.Tasual_Notes_CheckBox = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// Tasual_Notes_Cancel
@@ -58,7 +59,6 @@
 			// 
 			// Tasual_Notes_TextBox
 			// 
-			this.Tasual_Notes_TextBox.AcceptsReturn = true;
 			this.Tasual_Notes_TextBox.AcceptsTab = true;
 			this.Tasual_Notes_TextBox.AllowDrop = true;
 			this.Tasual_Notes_TextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -72,6 +72,17 @@
 			this.Tasual_Notes_TextBox.TabIndex = 0;
 			this.Tasual_Notes_TextBox.Text = "Write notes here";
 			// 
+			// Tasual_Notes_CheckBox
+			// 
+			this.Tasual_Notes_CheckBox.AutoSize = true;
+			this.Tasual_Notes_CheckBox.Location = new System.Drawing.Point(12, 177);
+			this.Tasual_Notes_CheckBox.Name = "Tasual_Notes_CheckBox";
+			this.Tasual_Notes_CheckBox.Size = new System.Drawing.Size(117, 17);
+			this.Tasual_Notes_CheckBox.TabIndex = 3;
+			this.Tasual_Notes_CheckBox.Text = "Press enter to save";
+			this.Tasual_Notes_CheckBox.UseVisualStyleBackColor = true;
+			this.Tasual_Notes_CheckBox.CheckedChanged += new System.EventHandler(this.Tasual_Notes_CheckBox_CheckedChanged);
+			// 
 			// Tasual_Notes
 			// 
 			this.AcceptButton = this.Tasual_Notes_Save;
@@ -79,6 +90,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.Tasual_Notes_Cancel;
 			this.ClientSize = new System.Drawing.Size(361, 208);
+			this.Controls.Add(this.Tasual_Notes_CheckBox);
 			this.Controls.Add(this.Tasual_Notes_Save);
 			this.Controls.Add(this.Tasual_Notes_Cancel);
 			this.Controls.Add(this.Tasual_Notes_TextBox);
@@ -88,6 +100,7 @@
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Notes";
+			this.Load += new System.EventHandler(this.Tasual_Notes_Load);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -97,5 +110,6 @@
 		private System.Windows.Forms.Button Tasual_Notes_Cancel;
 		private System.Windows.Forms.Button Tasual_Notes_Save;
 		private System.Windows.Forms.TextBox Tasual_Notes_TextBox;
+		private System.Windows.Forms.CheckBox Tasual_Notes_CheckBox;
 	}
 }

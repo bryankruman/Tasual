@@ -25,7 +25,7 @@ namespace Tasual
 			catch (Exception e)
 			{
 				Console.WriteLine(e);
-				this.Close();
+				Close();
 			}
 		}
 
@@ -43,7 +43,7 @@ namespace Tasual
 			catch (Exception e)
 			{
 				Console.WriteLine(e);
-				this.Close();
+				Close();
 			}
 		}
 
@@ -65,6 +65,19 @@ namespace Tasual
 			{
 				_Tasual_Create.Notes = Tasual_Notes_TextBox.Text;
 			}
+		}
+
+		private void Tasual_Notes_CheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			Tasual_Notes_TextBox.AcceptsReturn = !Tasual_Notes_CheckBox.Checked;
+			_Tasual_Main.Settings.EnterToSave = Tasual_Notes_CheckBox.Checked;
+			_Tasual_Main.Tasual_Settings_Save();
+		}
+
+		private void Tasual_Notes_Load(object sender, EventArgs e)
+		{
+			Tasual_Notes_TextBox.AcceptsReturn = !_Tasual_Main.Settings.EnterToSave;
+			Tasual_Notes_CheckBox.Checked = _Tasual_Main.Settings.EnterToSave;
 		}
 	}
 }
