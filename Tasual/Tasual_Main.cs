@@ -781,7 +781,7 @@ namespace Tasual
 		public void Tasual_ApplySettings()
 		{
 			this.TopMost = Settings.AlwaysOnTop;
-			// todo: add startup manager
+			StartupManager.SetStartupStatus(Settings.LaunchOnStartup);
 		}
 
 		// Main Form
@@ -789,7 +789,6 @@ namespace Tasual
 		{
 			// load settings 
 			Tasual_Settings_Load();
-
 			Tasual_ApplySettings();
 
 			// load task array

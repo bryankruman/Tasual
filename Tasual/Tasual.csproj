@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class_Setting.cs" />
+    <Compile Include="Class_StartupManager.cs" />
     <Compile Include="Class_Task.cs" />
     <Compile Include="Class_TimeInfo.cs" />
     <Compile Include="Class_WatermarkTextBox.cs">
