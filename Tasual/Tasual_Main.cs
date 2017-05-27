@@ -298,7 +298,14 @@ namespace Tasual
 			TimeColumn.AspectToStringConverter = delegate(object Input)
 			{
 				TimeInfo Time = (TimeInfo)Input;
-				return TimeInfo.FormatTime(Time.Start.ToLocalTime(), TimeInfo.TimeFormat.Short);
+				if (TimeInfo.Scheduled(Time))
+				{
+					return TimeInfo.FormatTime(Time.Start.ToLocalTime(), TimeInfo.TimeFormat.Short);
+				}
+				else
+				{
+					return "-";
+				}
 			};
 			Tasual_ListView.AllColumns.Add(TimeColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { TimeColumn });
@@ -392,7 +399,7 @@ namespace Tasual
 
 			foreach (Task Task in TaskArray)
 			{
-				if (TimeInfo.GetGroupStringFromTask(Task, Settings) == Group.Name)
+				if (TimeInfo.GetGroupStringFromTask(Task, Settings).Remove(0, 1) == Group.Name)
 				{
 					RemovalList.Add(Task);
 				}

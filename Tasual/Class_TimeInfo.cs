@@ -273,6 +273,18 @@ namespace Tasual
 			SpecificDay = _SpecificDay;
 		}
 
+		public static bool Scheduled(TimeInfo Time)
+		{
+			if (Time.Start != DateTime.MinValue)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
 		public static string Ordinal(int number)
 		{
 			string suffix = String.Empty;
@@ -362,17 +374,24 @@ namespace Tasual
 			{
 				return "4Completed";
 			}
-			else if ((DateTime.Now > Task.Time.Start) && Settings.AlwaysShowOverdueGroup)
+			else if (Scheduled(Task.Time))
 			{
-				return "1Overdue";
-			}
-			else if (Settings.AlwaysShowTodayGroup)
-			{
-				DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
-				DateTime TargetDay = Task.Time.Start - Task.Time.Start.TimeOfDay;
-				if (TargetDay == Today)
+				if ((DateTime.Now > Task.Time.Start) && Settings.AlwaysShowOverdueGroup)
 				{
-					return "2Today";
+					return "1Overdue";
+				}
+				else if (Settings.AlwaysShowTodayGroup)
+				{
+					DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
+					DateTime TargetDay = Task.Time.Start - Task.Time.Start.TimeOfDay;
+					if (TargetDay == Today)
+					{
+						return "2Today";
+					}
+					else
+					{
+						return String.Format("3{0}", Task.Group);
+					}
 				}
 				else
 				{
@@ -388,47 +407,54 @@ namespace Tasual
 		public static string GetDueStringFromTimeInfo(TimeInfo TimeInfo)
 		{
 			DateTime Time = TimeInfo.Start.ToLocalTime();
-			if (DateTime.Now > Time)
+			if (Scheduled(TimeInfo))
 			{
-				return "Overdue";
-			}
-			else
-			{
-				DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
-				DateTime TargetDay = Time - Time.TimeOfDay;
-				TimeSpan Span = TargetDay - Today;
-				if (TargetDay == Today)
+				if (DateTime.Now > Time)
 				{
-					return "Today";
-				}
-				else if (Span.Days <= 1)
-				{
-					return "Tomorrow";
-				}
-				else if (Span.Days <= 7)
-				{
-					return Time.DayOfWeek.ToString();
-				}
-				else if (Span.Days <= 14)
-				{
-					return "Next Week";
-				}
-				else if (Span.Days <= 21)
-				{
-					return "2 Weeks";
-				}
-				else if (Span.Days <= 30)
-				{
-					return "3 Weeks";
-				}
-				else if (TargetDay.Month == Today.AddMonths(1).Month)
-				{
-					return "Next Month";
+					return "Overdue";
 				}
 				else
 				{
-					return "Future";
+					DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
+					DateTime TargetDay = Time - Time.TimeOfDay;
+					TimeSpan Span = TargetDay - Today;
+					if (TargetDay == Today)
+					{
+						return "Today";
+					}
+					else if (Span.Days <= 1)
+					{
+						return "Tomorrow";
+					}
+					else if (Span.Days <= 7)
+					{
+						return Time.DayOfWeek.ToString();
+					}
+					else if (Span.Days <= 14)
+					{
+						return "Next Week";
+					}
+					else if (Span.Days <= 21)
+					{
+						return "2 Weeks";
+					}
+					else if (Span.Days <= 30)
+					{
+						return "3 Weeks";
+					}
+					else if (TargetDay.Month == Today.AddMonths(1).Month)
+					{
+						return "Next Month";
+					}
+					else
+					{
+						return "Future";
+					}
 				}
+			}
+			else
+			{
+				return "Future";
 			}
 		}
 
@@ -464,47 +490,54 @@ namespace Tasual
 			{
 				return 16; // "Completed";
 			}
-			else if (DateTime.Now > Time)
-			{
-				return 1; // "Overdue";
-			}
-			else
-			{
-				DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
-				DateTime TargetDay = Time - Time.TimeOfDay;
-				TimeSpan Span = TargetDay - Today;
-				if (TargetDay == Today)
+			else if (Scheduled(Task.Time))
+			{ 
+				if (DateTime.Now > Time)
 				{
-					return 2; // "Today";
-				}
-				else if (Span.Days <= 1)
-				{
-					return 3; //  "Tomorrow";
-				}
-				else if (Span.Days <= 7)
-				{
-					return 4 + (int)Time.DayOfWeek; //Time.DayOfWeek.ToString();
-				}
-				else if (Span.Days <= 14)
-				{
-					return 11; //"Next Week";
-				}
-				else if (Span.Days <= 21)
-				{
-					return 12; // "2 Weeks";
-				}
-				else if (Span.Days <= 30)
-				{
-					return 13; // "3 Weeks";
-				}
-				else if (TargetDay.Month == Today.AddMonths(1).Month)
-				{
-					return 14; // "Next Month";
+					return 1; // "Overdue";
 				}
 				else
 				{
-					return 15; // "Future";
+					DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
+					DateTime TargetDay = Time - Time.TimeOfDay;
+					TimeSpan Span = TargetDay - Today;
+					if (TargetDay == Today)
+					{
+						return 2; // "Today";
+					}
+					else if (Span.Days <= 1)
+					{
+						return 3; //  "Tomorrow";
+					}
+					else if (Span.Days <= 7)
+					{
+						return 4 + (int)Time.DayOfWeek; //Time.DayOfWeek.ToString();
+					}
+					else if (Span.Days <= 14)
+					{
+						return 11; //"Next Week";
+					}
+					else if (Span.Days <= 21)
+					{
+						return 12; // "2 Weeks";
+					}
+					else if (Span.Days <= 30)
+					{
+						return 13; // "3 Weeks";
+					}
+					else if (TargetDay.Month == Today.AddMonths(1).Month)
+					{
+						return 14; // "Next Month";
+					}
+					else
+					{
+						return 15; // "Future";
+					}
 				}
+			}
+			else
+			{
+				return 15; // "Future";
 			}
 		}
 
