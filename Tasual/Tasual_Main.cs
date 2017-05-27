@@ -73,6 +73,12 @@ namespace Tasual
 		//  Array Functions
 		// =================
 
+		public void Tasual_Settings_Apply()
+		{
+			this.TopMost = Settings.AlwaysOnTop;
+			StartupManager.SetStartupStatus(Settings.LaunchOnStartup);
+		}
+
 		public void Tasual_Settings_Save()
 		{
 			try
@@ -778,18 +784,12 @@ namespace Tasual
 		//  Other Handlers
 		// ================
 
-		public void Tasual_ApplySettings()
-		{
-			this.TopMost = Settings.AlwaysOnTop;
-			StartupManager.SetStartupStatus(Settings.LaunchOnStartup);
-		}
-
 		// Main Form
 		private void Tasual_Main_Load(object sender, EventArgs e)
 		{
 			// load settings 
 			Tasual_Settings_Load();
-			Tasual_ApplySettings();
+			Tasual_Settings_Apply();
 
 			// load task array
 			Tasual_Array_Load();
