@@ -57,6 +57,7 @@
 			// 
 			// Tasual_Link_Button_Follow
 			// 
+			this.Tasual_Link_Button_Follow.Enabled = false;
 			this.Tasual_Link_Button_Follow.Location = new System.Drawing.Point(12, 38);
 			this.Tasual_Link_Button_Follow.Name = "Tasual_Link_Button_Follow";
 			this.Tasual_Link_Button_Follow.Size = new System.Drawing.Size(92, 23);
@@ -70,7 +71,7 @@
 			this.Tasual_Link_TextBox.Location = new System.Drawing.Point(12, 12);
 			this.Tasual_Link_TextBox.Name = "Tasual_Link_TextBox";
 			this.Tasual_Link_TextBox.Size = new System.Drawing.Size(354, 20);
-			this.Tasual_Link_TextBox.TabIndex = 3;
+			this.Tasual_Link_TextBox.TabIndex = 0;
 			this.Tasual_Link_TextBox.TextChanged += new System.EventHandler(this.Tasual_Link_TextBox_TextChanged);
 			// 
 			// Tasual_Link
