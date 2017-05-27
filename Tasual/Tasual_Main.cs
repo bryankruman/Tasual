@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 using BrightIdeasSoftware;
 
 namespace Tasual
@@ -46,6 +45,17 @@ namespace Tasual
 		//  Common/Supporting Functions
 		// =============================
 
+		// Allow other dialogs to trigger a save
+		// This was necessary as simply calling ArrayHandler.Save() from other classes would give a CS1690 warning for
+		// using a field of a marshal-by-reference class. Additionally, these methods must continue using references 
+		// otherwise other functions in the program cease to be able to retrieve data from TaskArray.
+		// TODO: Is this really the right way to handle this? Should we keep the array handling code purely in the 
+		//       Tasual_Main class? Or is there another way to handle it.
+		public void Tasual_Main_Save()
+		{
+			ArrayHandler.Save(ref TaskArray, Settings);
+		}
+
 		public void Tasual_ApplySettings()
 		{
 			this.TopMost = Settings.AlwaysOnTop;
@@ -55,8 +65,9 @@ namespace Tasual
 		public void Tasual_ClearAll()
 		{
 			TaskArray.Clear();
-			Tasual_Array_Save();
-			Tasual_Array_Load();
+			ArrayHandler.Save(ref TaskArray, Settings);
+			ArrayHandler.Load(ref TaskArray, Settings);
+			Tasual_ListView.SetObjects(TaskArray);
 			Tasual_ListView.BuildList();
 		}
 
@@ -77,192 +88,6 @@ namespace Tasual
 			else
 			{
 				Tasual_StatusLabel.Text = string.Format("{0} of {1} tasks complete", Complete, Total);
-			}
-		}
-
-
-		// =================
-		//  Array Functions
-		// =================
-
-		private void Tasual_Array_ReAssignGroup(string OldTaskGroup, string NewTaskGroup)
-		{
-			foreach (Task Task in TaskArray)
-			{
-				if (Task == null) { break; }
-				if (Task.Group == OldTaskGroup)
-				{
-					Task.Group = NewTaskGroup;
-				}
-			}
-		}
-
-		public void Tasual_Array_Save()
-		{
-			switch (Settings.Protocol)
-			{
-				case Setting.Protocols.Text: Tasual_Array_Save_Text(); break;
-				case Setting.Protocols.JSON: Tasual_Array_Save_JSON(); break;
-			}
-		}
-
-		public void Tasual_Array_Save_JSON()
-		{
-			try
-			{
-				using (FileStream OutputFile = File.Open(Settings.TextFile, FileMode.Create))
-				using (StreamWriter OutputStream = new StreamWriter(OutputFile))
-				using (JsonWriter OutputJson = new JsonTextWriter(OutputStream))
-				{
-					OutputJson.Formatting = Formatting.Indented;
-					JsonSerializer Serializer = new JsonSerializer();
-					Serializer.Serialize(OutputJson, TaskArray);
-				}
-
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine("Tasual_Array_Save_JSON(): {0}\nTrace: {1}", e.Message, e.StackTrace);
-			}
-		}
-
-		public void Tasual_Array_Save_Text()
-		{
-			Console.WriteLine("Tasual_Array_Save_Text();");
-			try
-			{
-				using (StreamWriter OutputFile = new StreamWriter(Settings.TextFile))
-				{
-					foreach (Task Task in TaskArray)
-					{
-						string Line;
-						Line = Task.Checked.ToString();
-						Line = Line + (char)29 + Task.Priority.ToString();
-						Line = Line + (char)29 + Task.Group;
-						Line = Line + (char)29 + Task.Description;
-
-						DateTimeOffset TimeOffset;
-						TimeOffset = new DateTimeOffset(Task.Time.Start.ToLocalTime());
-						Line = Line + (char)29 + TimeOffset.ToUnixTimeSeconds();
-
-						TimeOffset = new DateTimeOffset(Task.Time.End.ToLocalTime());
-						Line = Line + (char)29 + TimeOffset.ToUnixTimeSeconds();
-
-						TimeOffset = new DateTimeOffset(Task.Time.Next.ToLocalTime());
-						Line = Line + (char)29 + TimeOffset.ToUnixTimeSeconds();
-						OutputFile.WriteLine(Line);
-					}
-				}
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine("Tasual_Array_Save_Text(): {0}\nTrace: {1}", e.Message, e.StackTrace);
-			}
-		}
-
-		public void Tasual_Array_Load()
-		{
-			switch (Settings.Protocol)
-			{
-				case Setting.Protocols.Text: Tasual_Array_Load_Text(); break;
-				case Setting.Protocols.JSON: Tasual_Array_Load_JSON(); break;
-			}
-		}
-
-		public void Tasual_Array_Load_JSON()
-		{
-			try
-			{
-				using (StreamReader InputFile = File.OpenText(Settings.TextFile))
-				using (JsonReader InputJson = new JsonTextReader(InputFile))
-				{
-					TaskArray.Clear();
-
-					JsonSerializer Serializer = new JsonSerializer();
-					TaskArray = (List<Task>)Serializer.Deserialize(InputJson, typeof(List<Task>));
-					Tasual_ListView.SetObjects(TaskArray);
-				}
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine("Tasual_Array_Load_JSON(): {0}\nTrace: {1}", e.Message, e.StackTrace);
-			}
-		}
-
-		public void Tasual_Array_Load_Text()
-		{
-			Console.WriteLine("Tasual_Array_Load_Text();");
-			try
-			{
-				using (StreamReader InputFile = new StreamReader(Settings.TextFile))
-				{
-					TaskArray.Clear();
-					int Counter = 0;
-					string Line;
-
-					while ((Line = InputFile.ReadLine()) != null)
-					{
-						Task NewItem = new Task();
-						int ArgType = 0;
-						string[] Segments = Line.Split((char)29);
-						double UnixTime;
-
-						foreach (string Token in Segments)
-						{
-							// lets do something with this data now
-							int Temp = 0;
-							bool TempBool = false;
-
-							switch (ArgType)
-							{
-								case (int)Task.Arguments.Checked: { Boolean.TryParse(Token, out TempBool); NewItem.Checked = TempBool; break; }
-								case (int)Task.Arguments.Priority: { Int32.TryParse(Token, out Temp); NewItem.Priority = Temp; break; }
-								case (int)Task.Arguments.Group: { NewItem.Group = Token; break; }
-								case (int)Task.Arguments.Description: { NewItem.Description = Token; break; }
-								case (int)Task.Arguments.Created:
-									{
-										Double.TryParse(Token, out UnixTime);
-										NewItem.Time.Start = 
-											DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
-										break;
-									}
-								case (int)Task.Arguments.Ending:
-									{
-										Double.TryParse(Token, out UnixTime);
-										NewItem.Time.End = 
-											DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
-										break;
-									}
-								case (int)Task.Arguments.Next:
-									{
-										Double.TryParse(Token, out UnixTime);
-										NewItem.Time.Next = 
-											DateTimeOffset.FromUnixTimeSeconds((long)UnixTime).DateTime.ToLocalTime();
-										break;
-									}
-								default:
-									{
-										Console.WriteLine("Too many arguments in file!");
-										break;
-									}
-							}
-
-							++ArgType;
-						}
-
-						if (ArgType == (int)Task.Arguments.Count)
-						{
-							TaskArray.Add(NewItem);
-						}
-
-						Counter++;
-					}
-				}
-
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine("Tasual_Array_Load_Text(): {0}\nTrace: {1}", e.Message, e.StackTrace);
 			}
 		}
 
@@ -479,7 +304,7 @@ namespace Tasual
 			);
 
 			TaskArray.Add(Task);
-			Tasual_Array_Save();
+			ArrayHandler.Save(ref TaskArray, Settings);
 			Tasual_ListView.BuildList();
 			Tasual_StatusLabel_UpdateCounts();
 			Tasual_ListView.EditModel(Task);
@@ -504,10 +329,10 @@ namespace Tasual
 		// Tasual_Main: "Sources"
 		private void Tasual_MenuStrip_Sources_Click(object sender, EventArgs e)
 		{
-			Tasual_Array_Save_JSON();
-			Tasual_Array_Load_JSON();
-			Tasual_ListView.SetObjects(TaskArray);
-			Tasual_ListView.BuildList();
+			//Tasual_Array_Save_JSON();
+			//Tasual_Array_Load_JSON();
+			//Tasual_ListView.SetObjects(TaskArray);
+			//Tasual_ListView.BuildList();
 		}
 
 		// Tasual_ListView: "Group"
@@ -529,7 +354,7 @@ namespace Tasual
 				TaskArray.Remove(RemoveTask);
 			}
 
-			Tasual_Array_Save();
+			ArrayHandler.Save(ref TaskArray, Settings);
 			Tasual_ListView.BuildList();
 			Tasual_StatusLabel_UpdateCounts();
 		}
@@ -544,7 +369,7 @@ namespace Tasual
 		{
 			ToolStripDropDownItem Item = (ToolStripDropDownItem)sender;
 			OLVGroup Group = (OLVGroup)Tasual_MenuStrip_Group.Tag;
-			Tasual_Array_ReAssignGroup(Group.Name, Item.Text);
+			ArrayHandler.ReAssignGroup(TaskArray, Group.Name, Item.Text);
 			Tasual_ListView.BuildList();
 		}
 
@@ -635,7 +460,7 @@ namespace Tasual
 		{
 			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
 			Task.Link = "";
-			Tasual_Array_Save();
+			ArrayHandler.Save(ref TaskArray, Settings);
 			Tasual_ListView.BuildList();
 		}
 
@@ -662,7 +487,7 @@ namespace Tasual
 		{
 			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
 			Task.Location = "";
-			Tasual_Array_Save();
+			ArrayHandler.Save(ref TaskArray, Settings);
 			Tasual_ListView.BuildList();
 		}
 
@@ -683,7 +508,7 @@ namespace Tasual
 		{
 			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
 			Task.Notes = "";
-			Tasual_Array_Save();
+			ArrayHandler.Save(ref TaskArray, Settings);
 			Tasual_ListView.BuildList();
 		}
 
@@ -736,7 +561,7 @@ namespace Tasual
 		private void Tasual_MenuStrip_Item_Delete_Click(object sender, EventArgs e)
 		{
 			TaskArray.Remove((Task)Tasual_MenuStrip_Item.Tag);
-			Tasual_Array_Save();
+			ArrayHandler.Save(ref TaskArray, Settings);
 			Tasual_ListView.BuildList();
 			Tasual_StatusLabel_UpdateCounts();
 		}
@@ -787,7 +612,8 @@ namespace Tasual
 			Tasual_ApplySettings();
 
 			// load task array
-			Tasual_Array_Load();
+			ArrayHandler.Load(ref TaskArray, Settings);
+			Tasual_ListView.SetObjects(TaskArray);
 
 			// set up objectlistview
 			Tasual_ListView_Setup();
@@ -854,12 +680,12 @@ namespace Tasual
 
 		private void Tasual_ListView_CellEditFinished(object sender, CellEditEventArgs e)
 		{
-			Tasual_Array_Save();
+			ArrayHandler.Save(ref TaskArray, Settings);
 		}
 
 		private void Tasual_ListView_ItemChecked(object sender, ItemCheckedEventArgs e)
 		{
-			Tasual_Array_Save();
+			ArrayHandler.Save(ref TaskArray, Settings);
 			Tasual_ListView.BuildList();
 			Tasual_StatusLabel_UpdateCounts();
 		}

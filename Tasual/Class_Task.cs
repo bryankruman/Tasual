@@ -98,7 +98,7 @@ namespace Tasual
 		}
 
 		// Supporting Functions
-		public void PrintToConsoleBasic(Task Task)
+		public static void PrintToConsoleBasic(Task Task)
 		{
 			Console.WriteLine(
 				"TaskItem: '{0}', '{1}', '{2}', '{3}', ('{4}', '{5}', '{6}')",
@@ -112,7 +112,7 @@ namespace Tasual
 			);
 		}
 
-		public void PrintToConsoleDetailed(Task Task)
+		public static void PrintToConsoleDetailed(Task Task)
 		{
 			foreach (PropertyDescriptor Descriptor in TypeDescriptor.GetProperties(Task))
 			{

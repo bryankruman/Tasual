@@ -696,7 +696,7 @@ namespace Tasual
 			Task.Time = TimeInfo;
 
 			_Tasual_Main.TaskArray.Add(Task);
-			_Tasual_Main.Tasual_Array_Save();
+			_Tasual_Main.Tasual_Main_Save();
 			_Tasual_Main.Tasual_ListView.BuildList();
 			_Tasual_Main.Tasual_StatusLabel_UpdateCounts();
 			this.Close();

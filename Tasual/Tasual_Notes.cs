@@ -54,7 +54,9 @@ namespace Tasual
 				if (Task != null)
 				{
 					Task.Notes = Tasual_Notes_TextBox.Text;
-					_Tasual_Main.Tasual_Array_Save();
+					_Tasual_Main.Tasual_Main_Save();
+					//ArrayHandler.Save(ref _Tasual_Main.TaskArray, _Tasual_Main.Settings);
+					//_Tasual_Main.Tasual_Array_Save();
 				}
 				else
 				{

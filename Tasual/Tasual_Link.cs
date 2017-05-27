@@ -45,7 +45,7 @@ namespace Tasual
 			if (Task != null)
 			{
 				Task.Link = Tasual_Link_TextBox.Text;
-				_Tasual_Main.Tasual_Array_Save();
+				_Tasual_Main.Tasual_Main_Save();
 			}
 			else
 			{
