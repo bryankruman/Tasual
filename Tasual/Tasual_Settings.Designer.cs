@@ -69,7 +69,7 @@
 			this.Tasual_Settings_ComboBox_GroupStyle.Items.AddRange(new object[] {
             "by category",
             "by due time"});
-			this.Tasual_Settings_ComboBox_GroupStyle.Location = new System.Drawing.Point(114, 28);
+			this.Tasual_Settings_ComboBox_GroupStyle.Location = new System.Drawing.Point(111, 27);
 			this.Tasual_Settings_ComboBox_GroupStyle.Name = "Tasual_Settings_ComboBox_GroupStyle";
 			this.Tasual_Settings_ComboBox_GroupStyle.Size = new System.Drawing.Size(157, 21);
 			this.Tasual_Settings_ComboBox_GroupStyle.TabIndex = 1;
