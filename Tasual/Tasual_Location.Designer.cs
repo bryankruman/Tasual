@@ -64,6 +64,7 @@
 			this.Tasual_Location_Button_Save.TabIndex = 2;
 			this.Tasual_Location_Button_Save.Text = "Save";
 			this.Tasual_Location_Button_Save.UseVisualStyleBackColor = true;
+			this.Tasual_Location_Button_Save.Click += new System.EventHandler(this.Tasual_Location_Button_Save_Click);
 			// 
 			// Tasual_Location_Button_Cancel
 			// 

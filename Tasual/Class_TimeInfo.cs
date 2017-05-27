@@ -52,7 +52,6 @@ namespace Tasual
 		public enum TimeFormat
 		{
 			Elapsed,
-			Due,
 			Short,
 			Medium,
 			Long
@@ -532,61 +531,6 @@ namespace Tasual
 						else
 						{
 							return String.Format("{0} {1}", Time.ToShortDateString(), Time.ToShortTimeString());
-						}
-					}
-
-				case TimeFormat.Due:
-					{
-						// Overdue
-						// Today
-						// Tomorrow
-						// Friday
-						// Next Week
-						// 2 Weeks
-						// Next Month
-						// Future
-
-						if (DateTime.Now > Time)
-						{
-							return "Overdue";
-						}
-						else
-						{
-							DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
-							DateTime TargetDay = Time - Time.TimeOfDay;
-							TimeSpan Span = TargetDay - Today;
-							if (TargetDay == Today)
-							{
-								return "Today";
-							}
-							else if (Span.Days <= 1)
-							{
-								return "Tomorrow";
-							}
-							else if (Span.Days <= 7)
-							{
-								return Time.DayOfWeek.ToString();
-							}
-							else if (Span.Days <= 14)
-							{
-								return "Next Week";
-							}
-							else if (Span.Days <= 21)
-							{
-								return "2 Weeks";
-							}
-							else if (Span.Days <= 30)
-							{
-								return "3 Weeks";
-							}
-							else if (TargetDay.Month == Today.AddMonths(1).Month)
-							{
-								return "Next Month";
-							}
-							else
-							{
-								return "Future";
-							}
 						}
 					}
 

@@ -49,24 +49,21 @@ namespace Tasual
 
 		private void Tasual_Notes_Done_Click(object sender, EventArgs e)
 		{
-			if (Tasual_Notes_TextBox.Text != "")
+			if (Origination == 1)
 			{
-				if (Origination == 1)
+				if (Task != null)
 				{
-					if (Task != null)
-					{
-						Task.Notes = Tasual_Notes_TextBox.Text;
-						_Tasual_Main.Tasual_Array_Save();
-					}
-					else
-					{
-						Console.WriteLine("Tasual_Notes_Done_Click(): Somehow Task was null!");
-					}
+					Task.Notes = Tasual_Notes_TextBox.Text;
+					_Tasual_Main.Tasual_Array_Save();
 				}
 				else
 				{
-					_Tasual_Create.Notes = Tasual_Notes_TextBox.Text;
+					Console.WriteLine("Tasual_Notes_Done_Click(): Somehow Task was null!");
 				}
+			}
+			else
+			{
+				_Tasual_Create.Notes = Tasual_Notes_TextBox.Text;
 			}
 		}
 	}
