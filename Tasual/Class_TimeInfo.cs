@@ -575,7 +575,29 @@ namespace Tasual
 							string Minutes = "";
 							if (Time.Minute != 0) { Minutes = ":" + Time.Minute.ToString("00"); }
 
-							if (Time.Hour > 12)
+							if (Time.Hour == 0)
+							{
+								if (Time.Minute != 0)
+								{
+									TimeStamp = " - 12" + Minutes + "am";
+								}
+								else
+								{
+									TimeStamp = " - Midnight";
+								}
+							}
+							else if (Time.Hour == 12) // TODO: Fix this properly! 
+							{
+								if (Time.Minute != 0)
+								{
+									TimeStamp = " - 12" + Minutes + "pm";
+								}
+								else
+								{
+									TimeStamp = " - Noon";
+								}
+							}
+							else if (Time.Hour > 12)
 							{
 								TimeStamp = " - " + (Time.Hour - 12).ToString();
 								TimeStamp = TimeStamp + Minutes + "pm";
