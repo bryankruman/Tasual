@@ -59,11 +59,15 @@ namespace Tasual
 				Tasual_TimePop_RadioButton_AllDay.Enabled = false;
 				Tasual_TimePop_RadioButton_Specific.Enabled = false;
 				Tasual_TimePop_DateTimePicker.Enabled = false;
-				Tasual_TimePop_Button_Save.Enabled = false;
 
 				if (RepeatType == TimeInfo.RepeatType.Singular)
 				{
+					Tasual_TimePop_Button_Save.Enabled = true;
 					Tasual_TimePop_Label_CantEdit.Visible = false;
+				}
+				else
+				{
+					Tasual_TimePop_Button_Save.Enabled = false;
 				}
 			}
 		}
@@ -93,7 +97,6 @@ namespace Tasual
 			Tasual_TimePop_DateTimePicker.Value = NextOrNow;
 
 			Tasual_TimePop_CheckEnableStatus();
-			//Tasual_TimePop_DateTimePicker.MinDate = DateTime.Now;
 		}
 
 		private void Tasual_CalendarPopout_Deactivate(object sender, EventArgs e)
@@ -106,11 +109,6 @@ namespace Tasual
 			Tasual_TimePop_CheckEnableStatus();
 		}
 
-		private void Tasual_TimePop_Calendar_DateChanged(object sender, DateRangeEventArgs e)
-		{
-
-		}
-
 		private void Tasual_TimePop_RadioButton_AllDay_CheckedChanged(object sender, EventArgs e)
 		{
 			Tasual_TimePop_CheckEnableStatus();
@@ -119,11 +117,6 @@ namespace Tasual
 		private void Tasual_TimePop_RadioButton_Specific_CheckedChanged(object sender, EventArgs e)
 		{
 			Tasual_TimePop_CheckEnableStatus();
-		}
-
-		private void Tasual_TimePop_DateTimePicker_ValueChanged(object sender, EventArgs e)
-		{
-
 		}
 
 		private void Tasual_TimePop_LinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -141,20 +134,33 @@ namespace Tasual
 			NewTime = NewTime - NewTime.TimeOfDay;
 			NewTime = NewTime + Tasual_TimePop_DateTimePicker.Value.TimeOfDay;
 
-			if (NewTime < DateTime.Now)
+			if (Tasual_TimePop_CheckBox.Checked)
 			{
-				Console.WriteLine("Can't have a date that is before now!");
-				Close();
+				if (NewTime < DateTime.Now)
+				{
+					Console.WriteLine("Can't have a date that is before now!");
+					return;
+				}
+				else
+				{
+					_Task.Time.Modified = DateTime.Now;
+					_Task.Time.Next = NewTime;
+					_Task.Time.TimeOfDay = Tasual_TimePop_DateTimePicker.Value.TimeOfDay;
+				}
 			}
 			else
 			{
-				_Task.Time.Modified = DateTime.Now;
-				_Task.Time.Next = NewTime;
-				_Tasual_Main.Tasual_Array_Save();
-				_Tasual_Main.Tasual_ListView.BuildList();
-				Close();
+				_Task.Time = new TimeInfo(
+					_Task.Time.Created,
+					DateTime.Now,
+					DateTime.MinValue,
+					DateTime.MinValue,
+					DateTime.MinValue);
 			}
-
+			_Tasual_Main.Tasual_Array_Save();
+			_Tasual_Main.Tasual_ListView.BuildList();
+			_Tasual_Main.Tasual_ListView.EnsureModelVisible(_Task);
+			Close();
 		}
 
 		private void Tasual_TimePop_Button_Cancel_Click(object sender, EventArgs e)
