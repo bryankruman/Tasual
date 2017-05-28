@@ -306,11 +306,11 @@ namespace Tasual
 			}
 		}
 
-		public Tasual_Create(Tasual_Main Tasual_Main)
+		public Tasual_Create(Tasual_Main PassedForm)
 		{
 			// Treat as normal "Create" dialog
 			InitializeComponent();
-			_Tasual_Main = Tasual_Main;
+			_Tasual_Main = PassedForm;
 			EditMode = false;
 
 			// Common setup
@@ -337,11 +337,11 @@ namespace Tasual
 			Tasual_Create_ComboBox_Priority.SelectedIndex = 1;
 		}
 
-		public Tasual_Create(Tasual_Main Tasual_Main, int PassedIndex)
+		public Tasual_Create(Tasual_Main PassedForm, int PassedIndex)
 		{
 			// Treat as "Edit" dialog
 			InitializeComponent();
-			_Tasual_Main = Tasual_Main;
+			_Tasual_Main = PassedForm;
 			TaskToEdit = _Tasual_Main.TaskArray[PassedIndex];
 			EditMode = true;
 			Text = "Edit";

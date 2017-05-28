@@ -928,7 +928,7 @@ namespace Tasual
 		{
 			if (CalendarPopout != null)
 			{
-				Tasual_Popout_Calendar Calendar = new Tasual_Popout_Calendar();
+				Tasual_TimePop Calendar = new Tasual_TimePop(this, TaskArray.IndexOf((Task)Tasual_ListView.SelectedItem.RowObject));
 
 				Rectangle Bounds = CalendarPopout.SubItem.Bounds;
 				Calendar.Location = PointToScreen(new Point(Bounds.Left, Bounds.Bottom + Bounds.Height + 5));

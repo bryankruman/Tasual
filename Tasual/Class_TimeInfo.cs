@@ -715,8 +715,17 @@ namespace Tasual
 					++Count;
 					From = Next;
 				}
+				else
+				{
+					break;
+				}
 			}
 			return Count;
+		}
+
+		public static DateTime FindNextIteration(ref TimeInfo Rules)
+		{
+			return FindNextIteration(DateTime.Now, ref Rules);
 		}
 
 		public static DateTime FindNextIteration(DateTime BaseTime, ref TimeInfo Rules)
