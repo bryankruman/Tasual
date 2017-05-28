@@ -840,7 +840,7 @@ namespace Tasual
 		{
 			Task Task = new Task();
 
-			if (!string.IsNullOrWhiteSpace(Tasual_Create_TextBox_Description.Text))
+			if ((!string.IsNullOrWhiteSpace(Tasual_Create_TextBox_Description.Text)) && (Tasual_Create_TextBox_Description.Text != "Description"))
 			{
 				Task.Description = Tasual_Create_TextBox_Description.Text;
 			}
@@ -853,12 +853,12 @@ namespace Tasual
 			Task.Priority = Tasual_Create_ComboBox_Priority.SelectedIndex;
 			Task.Group = Tasual_Create_ComboBox_Category.Text;
 			Task.Notes = Notes;
-			if (Tasual_Create_TextBox_Link.Text != Tasual_Create_TextBox_Link.WatermarkText)
+			if (Tasual_Create_TextBox_Link.Text != "Link")
 			{
 				Task.Link = Tasual_Create_TextBox_Link.Text;
 			}
 
-			if (Tasual_Create_TextBox_Location.Text != Tasual_Create_TextBox_Location.WatermarkText)
+			if (Tasual_Create_TextBox_Location.Text != "Location")
 			{
 				Task.Location = Tasual_Create_TextBox_Location.Text;
 			}
@@ -978,6 +978,96 @@ namespace Tasual
 		private void Tasual_Create_Button_Cancel_Click(object sender, EventArgs e)
 		{
 			Close();
+		}
+
+		private void Tasual_Create_TextBox_Description_CheckColor()
+		{
+			if (Tasual_Create_TextBox_Description.Text == "Description")
+			{
+				Tasual_Create_TextBox_Description.ForeColor = Color.Gray;
+			}
+			else
+			{
+				Tasual_Create_TextBox_Description.ForeColor = Color.Black;
+			}
+		}
+
+		private void Tasual_Create_TextBox_Link_CheckColor()
+		{
+			if (Tasual_Create_TextBox_Link.Text == "Link")
+			{
+				Tasual_Create_TextBox_Link.ForeColor = Color.Gray;
+			}
+			else
+			{
+				Tasual_Create_TextBox_Link.ForeColor = Color.FromArgb(255, 36, 90, 150);
+			}
+		}
+
+		private void Tasual_Create_TextBox_Location_CheckColor()
+		{
+			if (Tasual_Create_TextBox_Location.Text == "Location")
+			{
+				Tasual_Create_TextBox_Location.ForeColor = Color.Gray;
+			}
+			else
+			{
+				Tasual_Create_TextBox_Location.ForeColor = Color.FromArgb(255, 36, 120, 90);
+			}
+		}
+
+		private void Tasual_Create_TextBox_Link_Enter(object sender, EventArgs e)
+		{
+			if (Tasual_Create_TextBox_Link.Text == "Link")
+			{
+				Tasual_Create_TextBox_Link.Text = "";
+			}
+			Tasual_Create_TextBox_Link_CheckColor();
+		}
+
+		private void Tasual_Create_TextBox_Link_Leave(object sender, EventArgs e)
+		{
+			if (Tasual_Create_TextBox_Link.Text == "")
+			{
+				Tasual_Create_TextBox_Link.Text = "Link";
+			}
+			Tasual_Create_TextBox_Link_CheckColor();
+		}
+
+		private void Tasual_Create_TextBox_Location_Enter(object sender, EventArgs e)
+		{
+			if (Tasual_Create_TextBox_Location.Text == "Location")
+			{
+				Tasual_Create_TextBox_Location.Text = "";
+			}
+			Tasual_Create_TextBox_Location_CheckColor();
+		}
+
+		private void Tasual_Create_TextBox_Location_Leave(object sender, EventArgs e)
+		{
+			if (Tasual_Create_TextBox_Location.Text == "")
+			{
+				Tasual_Create_TextBox_Location.Text = "Location";
+			}
+			Tasual_Create_TextBox_Location_CheckColor();
+		}
+
+		private void Tasual_Create_TextBox_Description_Enter(object sender, EventArgs e)
+		{
+			if (Tasual_Create_TextBox_Description.Text == "Description")
+			{
+				Tasual_Create_TextBox_Description.Text = "";
+			}
+			Tasual_Create_TextBox_Description_CheckColor();
+		}
+
+		private void Tasual_Create_TextBox_Description_Leave(object sender, EventArgs e)
+		{
+			if (Tasual_Create_TextBox_Description.Text == "")
+			{
+				Tasual_Create_TextBox_Description.Text = "Description";
+			}
+			Tasual_Create_TextBox_Description_CheckColor();
 		}
 	}
 }
