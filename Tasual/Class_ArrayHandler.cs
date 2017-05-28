@@ -65,10 +65,8 @@ namespace Tasual
 				using (JsonReader InputJson = new JsonTextReader(InputFile))
 				{
 					Array.Clear();
-
 					JsonSerializer Serializer = new JsonSerializer();
 					Array = (List<Task>)Serializer.Deserialize(InputJson, typeof(List<Task>));
-					Console.WriteLine("it works {0}", PathToFile);
 				}
 			}
 			catch (Exception e)
