@@ -1038,7 +1038,6 @@
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Create";
-			this.Load += new System.EventHandler(this.Tasual_Create_Load);
 			this.Tasual_Create_GroupBox_Scheduled.ResumeLayout(false);
 			this.Tasual_Create_GroupBox_Scheduled.PerformLayout();
 			this.Tasual_Create_Panel_SelectionLabels.ResumeLayout(false);

@@ -33,6 +33,7 @@ namespace Tasual
 			Fourth = 8,
 			Fifth = 16,
 			Last = 32,
+			FirstThruLast = 39, // (Skips 45th and 5th options as they can't happen via dialog)
 			Everyweek = 31
 		}
 
@@ -55,6 +56,13 @@ namespace Tasual
 			Short,
 			Medium,
 			Long
+		}
+
+		public enum RepeatType
+		{
+			Singular,
+			SimpleRepeat,
+			ComplexRepeat
 		}
 
 		// for all tasks
@@ -365,6 +373,22 @@ namespace Tasual
 				case DayOfWeek.Saturday: return DayFlag.Saturday;
 				case DayOfWeek.Sunday: return DayFlag.Sunday;
 				default: return 0;
+			}
+		}
+
+		public static RepeatType GetRepeatType(TimeInfo Time)
+		{
+			if ((Time.MonthFilter != 0) || (Time.MonthFilter != 0) || (Time.MonthFilter != 0) || (Time.MonthFilter != 0))
+			{
+				return RepeatType.ComplexRepeat;
+			}
+			else if ((Time.Yearly != 0) || (Time.Monthly != 0) || (Time.Weekly != 0) || (Time.Daily != 0))
+			{
+				return RepeatType.SimpleRepeat;
+			}
+			else
+			{
+				return RepeatType.Singular;
 			}
 		}
 
