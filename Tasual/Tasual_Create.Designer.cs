@@ -93,7 +93,7 @@
 			this.Tasual_Create_TextBox_Link = new Tasual.WatermarkTextBox();
 			this.Tasual_Create_TextBox_Location = new Tasual.WatermarkTextBox();
 			this.Tasual_Create_Button_Notes = new System.Windows.Forms.Button();
-			this.Tasual_Create_TextBox_Description = new Tasual.WatermarkTextBox();
+			this.Tasual_Create_TextBox_Description = new System.Windows.Forms.TextBox();
 			this.Tasual_Create_GroupBox_Scheduled.SuspendLayout();
 			this.Tasual_Create_Panel_SelectionLabels.SuspendLayout();
 			this.Tasual_Create_Panel_Type.SuspendLayout();
@@ -105,14 +105,13 @@
 			// 
 			// Tasual_Create_ComboBox_Category
 			// 
-			this.Tasual_Create_ComboBox_Category.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.Tasual_Create_ComboBox_Category.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.Tasual_Create_ComboBox_Category.FormattingEnabled = true;
 			this.Tasual_Create_ComboBox_Category.Location = new System.Drawing.Point(242, 49);
 			this.Tasual_Create_ComboBox_Category.Name = "Tasual_Create_ComboBox_Category";
 			this.Tasual_Create_ComboBox_Category.Size = new System.Drawing.Size(112, 21);
-			this.Tasual_Create_ComboBox_Category.TabIndex = 9;
-			this.Tasual_Create_ComboBox_Category.SelectedIndexChanged += new System.EventHandler(this.Tasual_Create_ComboBox_Category_SelectedIndexChanged);
+			this.Tasual_Create_ComboBox_Category.TabIndex = 5;
 			// 
 			// Tasual_Create_Label_Category
 			// 
@@ -129,18 +128,17 @@
 			this.Tasual_Create_ComboBox_Dismiss.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.Tasual_Create_ComboBox_Dismiss.FormattingEnabled = true;
 			this.Tasual_Create_ComboBox_Dismiss.Items.AddRange(new object[] {
-			"Never",
-			"Immediately",
-			"After 1 hour",
-			"After 12 hours",
-			"After 24 hours",
-			"After 1 week",
-			"After 1 month"});
+            "Never",
+            "Immediately",
+            "After 1 hour",
+            "After 12 hours",
+            "After 24 hours",
+            "After 1 week",
+            "After 1 month"});
 			this.Tasual_Create_ComboBox_Dismiss.Location = new System.Drawing.Point(195, 64);
 			this.Tasual_Create_ComboBox_Dismiss.Name = "Tasual_Create_ComboBox_Dismiss";
 			this.Tasual_Create_ComboBox_Dismiss.Size = new System.Drawing.Size(131, 21);
-			this.Tasual_Create_ComboBox_Dismiss.TabIndex = 21;
-			this.Tasual_Create_ComboBox_Dismiss.SelectedIndexChanged += new System.EventHandler(this.Tasual_Create_ComboBox_Dismiss_SelectedIndexChanged);
+			this.Tasual_Create_ComboBox_Dismiss.TabIndex = 12;
 			// 
 			// Tasual_Create_Label_DaySel_Sat
 			// 
@@ -152,7 +150,7 @@
 			this.Tasual_Create_Label_DaySel_Sat.Location = new System.Drawing.Point(292, 2);
 			this.Tasual_Create_Label_DaySel_Sat.Name = "Tasual_Create_Label_DaySel_Sat";
 			this.Tasual_Create_Label_DaySel_Sat.Size = new System.Drawing.Size(26, 16);
-			this.Tasual_Create_Label_DaySel_Sat.TabIndex = 20;
+			this.Tasual_Create_Label_DaySel_Sat.TabIndex = 26;
 			this.Tasual_Create_Label_DaySel_Sat.Text = "Sat";
 			this.Tasual_Create_Label_DaySel_Sat.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_DaySel_Sat.Click += new System.EventHandler(this.Tasual_Create_Label_DaySel_ClickHandler);
@@ -167,7 +165,7 @@
 			this.Tasual_Create_Label_DaySel_Fri.Location = new System.Drawing.Point(268, 2);
 			this.Tasual_Create_Label_DaySel_Fri.Name = "Tasual_Create_Label_DaySel_Fri";
 			this.Tasual_Create_Label_DaySel_Fri.Size = new System.Drawing.Size(26, 16);
-			this.Tasual_Create_Label_DaySel_Fri.TabIndex = 19;
+			this.Tasual_Create_Label_DaySel_Fri.TabIndex = 25;
 			this.Tasual_Create_Label_DaySel_Fri.Text = "Fri";
 			this.Tasual_Create_Label_DaySel_Fri.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_DaySel_Fri.Click += new System.EventHandler(this.Tasual_Create_Label_DaySel_ClickHandler);
@@ -192,26 +190,25 @@
 			this.Tasual_Create_Label_DaySel_Thu.Location = new System.Drawing.Point(243, 2);
 			this.Tasual_Create_Label_DaySel_Thu.Name = "Tasual_Create_Label_DaySel_Thu";
 			this.Tasual_Create_Label_DaySel_Thu.Size = new System.Drawing.Size(26, 16);
-			this.Tasual_Create_Label_DaySel_Thu.TabIndex = 18;
+			this.Tasual_Create_Label_DaySel_Thu.TabIndex = 24;
 			this.Tasual_Create_Label_DaySel_Thu.Text = "Thu";
 			this.Tasual_Create_Label_DaySel_Thu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_DaySel_Thu.Click += new System.EventHandler(this.Tasual_Create_Label_DaySel_ClickHandler);
 			// 
 			// Tasual_Create_ComboBox_Priority
 			// 
-			this.Tasual_Create_ComboBox_Priority.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.Tasual_Create_ComboBox_Priority.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.Tasual_Create_ComboBox_Priority.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.Tasual_Create_ComboBox_Priority.FormattingEnabled = true;
 			this.Tasual_Create_ComboBox_Priority.Items.AddRange(new object[] {
-			"Low",
-			"Normal",
-			"High"});
+            "Low",
+            "Normal",
+            "High"});
 			this.Tasual_Create_ComboBox_Priority.Location = new System.Drawing.Point(242, 75);
 			this.Tasual_Create_ComboBox_Priority.Name = "Tasual_Create_ComboBox_Priority";
 			this.Tasual_Create_ComboBox_Priority.Size = new System.Drawing.Size(112, 21);
-			this.Tasual_Create_ComboBox_Priority.TabIndex = 11;
-			this.Tasual_Create_ComboBox_Priority.SelectedIndexChanged += new System.EventHandler(this.Tasual_Create_ComboBox_Priority_SelectedIndexChanged);
+			this.Tasual_Create_ComboBox_Priority.TabIndex = 6;
 			// 
 			// Tasual_Create_Label_DaySel_Wed
 			// 
@@ -223,7 +220,7 @@
 			this.Tasual_Create_Label_DaySel_Wed.Location = new System.Drawing.Point(218, 2);
 			this.Tasual_Create_Label_DaySel_Wed.Name = "Tasual_Create_Label_DaySel_Wed";
 			this.Tasual_Create_Label_DaySel_Wed.Size = new System.Drawing.Size(26, 16);
-			this.Tasual_Create_Label_DaySel_Wed.TabIndex = 17;
+			this.Tasual_Create_Label_DaySel_Wed.TabIndex = 23;
 			this.Tasual_Create_Label_DaySel_Wed.Text = "Wed";
 			this.Tasual_Create_Label_DaySel_Wed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_DaySel_Wed.Click += new System.EventHandler(this.Tasual_Create_Label_DaySel_ClickHandler);
@@ -238,7 +235,7 @@
 			this.Tasual_Create_Label_DaySel_Tue.Location = new System.Drawing.Point(193, 2);
 			this.Tasual_Create_Label_DaySel_Tue.Name = "Tasual_Create_Label_DaySel_Tue";
 			this.Tasual_Create_Label_DaySel_Tue.Size = new System.Drawing.Size(26, 16);
-			this.Tasual_Create_Label_DaySel_Tue.TabIndex = 16;
+			this.Tasual_Create_Label_DaySel_Tue.TabIndex = 22;
 			this.Tasual_Create_Label_DaySel_Tue.Text = "Tue";
 			this.Tasual_Create_Label_DaySel_Tue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_DaySel_Tue.Click += new System.EventHandler(this.Tasual_Create_Label_DaySel_ClickHandler);
@@ -253,7 +250,7 @@
 			this.Tasual_Create_Label_DaySel_Mon.Location = new System.Drawing.Point(168, 2);
 			this.Tasual_Create_Label_DaySel_Mon.Name = "Tasual_Create_Label_DaySel_Mon";
 			this.Tasual_Create_Label_DaySel_Mon.Size = new System.Drawing.Size(26, 16);
-			this.Tasual_Create_Label_DaySel_Mon.TabIndex = 15;
+			this.Tasual_Create_Label_DaySel_Mon.TabIndex = 21;
 			this.Tasual_Create_Label_DaySel_Mon.Text = "Mon";
 			this.Tasual_Create_Label_DaySel_Mon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_DaySel_Mon.Click += new System.EventHandler(this.Tasual_Create_Label_DaySel_ClickHandler);
@@ -268,7 +265,7 @@
 			this.Tasual_Create_Label_DaySel_Sun.Location = new System.Drawing.Point(143, 2);
 			this.Tasual_Create_Label_DaySel_Sun.Name = "Tasual_Create_Label_DaySel_Sun";
 			this.Tasual_Create_Label_DaySel_Sun.Size = new System.Drawing.Size(26, 16);
-			this.Tasual_Create_Label_DaySel_Sun.TabIndex = 14;
+			this.Tasual_Create_Label_DaySel_Sun.TabIndex = 20;
 			this.Tasual_Create_Label_DaySel_Sun.Text = "Sun";
 			this.Tasual_Create_Label_DaySel_Sun.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_DaySel_Sun.Click += new System.EventHandler(this.Tasual_Create_Label_DaySel_ClickHandler);
@@ -278,7 +275,7 @@
 			this.Tasual_Create_DateTimePicker_StartDate.Location = new System.Drawing.Point(13, 33);
 			this.Tasual_Create_DateTimePicker_StartDate.Name = "Tasual_Create_DateTimePicker_StartDate";
 			this.Tasual_Create_DateTimePicker_StartDate.Size = new System.Drawing.Size(199, 20);
-			this.Tasual_Create_DateTimePicker_StartDate.TabIndex = 12;
+			this.Tasual_Create_DateTimePicker_StartDate.TabIndex = 8;
 			this.Tasual_Create_DateTimePicker_StartDate.ValueChanged += new System.EventHandler(this.Tasual_Create_DateTimePicker_StartDate_ValueChanged);
 			// 
 			// Tasual_Create_GroupBox_Scheduled
@@ -358,7 +355,7 @@
 			this.Tasual_Create_Label_MonthSel_All.Location = new System.Drawing.Point(103, 53);
 			this.Tasual_Create_Label_MonthSel_All.Name = "Tasual_Create_Label_MonthSel_All";
 			this.Tasual_Create_Label_MonthSel_All.Size = new System.Drawing.Size(35, 16);
-			this.Tasual_Create_Label_MonthSel_All.TabIndex = 53;
+			this.Tasual_Create_Label_MonthSel_All.TabIndex = 32;
 			this.Tasual_Create_Label_MonthSel_All.Text = "All";
 			this.Tasual_Create_Label_MonthSel_All.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_MonthSel_All.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_All_Click);
@@ -373,7 +370,7 @@
 			this.Tasual_Create_Label_WeekSel_All.Location = new System.Drawing.Point(103, 25);
 			this.Tasual_Create_Label_WeekSel_All.Name = "Tasual_Create_Label_WeekSel_All";
 			this.Tasual_Create_Label_WeekSel_All.Size = new System.Drawing.Size(35, 16);
-			this.Tasual_Create_Label_WeekSel_All.TabIndex = 52;
+			this.Tasual_Create_Label_WeekSel_All.TabIndex = 27;
 			this.Tasual_Create_Label_WeekSel_All.Text = "All";
 			this.Tasual_Create_Label_WeekSel_All.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_WeekSel_All.Click += new System.EventHandler(this.Tasual_Create_Label_WeekSel_All_Click);
@@ -388,7 +385,7 @@
 			this.Tasual_Create_Label_DaySel_All.Location = new System.Drawing.Point(103, 2);
 			this.Tasual_Create_Label_DaySel_All.Name = "Tasual_Create_Label_DaySel_All";
 			this.Tasual_Create_Label_DaySel_All.Size = new System.Drawing.Size(35, 16);
-			this.Tasual_Create_Label_DaySel_All.TabIndex = 51;
+			this.Tasual_Create_Label_DaySel_All.TabIndex = 19;
 			this.Tasual_Create_Label_DaySel_All.Text = "All";
 			this.Tasual_Create_Label_DaySel_All.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_DaySel_All.Click += new System.EventHandler(this.Tasual_Create_Label_DaySel_All_Click);
@@ -403,7 +400,7 @@
 			this.Tasual_Create_Label_MonthSel_Jan.Location = new System.Drawing.Point(143, 47);
 			this.Tasual_Create_Label_MonthSel_Jan.Name = "Tasual_Create_Label_MonthSel_Jan";
 			this.Tasual_Create_Label_MonthSel_Jan.Size = new System.Drawing.Size(30, 16);
-			this.Tasual_Create_Label_MonthSel_Jan.TabIndex = 30;
+			this.Tasual_Create_Label_MonthSel_Jan.TabIndex = 33;
 			this.Tasual_Create_Label_MonthSel_Jan.Text = "Jan";
 			this.Tasual_Create_Label_MonthSel_Jan.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_MonthSel_Jan.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_ClickHandler);
@@ -418,7 +415,7 @@
 			this.Tasual_Create_Label_DaySel_Specific.Location = new System.Drawing.Point(63, 2);
 			this.Tasual_Create_Label_DaySel_Specific.Name = "Tasual_Create_Label_DaySel_Specific";
 			this.Tasual_Create_Label_DaySel_Specific.Size = new System.Drawing.Size(35, 16);
-			this.Tasual_Create_Label_DaySel_Specific.TabIndex = 50;
+			this.Tasual_Create_Label_DaySel_Specific.TabIndex = 18;
 			this.Tasual_Create_Label_DaySel_Specific.Text = "19th";
 			this.Tasual_Create_Label_DaySel_Specific.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_DaySel_Specific.Click += new System.EventHandler(this.Tasual_Create_Label_DaySel_Specific_Click);
@@ -433,7 +430,7 @@
 			this.Tasual_Create_Label_MonthSel_Feb.Location = new System.Drawing.Point(172, 47);
 			this.Tasual_Create_Label_MonthSel_Feb.Name = "Tasual_Create_Label_MonthSel_Feb";
 			this.Tasual_Create_Label_MonthSel_Feb.Size = new System.Drawing.Size(30, 16);
-			this.Tasual_Create_Label_MonthSel_Feb.TabIndex = 31;
+			this.Tasual_Create_Label_MonthSel_Feb.TabIndex = 34;
 			this.Tasual_Create_Label_MonthSel_Feb.Text = "Feb";
 			this.Tasual_Create_Label_MonthSel_Feb.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_MonthSel_Feb.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_ClickHandler);
@@ -458,7 +455,7 @@
 			this.Tasual_Create_Label_MonthSel_Mar.Location = new System.Drawing.Point(201, 47);
 			this.Tasual_Create_Label_MonthSel_Mar.Name = "Tasual_Create_Label_MonthSel_Mar";
 			this.Tasual_Create_Label_MonthSel_Mar.Size = new System.Drawing.Size(30, 16);
-			this.Tasual_Create_Label_MonthSel_Mar.TabIndex = 32;
+			this.Tasual_Create_Label_MonthSel_Mar.TabIndex = 35;
 			this.Tasual_Create_Label_MonthSel_Mar.Text = "Mar";
 			this.Tasual_Create_Label_MonthSel_Mar.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_MonthSel_Mar.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_ClickHandler);
@@ -483,7 +480,7 @@
 			this.Tasual_Create_Label_MonthSel_Apr.Location = new System.Drawing.Point(230, 47);
 			this.Tasual_Create_Label_MonthSel_Apr.Name = "Tasual_Create_Label_MonthSel_Apr";
 			this.Tasual_Create_Label_MonthSel_Apr.Size = new System.Drawing.Size(30, 16);
-			this.Tasual_Create_Label_MonthSel_Apr.TabIndex = 33;
+			this.Tasual_Create_Label_MonthSel_Apr.TabIndex = 36;
 			this.Tasual_Create_Label_MonthSel_Apr.Text = "Apr";
 			this.Tasual_Create_Label_MonthSel_Apr.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_MonthSel_Apr.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_ClickHandler);
@@ -498,7 +495,7 @@
 			this.Tasual_Create_Label_MonthSel_May.Location = new System.Drawing.Point(259, 47);
 			this.Tasual_Create_Label_MonthSel_May.Name = "Tasual_Create_Label_MonthSel_May";
 			this.Tasual_Create_Label_MonthSel_May.Size = new System.Drawing.Size(30, 16);
-			this.Tasual_Create_Label_MonthSel_May.TabIndex = 34;
+			this.Tasual_Create_Label_MonthSel_May.TabIndex = 37;
 			this.Tasual_Create_Label_MonthSel_May.Text = "May";
 			this.Tasual_Create_Label_MonthSel_May.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_MonthSel_May.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_ClickHandler);
@@ -513,7 +510,7 @@
 			this.Tasual_Create_Label_WeekSel_Last.Location = new System.Drawing.Point(273, 25);
 			this.Tasual_Create_Label_WeekSel_Last.Name = "Tasual_Create_Label_WeekSel_Last";
 			this.Tasual_Create_Label_WeekSel_Last.Size = new System.Drawing.Size(45, 16);
-			this.Tasual_Create_Label_WeekSel_Last.TabIndex = 29;
+			this.Tasual_Create_Label_WeekSel_Last.TabIndex = 31;
 			this.Tasual_Create_Label_WeekSel_Last.Text = "Last";
 			this.Tasual_Create_Label_WeekSel_Last.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_WeekSel_Last.Click += new System.EventHandler(this.Tasual_Create_Label_WeekSel_ClickHandler);
@@ -528,7 +525,7 @@
 			this.Tasual_Create_Label_MonthSel_Dec.Location = new System.Drawing.Point(288, 62);
 			this.Tasual_Create_Label_MonthSel_Dec.Name = "Tasual_Create_Label_MonthSel_Dec";
 			this.Tasual_Create_Label_MonthSel_Dec.Size = new System.Drawing.Size(30, 16);
-			this.Tasual_Create_Label_MonthSel_Dec.TabIndex = 30;
+			this.Tasual_Create_Label_MonthSel_Dec.TabIndex = 44;
 			this.Tasual_Create_Label_MonthSel_Dec.Text = "Dec";
 			this.Tasual_Create_Label_MonthSel_Dec.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_MonthSel_Dec.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_ClickHandler);
@@ -543,7 +540,7 @@
 			this.Tasual_Create_Label_MonthSel_Jun.Location = new System.Drawing.Point(288, 47);
 			this.Tasual_Create_Label_MonthSel_Jun.Name = "Tasual_Create_Label_MonthSel_Jun";
 			this.Tasual_Create_Label_MonthSel_Jun.Size = new System.Drawing.Size(30, 16);
-			this.Tasual_Create_Label_MonthSel_Jun.TabIndex = 35;
+			this.Tasual_Create_Label_MonthSel_Jun.TabIndex = 38;
 			this.Tasual_Create_Label_MonthSel_Jun.Text = "Jun";
 			this.Tasual_Create_Label_MonthSel_Jun.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_MonthSel_Jun.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_ClickHandler);
@@ -558,7 +555,7 @@
 			this.Tasual_Create_Label_MonthSel_Nov.Location = new System.Drawing.Point(259, 62);
 			this.Tasual_Create_Label_MonthSel_Nov.Name = "Tasual_Create_Label_MonthSel_Nov";
 			this.Tasual_Create_Label_MonthSel_Nov.Size = new System.Drawing.Size(30, 16);
-			this.Tasual_Create_Label_MonthSel_Nov.TabIndex = 40;
+			this.Tasual_Create_Label_MonthSel_Nov.TabIndex = 43;
 			this.Tasual_Create_Label_MonthSel_Nov.Text = "Nov";
 			this.Tasual_Create_Label_MonthSel_Nov.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_MonthSel_Nov.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_ClickHandler);
@@ -573,7 +570,7 @@
 			this.Tasual_Create_Label_MonthSel_Jul.Location = new System.Drawing.Point(143, 62);
 			this.Tasual_Create_Label_MonthSel_Jul.Name = "Tasual_Create_Label_MonthSel_Jul";
 			this.Tasual_Create_Label_MonthSel_Jul.Size = new System.Drawing.Size(30, 16);
-			this.Tasual_Create_Label_MonthSel_Jul.TabIndex = 36;
+			this.Tasual_Create_Label_MonthSel_Jul.TabIndex = 39;
 			this.Tasual_Create_Label_MonthSel_Jul.Text = "Jul";
 			this.Tasual_Create_Label_MonthSel_Jul.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_MonthSel_Jul.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_ClickHandler);
@@ -588,7 +585,7 @@
 			this.Tasual_Create_Label_MonthSel_Oct.Location = new System.Drawing.Point(230, 62);
 			this.Tasual_Create_Label_MonthSel_Oct.Name = "Tasual_Create_Label_MonthSel_Oct";
 			this.Tasual_Create_Label_MonthSel_Oct.Size = new System.Drawing.Size(30, 16);
-			this.Tasual_Create_Label_MonthSel_Oct.TabIndex = 39;
+			this.Tasual_Create_Label_MonthSel_Oct.TabIndex = 42;
 			this.Tasual_Create_Label_MonthSel_Oct.Text = "Oct";
 			this.Tasual_Create_Label_MonthSel_Oct.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_MonthSel_Oct.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_ClickHandler);
@@ -603,7 +600,7 @@
 			this.Tasual_Create_Label_MonthSel_Aug.Location = new System.Drawing.Point(172, 62);
 			this.Tasual_Create_Label_MonthSel_Aug.Name = "Tasual_Create_Label_MonthSel_Aug";
 			this.Tasual_Create_Label_MonthSel_Aug.Size = new System.Drawing.Size(30, 16);
-			this.Tasual_Create_Label_MonthSel_Aug.TabIndex = 37;
+			this.Tasual_Create_Label_MonthSel_Aug.TabIndex = 40;
 			this.Tasual_Create_Label_MonthSel_Aug.Text = "Aug";
 			this.Tasual_Create_Label_MonthSel_Aug.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_MonthSel_Aug.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_ClickHandler);
@@ -618,7 +615,7 @@
 			this.Tasual_Create_Label_WeekSel_1st.Location = new System.Drawing.Point(143, 25);
 			this.Tasual_Create_Label_WeekSel_1st.Name = "Tasual_Create_Label_WeekSel_1st";
 			this.Tasual_Create_Label_WeekSel_1st.Size = new System.Drawing.Size(45, 16);
-			this.Tasual_Create_Label_WeekSel_1st.TabIndex = 24;
+			this.Tasual_Create_Label_WeekSel_1st.TabIndex = 28;
 			this.Tasual_Create_Label_WeekSel_1st.Text = "1st";
 			this.Tasual_Create_Label_WeekSel_1st.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_WeekSel_1st.Click += new System.EventHandler(this.Tasual_Create_Label_WeekSel_ClickHandler);
@@ -633,7 +630,7 @@
 			this.Tasual_Create_Label_WeekSel_3rd.Location = new System.Drawing.Point(230, 25);
 			this.Tasual_Create_Label_WeekSel_3rd.Name = "Tasual_Create_Label_WeekSel_3rd";
 			this.Tasual_Create_Label_WeekSel_3rd.Size = new System.Drawing.Size(45, 16);
-			this.Tasual_Create_Label_WeekSel_3rd.TabIndex = 26;
+			this.Tasual_Create_Label_WeekSel_3rd.TabIndex = 30;
 			this.Tasual_Create_Label_WeekSel_3rd.Text = "3rd";
 			this.Tasual_Create_Label_WeekSel_3rd.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_WeekSel_3rd.Click += new System.EventHandler(this.Tasual_Create_Label_WeekSel_ClickHandler);
@@ -648,7 +645,7 @@
 			this.Tasual_Create_Label_MonthSel_Sep.Location = new System.Drawing.Point(201, 62);
 			this.Tasual_Create_Label_MonthSel_Sep.Name = "Tasual_Create_Label_MonthSel_Sep";
 			this.Tasual_Create_Label_MonthSel_Sep.Size = new System.Drawing.Size(30, 16);
-			this.Tasual_Create_Label_MonthSel_Sep.TabIndex = 38;
+			this.Tasual_Create_Label_MonthSel_Sep.TabIndex = 41;
 			this.Tasual_Create_Label_MonthSel_Sep.Text = "Sep";
 			this.Tasual_Create_Label_MonthSel_Sep.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_MonthSel_Sep.Click += new System.EventHandler(this.Tasual_Create_Label_MonthSel_ClickHandler);
@@ -663,7 +660,7 @@
 			this.Tasual_Create_Label_WeekSel_2nd.Location = new System.Drawing.Point(186, 25);
 			this.Tasual_Create_Label_WeekSel_2nd.Name = "Tasual_Create_Label_WeekSel_2nd";
 			this.Tasual_Create_Label_WeekSel_2nd.Size = new System.Drawing.Size(45, 16);
-			this.Tasual_Create_Label_WeekSel_2nd.TabIndex = 25;
+			this.Tasual_Create_Label_WeekSel_2nd.TabIndex = 29;
 			this.Tasual_Create_Label_WeekSel_2nd.Text = "2nd";
 			this.Tasual_Create_Label_WeekSel_2nd.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.Tasual_Create_Label_WeekSel_2nd.Click += new System.EventHandler(this.Tasual_Create_Label_WeekSel_ClickHandler);
@@ -686,7 +683,7 @@
 			this.Tasual_Create_RadioButton_Type_RepeatSimple.Location = new System.Drawing.Point(70, 3);
 			this.Tasual_Create_RadioButton_Type_RepeatSimple.Name = "Tasual_Create_RadioButton_Type_RepeatSimple";
 			this.Tasual_Create_RadioButton_Type_RepeatSimple.Size = new System.Drawing.Size(94, 17);
-			this.Tasual_Create_RadioButton_Type_RepeatSimple.TabIndex = 63;
+			this.Tasual_Create_RadioButton_Type_RepeatSimple.TabIndex = 14;
 			this.Tasual_Create_RadioButton_Type_RepeatSimple.Text = "Repeats every";
 			this.Tasual_Create_RadioButton_Type_RepeatSimple.UseVisualStyleBackColor = true;
 			this.Tasual_Create_RadioButton_Type_RepeatSimple.CheckedChanged += new System.EventHandler(this.Tasual_Create_RadioButton_Type_RepeatSimple_CheckedChanged);
@@ -697,14 +694,14 @@
 			this.Tasual_Create_ComboBox_RepeatSimple.Enabled = false;
 			this.Tasual_Create_ComboBox_RepeatSimple.FormattingEnabled = true;
 			this.Tasual_Create_ComboBox_RepeatSimple.Items.AddRange(new object[] {
-			"Day(s)",
-			"Week(s)",
-			"Month(s)",
-			"Year(s)"});
+            "Day(s)",
+            "Week(s)",
+            "Month(s)",
+            "Year(s)"});
 			this.Tasual_Create_ComboBox_RepeatSimple.Location = new System.Drawing.Point(221, 2);
 			this.Tasual_Create_ComboBox_RepeatSimple.Name = "Tasual_Create_ComboBox_RepeatSimple";
 			this.Tasual_Create_ComboBox_RepeatSimple.Size = new System.Drawing.Size(96, 21);
-			this.Tasual_Create_ComboBox_RepeatSimple.TabIndex = 17;
+			this.Tasual_Create_ComboBox_RepeatSimple.TabIndex = 16;
 			this.Tasual_Create_ComboBox_RepeatSimple.SelectedIndexChanged += new System.EventHandler(this.Tasual_Create_ComboBox_RepeatSimple_SelectedIndexChanged);
 			// 
 			// Tasual_Create_RadioButton_Type_RepeatCustom
@@ -713,7 +710,7 @@
 			this.Tasual_Create_RadioButton_Type_RepeatCustom.Location = new System.Drawing.Point(3, 25);
 			this.Tasual_Create_RadioButton_Type_RepeatCustom.Name = "Tasual_Create_RadioButton_Type_RepeatCustom";
 			this.Tasual_Create_RadioButton_Type_RepeatCustom.Size = new System.Drawing.Size(156, 17);
-			this.Tasual_Create_RadioButton_Type_RepeatCustom.TabIndex = 64;
+			this.Tasual_Create_RadioButton_Type_RepeatCustom.TabIndex = 17;
 			this.Tasual_Create_RadioButton_Type_RepeatCustom.Text = "Repeats at custom intervals";
 			this.Tasual_Create_RadioButton_Type_RepeatCustom.UseVisualStyleBackColor = true;
 			this.Tasual_Create_RadioButton_Type_RepeatCustom.CheckedChanged += new System.EventHandler(this.Tasual_Create_RadioButton_Type_RepeatCustom_CheckedChanged);
@@ -723,23 +720,23 @@
 			this.Tasual_Create_NumericUpDown_Type_RepeatSimple.Enabled = false;
 			this.Tasual_Create_NumericUpDown_Type_RepeatSimple.Location = new System.Drawing.Point(166, 3);
 			this.Tasual_Create_NumericUpDown_Type_RepeatSimple.Maximum = new decimal(new int[] {
-			365,
-			0,
-			0,
-			0});
+            365,
+            0,
+            0,
+            0});
 			this.Tasual_Create_NumericUpDown_Type_RepeatSimple.Minimum = new decimal(new int[] {
-			1,
-			0,
-			0,
-			0});
+            1,
+            0,
+            0,
+            0});
 			this.Tasual_Create_NumericUpDown_Type_RepeatSimple.Name = "Tasual_Create_NumericUpDown_Type_RepeatSimple";
 			this.Tasual_Create_NumericUpDown_Type_RepeatSimple.Size = new System.Drawing.Size(48, 20);
-			this.Tasual_Create_NumericUpDown_Type_RepeatSimple.TabIndex = 18;
+			this.Tasual_Create_NumericUpDown_Type_RepeatSimple.TabIndex = 15;
 			this.Tasual_Create_NumericUpDown_Type_RepeatSimple.Value = new decimal(new int[] {
-			1,
-			0,
-			0,
-			0});
+            1,
+            0,
+            0,
+            0});
 			this.Tasual_Create_NumericUpDown_Type_RepeatSimple.ValueChanged += new System.EventHandler(this.Tasual_Create_NumericUpDown_Type_RepeatSimple_ValueChanged);
 			// 
 			// Tasual_Create_RadioButton_Type_Singular
@@ -749,7 +746,7 @@
 			this.Tasual_Create_RadioButton_Type_Singular.Location = new System.Drawing.Point(3, 3);
 			this.Tasual_Create_RadioButton_Type_Singular.Name = "Tasual_Create_RadioButton_Type_Singular";
 			this.Tasual_Create_RadioButton_Type_Singular.Size = new System.Drawing.Size(63, 17);
-			this.Tasual_Create_RadioButton_Type_Singular.TabIndex = 62;
+			this.Tasual_Create_RadioButton_Type_Singular.TabIndex = 13;
 			this.Tasual_Create_RadioButton_Type_Singular.TabStop = true;
 			this.Tasual_Create_RadioButton_Type_Singular.Text = "Singular";
 			this.Tasual_Create_RadioButton_Type_Singular.UseVisualStyleBackColor = true;
@@ -787,7 +784,7 @@
 			this.Tasual_Create_RadioButton_Ends_Never.Location = new System.Drawing.Point(73, 3);
 			this.Tasual_Create_RadioButton_Ends_Never.Name = "Tasual_Create_RadioButton_Ends_Never";
 			this.Tasual_Create_RadioButton_Ends_Never.Size = new System.Drawing.Size(54, 17);
-			this.Tasual_Create_RadioButton_Ends_Never.TabIndex = 54;
+			this.Tasual_Create_RadioButton_Ends_Never.TabIndex = 45;
 			this.Tasual_Create_RadioButton_Ends_Never.TabStop = true;
 			this.Tasual_Create_RadioButton_Ends_Never.Text = "Never";
 			this.Tasual_Create_RadioButton_Ends_Never.UseVisualStyleBackColor = true;
@@ -799,7 +796,7 @@
 			this.Tasual_Create_RadioButton_Ends_Occurences.Location = new System.Drawing.Point(139, 3);
 			this.Tasual_Create_RadioButton_Ends_Occurences.Name = "Tasual_Create_RadioButton_Ends_Occurences";
 			this.Tasual_Create_RadioButton_Ends_Occurences.Size = new System.Drawing.Size(47, 17);
-			this.Tasual_Create_RadioButton_Ends_Occurences.TabIndex = 55;
+			this.Tasual_Create_RadioButton_Ends_Occurences.TabIndex = 46;
 			this.Tasual_Create_RadioButton_Ends_Occurences.Text = "After";
 			this.Tasual_Create_RadioButton_Ends_Occurences.UseVisualStyleBackColor = true;
 			this.Tasual_Create_RadioButton_Ends_Occurences.CheckedChanged += new System.EventHandler(this.Tasual_Create_RadioButton_Ends_Occurences_CheckedChanged);
@@ -810,7 +807,7 @@
 			this.Tasual_Create_RadioButton_Ends_OnDate.Location = new System.Drawing.Point(73, 26);
 			this.Tasual_Create_RadioButton_Ends_OnDate.Name = "Tasual_Create_RadioButton_Ends_OnDate";
 			this.Tasual_Create_RadioButton_Ends_OnDate.Size = new System.Drawing.Size(39, 17);
-			this.Tasual_Create_RadioButton_Ends_OnDate.TabIndex = 56;
+			this.Tasual_Create_RadioButton_Ends_OnDate.TabIndex = 48;
 			this.Tasual_Create_RadioButton_Ends_OnDate.Text = "On";
 			this.Tasual_Create_RadioButton_Ends_OnDate.UseVisualStyleBackColor = true;
 			this.Tasual_Create_RadioButton_Ends_OnDate.CheckedChanged += new System.EventHandler(this.Tasual_Create_RadioButton_Ends_OnDate_CheckedChanged);
@@ -821,7 +818,7 @@
 			this.Tasual_Create_DateTimePicker_EndDate.Location = new System.Drawing.Point(118, 24);
 			this.Tasual_Create_DateTimePicker_EndDate.Name = "Tasual_Create_DateTimePicker_EndDate";
 			this.Tasual_Create_DateTimePicker_EndDate.Size = new System.Drawing.Size(199, 20);
-			this.Tasual_Create_DateTimePicker_EndDate.TabIndex = 57;
+			this.Tasual_Create_DateTimePicker_EndDate.TabIndex = 49;
 			this.Tasual_Create_DateTimePicker_EndDate.ValueChanged += new System.EventHandler(this.Tasual_Create_DateTimePicker_EndDate_ValueChanged);
 			// 
 			// Tasual_Create_NumericUpDown_Ends_Occurences
@@ -829,23 +826,23 @@
 			this.Tasual_Create_NumericUpDown_Ends_Occurences.Enabled = false;
 			this.Tasual_Create_NumericUpDown_Ends_Occurences.Location = new System.Drawing.Point(186, 2);
 			this.Tasual_Create_NumericUpDown_Ends_Occurences.Maximum = new decimal(new int[] {
-			365,
-			0,
-			0,
-			0});
+            365,
+            0,
+            0,
+            0});
 			this.Tasual_Create_NumericUpDown_Ends_Occurences.Minimum = new decimal(new int[] {
-			1,
-			0,
-			0,
-			0});
+            1,
+            0,
+            0,
+            0});
 			this.Tasual_Create_NumericUpDown_Ends_Occurences.Name = "Tasual_Create_NumericUpDown_Ends_Occurences";
 			this.Tasual_Create_NumericUpDown_Ends_Occurences.Size = new System.Drawing.Size(53, 20);
-			this.Tasual_Create_NumericUpDown_Ends_Occurences.TabIndex = 58;
+			this.Tasual_Create_NumericUpDown_Ends_Occurences.TabIndex = 47;
 			this.Tasual_Create_NumericUpDown_Ends_Occurences.Value = new decimal(new int[] {
-			1,
-			0,
-			0,
-			0});
+            1,
+            0,
+            0,
+            0});
 			this.Tasual_Create_NumericUpDown_Ends_Occurences.ValueChanged += new System.EventHandler(this.Tasual_Create_NumericUpDown_Ends_Occurences_ValueChanged);
 			// 
 			// Tasual_Create_Label_Ends
@@ -875,7 +872,7 @@
 			this.Tasual_Create_RadioButton_Time_AllDay.Location = new System.Drawing.Point(6, 5);
 			this.Tasual_Create_RadioButton_Time_AllDay.Name = "Tasual_Create_RadioButton_Time_AllDay";
 			this.Tasual_Create_RadioButton_Time_AllDay.Size = new System.Drawing.Size(56, 17);
-			this.Tasual_Create_RadioButton_Time_AllDay.TabIndex = 22;
+			this.Tasual_Create_RadioButton_Time_AllDay.TabIndex = 9;
 			this.Tasual_Create_RadioButton_Time_AllDay.TabStop = true;
 			this.Tasual_Create_RadioButton_Time_AllDay.Text = "All day";
 			this.Tasual_Create_RadioButton_Time_AllDay.UseVisualStyleBackColor = true;
@@ -890,7 +887,7 @@
 			this.Tasual_Create_DateTimePicker_StartTime.Name = "Tasual_Create_DateTimePicker_StartTime";
 			this.Tasual_Create_DateTimePicker_StartTime.ShowUpDown = true;
 			this.Tasual_Create_DateTimePicker_StartTime.Size = new System.Drawing.Size(73, 20);
-			this.Tasual_Create_DateTimePicker_StartTime.TabIndex = 21;
+			this.Tasual_Create_DateTimePicker_StartTime.TabIndex = 11;
 			this.Tasual_Create_DateTimePicker_StartTime.ValueChanged += new System.EventHandler(this.Tasual_Create_DateTimePicker_StartTime_ValueChanged);
 			// 
 			// Tasual_Create_RadioButton_Time_Specific
@@ -899,7 +896,7 @@
 			this.Tasual_Create_RadioButton_Time_Specific.Location = new System.Drawing.Point(6, 28);
 			this.Tasual_Create_RadioButton_Time_Specific.Name = "Tasual_Create_RadioButton_Time_Specific";
 			this.Tasual_Create_RadioButton_Time_Specific.Size = new System.Drawing.Size(14, 13);
-			this.Tasual_Create_RadioButton_Time_Specific.TabIndex = 23;
+			this.Tasual_Create_RadioButton_Time_Specific.TabIndex = 10;
 			this.Tasual_Create_RadioButton_Time_Specific.UseVisualStyleBackColor = true;
 			this.Tasual_Create_RadioButton_Time_Specific.CheckedChanged += new System.EventHandler(this.Tasual_Create_RadioButton_Time_Specific_CheckedChanged);
 			// 
@@ -931,7 +928,7 @@
 			this.Tasual_Create_Label_Summary.Size = new System.Drawing.Size(333, 54);
 			this.Tasual_Create_Label_Summary.TabIndex = 42;
 			this.Tasual_Create_Label_Summary.Text = "Repeats on Mon, Tues, and Fri in the 2nd and 3rd weeks of May, Jun, and Jul until" +
-	" 12 occurences.";
+    " 12 occurences.";
 			this.Tasual_Create_Label_Summary.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// Tasual_Create_CheckBox_Scheduled
@@ -940,7 +937,7 @@
 			this.Tasual_Create_CheckBox_Scheduled.Location = new System.Drawing.Point(26, 111);
 			this.Tasual_Create_CheckBox_Scheduled.Name = "Tasual_Create_CheckBox_Scheduled";
 			this.Tasual_Create_CheckBox_Scheduled.Size = new System.Drawing.Size(77, 17);
-			this.Tasual_Create_CheckBox_Scheduled.TabIndex = 18;
+			this.Tasual_Create_CheckBox_Scheduled.TabIndex = 7;
 			this.Tasual_Create_CheckBox_Scheduled.Text = "Scheduled";
 			this.Tasual_Create_CheckBox_Scheduled.UseVisualStyleBackColor = true;
 			this.Tasual_Create_CheckBox_Scheduled.CheckedChanged += new System.EventHandler(this.Tasual_Create_CheckBox_Scheduled_CheckedChanged);
@@ -950,7 +947,7 @@
 			this.Tasual_Create_Button_Create.Location = new System.Drawing.Point(197, 451);
 			this.Tasual_Create_Button_Create.Name = "Tasual_Create_Button_Create";
 			this.Tasual_Create_Button_Create.Size = new System.Drawing.Size(75, 23);
-			this.Tasual_Create_Button_Create.TabIndex = 19;
+			this.Tasual_Create_Button_Create.TabIndex = 50;
 			this.Tasual_Create_Button_Create.Text = "Create";
 			this.Tasual_Create_Button_Create.UseVisualStyleBackColor = true;
 			this.Tasual_Create_Button_Create.Click += new System.EventHandler(this.Tasual_Create_Button_Create_Click);
@@ -961,7 +958,7 @@
 			this.Tasual_Create_Button_Cancel.Location = new System.Drawing.Point(278, 451);
 			this.Tasual_Create_Button_Cancel.Name = "Tasual_Create_Button_Cancel";
 			this.Tasual_Create_Button_Cancel.Size = new System.Drawing.Size(75, 23);
-			this.Tasual_Create_Button_Cancel.TabIndex = 20;
+			this.Tasual_Create_Button_Cancel.TabIndex = 51;
 			this.Tasual_Create_Button_Cancel.Text = "Cancel";
 			this.Tasual_Create_Button_Cancel.UseVisualStyleBackColor = true;
 			this.Tasual_Create_Button_Cancel.Click += new System.EventHandler(this.Tasual_Create_Button_Cancel_Click);
@@ -973,7 +970,7 @@
 			this.Tasual_Create_TextBox_Link.Location = new System.Drawing.Point(12, 50);
 			this.Tasual_Create_TextBox_Link.Name = "Tasual_Create_TextBox_Link";
 			this.Tasual_Create_TextBox_Link.Size = new System.Drawing.Size(168, 20);
-			this.Tasual_Create_TextBox_Link.TabIndex = 21;
+			this.Tasual_Create_TextBox_Link.TabIndex = 2;
 			this.Tasual_Create_TextBox_Link.Text = "Link";
 			this.Tasual_Create_TextBox_Link.WatermarkActive = true;
 			this.Tasual_Create_TextBox_Link.WatermarkText = "Link";
@@ -986,7 +983,7 @@
 			this.Tasual_Create_TextBox_Location.Location = new System.Drawing.Point(12, 76);
 			this.Tasual_Create_TextBox_Location.Name = "Tasual_Create_TextBox_Location";
 			this.Tasual_Create_TextBox_Location.Size = new System.Drawing.Size(168, 20);
-			this.Tasual_Create_TextBox_Location.TabIndex = 22;
+			this.Tasual_Create_TextBox_Location.TabIndex = 3;
 			this.Tasual_Create_TextBox_Location.Text = "Location";
 			this.Tasual_Create_TextBox_Location.WatermarkActive = true;
 			this.Tasual_Create_TextBox_Location.WatermarkText = "Location";
@@ -997,24 +994,18 @@
 			this.Tasual_Create_Button_Notes.Location = new System.Drawing.Point(300, 13);
 			this.Tasual_Create_Button_Notes.Name = "Tasual_Create_Button_Notes";
 			this.Tasual_Create_Button_Notes.Size = new System.Drawing.Size(53, 22);
-			this.Tasual_Create_Button_Notes.TabIndex = 23;
+			this.Tasual_Create_Button_Notes.TabIndex = 4;
 			this.Tasual_Create_Button_Notes.Text = "Notes";
 			this.Tasual_Create_Button_Notes.UseVisualStyleBackColor = true;
 			this.Tasual_Create_Button_Notes.Click += new System.EventHandler(this.Tasual_Create_Button_Notes_Click);
 			// 
 			// Tasual_Create_TextBox_Description
 			// 
-			this.Tasual_Create_TextBox_Description.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
-			this.Tasual_Create_TextBox_Description.ForeColor = System.Drawing.Color.Gray;
-			this.Tasual_Create_TextBox_Description.Location = new System.Drawing.Point(12, 14);
+			this.Tasual_Create_TextBox_Description.Location = new System.Drawing.Point(12, 15);
 			this.Tasual_Create_TextBox_Description.Name = "Tasual_Create_TextBox_Description";
-			this.Tasual_Create_TextBox_Description.Size = new System.Drawing.Size(283, 20);
-			this.Tasual_Create_TextBox_Description.TabIndex = 5;
-			this.Tasual_Create_TextBox_Description.Text = "Description";
-			this.Tasual_Create_TextBox_Description.WatermarkActive = true;
-			this.Tasual_Create_TextBox_Description.WatermarkText = "Description";
-			this.Tasual_Create_TextBox_Description.TextChanged += new System.EventHandler(this.Tasual_Create_TextBox_Description_TextChanged);
+			this.Tasual_Create_TextBox_Description.Size = new System.Drawing.Size(282, 20);
+			this.Tasual_Create_TextBox_Description.TabIndex = 1;
+			this.Tasual_Create_TextBox_Description.Text = "New task";
 			// 
 			// Tasual_Create
 			// 
@@ -1025,6 +1016,7 @@
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.CancelButton = this.Tasual_Create_Button_Cancel;
 			this.ClientSize = new System.Drawing.Size(364, 485);
+			this.Controls.Add(this.Tasual_Create_TextBox_Description);
 			this.Controls.Add(this.Tasual_Create_Button_Notes);
 			this.Controls.Add(this.Tasual_Create_TextBox_Location);
 			this.Controls.Add(this.Tasual_Create_TextBox_Link);
@@ -1036,7 +1028,6 @@
 			this.Controls.Add(this.Tasual_Create_CheckBox_Scheduled);
 			this.Controls.Add(this.Tasual_Create_GroupBox_Scheduled);
 			this.Controls.Add(this.Tasual_Create_ComboBox_Category);
-			this.Controls.Add(this.Tasual_Create_TextBox_Description);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.HelpButton = true;
 			this.MaximizeBox = false;
@@ -1131,6 +1122,6 @@
 		private System.Windows.Forms.Panel Tasual_Create_Panel_Ends;
 		private System.Windows.Forms.Panel Tasual_Create_Panel_Type;
 		private System.Windows.Forms.Panel Tasual_Create_Panel_SelectionLabels;
-		private Tasual.WatermarkTextBox Tasual_Create_TextBox_Description;
+		private System.Windows.Forms.TextBox Tasual_Create_TextBox_Description;
 	}
 }

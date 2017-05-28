@@ -107,11 +107,6 @@ namespace Tasual
 			Setting.Save(ref Settings);
 		}
 
-		public static Tasual_Main ReturnFormInstance()
-		{
-			return Application.OpenForms[0] as Tasual_Main;
-		}
-
 		public void Tasual_StatusLabel_UpdateCounts()
 		{
 			int Complete = Tasual_ListView.CheckedItems.Count;
@@ -649,7 +644,7 @@ namespace Tasual
 		private void Tasual_MenuStrip_Notify_Settings_Click(object sender, EventArgs e)
 		{
 			Tasual_Settings SettingsForm = new Tasual_Settings(this);
-			SettingsForm.ShowDialog(ReturnFormInstance());
+			SettingsForm.ShowDialog(this);
 		}
 
 		private void Tasual_MenuStrip_Notify_Quit_Click(object sender, EventArgs e)

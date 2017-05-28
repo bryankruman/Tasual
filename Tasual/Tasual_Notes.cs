@@ -10,14 +10,14 @@ namespace Tasual
 		private readonly Task Task;
 		private readonly int Origination; // 1 = Main, 2 = Create
 
-		public Tasual_Notes(Tasual_Main PassedForm, int PassedIndex)
+		public Tasual_Notes(Tasual_Main PassedMain, int PassedIndex)
 		{
 			try
 			{
 				InitializeComponent();
 
 				Origination = 1;
-				_Tasual_Main = PassedForm;
+				_Tasual_Main = PassedMain;
 				Task = _Tasual_Main.TaskArray[PassedIndex];
 
 				Tasual_Notes_TextBox.Text = Task.Notes;
@@ -29,14 +29,15 @@ namespace Tasual
 			}
 		}
 
-		public Tasual_Notes(Tasual_Create PassedForm)
+		public Tasual_Notes(Tasual_Main PassedMain, Tasual_Create PassedCreate)
 		{
 			try
 			{
 				InitializeComponent();
 
 				Origination = 2;
-				_Tasual_Create = PassedForm;
+				_Tasual_Main = PassedMain;
+				_Tasual_Create = PassedCreate;
 
 				Tasual_Notes_TextBox.Text = _Tasual_Create.Notes;
 			}

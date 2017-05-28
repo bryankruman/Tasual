@@ -79,6 +79,18 @@ namespace Tasual
 			}
 
 			Tasual_Create_ComboBox_Category.SelectedIndex = 0;
+
+			Tasual_Create_DateTimePicker_StartDate.MinDate = DateTime.Now;
+
+			DateTime BaseTime = DateTime.Now.AddMinutes(15);
+			DateTime RoundedUp = new DateTime(BaseTime.Year, BaseTime.Month, BaseTime.Day, BaseTime.Hour, 0, 0);
+			if ((BaseTime.Minute > 0) || (BaseTime.Second > 0))
+			{
+				RoundedUp = RoundedUp.AddHours(1);
+			}
+			Tasual_Create_DateTimePicker_StartTime.Value = RoundedUp;
+
+			Tasual_Create_DateTimePicker_EndDate.MinDate = DateTime.Now;
 		}
 
 		private void Tasual_Create_CheckGroupBoxSize()
@@ -110,21 +122,6 @@ namespace Tasual
 
 		}
 
-		private void Tasual_Create_ComboBox_Category_SelectedIndexChanged(object sender, EventArgs e)
-		{
-
-		}
-
-		private void Tasual_Create_ComboBox_Priority_SelectedIndexChanged(object sender, EventArgs e)
-		{
-
-		}
-
-		private void Tasual_Create_ComboBox_Dismiss_SelectedIndexChanged(object sender, EventArgs e)
-		{
-
-		}
-
 		private void Tasual_Create_ComboBox_RepeatSimple_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			Tasual_Create_UpdateSummaryLabel();
@@ -132,11 +129,23 @@ namespace Tasual
 
 		private void Tasual_Create_DateTimePicker_StartDate_ValueChanged(object sender, EventArgs e)
 		{
+			if (Tasual_Create_DateTimePicker_StartDate.Value < Tasual_Create_DateTimePicker_StartTime.Value)
+			{
+				Console.WriteLine("date before time!");
+			}
 			Tasual_Create_UpdateSummaryLabel();
 		}
 
 		private void Tasual_Create_DateTimePicker_StartTime_ValueChanged(object sender, EventArgs e)
 		{
+			DateTime Readjust = Tasual_Create_DateTimePicker_StartDate.Value;
+			Readjust = Readjust - Readjust.TimeOfDay;
+			Readjust = Readjust + Tasual_Create_DateTimePicker_StartTime.Value.TimeOfDay;
+			if (Readjust < Tasual_Create_DateTimePicker_StartDate.MinDate)
+			{
+				Readjust = Readjust.AddDays(1);
+			}
+			Tasual_Create_DateTimePicker_StartDate.Value = Readjust;
 			Tasual_Create_UpdateSummaryLabel();
 		}
 
@@ -428,7 +437,7 @@ namespace Tasual
 
 		private void Tasual_Create_Button_Notes_Click(object sender, EventArgs e)
 		{
-			Tasual_Notes NotesForm = new Tasual_Notes(this);
+			Tasual_Notes NotesForm = new Tasual_Notes(_Tasual_Main, this);
 			NotesForm.ShowDialog(this);
 		}
 
@@ -579,29 +588,15 @@ namespace Tasual
 		// TODO: Force DateTimePicker_EndDate.MinValue to be later than StartDate
 		// TODO: Force DateTimePicker_StartDate.MinValue to be later than DateTime.Now
 		// See: http://stackoverflow.com/questions/12607087/only-allow-specific-characters-in-textbox
-		Regex AllowedCharacters = new Regex("^[\\w\\s]+$"); // todo: Make this not suck as much
+		// Regex AllowedCharacters = new Regex("^[\\w\\s]+$"); // todo: Make this not suck as much
 
 		private void Tasual_Create_Button_Create_Click(object sender, EventArgs e)
 		{
 			Task Task = new Task();
-			//Task.Status = (int)Task.Statuses.New;
-			//Task.Checked = (int)Task.Types.TYPE_USER_SINGLE;
 
-			if (
-				(Tasual_Create_TextBox_Description.Text != Tasual_Create_TextBox_Description.WatermarkText)
-				&&
-				!string.IsNullOrWhiteSpace(Tasual_Create_TextBox_Description.Text)
-				)
+			if (!string.IsNullOrWhiteSpace(Tasual_Create_TextBox_Description.Text))
 			{
-				if (AllowedCharacters.IsMatch(Tasual_Create_TextBox_Description.Text))
-				{
-					Task.Description = Tasual_Create_TextBox_Description.Text;
-				}
-				else
-				{
-					Console.WriteLine("Tasual_Create_Button_Create_Click(): Invalid characters!");
-					return;
-				}
+				Task.Description = Tasual_Create_TextBox_Description.Text;
 			}
 			else
 			{
@@ -611,8 +606,6 @@ namespace Tasual
 
 			Task.Priority = Tasual_Create_ComboBox_Priority.SelectedIndex;
 			Task.Group = Tasual_Create_ComboBox_Category.Text;
-			Console.WriteLine("Group: {0}", Task.Group);
-
 			Task.Notes = Notes;
 			if (Tasual_Create_TextBox_Link.Text != Tasual_Create_TextBox_Link.WatermarkText)
 			{
@@ -625,72 +618,76 @@ namespace Tasual
 			}
 
 			TimeInfo TimeInfo = new TimeInfo();
-			TimeInfo.Start = Tasual_Create_DateTimePicker_StartDate.Value;
-			TimeInfo.Start = TimeInfo.Start - TimeInfo.Start.TimeOfDay;
-			TimeInfo.Start = TimeInfo.Start + Tasual_Create_DateTimePicker_StartTime.Value.TimeOfDay;
-			if (Tasual_Create_RadioButton_Type_Singular.Checked == false)
+			//TimeInfo.Created = DateTime.Now(); // not necessary, constructor sets this
+			if (Tasual_Create_CheckBox_Scheduled.Checked)
 			{
-				if (Tasual_Create_RadioButton_Type_RepeatSimple.Checked == true)
+				TimeInfo.Start = Tasual_Create_DateTimePicker_StartDate.Value;
+				TimeInfo.Start = TimeInfo.Start - TimeInfo.Start.TimeOfDay;
+				TimeInfo.Start = TimeInfo.Start + Tasual_Create_DateTimePicker_StartTime.Value.TimeOfDay;
+				if (Tasual_Create_RadioButton_Type_Singular.Checked == false)
 				{
-					switch (Tasual_Create_ComboBox_RepeatSimple.SelectedIndex)
+					if (Tasual_Create_RadioButton_Type_RepeatSimple.Checked == true)
 					{
-						case 0: // days
-							{
-								TimeInfo.Daily = (int)Tasual_Create_NumericUpDown_Type_RepeatSimple.Value;
-								break;
-							}
-						case 1: // weeks
-							{
-								TimeInfo.Weekly = (int)Tasual_Create_NumericUpDown_Type_RepeatSimple.Value;
-								break;
-							}
-						case 2: // months
-							{
-								TimeInfo.Monthly = (int)Tasual_Create_NumericUpDown_Type_RepeatSimple.Value;
-								break;
-							}
-						case 3: // years
-							{
-								TimeInfo.Yearly = (int)Tasual_Create_NumericUpDown_Type_RepeatSimple.Value;
-								break;
-							}
+						switch (Tasual_Create_ComboBox_RepeatSimple.SelectedIndex)
+						{
+							case 0: // days
+								{
+									TimeInfo.Daily = (int)Tasual_Create_NumericUpDown_Type_RepeatSimple.Value;
+									break;
+								}
+							case 1: // weeks
+								{
+									TimeInfo.Weekly = (int)Tasual_Create_NumericUpDown_Type_RepeatSimple.Value;
+									break;
+								}
+							case 2: // months
+								{
+									TimeInfo.Monthly = (int)Tasual_Create_NumericUpDown_Type_RepeatSimple.Value;
+									break;
+								}
+							case 3: // years
+								{
+									TimeInfo.Yearly = (int)Tasual_Create_NumericUpDown_Type_RepeatSimple.Value;
+									break;
+								}
+						}
 					}
-				}
-				else if (Tasual_Create_RadioButton_Type_RepeatCustom.Checked == true)
-				{
-					// day filters
-					if (Tasual_Create_Label_DaySel_Specific.Tag != null)
+					else if (Tasual_Create_RadioButton_Type_RepeatCustom.Checked == true)
 					{
-						TimeInfo.SpecificDay = Tasual_Create_DateTimePicker_StartDate.Value.Day;
-					}
-					else
-					{
-						if (Tasual_Create_Label_DaySel_Mon.Tag != null) { TimeInfo.DayFilter &= TimeInfo.DayFlag.Monday; }
-						if (Tasual_Create_Label_DaySel_Tue.Tag != null) { TimeInfo.DayFilter &= TimeInfo.DayFlag.Tuesday; }
-						if (Tasual_Create_Label_DaySel_Wed.Tag != null) { TimeInfo.DayFilter &= TimeInfo.DayFlag.Wednesday; }
-						if (Tasual_Create_Label_DaySel_Thu.Tag != null) { TimeInfo.DayFilter &= TimeInfo.DayFlag.Thursday; }
-						if (Tasual_Create_Label_DaySel_Fri.Tag != null) { TimeInfo.DayFilter &= TimeInfo.DayFlag.Friday; }
-						if (Tasual_Create_Label_DaySel_Sat.Tag != null) { TimeInfo.DayFilter &= TimeInfo.DayFlag.Saturday; }
-						if (Tasual_Create_Label_DaySel_Sun.Tag != null) { TimeInfo.DayFilter &= TimeInfo.DayFlag.Sunday; }
-					}
+						// day filters
+						if (Tasual_Create_Label_DaySel_Specific.Tag != null)
+						{
+							TimeInfo.SpecificDay = Tasual_Create_DateTimePicker_StartDate.Value.Day;
+						}
+						else
+						{
+							if (Tasual_Create_Label_DaySel_Mon.Tag != null) { TimeInfo.DayFilter &= TimeInfo.DayFlag.Monday; }
+							if (Tasual_Create_Label_DaySel_Tue.Tag != null) { TimeInfo.DayFilter &= TimeInfo.DayFlag.Tuesday; }
+							if (Tasual_Create_Label_DaySel_Wed.Tag != null) { TimeInfo.DayFilter &= TimeInfo.DayFlag.Wednesday; }
+							if (Tasual_Create_Label_DaySel_Thu.Tag != null) { TimeInfo.DayFilter &= TimeInfo.DayFlag.Thursday; }
+							if (Tasual_Create_Label_DaySel_Fri.Tag != null) { TimeInfo.DayFilter &= TimeInfo.DayFlag.Friday; }
+							if (Tasual_Create_Label_DaySel_Sat.Tag != null) { TimeInfo.DayFilter &= TimeInfo.DayFlag.Saturday; }
+							if (Tasual_Create_Label_DaySel_Sun.Tag != null) { TimeInfo.DayFilter &= TimeInfo.DayFlag.Sunday; }
+						}
 
-					if (Tasual_Create_Label_WeekSel_1st.Tag != null) { TimeInfo.WeekFilter &= TimeInfo.WeekFlag.First; }
-					if (Tasual_Create_Label_WeekSel_2nd.Tag != null) { TimeInfo.WeekFilter &= TimeInfo.WeekFlag.Second; }
-					if (Tasual_Create_Label_WeekSel_3rd.Tag != null) { TimeInfo.WeekFilter &= TimeInfo.WeekFlag.Third; }
-					if (Tasual_Create_Label_WeekSel_Last.Tag != null) { TimeInfo.WeekFilter &= TimeInfo.WeekFlag.Last; }
+						if (Tasual_Create_Label_WeekSel_1st.Tag != null) { TimeInfo.WeekFilter &= TimeInfo.WeekFlag.First; }
+						if (Tasual_Create_Label_WeekSel_2nd.Tag != null) { TimeInfo.WeekFilter &= TimeInfo.WeekFlag.Second; }
+						if (Tasual_Create_Label_WeekSel_3rd.Tag != null) { TimeInfo.WeekFilter &= TimeInfo.WeekFlag.Third; }
+						if (Tasual_Create_Label_WeekSel_Last.Tag != null) { TimeInfo.WeekFilter &= TimeInfo.WeekFlag.Last; }
 
-					if (Tasual_Create_Label_MonthSel_Jan.Tag != null) { TimeInfo.MonthFilter &= TimeInfo.MonthFlag.January; }
-					if (Tasual_Create_Label_MonthSel_Feb.Tag != null) { TimeInfo.MonthFilter &= TimeInfo.MonthFlag.February; }
-					if (Tasual_Create_Label_MonthSel_Mar.Tag != null) { TimeInfo.MonthFilter &= TimeInfo.MonthFlag.March; }
-					if (Tasual_Create_Label_MonthSel_Apr.Tag != null) { TimeInfo.MonthFilter &= TimeInfo.MonthFlag.April; }
-					if (Tasual_Create_Label_MonthSel_May.Tag != null) { TimeInfo.MonthFilter &= TimeInfo.MonthFlag.May; }
-					if (Tasual_Create_Label_MonthSel_Jun.Tag != null) { TimeInfo.MonthFilter &= TimeInfo.MonthFlag.June; }
-					if (Tasual_Create_Label_MonthSel_Jul.Tag != null) { TimeInfo.MonthFilter &= TimeInfo.MonthFlag.July; }
-					if (Tasual_Create_Label_MonthSel_Aug.Tag != null) { TimeInfo.MonthFilter &= TimeInfo.MonthFlag.August; }
-					if (Tasual_Create_Label_MonthSel_Sep.Tag != null) { TimeInfo.MonthFilter &= TimeInfo.MonthFlag.September; }
-					if (Tasual_Create_Label_MonthSel_Oct.Tag != null) { TimeInfo.MonthFilter &= TimeInfo.MonthFlag.October; }
-					if (Tasual_Create_Label_MonthSel_Nov.Tag != null) { TimeInfo.MonthFilter &= TimeInfo.MonthFlag.November; }
-					if (Tasual_Create_Label_MonthSel_Dec.Tag != null) { TimeInfo.MonthFilter &= TimeInfo.MonthFlag.December; }
+						if (Tasual_Create_Label_MonthSel_Jan.Tag != null) { TimeInfo.MonthFilter &= TimeInfo.MonthFlag.January; }
+						if (Tasual_Create_Label_MonthSel_Feb.Tag != null) { TimeInfo.MonthFilter &= TimeInfo.MonthFlag.February; }
+						if (Tasual_Create_Label_MonthSel_Mar.Tag != null) { TimeInfo.MonthFilter &= TimeInfo.MonthFlag.March; }
+						if (Tasual_Create_Label_MonthSel_Apr.Tag != null) { TimeInfo.MonthFilter &= TimeInfo.MonthFlag.April; }
+						if (Tasual_Create_Label_MonthSel_May.Tag != null) { TimeInfo.MonthFilter &= TimeInfo.MonthFlag.May; }
+						if (Tasual_Create_Label_MonthSel_Jun.Tag != null) { TimeInfo.MonthFilter &= TimeInfo.MonthFlag.June; }
+						if (Tasual_Create_Label_MonthSel_Jul.Tag != null) { TimeInfo.MonthFilter &= TimeInfo.MonthFlag.July; }
+						if (Tasual_Create_Label_MonthSel_Aug.Tag != null) { TimeInfo.MonthFilter &= TimeInfo.MonthFlag.August; }
+						if (Tasual_Create_Label_MonthSel_Sep.Tag != null) { TimeInfo.MonthFilter &= TimeInfo.MonthFlag.September; }
+						if (Tasual_Create_Label_MonthSel_Oct.Tag != null) { TimeInfo.MonthFilter &= TimeInfo.MonthFlag.October; }
+						if (Tasual_Create_Label_MonthSel_Nov.Tag != null) { TimeInfo.MonthFilter &= TimeInfo.MonthFlag.November; }
+						if (Tasual_Create_Label_MonthSel_Dec.Tag != null) { TimeInfo.MonthFilter &= TimeInfo.MonthFlag.December; }
+					}
 				}
 			}
 			Task.Time = TimeInfo;
@@ -698,6 +695,8 @@ namespace Tasual
 			_Tasual_Main.TaskArray.Add(Task);
 			_Tasual_Main.Tasual_Array_Save();
 			_Tasual_Main.Tasual_ListView.BuildList();
+			_Tasual_Main.Tasual_ListView.EnsureModelVisible(Task);
+			_Tasual_Main.Tasual_ListView.SelectObject(Task);
 			_Tasual_Main.Tasual_StatusLabel_UpdateCounts();
 			this.Close();
 		}
