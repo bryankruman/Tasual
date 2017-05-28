@@ -368,7 +368,17 @@ namespace Tasual
 		}
 
 		// Tasual_Main: "Edit"
-		private void Tasual_MenuStrip_Edit_Click(object sender, EventArgs e)
+		private void Tasual_MenuStrip_Edit_Advanced_Click(object sender, EventArgs e)
+		{
+			if (Tasual_ListView.SelectedItem != null)
+			{
+				Task Task = (Task)Tasual_ListView.SelectedItem.RowObject;
+				Tasual_Create CreateForm = new Tasual_Create(this, TaskArray.IndexOf(Task));
+				CreateForm.ShowDialog(this);
+			}
+		}
+
+		private void Tasual_MenuStrip_Edit_Quick_Click(object sender, EventArgs e)
 		{
 			if (Tasual_ListView.SelectedItem != null)
 			{
@@ -951,6 +961,16 @@ namespace Tasual
 						break;
 					}
 			}
+		}
+
+		private void Tasual_MenuStrip_Item_Edit_Quick_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void Tasual_MenuStrip_Item_Edit_Advanced_Click(object sender, EventArgs e)
+		{
+
 		}
 	}
 }

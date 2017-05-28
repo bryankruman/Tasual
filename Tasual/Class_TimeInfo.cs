@@ -69,6 +69,9 @@ namespace Tasual
 		[JsonProperty("created")]
 		public DateTime Created; // date of creation
 
+		[JsonProperty("modified")]
+		public DateTime Modified; // date of last modification
+
 		[JsonProperty("start")]
 		public DateTime Start; // date of first occurence
 
@@ -124,6 +127,7 @@ namespace Tasual
 		public TimeInfo()
 		{
 			Created = DateTime.MinValue;
+			Modified = DateTime.MinValue;
 			Start = DateTime.MinValue;
 			Next = DateTime.MinValue;
 			End = DateTime.MinValue;
@@ -144,11 +148,13 @@ namespace Tasual
 		// singular constructor
 		public TimeInfo(
 			DateTime _Created,
+			DateTime _Modified,
 			DateTime _Start,
 			DateTime _Next,
 			DateTime _End)
 		{
 			Created = _Created;
+			Modified = _Modified;
 			Start = _Start;
 			Next = _Next;
 			End = _End;
@@ -172,6 +178,7 @@ namespace Tasual
 		// simple repeating constructor
 		public TimeInfo(
 			DateTime _Created,
+			DateTime _Modified,
 			DateTime _Start,
 			DateTime _Next,
 			DateTime _End,
@@ -185,6 +192,7 @@ namespace Tasual
 			TimeSpan _TimeOfDay)
 		{
 			Created = _Created;
+			Modified = _Modified;
 			Start = _Start;
 			Next = _Next;
 			End = _End;
@@ -208,6 +216,7 @@ namespace Tasual
 		// complex repeating constructor
 		public TimeInfo(
 			DateTime _Created,
+			DateTime _Modified,
 			DateTime _Start,
 			DateTime _Next,
 			DateTime _End,
@@ -221,6 +230,7 @@ namespace Tasual
 			int _SpecificDay)
 		{
 			Created = _Created;
+			Modified = _Modified;
 			Start = _Start;
 			Next = _Next;
 			End = _End;
@@ -244,6 +254,7 @@ namespace Tasual
 		// full constructor
 		public TimeInfo(
 			DateTime _Created,
+			DateTime _Modified,
 			DateTime _Start,
 			DateTime _Next,
 			DateTime _End,
@@ -261,6 +272,7 @@ namespace Tasual
 			int _SpecificDay)
 		{
 			Created = _Created;
+			Modified = _Modified;
 			Start = _Start;
 			Next = _Next;
 			End = _End;
