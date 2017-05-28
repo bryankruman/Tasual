@@ -699,6 +699,26 @@ namespace Tasual
 			}
 		}
 
+		public static int FindIterationCount(ref TimeInfo Rules)
+		{
+			return FindIterationCount(Rules.Start, DateTime.Now, ref Rules);
+		}
+
+		public static int FindIterationCount(DateTime From, DateTime Until, ref TimeInfo Rules)
+		{
+			int Count = 0;
+			while (From < Until)
+			{
+				DateTime Next = FindNextIteration(From, ref Rules);
+				if (Next != DateTime.MinValue)
+				{
+					++Count;
+					From = Next;
+				}
+			}
+			return Count;
+		}
+
 		public static DateTime FindNextIteration(DateTime BaseTime, ref TimeInfo Rules)
 		{
 			DateTime NextTime = new DateTime();
@@ -716,7 +736,7 @@ namespace Tasual
 
 				for (int hops = 1; hops <= 3650; ++hops)
 				{
-					Rules.Count = hops;
+					//Rules.Count = hops;
 					if (NextTime > BaseTime)
 					{
 						return NextTime;
@@ -728,8 +748,6 @@ namespace Tasual
 					NextTime = NextTime.AddDays(Rules.Daily);
 				}
 			}
-
-			// todo: find some good way to count occurences of complex recurrances 
 
 			// COMPLEX RECURRANCE: Filter month/week/day by flags
 			// Increment NextTime until we find a day that matches all of our criteria
