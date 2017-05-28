@@ -295,7 +295,7 @@ namespace Tasual
 
 		public static bool Scheduled(TimeInfo Time)
 		{
-			if (Time.Start != DateTime.MinValue)
+			if (Time.Next != DateTime.MinValue)
 			{
 				return true;
 			}
@@ -412,14 +412,14 @@ namespace Tasual
 			}
 			else if (Scheduled(Task.Time))
 			{
-				if ((DateTime.Now > Task.Time.Start) && Settings.AlwaysShowOverdueGroup)
+				if ((DateTime.Now > Task.Time.Next) && Settings.AlwaysShowOverdueGroup)
 				{
 					return "1Overdue";
 				}
 				else if (Settings.AlwaysShowTodayGroup)
 				{
 					DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
-					DateTime TargetDay = Task.Time.Start - Task.Time.Start.TimeOfDay;
+					DateTime TargetDay = Task.Time.Next - Task.Time.Next.TimeOfDay;
 					if (TargetDay == Today)
 					{
 						return "2Today";
@@ -442,7 +442,7 @@ namespace Tasual
 
 		public static string GetDueStringFromTimeInfo(TimeInfo TimeInfo)
 		{
-			DateTime Time = TimeInfo.Start.ToLocalTime();
+			DateTime Time = TimeInfo.Next.ToLocalTime();
 			if (Scheduled(TimeInfo))
 			{
 				if (DateTime.Now > Time)
@@ -520,7 +520,7 @@ namespace Tasual
 
 		public static int GetDueIntFromTask(Task Task)
 		{
-			DateTime Time = Task.Time.Start.ToLocalTime();
+			DateTime Time = Task.Time.Next.ToLocalTime();
 			//TimeInfo Time = (TimeInfo)Input;
 			if (Task.Checked)
 			{

@@ -131,12 +131,14 @@ namespace Tasual
 			DateTime NewTime = new DateTime();
 			NewTime = Tasual_TimePop_Calendar.SelectionStart;
 
+			Console.WriteLine("DateTime: {0} - {1}", NewTime.ToShortDateString(), NewTime.ToLongTimeString());
+
 			NewTime = NewTime - NewTime.TimeOfDay;
-			NewTime = NewTime + Tasual_TimePop_DateTimePicker.Value.TimeOfDay;
+			//NewTime = NewTime + Tasual_TimePop_DateTimePicker.Value.TimeOfDay;
 
 			if (Tasual_TimePop_CheckBox.Checked)
 			{
-				if (NewTime < DateTime.Now)
+				if ((NewTime + Tasual_TimePop_DateTimePicker.Value.TimeOfDay) < DateTime.Now)
 				{
 					Console.WriteLine("Can't have a date that is before now!");
 					return;
@@ -145,7 +147,10 @@ namespace Tasual
 				{
 					_Task.Time.Modified = DateTime.Now;
 					_Task.Time.Next = NewTime;
-					_Task.Time.TimeOfDay = Tasual_TimePop_DateTimePicker.Value.TimeOfDay;
+					if (Tasual_TimePop_RadioButton_Specific.Checked)
+					{
+						_Task.Time.TimeOfDay = Tasual_TimePop_DateTimePicker.Value.TimeOfDay;
+					}
 				}
 			}
 			else

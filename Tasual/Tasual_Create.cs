@@ -353,8 +353,14 @@ namespace Tasual
 			// Text fields
 			Tasual_Create_TextBox_Description.Text = TaskToEdit.Description;
 			Notes = TaskToEdit.Notes;
-			Tasual_Create_TextBox_Link.Text = TaskToEdit.Link;
-			Tasual_Create_TextBox_Location.Text = TaskToEdit.Location;
+			if (!string.IsNullOrEmpty(TaskToEdit.Link))
+			{
+				Tasual_Create_TextBox_Link.Text = TaskToEdit.Link;
+			}
+			if (!string.IsNullOrEmpty(TaskToEdit.Location))
+			{
+				Tasual_Create_TextBox_Location.Text = TaskToEdit.Location;
+			}
 
 			// Categories
 			Tasual_Create_ComboBox_Category.Items.Add(TaskToEdit.Group);
@@ -368,10 +374,16 @@ namespace Tasual
 
 			// Date and Time
 			Tasual_Create_DateTimePicker_StartDate.MinDate = DateTime.Now;
-			if (TaskToEdit.Time.Start > DateTime.Now)
+			if (TaskToEdit.Time.Next > DateTime.Now)
 			{
-				Tasual_Create_DateTimePicker_StartDate.Value = TaskToEdit.Time.Start;
-				Tasual_Create_DateTimePicker_StartTime.Value = TaskToEdit.Time.Start;
+				Tasual_Create_DateTimePicker_StartDate.Value = TaskToEdit.Time.Next;
+				Tasual_Create_DateTimePicker_StartTime.Value = TaskToEdit.Time.Next;
+				if (TaskToEdit.Time.TimeOfDay != TimeSpan.MinValue)
+				{
+					Tasual_Create_RadioButton_Time_AllDay.Checked = false;
+					Tasual_Create_RadioButton_Time_Specific.Checked = true;
+					Tasual_Create_DateTimePicker_StartTime.Enabled = true;
+				}
 			}
 			else
 			{
@@ -407,7 +419,7 @@ namespace Tasual
 						{
 							Tasual_Create_TagLabel(Tasual_Create_Label_DaySel_Specific, true);
 						}
-						else if ((TaskToEdit.Time.DayFilter & TimeInfo.DayFlag.Everyday) != 0)
+						else if ((TaskToEdit.Time.DayFilter & TimeInfo.DayFlag.Everyday) == TimeInfo.DayFlag.Everyday)
 						{
 							foreach (Label SelectionLabel in SelectionLabels_Days)
 							{
@@ -427,7 +439,7 @@ namespace Tasual
 						}
 
 						// WEEKS
-						if ((TaskToEdit.Time.WeekFilter & TimeInfo.WeekFlag.FirstThruLast) != 0)
+						if ((TaskToEdit.Time.WeekFilter & TimeInfo.WeekFlag.FirstThruLast) == TimeInfo.WeekFlag.FirstThruLast)
 						{
 							Tasual_Create_TagLabel(Tasual_Create_Label_WeekSel_1st, true);
 							Tasual_Create_TagLabel(Tasual_Create_Label_WeekSel_2nd, true);
@@ -444,7 +456,7 @@ namespace Tasual
 						}
 
 						// MONTHS
-						if ((TaskToEdit.Time.MonthFilter & TimeInfo.MonthFlag.Everymonth) != 0)
+						if ((TaskToEdit.Time.MonthFilter & TimeInfo.MonthFlag.Everymonth) == TimeInfo.MonthFlag.Everymonth)
 						{
 							foreach (Label SelectionLabel in SelectionLabels_Months)
 							{
@@ -874,11 +886,13 @@ namespace Tasual
 				{
 					TimeInfo.Start = TimeInfo.Start - TimeInfo.Start.TimeOfDay;
 					TimeInfo.Start = TimeInfo.Start + TimeSpan.Zero;
+					TimeInfo.TimeOfDay = TimeSpan.Zero;
 				}
 				else
 				{
 					TimeInfo.Start = TimeInfo.Start - TimeInfo.Start.TimeOfDay;
 					TimeInfo.Start = TimeInfo.Start + Tasual_Create_DateTimePicker_StartTime.Value.TimeOfDay;
+					TimeInfo.TimeOfDay = Tasual_Create_DateTimePicker_StartTime.Value.TimeOfDay;
 				}
 
 				TimeInfo.Dismiss = Tasual_Create_ComboBox_Dismiss.SelectedIndex;
@@ -958,6 +972,20 @@ namespace Tasual
 					TimeInfo.End = Tasual_Create_DateTimePicker_EndDate.Value;
 				}
 			}
+
+			DateTime Next = TimeInfo.FindNextIteration(ref TimeInfo);
+
+			//int Count = TimeInfo.FindIterationCount(ref TimeInfo);
+
+			if (Next != DateTime.MinValue)
+			{
+				TimeInfo.Next = Next;
+			}
+			else // our next iteration is the start iteration
+			{
+				TimeInfo.Next = TimeInfo.Start;
+			}
+
 			Task.Time = TimeInfo;
 
 			if (EditMode)
