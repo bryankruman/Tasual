@@ -546,6 +546,18 @@ namespace Tasual
 				}
 				else if (Tasual_Create_RadioButton_Type_RepeatCustom.Checked == true)
 				{
+					// Repeats on Mon, Tue, and Fri in the 2nd and 3rd weeks of May, Jun, and Jul for 12 occurences.
+					// Repeats on Mon in Jun and Jul for 12 occurences.
+					// Repeats once on the first Mon, Tue, or Wed in the 2nd week of any month. 
+					// Repeats on Mon and Tue in the last week of every month until Jun 13th, 2018
+					Tasual_Create_Label_Summary.Text = String.Format(
+						"Repeats on {1} from {2} {3}{4}{5}{6}",
+						StartDate.ToString("ddd, MMM"),
+						TimeInfo.Ordinal(StartDate.Day),
+						StartYearInsert,
+						TimeInsert,
+						EndsInsert
+					);
 					/*
 					// day filters
 					if (Tasual_Create_Label_DaySel_Specific.Tag != null)
