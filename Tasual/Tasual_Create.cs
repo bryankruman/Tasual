@@ -213,7 +213,8 @@ namespace Tasual
 						" until {0} {1}{2}",
 						EndDate.ToString("ddd, MMM"),
 						TimeInfo.Ordinal(EndDate.Day),
-						EndsYearInsert);
+						EndsYearInsert
+					);
 				}
 
 				if (Tasual_Create_RadioButton_Type_RepeatSimple.Checked == true)
@@ -399,7 +400,8 @@ namespace Tasual
 						DayString,
 						WeekString,
 						MonthString,
-						EndsInsert);
+						EndsInsert
+					);
 				}
 			}
 		}
@@ -1083,6 +1085,8 @@ namespace Tasual
 			{
 				TimeInfo.Next = TimeInfo.Start;
 			}
+
+			TimeInfo.Summary = Tasual_Create_Label_Summary.Text;
 
 			Task.Time = TimeInfo;
 

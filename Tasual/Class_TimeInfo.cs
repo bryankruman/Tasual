@@ -66,6 +66,9 @@ namespace Tasual
 		}
 
 		// for all tasks
+		[JsonProperty("summary")]
+		public string Summary; // description of this tasks schedule and how it repeats
+
 		[JsonProperty("created")]
 		public DateTime Created; // date of creation
 
@@ -126,6 +129,7 @@ namespace Tasual
 		// blank constructor
 		public TimeInfo()
 		{
+			Summary = null;
 			Created = DateTime.MinValue;
 			Modified = DateTime.MinValue;
 			Start = DateTime.MinValue;
@@ -153,6 +157,7 @@ namespace Tasual
 			DateTime _Next,
 			DateTime _End)
 		{
+			Summary = null;
 			Created = _Created;
 			Modified = _Modified;
 			Start = _Start;
@@ -191,6 +196,7 @@ namespace Tasual
 			int _Daily,
 			TimeSpan _TimeOfDay)
 		{
+			Summary = null;
 			Created = _Created;
 			Modified = _Modified;
 			Start = _Start;
@@ -229,6 +235,7 @@ namespace Tasual
 			DayFlag _DayFilter,
 			int _SpecificDay)
 		{
+			Summary = null;
 			Created = _Created;
 			Modified = _Modified;
 			Start = _Start;
@@ -271,6 +278,7 @@ namespace Tasual
 			DayFlag _DayFilter,
 			int _SpecificDay)
 		{
+			Summary = null;
 			Created = _Created;
 			Modified = _Modified;
 			Start = _Start;
@@ -611,8 +619,6 @@ namespace Tasual
 							DateTime Offset = new DateTime();
 							Offset = Offset + Time.TimeOfDay;
 
-							Console.WriteLine("TimeOfDay: {0}", Offset.Hour);
-
 							string Minutes = "";
 							if (Offset.TimeOfDay.Minutes != 0) { Minutes = ":" + Offset.Minute.ToString("00"); }
 
@@ -659,15 +665,17 @@ namespace Tasual
 				case TimeFormat.Medium: // "Sat, Jun 6th at 10:00pm"
 					{
 						string TimeStamp;
-						if (Time.TimeOfDay == TimeSpan.Zero)
+						DateTime Offset = new DateTime();
+						Offset = Offset + Time.TimeOfDay;
+						if (Offset.TimeOfDay == TimeSpan.FromSeconds(86399))
 						{
 							TimeStamp = "";
 						}
 						else
 						{
 							TimeStamp = "at ";
-							TimeStamp = TimeStamp + Time.Hour.ToString() + ":" + Time.Minute.ToString();
-							if (Time.Hour <= 12) { TimeStamp = TimeStamp + "am"; }
+							TimeStamp = TimeStamp + Offset.Hour.ToString() + ":" + Offset.Minute.ToString();
+							if (Offset.Hour <= 12) { TimeStamp = TimeStamp + "am"; }
 							else { TimeStamp = TimeStamp + "pm"; }
 						}
 
@@ -681,7 +689,7 @@ namespace Tasual
 				case TimeFormat.Long: // "Tuesday, June 6th at 10:00pm"
 					{
 						string TimeStamp;
-						if (Time.TimeOfDay == TimeSpan.Zero)
+						if (Time.TimeOfDay == TimeSpan.FromSeconds(86399))
 						{
 							TimeStamp = "";
 						}
