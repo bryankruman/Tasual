@@ -151,6 +151,8 @@ namespace Tasual
 			}
 		}
 
+		// TODO: Clean this fustercluck up
+		// TODO: Move to separate function in TimeInfo which reads based off of TimeInfo
 		private void Tasual_Create_UpdateSummaryLabel()
 		{
 			string TimeInsert = "";
@@ -171,7 +173,6 @@ namespace Tasual
 				// "Scheduled for Mon, Jun 13th at 6:50 PM"
 				// "Scheduled for Mon, Jun 13th 2018 at 6:50 PM"
 				// "Scheduled for Mon, Jun 13th"
-
 				Tasual_Create_Label_Summary.Text = String.Format(
 					"Scheduled for {0} {1}{2}{3}",
 					StartDate.ToString("ddd, MMM"),
