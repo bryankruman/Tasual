@@ -78,23 +78,34 @@ namespace Tasual
 			_Tasual_Main = PassedForm;
 			_Task = _Tasual_Main.TaskArray[PassedIndex];
 
-			Tasual_TimePop_CheckBox.Checked = TimeInfo.Scheduled(_Task.Time);
 			Tasual_TimePop_Calendar.MinDate = DateTime.Now;
-
-			if (_Task.Time.TimeOfDay == TimeSpan.Zero)
-			{
-				Tasual_TimePop_RadioButton_AllDay.Checked = true;
-				Tasual_TimePop_RadioButton_Specific.Checked = false;
-			}
-			else
-			{
-				Tasual_TimePop_RadioButton_AllDay.Checked = false;
-				Tasual_TimePop_RadioButton_Specific.Checked = true;
-			}
 
 			DateTime NextOrNow = new DateTime(Math.Max(_Task.Time.Next.Ticks, DateTime.Now.Ticks));
 			Tasual_TimePop_Calendar.SetDate(NextOrNow);
-			Tasual_TimePop_DateTimePicker.Value = NextOrNow;
+
+			if (TimeInfo.Scheduled(_Task.Time))
+			{
+				Tasual_TimePop_CheckBox.Checked = true;
+				if (_Task.Time.TimeOfDay == TimeSpan.FromSeconds(86399))
+				{
+					Tasual_TimePop_RadioButton_AllDay.Checked = true;
+					Tasual_TimePop_RadioButton_Specific.Checked = false;
+					Tasual_TimePop_DateTimePicker.Value = TimeInfo.PickRoundedUpTime(DateTime.Now);
+				}
+				else
+				{
+					Tasual_TimePop_RadioButton_AllDay.Checked = false;
+					Tasual_TimePop_RadioButton_Specific.Checked = true;
+					Tasual_TimePop_DateTimePicker.Value = NextOrNow;
+				}
+			}
+			else
+			{
+				Tasual_TimePop_CheckBox.Checked = false;
+				Tasual_TimePop_RadioButton_AllDay.Checked = true;
+				Tasual_TimePop_RadioButton_Specific.Checked = false;
+				Tasual_TimePop_DateTimePicker.Value = TimeInfo.PickRoundedUpTime(DateTime.Now);
+			}
 
 			Tasual_TimePop_CheckEnableStatus();
 		}
@@ -131,14 +142,28 @@ namespace Tasual
 			DateTime NewTime = new DateTime();
 			NewTime = Tasual_TimePop_Calendar.SelectionStart;
 
+			TimeSpan TimeOfDay = new TimeSpan();
+
 			Console.WriteLine("DateTime: {0} - {1}", NewTime.ToShortDateString(), NewTime.ToLongTimeString());
 
 			NewTime = NewTime - NewTime.TimeOfDay;
-			//NewTime = NewTime + Tasual_TimePop_DateTimePicker.Value.TimeOfDay;
 
 			if (Tasual_TimePop_CheckBox.Checked)
 			{
-				if ((NewTime + Tasual_TimePop_DateTimePicker.Value.TimeOfDay) < DateTime.Now)
+				if (Tasual_TimePop_RadioButton_Specific.Checked)
+				{
+					NewTime = NewTime + Tasual_TimePop_DateTimePicker.Value.TimeOfDay;
+					TimeOfDay = Tasual_TimePop_DateTimePicker.Value.TimeOfDay;
+					//_Task.Time.TimeOfDay = Tasual_TimePop_DateTimePicker.Value.TimeOfDay;
+				}
+				else
+				{
+					NewTime = NewTime + TimeSpan.FromSeconds(86399);
+					TimeOfDay = TimeSpan.FromSeconds(86399);
+					//_Task.Time.TimeOfDay = TimeSpan.FromSeconds(86399);
+				}
+
+				if (NewTime < DateTime.Now)
 				{
 					Console.WriteLine("Can't have a date that is before now!");
 					return;
@@ -147,10 +172,7 @@ namespace Tasual
 				{
 					_Task.Time.Modified = DateTime.Now;
 					_Task.Time.Next = NewTime;
-					if (Tasual_TimePop_RadioButton_Specific.Checked)
-					{
-						_Task.Time.TimeOfDay = Tasual_TimePop_DateTimePicker.Value.TimeOfDay;
-					}
+					_Task.Time.TimeOfDay = TimeOfDay;
 				}
 			}
 			else
@@ -162,6 +184,7 @@ namespace Tasual
 					DateTime.MinValue,
 					DateTime.MinValue);
 			}
+
 			_Tasual_Main.Tasual_Array_Save();
 			_Tasual_Main.Tasual_ListView.BuildList();
 			_Tasual_Main.Tasual_ListView.EnsureModelVisible(_Task);

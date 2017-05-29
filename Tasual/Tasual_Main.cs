@@ -295,7 +295,7 @@ namespace Tasual
 				TimeInfo Time = (TimeInfo)Input;
 				if (TimeInfo.Scheduled(Time))
 				{
-					return TimeInfo.FormatTime(Time.Next.ToLocalTime(), TimeInfo.TimeFormat.Short);
+					return TimeInfo.FormatTime(Time.Next, TimeInfo.TimeFormat.Short);
 				}
 				else
 				{

@@ -378,7 +378,7 @@ namespace Tasual
 			{
 				Tasual_Create_DateTimePicker_StartDate.Value = TaskToEdit.Time.Next;
 				Tasual_Create_DateTimePicker_StartTime.Value = TaskToEdit.Time.Next;
-				if (TaskToEdit.Time.TimeOfDay != TimeSpan.MinValue)
+				if (TaskToEdit.Time.TimeOfDay != TimeSpan.FromSeconds(86399))
 				{
 					Tasual_Create_RadioButton_Time_AllDay.Checked = false;
 					Tasual_Create_RadioButton_Time_Specific.Checked = true;
@@ -885,8 +885,8 @@ namespace Tasual
 				if (Tasual_Create_RadioButton_Time_AllDay.Checked)
 				{
 					TimeInfo.Start = TimeInfo.Start - TimeInfo.Start.TimeOfDay;
-					TimeInfo.Start = TimeInfo.Start + TimeSpan.Zero;
-					TimeInfo.TimeOfDay = TimeSpan.Zero;
+					TimeInfo.Start = TimeInfo.Start + TimeSpan.FromSeconds(86399);
+					TimeInfo.TimeOfDay = TimeSpan.FromSeconds(86399);
 				}
 				else
 				{

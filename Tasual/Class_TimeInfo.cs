@@ -138,7 +138,7 @@ namespace Tasual
 			Monthly = 0;
 			Weekly = 0;
 			Daily = 0;
-			TimeOfDay = TimeSpan.Zero;
+			TimeOfDay = TimeSpan.FromSeconds(86399);
 			MonthFilter = 0;
 			WeekFilter = 0;
 			DayFilter = 0;
@@ -168,7 +168,7 @@ namespace Tasual
 			Weekly = 0;
 			Daily = 0;
 
-			TimeOfDay = TimeSpan.Zero;
+			TimeOfDay = TimeSpan.FromSeconds(86399);
 			MonthFilter = 0;
 			WeekFilter = 0;
 			DayFilter = 0;
@@ -442,7 +442,7 @@ namespace Tasual
 
 		public static string GetDueStringFromTimeInfo(TimeInfo TimeInfo)
 		{
-			DateTime Time = TimeInfo.Next.ToLocalTime();
+			DateTime Time = TimeInfo.Next;
 			if (Scheduled(TimeInfo))
 			{
 				if (DateTime.Now > Time)
@@ -520,7 +520,7 @@ namespace Tasual
 
 		public static int GetDueIntFromTask(Task Task)
 		{
-			DateTime Time = Task.Time.Next.ToLocalTime();
+			DateTime Time = Task.Time.Next;
 			//TimeInfo Time = (TimeInfo)Input;
 			if (Task.Checked)
 			{
@@ -606,14 +606,19 @@ namespace Tasual
 				case TimeFormat.Short: // "6/6 - Tue 10pm"
 					{
 						string TimeStamp = "";
-						if (Time.TimeOfDay != TimeSpan.Zero)
+						if (Time.TimeOfDay != TimeSpan.FromSeconds(86399))
 						{
-							string Minutes = "";
-							if (Time.Minute != 0) { Minutes = ":" + Time.Minute.ToString("00"); }
+							DateTime Offset = new DateTime();
+							Offset = Offset + Time.TimeOfDay;
 
-							if (Time.Hour == 0)
+							Console.WriteLine("TimeOfDay: {0}", Offset.Hour);
+
+							string Minutes = "";
+							if (Offset.TimeOfDay.Minutes != 0) { Minutes = ":" + Offset.Minute.ToString("00"); }
+
+							if (Offset.Hour == 0)
 							{
-								if (Time.Minute != 0)
+								if (Offset.Minute != 0)
 								{
 									TimeStamp = " - 12" + Minutes + "am";
 								}
@@ -622,9 +627,9 @@ namespace Tasual
 									TimeStamp = " - Midnight";
 								}
 							}
-							else if (Time.Hour == 12) // TODO: Fix this properly! 
+							else if (Offset.Hour == 12) // TODO: Fix this properly! 
 							{
-								if (Time.Minute != 0)
+								if (Offset.Minute != 0)
 								{
 									TimeStamp = " - 12" + Minutes + "pm";
 								}
@@ -633,14 +638,14 @@ namespace Tasual
 									TimeStamp = " - Noon";
 								}
 							}
-							else if (Time.Hour > 12)
+							else if (Offset.Hour > 12)
 							{
-								TimeStamp = " - " + (Time.Hour - 12).ToString();
+								TimeStamp = " - " + (Offset.Hour - 12).ToString();
 								TimeStamp = TimeStamp + Minutes + "pm";
 							}
 							else
 							{
-								TimeStamp = " - " + Time.Hour.ToString();
+								TimeStamp = " - " + Offset.Hour.ToString();
 								TimeStamp = TimeStamp + Minutes + "am";
 							}
 						}
@@ -697,6 +702,17 @@ namespace Tasual
 
 				default: return "";
 			}
+		}
+
+		public static DateTime PickRoundedUpTime(DateTime BaseTime)
+		{
+			BaseTime = BaseTime.AddMinutes(15);
+			DateTime RoundedUp = new DateTime(BaseTime.Year, BaseTime.Month, BaseTime.Day, BaseTime.Hour, 0, 0);
+			if ((BaseTime.Minute > 0) || (BaseTime.Second > 0))
+			{
+				RoundedUp = RoundedUp.AddHours(1);
+			}
+			return RoundedUp;
 		}
 
 		public static int FindIterationCount(ref TimeInfo Rules)
