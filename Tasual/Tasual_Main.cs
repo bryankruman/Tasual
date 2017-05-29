@@ -933,14 +933,16 @@ namespace Tasual
 				{
 					if (Tasual_ListView.SelectedItem != null)
 					{
-						this.BeginInvoke((MethodInvoker)delegate
-						{
-							Tasual_ListView.EditModel(Tasual_ListView.SelectedItem.RowObject);
-						});
+						Task Task = (Task)Tasual_ListView.SelectedItem.RowObject;
+						Tasual_ListView.PossibleFinishCellEditing();
+						//Tasual_ListView.Edit
+						Tasual_ListView.EditModel(Task);
 					}
 				}
 			}
 		}
+
+		bool Tasual_ListView_DoubleClickEdit = false;
 
 		private void Tasual_Timer_ListViewClick_Tick(object sender, EventArgs e)
 		{
@@ -971,7 +973,14 @@ namespace Tasual
 			{
 				if (Tasual_Timer_ListViewClick.Enabled && (e.Button == MouseButtons.Left)) // second click
 				{
-					Tasual_ListView_DoubleClick(e);
+					if (Tasual_ListView_FirstClickInfo.Item != null)
+					{
+						if (Tasual_ListView_FirstClickInfo.Item == Info.Item)
+						{
+							Tasual_ListView_DoubleClickEdit = true;
+						}
+					}
+
 					Tasual_ListView_PreviouslySelected = false;
 					Tasual_ListView_FirstClickInfo = null;
 					Tasual_Timer_ListViewClick.Stop();
@@ -1044,6 +1053,17 @@ namespace Tasual
 				Calendar.Show(this);
 
 				CalendarPopout = null;
+			}
+
+			else if (Tasual_ListView_DoubleClickEdit)
+			{
+				if (Tasual_ListView.SelectedItem != null)
+				{
+					Task Task = (Task)Tasual_ListView.SelectedItem.RowObject;
+					Tasual_ListView.PossibleFinishCellEditing();
+					Tasual_ListView.EditModel(Task);
+				}
+				Tasual_ListView_DoubleClickEdit = false;
 			}
 		}
 
