@@ -20,6 +20,7 @@ namespace Tasual
 
 		OlvListViewHitTestInfo CalendarPopout = null;
 		OlvListViewHitTestInfo Tasual_ListView_FirstClickInfo = null;
+		bool Tasual_ListView_DoubleClickEdit = false;
 		bool Tasual_ListView_PreviouslySelected = false;
 		string Tasual_LastSelectedGroup;
 
@@ -941,8 +942,6 @@ namespace Tasual
 				}
 			}
 		}
-
-		bool Tasual_ListView_DoubleClickEdit = false;
 
 		private void Tasual_Timer_ListViewClick_Tick(object sender, EventArgs e)
 		{
