@@ -673,17 +673,20 @@ namespace Tasual
 
 		private void Tasual_Create_TextBox_Description_TextChanged(object sender, EventArgs e)
 		{
-
+			// TODO: Parse this text to make sure we don't get any unwanted characters
+			// Note: This is probably the wrong eventhandler for this... we might need keydown or such
 		}
 
 		private void Tasual_Create_TextBox_Link_TextChanged(object sender, EventArgs e)
 		{
-
+			// TODO: Parse this text to make sure we don't get any unwanted characters
+			// Note: This is probably the wrong eventhandler for this... we might need keydown or such
 		}
 
 		private void Tasual_Create_TextBox_Location_TextChanged(object sender, EventArgs e)
 		{
-
+			// TODO: Parse this text to make sure we don't get any unwanted characters
+			// Note: This is probably the wrong eventhandler for this... we might need keydown or such
 		}
 
 		private void Tasual_Create_ComboBox_RepeatSimple_SelectedIndexChanged(object sender, EventArgs e)

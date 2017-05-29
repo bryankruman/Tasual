@@ -28,13 +28,13 @@ namespace Tasual
 		public bool SaveWindowPos { get; set; } = false;
 
 		[JsonProperty("windowstate")]
-		public FormWindowState WindowState { get; set; }
+		public FormWindowState WindowState { get; set; } // don't set defaults on these
 
 		[JsonProperty("location")]
-		public Point Location { get; set; }
+		public Point Location { get; set; } // don't set defaults on these
 
 		[JsonProperty("size")]
-		public Size Size { get; set; }
+		public Size Size { get; set; } // don't set defaults on these
 
 
 		[JsonProperty("promptclear")]
