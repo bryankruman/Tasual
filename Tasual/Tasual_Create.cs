@@ -256,52 +256,149 @@ namespace Tasual
 				}
 				else if (Tasual_Create_RadioButton_Type_RepeatCustom.Checked == true)
 				{
-					// Repeats on Mon, Tue, and Fri in the 2nd and 3rd weeks of May, Jun, and Jul for 12 occurences.
-					// Repeats on Mon in Jun and Jul for 12 occurences.
-					// Repeats once on the first Mon, Tue, or Wed in the 2nd week of any month. 
+					// Repeats on Mon, Tue, and Fri in the 2nd and 3rd weeks of May, Jun, and Jul for 12 occurences
+					// Repeats on Mon in Jun and Jul for 12 occurences
+					// Repeats once on the first Mon, Tue, or Wed in the 2nd week of any month
 					// Repeats on Mon and Tue in the last week of every month until Jun 13th, 2018
-					/*Tasual_Create_Label_Summary.Text = String.Format(
-						"Repeats on {1} from {2} {3}{4}{5}{6}",
-						StartDate.ToString("ddd, MMM"),
-						TimeInfo.Ordinal(StartDate.Day),
-						StartYearInsert,
-						TimeInsert,
-						EndsInsert
-					);*/
-					/*
-					// day filters
-					if (Tasual_Create_Label_DaySel_Specific.Tag != null)
+					string Format, Preposition, AllMonths, AllDays;
+					if (EndsCount > 1)
 					{
-						TimeInfo.SpecificDay = Tasual_Create_DateTimePicker_StartDate.Value.Day;
+						//"Repeats on <DAYS> in (WEEKS OF) <EVERY MONTHS> <ENDING>"
+						Format = "Repeats on {0} in {1}{2}{3}";
+						Preposition = " and ";
+						AllMonths = "every month";
+						AllDays = "everyday";
 					}
 					else
 					{
-						if (Tasual_Create_Label_DaySel_Mon.Tag != null) { TimeInfo.DayFilter &= Task.DayFlag.Monday; }
-						if (Tasual_Create_Label_DaySel_Tue.Tag != null) { TimeInfo.DayFilter &= Task.DayFlag.Tuesday; }
-						if (Tasual_Create_Label_DaySel_Wed.Tag != null) { TimeInfo.DayFilter &= Task.DayFlag.Wednesday; }
-						if (Tasual_Create_Label_DaySel_Thu.Tag != null) { TimeInfo.DayFilter &= Task.DayFlag.Thursday; }
-						if (Tasual_Create_Label_DaySel_Fri.Tag != null) { TimeInfo.DayFilter &= Task.DayFlag.Friday; }
-						if (Tasual_Create_Label_DaySel_Sat.Tag != null) { TimeInfo.DayFilter &= Task.DayFlag.Saturday; }
-						if (Tasual_Create_Label_DaySel_Sun.Tag != null) { TimeInfo.DayFilter &= Task.DayFlag.Sunday; }
+						//"Repeats once on the first <DAYS> in (WEEKS OF) <ANY MONTHS> <ENDING>"
+						Format = "Repeats once on the first {0} in {1}{2}{3}";
+						Preposition = " or ";
+						AllMonths = "any month";
+						AllDays = "weekday";
 					}
 
-					if (Tasual_Create_Label_WeekSel_1st.Tag != null) { TimeInfo.WeekFilter &= Task.WeekFlag.First; }
-					if (Tasual_Create_Label_WeekSel_2nd.Tag != null) { TimeInfo.WeekFilter &= Task.WeekFlag.Second; }
-					if (Tasual_Create_Label_WeekSel_3rd.Tag != null) { TimeInfo.WeekFilter &= Task.WeekFlag.Third; }
-					if (Tasual_Create_Label_WeekSel_Last.Tag != null) { TimeInfo.WeekFilter &= Task.WeekFlag.Last; }
+					string DayString;
+					if (Tasual_Create_Label_DaySel_Specific.Tag != null)
+					{
+						if (EndsCount > 1)
+						{
+							DayString = "the " + Tasual_Create_Label_DaySel_Specific.Text;
+						}
+						else
+						{
+							DayString = Tasual_Create_Label_DaySel_Specific.Text;
+						}
+					}
+					else
+					{
+						List<string> Days = new List<string>();
+						if (Tasual_Create_Label_DaySel_Mon.Tag != null) { Days.Add("Mon"); }
+						if (Tasual_Create_Label_DaySel_Tue.Tag != null) { Days.Add("Tue"); }
+						if (Tasual_Create_Label_DaySel_Wed.Tag != null) { Days.Add("Wed"); }
+						if (Tasual_Create_Label_DaySel_Thu.Tag != null) { Days.Add("Thu"); }
+						if (Tasual_Create_Label_DaySel_Fri.Tag != null) { Days.Add("Fri"); }
+						if (Tasual_Create_Label_DaySel_Sat.Tag != null) { Days.Add("Sat"); }
+						if (Tasual_Create_Label_DaySel_Sun.Tag != null) { Days.Add("Sun"); }
 
-					if (Tasual_Create_Label_MonthSel_Jan.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.January; }
-					if (Tasual_Create_Label_MonthSel_Feb.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.February; }
-					if (Tasual_Create_Label_MonthSel_Mar.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.March; }
-					if (Tasual_Create_Label_MonthSel_Apr.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.April; }
-					if (Tasual_Create_Label_MonthSel_May.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.May; }
-					if (Tasual_Create_Label_MonthSel_Jun.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.June; }
-					if (Tasual_Create_Label_MonthSel_Jul.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.July; }
-					if (Tasual_Create_Label_MonthSel_Aug.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.August; }
-					if (Tasual_Create_Label_MonthSel_Sep.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.September; }
-					if (Tasual_Create_Label_MonthSel_Oct.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.October; }
-					if (Tasual_Create_Label_MonthSel_Nov.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.November; }
-					if (Tasual_Create_Label_MonthSel_Dec.Tag != null) { TimeInfo.MonthFilter &= Task.MonthFlag.December; }*/
+						if (Days.Count == 0)
+						{
+							Tasual_Create_Label_Summary.Text = "Can't repeat without at least one day selected";
+							return;
+						}
+						else if (Days.Count == 7)
+						{
+							DayString = AllDays;
+						}
+						else
+						{
+							DayString = String.Join(", ", Days);
+							int Index = DayString.LastIndexOf(", ");
+
+							if (Index != -1)
+							{
+								DayString = DayString.Remove(Index, 2).Insert(Index, Preposition);
+							}
+						}
+					}
+
+					string WeekString;
+					List<string> Weeks = new List<string>();
+					if (Tasual_Create_Label_WeekSel_1st.Tag != null) { Weeks.Add("1st"); }
+					if (Tasual_Create_Label_WeekSel_2nd.Tag != null) { Weeks.Add("2nd"); }
+					if (Tasual_Create_Label_WeekSel_3rd.Tag != null) { Weeks.Add("3rd"); }
+					if (Tasual_Create_Label_WeekSel_Last.Tag != null) { Weeks.Add("Last"); }
+
+					if (Weeks.Count == 0)
+					{
+						Tasual_Create_Label_Summary.Text = "Can't repeat without at least one week selected";
+						return;
+					}
+					else if (Weeks.Count == 4)
+					{
+						WeekString = "";
+					}
+					else
+					{
+						WeekString = String.Join(", ", Weeks);
+						int Index = WeekString.LastIndexOf(", ");
+
+						if (Index != -1)
+						{
+							WeekString = WeekString.Remove(Index, 2).Insert(Index, Preposition);
+						}
+
+						if (Weeks.Count > 1)
+						{
+							WeekString = "the " + WeekString + " weeks of ";
+						}
+						else
+						{
+							WeekString = "the " + WeekString + " week of ";
+						}
+					}
+
+					string MonthString;
+					List<string> Months = new List<string>();
+					if (Tasual_Create_Label_MonthSel_Jan.Tag != null) { Months.Add("Jan"); }
+					if (Tasual_Create_Label_MonthSel_Feb.Tag != null) { Months.Add("Feb"); }
+					if (Tasual_Create_Label_MonthSel_Mar.Tag != null) { Months.Add("Mar"); }
+					if (Tasual_Create_Label_MonthSel_Apr.Tag != null) { Months.Add("Apr"); }
+					if (Tasual_Create_Label_MonthSel_May.Tag != null) { Months.Add("May"); }
+					if (Tasual_Create_Label_MonthSel_Jun.Tag != null) { Months.Add("Jun"); }
+					if (Tasual_Create_Label_MonthSel_Jul.Tag != null) { Months.Add("Jul"); }
+					if (Tasual_Create_Label_MonthSel_Aug.Tag != null) { Months.Add("Aug"); }
+					if (Tasual_Create_Label_MonthSel_Sep.Tag != null) { Months.Add("Sep"); }
+					if (Tasual_Create_Label_MonthSel_Oct.Tag != null) { Months.Add("Oct"); }
+					if (Tasual_Create_Label_MonthSel_Nov.Tag != null) { Months.Add("Nov"); }
+					if (Tasual_Create_Label_MonthSel_Dec.Tag != null) { Months.Add("Dec"); }
+
+					if (Months.Count == 0)
+					{
+						Tasual_Create_Label_Summary.Text = "Can't repeat without at least one month selected";
+						return;
+					}
+					else if (Months.Count == 12)
+					{
+						MonthString = AllMonths;
+					}
+					else
+					{
+						MonthString = String.Join(", ", Months);
+						int Index = MonthString.LastIndexOf(", ");
+
+						if (Index != -1)
+						{
+							MonthString = MonthString.Remove(Index, 2).Insert(Index, Preposition);
+						}
+					}
+
+					Tasual_Create_Label_Summary.Text = String.Format(
+						Format,
+						DayString,
+						WeekString,
+						MonthString,
+						EndsInsert);
 				}
 			}
 		}
