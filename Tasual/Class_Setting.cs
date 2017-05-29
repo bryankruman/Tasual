@@ -69,6 +69,16 @@ namespace Tasual
 		public bool ShowItemCounts { get; set; } = true;
 
 
+		[JsonProperty("removecompleted")]
+		public RemoveType RemoveCompleted { get; set; } = RemoveType.Never; // TODO: Add option to settings dialog for this
+
+		[JsonProperty("subitemheaderalign")]
+		public HorizontalAlignment SubItemHeaderAlign { get; set; } = HorizontalAlignment.Center;
+
+		[JsonProperty("subitemtextalign")]
+		public HorizontalAlignment SubItemTextAlign { get; set; } = HorizontalAlignment.Left;
+
+
 		[Flags]
 		public enum Columns
 		{
@@ -94,6 +104,42 @@ namespace Tasual
 		{
 			Category,
 			DueTime
+		}
+
+		public enum RemoveType
+		{
+			Never,
+			Immediate,
+			OneHour,
+			TwelveHours,
+			OneDay,
+			TwoDays,
+			OneWeek,
+			TwoWeeks,
+			OneMonth,
+			ThreeMonths,
+			SixMonths,
+			OneYear
+		}
+
+		public static TimeSpan GetRemoveTimeSpan(RemoveType Type)
+		{
+			switch (Type)
+			{
+				case RemoveType.Never:        { return TimeSpan.Zero; }
+				case RemoveType.Immediate:    { return TimeSpan.Zero; }
+				case RemoveType.OneHour:      { return new TimeSpan(0, 1, 0, 0); }
+				case RemoveType.TwelveHours:  { return new TimeSpan(0, 12, 0, 0); }
+				case RemoveType.OneDay:       { return new TimeSpan(1, 0, 0, 0); }
+				case RemoveType.TwoDays:      { return new TimeSpan(2, 0, 0, 0); }
+				case RemoveType.OneWeek:      { return new TimeSpan(7, 0, 0, 0); }
+				case RemoveType.TwoWeeks:     { return new TimeSpan(14, 0, 0, 0); }
+				case RemoveType.OneMonth:     { return new TimeSpan(30, 0, 0, 0); }
+				case RemoveType.ThreeMonths:  { return new TimeSpan(90, 0, 0, 0); }
+				case RemoveType.SixMonths:    { return new TimeSpan(180, 0, 0, 0); }
+				case RemoveType.OneYear:      { return new TimeSpan(365, 0, 0, 0); }
+				default:                      { return TimeSpan.Zero; }
+			}
 		}
 
 		public static void Save(ref Setting Settings)

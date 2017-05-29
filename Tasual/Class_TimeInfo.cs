@@ -65,9 +65,23 @@ namespace Tasual
 			ComplexRepeat
 		}
 
+		public enum DismissType
+		{
+			Never,
+			Immediate,
+			OneHour,
+			TwelveHours,
+			OneDay,
+			OneWeek,
+			OneMonth
+		}
+
 		// for all tasks
 		[JsonProperty("summary")]
 		public string Summary; // description of this tasks schedule and how it repeats
+
+		[JsonProperty("checkedtime")]
+		public DateTime CheckedTime; // date of task being "checked"/completed
 
 		[JsonProperty("created")]
 		public DateTime Created; // date of creation
@@ -78,11 +92,17 @@ namespace Tasual
 		[JsonProperty("start")]
 		public DateTime Start; // date of first occurence
 
-
-		// for recurring tasks
 		[JsonProperty("next")]
 		public DateTime Next; // date of next occurence
 
+		[JsonProperty("dismiss")]
+		public DismissType Dismiss; // time in seconds after due date ("Next") to remove task (-1 for instant)
+
+		[JsonProperty ("expired")]
+		public bool Expired; // boolean for if this task has expired already 
+
+
+		// for all recurring tasks
 		[JsonProperty("end")]
 		public DateTime End; // date when task stops recurring
 
@@ -91,9 +111,6 @@ namespace Tasual
 
 		[JsonProperty("count")]
 		public int Count; // instance count of this task (starts at 1)
-
-		[JsonProperty("dismiss")]
-		public int Dismiss; // time in seconds after due date ("Next") to remove task (-1 for instant)
 
 
 		// simple recurring tasks
@@ -130,6 +147,7 @@ namespace Tasual
 		public TimeInfo()
 		{
 			Summary = null;
+			CheckedTime = DateTime.MinValue;
 			Created = DateTime.MinValue;
 			Modified = DateTime.MinValue;
 			Start = DateTime.MinValue;
@@ -151,6 +169,7 @@ namespace Tasual
 
 		// singular constructor
 		public TimeInfo(
+			DateTime _CheckedTime,
 			DateTime _Created,
 			DateTime _Modified,
 			DateTime _Start,
@@ -158,15 +177,17 @@ namespace Tasual
 			DateTime _End)
 		{
 			Summary = null;
+			CheckedTime = _CheckedTime;
 			Created = _Created;
 			Modified = _Modified;
 			Start = _Start;
 			Next = _Next;
-			End = _End;
+			Dismiss = DismissType.Never;
+			Expired = false;
 
+			End = _End;
 			Iterations = 0;
 			Count = 0;
-			Dismiss = 0;
 
 			Yearly = 0;
 			Monthly = 0;
@@ -182,14 +203,16 @@ namespace Tasual
 
 		// simple repeating constructor
 		public TimeInfo(
+			DateTime _CheckedTime,
 			DateTime _Created,
 			DateTime _Modified,
 			DateTime _Start,
 			DateTime _Next,
 			DateTime _End,
+			DismissType _Dismiss,
+			bool _Expired,
 			int _Iterations,
 			int _Count,
-			int _Dismiss,
 			int _Yearly,
 			int _Monthly,
 			int _Weekly,
@@ -197,15 +220,17 @@ namespace Tasual
 			TimeSpan _TimeOfDay)
 		{
 			Summary = null;
+			CheckedTime = _CheckedTime;
 			Created = _Created;
 			Modified = _Modified;
 			Start = _Start;
 			Next = _Next;
-			End = _End;
+			Dismiss = _Dismiss;
+			Expired = _Expired;
 
+			End = _End;
 			Iterations = _Iterations;
 			Count = _Count;
-			Dismiss = _Dismiss;
 
 			Yearly = _Yearly;
 			Monthly = _Monthly;
@@ -221,14 +246,16 @@ namespace Tasual
 
 		// complex repeating constructor
 		public TimeInfo(
+			DateTime _CheckedTime,
 			DateTime _Created,
 			DateTime _Modified,
 			DateTime _Start,
 			DateTime _Next,
 			DateTime _End,
+			DismissType _Dismiss,
+			bool _Expired,
 			int _Iterations,
 			int _Count,
-			int _Expire,
 			TimeSpan _TimeOfDay,
 			MonthFlag _MonthFilter,
 			WeekFlag _WeekFilter,
@@ -236,15 +263,17 @@ namespace Tasual
 			int _SpecificDay)
 		{
 			Summary = null;
+			CheckedTime = _CheckedTime;
 			Created = _Created;
 			Modified = _Modified;
 			Start = _Start;
 			Next = _Next;
 			End = _End;
+			Dismiss = _Dismiss;
+			Expired = _Expired;
 
 			Iterations = _Iterations;
 			Count = _Count;
-			Dismiss = _Expire;
 
 			Yearly = 0;
 			Monthly = 0;
@@ -260,14 +289,16 @@ namespace Tasual
 
 		// full constructor
 		public TimeInfo(
+			DateTime _CheckedTime,
 			DateTime _Created,
 			DateTime _Modified,
 			DateTime _Start,
 			DateTime _Next,
 			DateTime _End,
+			DismissType _Dismiss,
+			bool _Expired,
 			int _Iterations,
 			int _Count,
-			int _Dismiss,
 			int _Yearly,
 			int _Monthly,
 			int _Weekly,
@@ -279,15 +310,17 @@ namespace Tasual
 			int _SpecificDay)
 		{
 			Summary = null;
+			CheckedTime = _CheckedTime;
 			Created = _Created;
 			Modified = _Modified;
 			Start = _Start;
 			Next = _Next;
 			End = _End;
+			Dismiss = _Dismiss;
+			Expired = _Expired;
 
 			Iterations = _Iterations;
 			Count = _Count;
-			Dismiss = _Dismiss;
 
 			Yearly = _Yearly;
 			Monthly = _Monthly;
@@ -393,6 +426,21 @@ namespace Tasual
 				case DayOfWeek.Saturday: return DayFlag.Saturday;
 				case DayOfWeek.Sunday: return DayFlag.Sunday;
 				default: return 0;
+			}
+		}
+
+		public static TimeSpan GetDismissTimeSpan(DismissType Type)
+		{
+			switch (Type)
+			{
+				case DismissType.Never: { return TimeSpan.Zero; }
+				case DismissType.Immediate: { return TimeSpan.Zero; }
+				case DismissType.OneHour: { return new TimeSpan(0, 1, 0, 0); }
+				case DismissType.TwelveHours: { return new TimeSpan(0, 12, 0, 0); }
+				case DismissType.OneDay: { return new TimeSpan(1, 0, 0, 0); }
+				case DismissType.OneWeek: { return new TimeSpan(7, 0, 0, 0); }
+				case DismissType.OneMonth: { return new TimeSpan(30, 0, 0, 0); }
+				default: { return TimeSpan.Zero; }
 			}
 		}
 

@@ -178,6 +178,7 @@ namespace Tasual
 			else
 			{
 				_Task.Time = new TimeInfo(
+					DateTime.MinValue,
 					_Task.Time.Created,
 					DateTime.Now,
 					DateTime.MinValue,

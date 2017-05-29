@@ -140,29 +140,32 @@ namespace Tasual
 			 *  - Update listview
 			 */
 
+			List<Task> RemovalList = new List<Task>();
+
 			foreach (Task Task in TaskArray)
 			{
 				if (Task.Checked)
 				{
-					if (Settings.RemoveCompleted)
+					if (Settings.RemoveCompleted != Setting.RemoveType.Never)
 					{
-						if (DateTime.Now > (Task.Time.CheckedTime + TimeInfo.GetRemoveTimeSpan(Settings.RemoveCompleted)))
+						if (DateTime.Now > (Task.Time.CheckedTime + Setting.GetRemoveTimeSpan(Settings.RemoveCompleted)))
 						{
 							// delete task
+							RemovalList.Add(Task);
 						}
 					}
 				}
 				else if (TimeInfo.Scheduled(Task.Time))
 				{
-					// TODO: Add "completion date" which sets the date of completion
 					// TODO: Add completion auto delete option to settings
 					if (Task.Time.Expired)
 					{
-						if (Task.Time.Dismiss != 0)
+						if (Task.Time.Dismiss != TimeInfo.DismissType.Never)
 						{
 							if (DateTime.Now > (Task.Time.Next + TimeInfo.GetDismissTimeSpan(Task.Time.Dismiss)))
 							{
 								// delete task
+								RemovalList.Add(Task);
 							}
 						}
 						// else do nothing
@@ -174,14 +177,23 @@ namespace Tasual
 						// check to see if we should do another iteration
 
 						Task.Time.Expired = true;
-						if (Task.Time.Dismiss == 1) // immediate deletion
+						if (Task.Time.Dismiss == TimeInfo.DismissType.Immediate) // immediate deletion
 						{
 							// delete task
+							RemovalList.Add(Task);
 						}
 					}
 				}
-
 			}
+
+			foreach (Task RemoveTask in RemovalList)
+			{
+				TaskArray.Remove(RemoveTask);
+			}
+
+			ArrayHandler.Save(ref TaskArray, Settings);
+			Tasual_ListView.BuildList();
+			Tasual_StatusLabel_UpdateCounts();
 		}
 
 
@@ -228,6 +240,32 @@ namespace Tasual
 
 			Tasual_ListView.IsSimpleDragSource = true;
 			Tasual_ListView.IsSimpleDropSink = true;
+
+			Tasual_ListView.BooleanCheckStateGetter = delegate (object RowObject)
+			{
+				return ((Task)RowObject).Checked;
+			};
+
+			Tasual_ListView.BooleanCheckStatePutter = delegate (object RowObject, bool NewValue)
+			{
+				Task Task = (Task)RowObject;
+
+				if (NewValue)
+				{
+					Task.Time.CheckedTime = DateTime.Now;
+					Task.Checked = true;
+				}
+				else
+				{
+					Task.Time.CheckedTime = DateTime.MinValue;
+					Task.Checked = false;
+				}
+
+				ArrayHandler.Save(ref TaskArray, Settings);
+				Tasual_ListView.BuildList();
+				Tasual_StatusLabel_UpdateCounts();
+				return NewValue;
+			};
 		}
 
 		public void Tasual_ListView_UpdateColumnSettings()
@@ -247,6 +285,7 @@ namespace Tasual
 			{
 				SelectedColumn = DueColumn;
 			}
+
 			Tasual_ListView.AlwaysGroupByColumn = SelectedColumn; //CategoryColumn DueColumn
 			Tasual_ListView.PrimarySortColumn = SelectedColumn;// CategoryColumn DueColumn
 		}
@@ -293,7 +332,7 @@ namespace Tasual
 			IconColumn.DisplayIndex = 2;
 			IconColumn.LastDisplayIndex = 2;
 			IconColumn.TextAlign = HorizontalAlignment.Right;
-			IconColumn.HeaderTextAlign = HorizontalAlignment.Center;
+			//IconColumn.HeaderTextAlign = HorizontalAlignment.Center;
 			IconColumn.ShowTextInHeader = false;
 			Tasual_ListView.AllColumns.Add(IconColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { IconColumn });
@@ -302,6 +341,7 @@ namespace Tasual
 			CategoryColumn.MinimumWidth = 100;
 			CategoryColumn.IsVisible = false;
 			CategoryColumn.IsEditable = true;
+			CategoryColumn.Sortable = true;
 			CategoryColumn.DisplayIndex = 3;
 			CategoryColumn.LastDisplayIndex = 3;
 			CategoryColumn.GroupKeyGetter = delegate (object Input)
@@ -313,8 +353,8 @@ namespace Tasual
 			{
 				return ((string)Input).Remove(0, 1);
 			};
-			CategoryColumn.TextAlign = HorizontalAlignment.Center;
-			CategoryColumn.HeaderTextAlign = HorizontalAlignment.Center;
+			CategoryColumn.TextAlign = Settings.SubItemTextAlign;
+			CategoryColumn.HeaderTextAlign = Settings.SubItemHeaderAlign;
 			Tasual_ListView.AllColumns.Add(CategoryColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { CategoryColumn });
 
@@ -322,10 +362,11 @@ namespace Tasual
 			DueColumn.MinimumWidth = 80;
 			DueColumn.IsVisible = false;
 			DueColumn.IsEditable = false;
+			DueColumn.Sortable = true;
 			DueColumn.DisplayIndex = 4;
 			DueColumn.LastDisplayIndex = 4;
-			DueColumn.TextAlign = HorizontalAlignment.Center;
-			DueColumn.HeaderTextAlign = HorizontalAlignment.Center;
+			DueColumn.TextAlign = Settings.SubItemTextAlign;
+			DueColumn.HeaderTextAlign = Settings.SubItemHeaderAlign;
 			DueColumn.AspectToStringConverter = delegate (object Input)
 			{
 				TimeInfo TimeInfo = (TimeInfo)Input;
@@ -348,10 +389,11 @@ namespace Tasual
 			TimeColumn.MinimumWidth = 130;
 			TimeColumn.IsVisible = true;
 			TimeColumn.IsEditable = false;
+			TimeColumn.Sortable = false; // TODO: Allow sorting by this
 			TimeColumn.DisplayIndex = 5;
 			TimeColumn.LastDisplayIndex = 5;
-			TimeColumn.TextAlign = HorizontalAlignment.Center;
-			TimeColumn.HeaderTextAlign = HorizontalAlignment.Center;
+			TimeColumn.TextAlign = Settings.SubItemTextAlign;
+			TimeColumn.HeaderTextAlign = Settings.SubItemHeaderAlign;
 			TimeColumn.AspectToStringConverter = delegate(object Input)
 			{
 				TimeInfo Time = (TimeInfo)Input;
@@ -842,9 +884,15 @@ namespace Tasual
 
 		private void Tasual_ListView_ItemChecked(object sender, ItemCheckedEventArgs e)
 		{
+			/*Console.WriteLine("hmm");
+
+			//e.Item.
+			\
+
+			CheckedTime = DateTime.MinValue;
 			ArrayHandler.Save(ref TaskArray, Settings);
 			Tasual_ListView.BuildList();
-			Tasual_StatusLabel_UpdateCounts();
+			Tasual_StatusLabel_UpdateCounts();*/
 		}
 
 		private void Tasual_ListView_SelectedIndexChanged(object sender, EventArgs e)
@@ -1033,6 +1081,11 @@ namespace Tasual
 		private void Tasual_MenuStrip_Item_Edit_Advanced_Click(object sender, EventArgs e)
 		{
 
+		}
+
+		private void Tasual_Timer_CheckUpdate_Tick(object sender, EventArgs e)
+		{
+			Tasual_CheckNeedsUpdate();
 		}
 	}
 }

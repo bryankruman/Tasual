@@ -71,6 +71,8 @@
 			this.Tasual_MenuStrip_Group_Delete = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_MenuStrip_Item = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.Tasual_MenuStrip_Item_Edit = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_MenuStrip_Item_Edit_Quick = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_MenuStrip_Item_Edit_Advanced = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_MenuStrip_Item_Delete = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_MenuStrip_Item_Move = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_MenuStrip_Item_Duplicate = new System.Windows.Forms.ToolStripMenuItem();
@@ -92,8 +94,7 @@
 			this.Tasual_MenuStrip_Icon_Location_Maps = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_MenuStrip_Icon_Location_Remove = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_MenuStrip_Icon_AddLocation = new System.Windows.Forms.ToolStripMenuItem();
-			this.Tasual_MenuStrip_Item_Edit_Quick = new System.Windows.Forms.ToolStripMenuItem();
-			this.Tasual_MenuStrip_Item_Edit_Advanced = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_Timer_CheckUpdate = new System.Windows.Forms.Timer(this.components);
 			this.Tasual_MenuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Tasual_ListView)).BeginInit();
 			this.Tasual_MenuStrip_Notify.SuspendLayout();
@@ -473,7 +474,7 @@
             this.Tasual_MenuStrip_Item_Move,
             this.Tasual_MenuStrip_Item_Duplicate});
 			this.Tasual_MenuStrip_Item.Name = "Tasual_MenuStrip_Item";
-			this.Tasual_MenuStrip_Item.Size = new System.Drawing.Size(153, 114);
+			this.Tasual_MenuStrip_Item.Size = new System.Drawing.Size(125, 92);
 			// 
 			// Tasual_MenuStrip_Item_Edit
 			// 
@@ -481,14 +482,28 @@
             this.Tasual_MenuStrip_Item_Edit_Quick,
             this.Tasual_MenuStrip_Item_Edit_Advanced});
 			this.Tasual_MenuStrip_Item_Edit.Name = "Tasual_MenuStrip_Item_Edit";
-			this.Tasual_MenuStrip_Item_Edit.Size = new System.Drawing.Size(152, 22);
+			this.Tasual_MenuStrip_Item_Edit.Size = new System.Drawing.Size(124, 22);
 			this.Tasual_MenuStrip_Item_Edit.Text = "Edit";
 			this.Tasual_MenuStrip_Item_Edit.Click += new System.EventHandler(this.Tasual_MenuStrip_Item_Edit_Click);
+			// 
+			// Tasual_MenuStrip_Item_Edit_Quick
+			// 
+			this.Tasual_MenuStrip_Item_Edit_Quick.Name = "Tasual_MenuStrip_Item_Edit_Quick";
+			this.Tasual_MenuStrip_Item_Edit_Quick.Size = new System.Drawing.Size(127, 22);
+			this.Tasual_MenuStrip_Item_Edit_Quick.Text = "Quick";
+			this.Tasual_MenuStrip_Item_Edit_Quick.Click += new System.EventHandler(this.Tasual_MenuStrip_Item_Edit_Quick_Click);
+			// 
+			// Tasual_MenuStrip_Item_Edit_Advanced
+			// 
+			this.Tasual_MenuStrip_Item_Edit_Advanced.Name = "Tasual_MenuStrip_Item_Edit_Advanced";
+			this.Tasual_MenuStrip_Item_Edit_Advanced.Size = new System.Drawing.Size(127, 22);
+			this.Tasual_MenuStrip_Item_Edit_Advanced.Text = "Advanced";
+			this.Tasual_MenuStrip_Item_Edit_Advanced.Click += new System.EventHandler(this.Tasual_MenuStrip_Item_Edit_Advanced_Click);
 			// 
 			// Tasual_MenuStrip_Item_Delete
 			// 
 			this.Tasual_MenuStrip_Item_Delete.Name = "Tasual_MenuStrip_Item_Delete";
-			this.Tasual_MenuStrip_Item_Delete.Size = new System.Drawing.Size(152, 22);
+			this.Tasual_MenuStrip_Item_Delete.Size = new System.Drawing.Size(124, 22);
 			this.Tasual_MenuStrip_Item_Delete.Text = "Delete";
 			this.Tasual_MenuStrip_Item_Delete.Click += new System.EventHandler(this.Tasual_MenuStrip_Item_Delete_Click);
 			// 
@@ -496,14 +511,14 @@
 			// 
 			this.Tasual_MenuStrip_Item_Move.Enabled = false;
 			this.Tasual_MenuStrip_Item_Move.Name = "Tasual_MenuStrip_Item_Move";
-			this.Tasual_MenuStrip_Item_Move.Size = new System.Drawing.Size(152, 22);
+			this.Tasual_MenuStrip_Item_Move.Size = new System.Drawing.Size(124, 22);
 			this.Tasual_MenuStrip_Item_Move.Text = "Move";
 			// 
 			// Tasual_MenuStrip_Item_Duplicate
 			// 
 			this.Tasual_MenuStrip_Item_Duplicate.Enabled = false;
 			this.Tasual_MenuStrip_Item_Duplicate.Name = "Tasual_MenuStrip_Item_Duplicate";
-			this.Tasual_MenuStrip_Item_Duplicate.Size = new System.Drawing.Size(152, 22);
+			this.Tasual_MenuStrip_Item_Duplicate.Size = new System.Drawing.Size(124, 22);
 			this.Tasual_MenuStrip_Item_Duplicate.Text = "Duplicate";
 			// 
 			// Tasual_MenuStrip_Icon
@@ -649,19 +664,11 @@
 			this.Tasual_MenuStrip_Icon_AddLocation.Text = "Add location";
 			this.Tasual_MenuStrip_Icon_AddLocation.Click += new System.EventHandler(this.Tasual_MenuStrip_Icon_AddLocation_Click);
 			// 
-			// Tasual_MenuStrip_Item_Edit_Quick
+			// Tasual_Timer_CheckUpdate
 			// 
-			this.Tasual_MenuStrip_Item_Edit_Quick.Name = "Tasual_MenuStrip_Item_Edit_Quick";
-			this.Tasual_MenuStrip_Item_Edit_Quick.Size = new System.Drawing.Size(152, 22);
-			this.Tasual_MenuStrip_Item_Edit_Quick.Text = "Quick";
-			this.Tasual_MenuStrip_Item_Edit_Quick.Click += new System.EventHandler(this.Tasual_MenuStrip_Item_Edit_Quick_Click);
-			// 
-			// Tasual_MenuStrip_Item_Edit_Advanced
-			// 
-			this.Tasual_MenuStrip_Item_Edit_Advanced.Name = "Tasual_MenuStrip_Item_Edit_Advanced";
-			this.Tasual_MenuStrip_Item_Edit_Advanced.Size = new System.Drawing.Size(152, 22);
-			this.Tasual_MenuStrip_Item_Edit_Advanced.Text = "Advanced";
-			this.Tasual_MenuStrip_Item_Edit_Advanced.Click += new System.EventHandler(this.Tasual_MenuStrip_Item_Edit_Advanced_Click);
+			this.Tasual_Timer_CheckUpdate.Enabled = true;
+			this.Tasual_Timer_CheckUpdate.Interval = 60000;
+			this.Tasual_Timer_CheckUpdate.Tick += new System.EventHandler(this.Tasual_Timer_CheckUpdate_Tick);
 			// 
 			// Tasual_Main
 			// 
@@ -762,6 +769,7 @@
 		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Edit_Advanced;
 		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Item_Edit_Quick;
 		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Item_Edit_Advanced;
+		private System.Windows.Forms.Timer Tasual_Timer_CheckUpdate;
 	}
 }
 

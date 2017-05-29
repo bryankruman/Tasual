@@ -499,7 +499,7 @@ namespace Tasual
 			Tasual_Create_SetSpecificDay();
 
 			// Dismiss
-			Tasual_Create_ComboBox_Dismiss.SelectedIndex = TaskToEdit.Time.Dismiss;
+			Tasual_Create_ComboBox_Dismiss.SelectedIndex = (int)TaskToEdit.Time.Dismiss;
 
 			// Repeating
 			switch (TimeInfo.GetRepeatType(TaskToEdit.Time))
@@ -513,6 +513,7 @@ namespace Tasual
 						Tasual_Create_RadioButton_Type_Singular.Checked = false;
 						Tasual_Create_NumericUpDown_Type_RepeatSimple.Enabled = false;
 						Tasual_Create_ComboBox_RepeatSimple.Enabled = false;
+						Tasual_Create_ComboBox_RepeatSimple.SelectedIndex = 0;
 
 						// DAYS
 						if (TaskToEdit.Time.SpecificDay != 0)
@@ -624,6 +625,7 @@ namespace Tasual
 						Tasual_Create_RadioButton_Type_Singular.Checked = true;
 						Tasual_Create_NumericUpDown_Type_RepeatSimple.Enabled = false;
 						Tasual_Create_ComboBox_RepeatSimple.Enabled = false;
+						Tasual_Create_ComboBox_RepeatSimple.SelectedIndex = 0;
 						break;
 					}
 			}
@@ -995,7 +997,7 @@ namespace Tasual
 					TimeInfo.TimeOfDay = Tasual_Create_DateTimePicker_StartTime.Value.TimeOfDay;
 				}
 
-				TimeInfo.Dismiss = Tasual_Create_ComboBox_Dismiss.SelectedIndex;
+				TimeInfo.Dismiss = (TimeInfo.DismissType)Tasual_Create_ComboBox_Dismiss.SelectedIndex;
 
 				if (Tasual_Create_RadioButton_Type_Singular.Checked == false)
 				{
