@@ -237,6 +237,10 @@ namespace Tasual
 						// make it plural
 						IncrementInsert = IncrementValue.ToString() + " " + IncrementInsert + "s";
 					}
+					else if (EndsCount <= 1)
+					{
+						IncrementInsert = "in 1 " + IncrementInsert;
+					}
 
 
 					string EveryOrOnce = "once";//"Repeats {0} {1} from now";

@@ -157,7 +157,6 @@ namespace Tasual
 				}
 				else if (TimeInfo.Scheduled(Task.Time))
 				{
-					// TODO: Add completion auto delete option to settings
 					if (Task.Time.Expired)
 					{
 						if (Task.Time.Dismiss != TimeInfo.DismissType.Never)
