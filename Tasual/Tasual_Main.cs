@@ -124,40 +124,60 @@ namespace Tasual
 
 		public void Tasual_CheckNeedsUpdate()
 		{
+			/* 
+			 * When a singular task expires
+			 *  - Check to see if we should push a notification
+			 *  - Set expired flag and delete if dismissal is immediate
+			 *  - Update listview
+			 *  
+			 * When a simple or recurring task expires
+			 *  - Check to see if task has another iteration on the way
+			 *    - Compare current count to total iterations allowed
+			 *    - Check end date to make sure the next iteration wouldn't be after the end date
+			 *    - If both conditions pass, create a new iteration
+			 *  - Check to see if we should push a notification
+			 *  - Set expired flag and delete if dismissal is immediate
+			 *  - Update listview
+			 */
+
 			foreach (Task Task in TaskArray)
 			{
-				if (TimeInfo.Scheduled(Task.Time))
+				if (Task.Checked)
+				{
+					if (Settings.RemoveCompleted)
+					{
+						if (DateTime.Now > (Task.Time.CheckedTime + TimeInfo.GetRemoveTimeSpan(Settings.RemoveCompleted)))
+						{
+							// delete task
+						}
+					}
+				}
+				else if (TimeInfo.Scheduled(Task.Time))
 				{
 					// TODO: Add "completion date" which sets the date of completion
 					// TODO: Add completion auto delete option to settings
-
-					// if (completed)
-					//   check to see how long it has been since it was completed, prune if older than threshold
-					// fi
-
-					// if (expired)
-					// if (DateTime.Now > (Task.Time.Next + (TimeSpan)TimeInfo.Dismissal(Task.Time.Dismiss)))
-					//   delete task
-					// fi
-
-					if (DateTime.Now > Task.Time.Next)
+					if (Task.Time.Expired)
 					{
-						// TODO: Figure out precisely the criteria for how to proceed here
+						if (Task.Time.Dismiss != 0)
+						{
+							if (DateTime.Now > (Task.Time.Next + TimeInfo.GetDismissTimeSpan(Task.Time.Dismiss)))
+							{
+								// delete task
+							}
+						}
+						// else do nothing
+					}
+					else if (DateTime.Now > Task.Time.Next)
+					{
+						// task is now expired
 
-						/* When a singular task expires
-						 *  - Update listview
-						 *  - Check to see if we should push a notification
-						 *  - Set expired flag and delete if dismissal is immediate
-						 *  
-						 * When a simple or recurring task expires
-						 *  - Check to see if task has another iteration on the way
-						 *    - Compare current count to total iterations allowed
-						 *    - Check end date to make sure the next iteration wouldn't be after the end date
-						 *    - If both conditions pass, create a new iteration
-						 *  - Update ListView
-						 *  - Check to see if we should push a notification
-						 *  - Set expired flag and delete if dismissal is immediate
-						 */
+						// check to see if we should do another iteration
+
+						Task.Time.Expired = true;
+						if (Task.Time.Dismiss == 1) // immediate deletion
+						{
+							// delete task
+						}
 					}
 				}
 
