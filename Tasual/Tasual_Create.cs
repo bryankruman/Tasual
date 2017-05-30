@@ -333,7 +333,7 @@ namespace Tasual
 					if (Tasual_Create_Label_WeekSel_1st.Tag != null) { Weeks.Add("1st"); }
 					if (Tasual_Create_Label_WeekSel_2nd.Tag != null) { Weeks.Add("2nd"); }
 					if (Tasual_Create_Label_WeekSel_3rd.Tag != null) { Weeks.Add("3rd"); }
-					if (Tasual_Create_Label_WeekSel_Last.Tag != null) { Weeks.Add("Last"); }
+					if (Tasual_Create_Label_WeekSel_Last.Tag != null) { Weeks.Add("last"); }
 
 					if (Weeks.Count == 0)
 					{
