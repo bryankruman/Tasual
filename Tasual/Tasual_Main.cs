@@ -262,6 +262,46 @@ namespace Tasual
 			}
 		}
 
+		private void Tasual_QuickCreate()
+		{
+			string GroupName = "Tasks";
+			// defaults to the first group it finds OR the last selected group
+			if (!string.IsNullOrEmpty(Tasual_LastSelectedGroup))
+			{
+				GroupName = Tasual_LastSelectedGroup;
+			}
+			else
+			{
+				foreach (Task Search in TaskArray)
+				{
+					if (!string.IsNullOrEmpty(Search.Group))
+					{
+						GroupName = Search.Group;
+						break;
+					}
+				}
+			}
+
+			Task Task = new Task(
+				false,
+				0,
+				GroupName,
+				"New task",
+				"",
+				"",
+				"",
+				new TimeInfo()
+			);
+
+			TaskArray.Add(Task);
+			ArrayHandler.Save(ref TaskArray, Settings);
+			Tasual_ListView.BuildList();
+			Tasual_StatusLabel_UpdateCounts();
+			Tasual_ListView.PossibleFinishCellEditing();
+			Tasual_ListView.EnsureModelVisible(Task);
+			Tasual_ListView.EditModel(Task);
+		}
+
 
 		// ====================
 		//  ListView Functions
@@ -491,46 +531,6 @@ namespace Tasual
 		{
 			Tasual_Create CreateForm = new Tasual_Create(this);
 			CreateForm.ShowDialog(this);
-		}
-
-		private void Tasual_QuickCreate()
-		{
-			string GroupName = "Tasks";
-			// defaults to the first group it finds OR the last selected group
-			if (!string.IsNullOrEmpty(Tasual_LastSelectedGroup))
-			{
-				GroupName = Tasual_LastSelectedGroup;
-			}
-			else
-			{
-				foreach (Task Search in TaskArray)
-				{
-					if (!string.IsNullOrEmpty(Search.Group))
-					{
-						GroupName = Search.Group;
-						break;
-					}
-				}
-			}
-
-			Task Task = new Task(
-				false,
-				0,
-				GroupName,
-				"New task",
-				"",
-				"",
-				"",
-				new TimeInfo()
-			);
-
-			TaskArray.Add(Task);
-			ArrayHandler.Save(ref TaskArray, Settings);
-			Tasual_ListView.BuildList();
-			Tasual_StatusLabel_UpdateCounts();
-			Tasual_ListView.PossibleFinishCellEditing();
-			Tasual_ListView.EnsureModelVisible(Task);
-			Tasual_ListView.EditModel(Task);
 		}
 
 		private void Tasual_MenuStrip_Create_Quick_Click(object sender, EventArgs e)
