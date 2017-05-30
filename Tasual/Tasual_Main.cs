@@ -489,8 +489,8 @@ namespace Tasual
 		// Tasual_Main: "Create"
 		private void Tasual_MenuStrip_Create_Advanced_Click(object sender, EventArgs e)
 		{
-			Tasual_Create TaskForm = new Tasual_Create(this);
-			TaskForm.ShowDialog(this);
+			Tasual_Create CreateForm = new Tasual_Create(this);
+			CreateForm.ShowDialog(this);
 		}
 
 		private void Tasual_QuickCreate()
@@ -570,10 +570,7 @@ namespace Tasual
 		// Tasual_Main: "Sources"
 		private void Tasual_MenuStrip_Sources_Click(object sender, EventArgs e)
 		{
-			//Tasual_Array_Save_JSON();
-			//Tasual_Array_Load_JSON();
-			//Tasual_ListView.SetObjects(TaskArray);
-			//Tasual_ListView.BuildList();
+			// Currently unused
 		}
 
 		// Tasual_ListView: "Group"
@@ -799,17 +796,110 @@ namespace Tasual
 		}
 
 		// Tasual_ListView: "Item"
+		private void Tasual_MenuStrip_Item_Create_Quick_Click(object sender, EventArgs e)
+		{
+			Tasual_QuickCreate();
+		}
+
+		private void Tasual_MenuStrip_Item_Create_Advanced_Click(object sender, EventArgs e)
+		{
+			Tasual_Create CreateForm = new Tasual_Create(this);
+			CreateForm.ShowDialog(this);
+		}
+
 		private void Tasual_MenuStrip_Item_Delete_Click(object sender, EventArgs e)
 		{
-			TaskArray.Remove((Task)Tasual_MenuStrip_Item.Tag);
+			Task Task = (Task)Tasual_MenuStrip_Item.Tag;
+			TaskArray.Remove(Task);
 			ArrayHandler.Save(ref TaskArray, Settings);
 			Tasual_ListView.BuildList();
 			Tasual_StatusLabel_UpdateCounts();
 		}
 
-		private void Tasual_MenuStrip_Item_Edit_Click(object sender, EventArgs e)
+		private void Tasual_MenuStrip_Item_Duplicate_Click(object sender, EventArgs e)
 		{
-			Tasual_ListView.EditModel((Task)Tasual_MenuStrip_Item.Tag);
+			// PRETTY MUCH do a clean copy here, but with some minor caveats
+
+			Task Task = (Task)Tasual_MenuStrip_Item.Tag;
+			TimeInfo NewTime = new TimeInfo(
+				Task.Time.Summary,
+				Task.Time.CheckedTime,
+				Task.Time.Created,
+				DateTime.Now,
+				Task.Time.Start,
+				Task.Time.Next,
+				Task.Time.End,
+				Task.Time.Dismiss,
+				false,
+				Task.Time.Iterations,
+				Task.Time.Count,
+				Task.Time.Yearly,
+				Task.Time.Monthly,
+				Task.Time.Weekly,
+				Task.Time.Daily,
+				Task.Time.TimeOfDay,
+				Task.Time.MonthFilter,
+				Task.Time.WeekFilter,
+				Task.Time.DayFilter,
+				Task.Time.SpecificDay
+			);
+
+			Task NewTask = new Task(
+				Task.Checked,
+				Task.Priority,
+				Task.Group,
+				Task.Description,
+				Task.Notes,
+				Task.Link,
+				Task.Location,
+				NewTime
+			);
+
+			TaskArray.Add(NewTask);
+			Tasual_ListView.BuildList();
+			Tasual_StatusLabel_UpdateCounts();
+		}
+
+		private void Tasual_MenuStrip_Item_Edit_Advanced_Click(object sender, EventArgs e)
+		{
+			Task Task = (Task)Tasual_MenuStrip_Item.Tag;
+			Tasual_Create CreateForm = new Tasual_Create(this, TaskArray.IndexOf(Task));
+			CreateForm.ShowDialog(this);
+		}
+
+		private void Tasual_MenuStrip_Item_Edit_Quick_Click(object sender, EventArgs e)
+		{
+			Task Task = (Task)Tasual_MenuStrip_Item.Tag;
+			Tasual_ListView.PossibleFinishCellEditing();
+			Tasual_ListView.EditModel(Task);
+		}
+
+		private void Tasual_MenuStrip_Item_Move_ClickHandler(object sender, EventArgs e)
+		{
+			ToolStripDropDownItem Item = (ToolStripDropDownItem)sender;
+			Task Task = (Task)Tasual_MenuStrip_Item.Tag;
+			Task.Group = Item.Text;
+			Tasual_ListView.BuildList();
+		}
+
+		private void Tasual_MenuStrip_Item_Move_DropDownOpening(object sender, EventArgs e)
+		{
+			Task TaggedTask = (Task)Tasual_MenuStrip_Item.Tag;
+			List<string> AlreadySelectedGroups = new List<string>();
+
+			Tasual_MenuStrip_Item_Move.DropDownItems.Clear();
+			Tasual_MenuStrip_Item_Move.DropDownItems.Add("(No other groups available)");
+			Tasual_MenuStrip_Item_Move.DropDownItems[0].Enabled = false;
+
+			foreach (Task Task in TaskArray)
+			{
+				if (!AlreadySelectedGroups.Contains(Task.Group) && (TaggedTask.Group != Task.Group))
+				{
+					Tasual_MenuStrip_Item_Move.DropDownItems.Add(Task.Group, null, Tasual_MenuStrip_Item_Move_ClickHandler);
+					AlreadySelectedGroups.Add(Task.Group);
+					Tasual_MenuStrip_Item_Move.DropDownItems[0].Visible = false;
+				}
+			}
 		}
 
 		// Tasual_Notify: "Notify"
@@ -1158,15 +1248,8 @@ namespace Tasual
 			}
 		}
 
-		private void Tasual_MenuStrip_Item_Edit_Quick_Click(object sender, EventArgs e)
-		{
 
-		}
 
-		private void Tasual_MenuStrip_Item_Edit_Advanced_Click(object sender, EventArgs e)
-		{
-
-		}
 
 		private void Tasual_Timer_CheckUpdate_Tick(object sender, EventArgs e)
 		{

@@ -62,20 +62,23 @@
 			this.Tasual_MenuStrip_Group_Create = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_MenuStrip_Group_Create_Quick = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_MenuStrip_Group_Create_Advanced = new System.Windows.Forms.ToolStripMenuItem();
-			this.Tasual_MenuStrip_Group_Sep1 = new System.Windows.Forms.ToolStripSeparator();
 			this.Tasual_MenuStrip_Group_Show = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_MenuStrip_Group_Hide = new System.Windows.Forms.ToolStripMenuItem();
-			this.Tasual_MenuStrip_Group_Sep2 = new System.Windows.Forms.ToolStripSeparator();
 			this.Tasual_MenuStrip_Group_Rename = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_MenuStrip_Group_MoveTasks = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_MenuStrip_Group_Move_Blank = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_MenuStrip_Group_Delete = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_MenuStrip_Item = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.Tasual_MenuStrip_Item_Create = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_MenuStrip_Item_Create_Quick = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_MenuStrip_Item_Create_Advanced = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_MenuStrip_Item_Edit = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_MenuStrip_Item_Edit_Quick = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_MenuStrip_Item_Edit_Advanced = new System.Windows.Forms.ToolStripMenuItem();
-			this.Tasual_MenuStrip_Item_Delete = new System.Windows.Forms.ToolStripMenuItem();
-			this.Tasual_MenuStrip_Item_Move = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_MenuStrip_Item_Duplicate = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_MenuStrip_Item_Move = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_MenuStrip_Item_Move_Blank = new System.Windows.Forms.ToolStripMenuItem();
+			this.Tasual_MenuStrip_Item_Delete = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_MenuStrip_Icon = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.Tasual_MenuStrip_Icon_Notes = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_MenuStrip_Icon_Notes_EditNotes = new System.Windows.Forms.ToolStripMenuItem();
@@ -189,6 +192,7 @@
 			this.Tasual_MenuStrip_Sources.Name = "Tasual_MenuStrip_Sources";
 			this.Tasual_MenuStrip_Sources.Size = new System.Drawing.Size(76, 20);
 			this.Tasual_MenuStrip_Sources.Text = "Sources";
+			this.Tasual_MenuStrip_Sources.Visible = false;
 			this.Tasual_MenuStrip_Sources.Click += new System.EventHandler(this.Tasual_MenuStrip_Sources_Click);
 			// 
 			// Tasual_ListView
@@ -388,15 +392,13 @@
 			// 
 			this.Tasual_MenuStrip_Group.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Tasual_MenuStrip_Group_Create,
-            this.Tasual_MenuStrip_Group_Sep1,
             this.Tasual_MenuStrip_Group_Show,
             this.Tasual_MenuStrip_Group_Hide,
-            this.Tasual_MenuStrip_Group_Sep2,
             this.Tasual_MenuStrip_Group_Rename,
             this.Tasual_MenuStrip_Group_MoveTasks,
             this.Tasual_MenuStrip_Group_Delete});
 			this.Tasual_MenuStrip_Group.Name = "Tasual_MenuStrip_Header";
-			this.Tasual_MenuStrip_Group.Size = new System.Drawing.Size(140, 148);
+			this.Tasual_MenuStrip_Group.Size = new System.Drawing.Size(140, 136);
 			this.Tasual_MenuStrip_Group.Opening += new System.ComponentModel.CancelEventHandler(this.Tasual_MenuStrip_Group_Opening);
 			// 
 			// Tasual_MenuStrip_Group_Create
@@ -406,7 +408,7 @@
             this.Tasual_MenuStrip_Group_Create_Advanced});
 			this.Tasual_MenuStrip_Group_Create.Name = "Tasual_MenuStrip_Group_Create";
 			this.Tasual_MenuStrip_Group_Create.Size = new System.Drawing.Size(139, 22);
-			this.Tasual_MenuStrip_Group_Create.Text = "Create";
+			this.Tasual_MenuStrip_Group_Create.Text = "Create Task";
 			// 
 			// Tasual_MenuStrip_Group_Create_Quick
 			// 
@@ -419,11 +421,6 @@
 			this.Tasual_MenuStrip_Group_Create_Advanced.Name = "Tasual_MenuStrip_Group_Create_Advanced";
 			this.Tasual_MenuStrip_Group_Create_Advanced.Size = new System.Drawing.Size(127, 22);
 			this.Tasual_MenuStrip_Group_Create_Advanced.Text = "Advanced";
-			// 
-			// Tasual_MenuStrip_Group_Sep1
-			// 
-			this.Tasual_MenuStrip_Group_Sep1.Name = "Tasual_MenuStrip_Group_Sep1";
-			this.Tasual_MenuStrip_Group_Sep1.Size = new System.Drawing.Size(136, 6);
 			// 
 			// Tasual_MenuStrip_Group_Show
 			// 
@@ -439,11 +436,6 @@
 			this.Tasual_MenuStrip_Group_Hide.Text = "Hide";
 			this.Tasual_MenuStrip_Group_Hide.Click += new System.EventHandler(this.Tasual_MenuStrip_Group_Hide_Click);
 			// 
-			// Tasual_MenuStrip_Group_Sep2
-			// 
-			this.Tasual_MenuStrip_Group_Sep2.Name = "Tasual_MenuStrip_Group_Sep2";
-			this.Tasual_MenuStrip_Group_Sep2.Size = new System.Drawing.Size(136, 6);
-			// 
 			// Tasual_MenuStrip_Group_Rename
 			// 
 			this.Tasual_MenuStrip_Group_Rename.Enabled = false;
@@ -454,10 +446,19 @@
 			// Tasual_MenuStrip_Group_MoveTasks
 			// 
 			this.Tasual_MenuStrip_Group_MoveTasks.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.Tasual_MenuStrip_Group_MoveTasks.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Tasual_MenuStrip_Group_Move_Blank});
 			this.Tasual_MenuStrip_Group_MoveTasks.Name = "Tasual_MenuStrip_Group_MoveTasks";
 			this.Tasual_MenuStrip_Group_MoveTasks.Size = new System.Drawing.Size(139, 22);
 			this.Tasual_MenuStrip_Group_MoveTasks.Text = "Move Tasks";
 			this.Tasual_MenuStrip_Group_MoveTasks.DropDownOpening += new System.EventHandler(this.Tasual_MenuStrip_Group_MoveTasks_DropDownOpening);
+			// 
+			// Tasual_MenuStrip_Group_Move_Blank
+			// 
+			this.Tasual_MenuStrip_Group_Move_Blank.Name = "Tasual_MenuStrip_Group_Move_Blank";
+			this.Tasual_MenuStrip_Group_Move_Blank.Size = new System.Drawing.Size(130, 22);
+			this.Tasual_MenuStrip_Group_Move_Blank.Text = "Blank Item";
+			this.Tasual_MenuStrip_Group_Move_Blank.Visible = false;
 			// 
 			// Tasual_MenuStrip_Group_Delete
 			// 
@@ -469,12 +470,36 @@
 			// Tasual_MenuStrip_Item
 			// 
 			this.Tasual_MenuStrip_Item.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Tasual_MenuStrip_Item_Create,
             this.Tasual_MenuStrip_Item_Edit,
-            this.Tasual_MenuStrip_Item_Delete,
+            this.Tasual_MenuStrip_Item_Duplicate,
             this.Tasual_MenuStrip_Item_Move,
-            this.Tasual_MenuStrip_Item_Duplicate});
+            this.Tasual_MenuStrip_Item_Delete});
 			this.Tasual_MenuStrip_Item.Name = "Tasual_MenuStrip_Item";
-			this.Tasual_MenuStrip_Item.Size = new System.Drawing.Size(125, 92);
+			this.Tasual_MenuStrip_Item.Size = new System.Drawing.Size(125, 114);
+			// 
+			// Tasual_MenuStrip_Item_Create
+			// 
+			this.Tasual_MenuStrip_Item_Create.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Tasual_MenuStrip_Item_Create_Quick,
+            this.Tasual_MenuStrip_Item_Create_Advanced});
+			this.Tasual_MenuStrip_Item_Create.Name = "Tasual_MenuStrip_Item_Create";
+			this.Tasual_MenuStrip_Item_Create.Size = new System.Drawing.Size(124, 22);
+			this.Tasual_MenuStrip_Item_Create.Text = "Create";
+			// 
+			// Tasual_MenuStrip_Item_Create_Quick
+			// 
+			this.Tasual_MenuStrip_Item_Create_Quick.Name = "Tasual_MenuStrip_Item_Create_Quick";
+			this.Tasual_MenuStrip_Item_Create_Quick.Size = new System.Drawing.Size(127, 22);
+			this.Tasual_MenuStrip_Item_Create_Quick.Text = "Quick";
+			this.Tasual_MenuStrip_Item_Create_Quick.Click += new System.EventHandler(this.Tasual_MenuStrip_Item_Create_Quick_Click);
+			// 
+			// Tasual_MenuStrip_Item_Create_Advanced
+			// 
+			this.Tasual_MenuStrip_Item_Create_Advanced.Name = "Tasual_MenuStrip_Item_Create_Advanced";
+			this.Tasual_MenuStrip_Item_Create_Advanced.Size = new System.Drawing.Size(127, 22);
+			this.Tasual_MenuStrip_Item_Create_Advanced.Text = "Advanced";
+			this.Tasual_MenuStrip_Item_Create_Advanced.Click += new System.EventHandler(this.Tasual_MenuStrip_Item_Create_Advanced_Click);
 			// 
 			// Tasual_MenuStrip_Item_Edit
 			// 
@@ -484,7 +509,6 @@
 			this.Tasual_MenuStrip_Item_Edit.Name = "Tasual_MenuStrip_Item_Edit";
 			this.Tasual_MenuStrip_Item_Edit.Size = new System.Drawing.Size(124, 22);
 			this.Tasual_MenuStrip_Item_Edit.Text = "Edit";
-			this.Tasual_MenuStrip_Item_Edit.Click += new System.EventHandler(this.Tasual_MenuStrip_Item_Edit_Click);
 			// 
 			// Tasual_MenuStrip_Item_Edit_Quick
 			// 
@@ -500,26 +524,35 @@
 			this.Tasual_MenuStrip_Item_Edit_Advanced.Text = "Advanced";
 			this.Tasual_MenuStrip_Item_Edit_Advanced.Click += new System.EventHandler(this.Tasual_MenuStrip_Item_Edit_Advanced_Click);
 			// 
+			// Tasual_MenuStrip_Item_Duplicate
+			// 
+			this.Tasual_MenuStrip_Item_Duplicate.Name = "Tasual_MenuStrip_Item_Duplicate";
+			this.Tasual_MenuStrip_Item_Duplicate.Size = new System.Drawing.Size(124, 22);
+			this.Tasual_MenuStrip_Item_Duplicate.Text = "Duplicate";
+			this.Tasual_MenuStrip_Item_Duplicate.Click += new System.EventHandler(this.Tasual_MenuStrip_Item_Duplicate_Click);
+			// 
+			// Tasual_MenuStrip_Item_Move
+			// 
+			this.Tasual_MenuStrip_Item_Move.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Tasual_MenuStrip_Item_Move_Blank});
+			this.Tasual_MenuStrip_Item_Move.Name = "Tasual_MenuStrip_Item_Move";
+			this.Tasual_MenuStrip_Item_Move.Size = new System.Drawing.Size(124, 22);
+			this.Tasual_MenuStrip_Item_Move.Text = "Move";
+			this.Tasual_MenuStrip_Item_Move.DropDownOpening += new System.EventHandler(this.Tasual_MenuStrip_Item_Move_DropDownOpening);
+			// 
+			// Tasual_MenuStrip_Item_Move_Blank
+			// 
+			this.Tasual_MenuStrip_Item_Move_Blank.Name = "Tasual_MenuStrip_Item_Move_Blank";
+			this.Tasual_MenuStrip_Item_Move_Blank.Size = new System.Drawing.Size(152, 22);
+			this.Tasual_MenuStrip_Item_Move_Blank.Text = "Blank Item";
+			this.Tasual_MenuStrip_Item_Move_Blank.Visible = false;
+			// 
 			// Tasual_MenuStrip_Item_Delete
 			// 
 			this.Tasual_MenuStrip_Item_Delete.Name = "Tasual_MenuStrip_Item_Delete";
 			this.Tasual_MenuStrip_Item_Delete.Size = new System.Drawing.Size(124, 22);
 			this.Tasual_MenuStrip_Item_Delete.Text = "Delete";
 			this.Tasual_MenuStrip_Item_Delete.Click += new System.EventHandler(this.Tasual_MenuStrip_Item_Delete_Click);
-			// 
-			// Tasual_MenuStrip_Item_Move
-			// 
-			this.Tasual_MenuStrip_Item_Move.Enabled = false;
-			this.Tasual_MenuStrip_Item_Move.Name = "Tasual_MenuStrip_Item_Move";
-			this.Tasual_MenuStrip_Item_Move.Size = new System.Drawing.Size(124, 22);
-			this.Tasual_MenuStrip_Item_Move.Text = "Move";
-			// 
-			// Tasual_MenuStrip_Item_Duplicate
-			// 
-			this.Tasual_MenuStrip_Item_Duplicate.Enabled = false;
-			this.Tasual_MenuStrip_Item_Duplicate.Name = "Tasual_MenuStrip_Item_Duplicate";
-			this.Tasual_MenuStrip_Item_Duplicate.Size = new System.Drawing.Size(124, 22);
-			this.Tasual_MenuStrip_Item_Duplicate.Text = "Duplicate";
 			// 
 			// Tasual_MenuStrip_Icon
 			// 
@@ -729,8 +762,6 @@
 		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Group_Rename;
 		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Group_Delete;
 		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Group_Hide;
-		private System.Windows.Forms.ToolStripSeparator Tasual_MenuStrip_Group_Sep1;
-		private System.Windows.Forms.ToolStripSeparator Tasual_MenuStrip_Group_Sep2;
 		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Group_MoveTasks;
 		private System.Windows.Forms.ContextMenuStrip Tasual_MenuStrip_Item;
 		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Item_Edit;
@@ -770,6 +801,11 @@
 		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Item_Edit_Quick;
 		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Item_Edit_Advanced;
 		private System.Windows.Forms.Timer Tasual_Timer_CheckUpdate;
+		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Group_Move_Blank;
+		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Item_Create;
+		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Item_Create_Quick;
+		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Item_Create_Advanced;
+		private System.Windows.Forms.ToolStripMenuItem Tasual_MenuStrip_Item_Move_Blank;
 	}
 }
 
