@@ -127,7 +127,7 @@ namespace Tasual
 		{
 			/* 
 			 * When a singular task expires
-			 *  - Check to see if we should push a notification
+			 *  - TODO: Check to see if we should push a notification
 			 *  - Set expired flag and delete if dismissal is immediate
 			 *  - Update listview
 			 *  
@@ -136,12 +136,14 @@ namespace Tasual
 			 *    - Compare current count to total iterations allowed
 			 *    - Check end date to make sure the next iteration wouldn't be after the end date
 			 *    - If both conditions pass, create a new iteration
-			 *  - Check to see if we should push a notification
+			 *  - TODO: Check to see if we should push a notification
 			 *  - Set expired flag and delete if dismissal is immediate
 			 *  - Update listview
 			 */
 
+			bool UpdateList = false;
 			List<Task> RemovalList = new List<Task>();
+			List<Task> AddedList = new List<Task>();
 
 			foreach (Task Task in TaskArray)
 			{
@@ -151,8 +153,9 @@ namespace Tasual
 					{
 						if (DateTime.Now > (Task.Time.CheckedTime + Setting.GetRemoveTimeSpan(Settings.RemoveCompleted)))
 						{
-							// delete task
+							// Delete task
 							RemovalList.Add(Task);
+							UpdateList = true;
 						}
 					}
 				}
@@ -164,24 +167,79 @@ namespace Tasual
 						{
 							if (DateTime.Now > (Task.Time.Next + TimeInfo.GetDismissTimeSpan(Task.Time.Dismiss)))
 							{
-								// delete task
+								// Delete task
 								RemovalList.Add(Task);
+								UpdateList = true;
 							}
 						}
 						// else do nothing
 					}
 					else if (DateTime.Now > Task.Time.Next)
 					{
-						// task is now expired
-
-						// check to see if we should do another iteration
-
+						// Task is now expired, check to see if we should delete it
 						Task.Time.Expired = true;
 						if (Task.Time.Dismiss == TimeInfo.DismissType.Immediate) // immediate deletion
 						{
-							// delete task
+							// Delete task
 							RemovalList.Add(Task);
+							UpdateList = true;
 						}
+
+						// Check to see if we should do another iteration
+						int Count = TimeInfo.FindIterationCount(Task.Time);
+
+						// Count iterations first
+						if (Task.Time.Iterations != 0)
+						{
+							if (Count >= Task.Time.Iterations) // TODO: Check if off by one error is here
+							{
+								// No more iterations of this task
+								continue;
+							}
+						}
+
+						// Next check all other conditions and set the new time
+						DateTime Next = TimeInfo.FindNextIteration(Task.Time);
+						if (Next != DateTime.MinValue)
+						{
+							TimeInfo NewTime = new TimeInfo(
+								Task.Time.Summary,
+								DateTime.MinValue,
+								Task.Time.Created,
+								DateTime.Now,
+								Task.Time.Start,
+								Next,
+								Task.Time.End,
+								Task.Time.Dismiss,
+								false,
+								Task.Time.Iterations,
+								Count,
+								Task.Time.Yearly,
+								Task.Time.Monthly,
+								Task.Time.Weekly,
+								Task.Time.Daily,
+								Task.Time.TimeOfDay,
+								Task.Time.MonthFilter,
+								Task.Time.WeekFilter,
+								Task.Time.DayFilter,
+								Task.Time.SpecificDay
+							);
+
+							Task NewTask = new Task(
+								false,
+								Task.Priority,
+								Task.Group,
+								Task.Description,
+								Task.Notes,
+								Task.Link,
+								Task.Location,
+								NewTime
+							);
+
+							AddedList.Add(NewTask);
+							UpdateList = true;
+						}
+						// else // It didn't pass/we don't have any more iterations
 					}
 				}
 			}
@@ -191,9 +249,17 @@ namespace Tasual
 				TaskArray.Remove(RemoveTask);
 			}
 
-			ArrayHandler.Save(ref TaskArray, Settings);
-			Tasual_ListView.BuildList();
-			Tasual_StatusLabel_UpdateCounts();
+			foreach (Task AddTask in AddedList)
+			{
+				TaskArray.Add(AddTask);
+			}
+
+			if (UpdateList)
+			{
+				ArrayHandler.Save(ref TaskArray, Settings);
+				Tasual_ListView.BuildList();
+				Tasual_StatusLabel_UpdateCounts();
+			}
 		}
 
 
@@ -450,11 +516,12 @@ namespace Tasual
 			Task Task = new Task(
 				false,
 				0,
-				0,
 				GroupName,
 				"New task",
-				new TimeInfo(),
-				new Timer()
+				"",
+				"",
+				"",
+				new TimeInfo()
 			);
 
 			TaskArray.Add(Task);

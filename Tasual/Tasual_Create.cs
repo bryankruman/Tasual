@@ -1082,7 +1082,7 @@ namespace Tasual
 				}
 			}
 
-			DateTime Next = TimeInfo.FindNextIteration(ref TimeInfo);
+			DateTime Next = TimeInfo.FindNextIteration(TimeInfo);
 
 			//int Count = TimeInfo.FindIterationCount(ref TimeInfo);
 

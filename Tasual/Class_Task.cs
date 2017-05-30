@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Windows.Forms;
 using Newtonsoft.Json;
 
 namespace Tasual
@@ -30,9 +29,6 @@ namespace Tasual
 
 		[JsonProperty("time")]
 		public TimeInfo Time { get; set; }
-
-		[JsonProperty("timer")]
-		public Timer Timer { get; set; }
 
 		public enum Arguments
 		{
@@ -82,19 +78,22 @@ namespace Tasual
 		public Task(
 			bool Checked,
 			int Priority,
-			int Status,
 			string Group,
 			string Description,
-			TimeInfo Time,
-			Timer Timer)
+			string Notes,
+			string Link,
+			string Location,
+			TimeInfo Time)
 		{
 
 			this.Checked = Checked;
 			this.Priority = Priority;
 			this.Group = Group;
 			this.Description = Description;
+			this.Notes = Notes;
+			this.Link = Link;
+			this.Location = Location;
 			this.Time = Time;
-			this.Timer = Timer;
 		}
 
 		// Supporting Functions

@@ -289,6 +289,7 @@ namespace Tasual
 
 		// full constructor
 		public TimeInfo(
+			string _Summary,
 			DateTime _CheckedTime,
 			DateTime _Created,
 			DateTime _Modified,
@@ -309,7 +310,7 @@ namespace Tasual
 			DayFlag _DayFilter,
 			int _SpecificDay)
 		{
-			Summary = null;
+			Summary = _Summary;
 			CheckedTime = _CheckedTime;
 			Created = _Created;
 			Modified = _Modified;
@@ -771,17 +772,17 @@ namespace Tasual
 			return RoundedUp;
 		}
 
-		public static int FindIterationCount(ref TimeInfo Rules)
+		public static int FindIterationCount(TimeInfo Rules)
 		{
-			return FindIterationCount(Rules.Start, DateTime.Now, ref Rules);
+			return FindIterationCount(Rules.Start, DateTime.Now, Rules);
 		}
 
-		public static int FindIterationCount(DateTime From, DateTime Until, ref TimeInfo Rules)
+		public static int FindIterationCount(DateTime From, DateTime Until, TimeInfo Rules)
 		{
 			int Count = 0;
 			while (From < Until)
 			{
-				DateTime Next = FindNextIteration(From, ref Rules);
+				DateTime Next = FindNextIteration(From, Rules);
 				if (Next != DateTime.MinValue)
 				{
 					++Count;
@@ -795,12 +796,12 @@ namespace Tasual
 			return Count;
 		}
 
-		public static DateTime FindNextIteration(ref TimeInfo Rules)
+		public static DateTime FindNextIteration(TimeInfo Rules)
 		{
-			return FindNextIteration(DateTime.Now, ref Rules);
+			return FindNextIteration(DateTime.Now, Rules);
 		}
 
-		public static DateTime FindNextIteration(DateTime BaseTime, ref TimeInfo Rules)
+		public static DateTime FindNextIteration(DateTime BaseTime, TimeInfo Rules)
 		{
 			DateTime NextTime = new DateTime();
 			NextTime = BaseTime;
