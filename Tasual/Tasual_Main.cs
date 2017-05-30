@@ -88,7 +88,7 @@ namespace Tasual
 
 		public void Tasual_Settings_Apply()
 		{
-			this.TopMost = Settings.AlwaysOnTop;
+			TopMost = Settings.AlwaysOnTop;
 			StartupManager.SetStartupStatus(Settings.LaunchOnStartup);
 		}
 
@@ -96,10 +96,10 @@ namespace Tasual
 		{
 			if (Settings.SaveWindowPos)
 			{
-				this.StartPosition = FormStartPosition.Manual;
-				this.Location = Settings.Location;
-				this.Size = Settings.Size;
-				this.WindowState = Settings.WindowState;
+				StartPosition = FormStartPosition.Manual;
+				Location = Settings.Location;
+				Size = Settings.Size;
+				WindowState = Settings.WindowState;
 			}
 		}
 
@@ -815,11 +815,11 @@ namespace Tasual
 		// Tasual_Notify: "Notify"
 		private void Tasual_MenuStrip_Notify_Show_Click(object sender, EventArgs e)
 		{
-			if (this.WindowState == FormWindowState.Minimized)
+			if (WindowState == FormWindowState.Minimized)
 			{
-				this.WindowState = FormWindowState.Normal;
+				WindowState = FormWindowState.Normal;
 			}
-			this.Activate();
+			Activate();
 		}
 
 		private void Tasual_MenuStrip_Notify_Settings_Click(object sender, EventArgs e)
@@ -883,16 +883,16 @@ namespace Tasual
 			{
 				if (WindowState == FormWindowState.Minimized)
 				{
-					this.ShowInTaskbar = false;
+					ShowInTaskbar = false;
 				}
 				else
 				{
-					this.ShowInTaskbar = true;
+					ShowInTaskbar = true;
 				}
 			}
 			else
 			{
-				this.ShowInTaskbar = true;
+				ShowInTaskbar = true;
 			}
 		}
 
@@ -901,11 +901,11 @@ namespace Tasual
 		{
 			if (e.Button == MouseButtons.Left)
 			{
-				if (this.WindowState == FormWindowState.Minimized)
+				if (WindowState == FormWindowState.Minimized)
 				{
-					this.WindowState = FormWindowState.Normal;
+					WindowState = FormWindowState.Normal;
 				}
-				this.Activate();
+				Activate();
 			}
 			else if (e.Button == MouseButtons.Right)
 			{
