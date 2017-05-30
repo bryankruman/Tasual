@@ -319,6 +319,277 @@ namespace Tasual
 			}
 		}
 
+		private void Tasual_ListView_ModelCanDrop_Category(object sender, ModelDropEventArgs Args)
+		{
+			Task Target = (Task)Args.TargetModel;
+			Args.Effect = DragDropEffects.None;
+
+			if (Target != null)
+			{
+				var SourceTasks = Args.SourceModels.Cast<Task>();
+				//bool AnySourceUndraggable = SourceTasks.Any(Source => (!TimeInfo.CanDragDropCategory(Source, Settings)));
+				//if (AnySourceUndraggable)
+				//{
+				//	Args.InfoMessage = "Cannot drag from undraggable category";
+				//}
+				//else if (!TimeInfo.CanDragDropCategory(Target, Settings))
+				//{
+				//	Args.InfoMessage = "Cannot drag to undraggable category";
+				//}
+
+				// both source and target are draggable, now lets check whether they're the same
+				if (SourceTasks.Any(Source => (TimeInfo.CompareGroupFromTasks(Source, Target, Settings))))
+				{
+					Args.InfoMessage = "Cannot drop to same category";
+				}
+				else
+				{
+					// looks good!
+					Args.Effect = DragDropEffects.Move;
+				}
+			}
+		}
+
+		private void Tasual_ListView_ModelCanDrop_DueTime(object sender, ModelDropEventArgs Args)
+		{
+			Task Target = (Task)Args.TargetModel;
+			Args.Effect = DragDropEffects.None;
+
+			if (Target != null)
+			{
+				var SourceTasks = Args.SourceModels.Cast<Task>();
+				if (Settings.GroupStyle == Setting.GroupStyles.DueTime)
+				{
+					if (SourceTasks.Any(Source => (TimeInfo.CompareDueIntFromTasks(Source, Target))))
+					{
+						Args.InfoMessage = "Cannot drag to the same time";
+					}
+					else
+					{
+						// looks good!
+						Args.Effect = DragDropEffects.Move;
+					}
+				}
+			}
+		}
+
+		private void Tasual_ListView_ModelCanDrop_ChooseHandler(object sender, ModelDropEventArgs Args)
+		{
+			if (Settings.GroupTasks)
+			{
+				if (Settings.GroupStyle == Setting.GroupStyles.Category)
+				{
+					Tasual_ListView_ModelCanDrop_Category(sender, Args);
+				}
+				else if (Settings.GroupStyle == Setting.GroupStyles.DueTime)
+				{
+					Tasual_ListView_ModelCanDrop_DueTime(sender, Args);
+				}
+			}
+		}
+
+		private void Tasual_ListView_ModelDropped_Category(object sender, ModelDropEventArgs Args)
+		{
+			Task Target = (Task)Args.TargetModel;
+			if (Target == null) { return; }
+
+			switch (TimeInfo.GetGroupTypeFromTask(Target, Settings))
+			{
+				// OVERDUE TARGET TASK
+				case TimeInfo.GroupTypes.Overdue:
+					{
+						foreach (Task Task in Args.SourceModels)
+						{
+							switch (TimeInfo.GetGroupTypeFromTask(Task, Settings))
+							{
+								case TimeInfo.GroupTypes.Standard:
+								case TimeInfo.GroupTypes.Today:
+									{
+										// Reschedule, DON'T change the group
+										TimeInfo NewTime = new TimeInfo();
+										NewTime.Created = Task.Time.Created;
+										NewTime.Modified = DateTime.Now;
+										DateTime NewDate = DateTime.Now;
+										NewDate = NewDate.AddSeconds(-1);
+										NewTime.Start = NewDate;
+										NewTime.Next = NewDate;
+										Task.Time = NewTime;
+										break;
+									}
+
+								case TimeInfo.GroupTypes.Completed:
+									{
+										// Reschedule, uncheck, DON'T change the group
+										Task.Checked = false;
+										TimeInfo NewTime = new TimeInfo();
+										NewTime.Created = Task.Time.Created;
+										NewTime.Modified = DateTime.Now;
+										DateTime NewDate = DateTime.Now;
+										NewDate = NewDate.AddSeconds(-1);
+										NewTime.Start = NewDate;
+										NewTime.Next = NewDate;
+										NewTime.CheckedTime = DateTime.MinValue;
+										Task.Time = NewTime;
+										break;
+									}
+							}
+						}
+						break;
+					}
+				
+				// TODAY TARGET TASK
+				case TimeInfo.GroupTypes.Today:
+					{
+						foreach (Task Task in Args.SourceModels)
+						{
+							switch (TimeInfo.GetGroupTypeFromTask(Task, Settings))
+							{
+								case TimeInfo.GroupTypes.Standard:
+								case TimeInfo.GroupTypes.Overdue:
+									{
+										// Reschedule, DON'T change the group
+										TimeInfo NewTime = new TimeInfo();
+										NewTime.Created = Task.Time.Created;
+										NewTime.Modified = DateTime.Now;
+										DateTime NewDate = DateTime.Now;
+										NewDate = NewDate - NewDate.TimeOfDay;
+										NewDate = NewDate + TimeSpan.FromSeconds(86399);
+										NewTime.Start = NewDate;
+										NewTime.Next = NewDate;
+										Task.Time = NewTime;
+										break;
+									}
+
+								case TimeInfo.GroupTypes.Completed:
+									{
+										// Reschedule, uncheck, DON'T change the group
+										Task.Checked = false;
+										TimeInfo NewTime = new TimeInfo();
+										NewTime.Created = Task.Time.Created;
+										NewTime.Modified = DateTime.Now;
+										DateTime NewDate = DateTime.Now;
+										NewDate = NewDate - NewDate.TimeOfDay;
+										NewDate = NewDate + TimeSpan.FromSeconds(86399);
+										NewTime.Start = NewDate;
+										NewTime.Next = NewDate;
+										NewTime.CheckedTime = DateTime.MinValue;
+										Task.Time = NewTime;
+										break;
+									}
+							}
+						}
+						break;
+					}
+
+				// STANDARD TARGET TASK
+				case TimeInfo.GroupTypes.Standard:
+					{
+						foreach (Task Task in Args.SourceModels)
+						{
+							switch (TimeInfo.GetGroupTypeFromTask(Task, Settings))
+							{
+								case TimeInfo.GroupTypes.Overdue:
+								case TimeInfo.GroupTypes.Today:
+									{
+										// Unschedule, and change group
+										Task.Group = Target.Group;
+										TimeInfo NewTime = new TimeInfo();
+										NewTime.Created = Task.Time.Created;
+										NewTime.Modified = DateTime.Now;
+										Task.Time = NewTime;
+										break;
+									}
+
+								case TimeInfo.GroupTypes.Standard:
+									{
+										// Leave scheduling, change group
+										Task.Group = Target.Group;
+										break;
+									}
+
+								case TimeInfo.GroupTypes.Completed:
+									{
+										// Unschedule if expired, uncheck, and change group
+										Task.Group = Target.Group;
+										Task.Checked = false;
+										Task.Time.CheckedTime = DateTime.MinValue;
+										TimeInfo NewTime = new TimeInfo();
+										NewTime.Created = Task.Time.Created;
+										NewTime.Modified = DateTime.Now;
+										Task.Time = NewTime;
+										break;
+									}
+							}
+						}
+						break;
+					}
+
+				// COMPLETED TARGET TASK
+				case TimeInfo.GroupTypes.Completed:
+					{
+						foreach (Task Task in Args.SourceModels)
+						{
+							switch (TimeInfo.GetGroupTypeFromTask(Task, Settings))
+							{
+								case TimeInfo.GroupTypes.Overdue:
+								case TimeInfo.GroupTypes.Today:
+								case TimeInfo.GroupTypes.Standard:
+									{
+										// Don't disable the time, just set it to be completed
+										Task.Checked = true;
+										Task.Time.CheckedTime = DateTime.Now;
+										break;
+									}
+								
+								// We don't need to do anything if source was already checked
+							}
+						}
+						break;
+					}
+			}
+			
+			ArrayHandler.Save(ref TaskArray, Settings);
+			Tasual_ListView.BuildList();
+		}
+
+		private void Tasual_ListView_ModelDropped_DueTime(object sender, ModelDropEventArgs Args)
+		{
+			Task Target = (Task)Args.TargetModel;
+			Args.Effect = DragDropEffects.None;
+
+			if (Target != null)
+			{
+				var SourceTasks = Args.SourceModels.Cast<Task>();
+				if (Settings.GroupStyle == Setting.GroupStyles.DueTime)
+				{
+					if (SourceTasks.Any(Source => (TimeInfo.CompareDueIntFromTasks(Source, Target))))
+					{
+						Args.InfoMessage = "Cannot drag to the same time";
+					}
+					else
+					{
+						// looks good!
+						Args.Effect = DragDropEffects.Move;
+					}
+				}
+			}
+		}
+
+		private void Tasual_ListView_ModelDropped_ChooseHandler(object sender, ModelDropEventArgs Args)
+		{
+			if (Settings.GroupTasks)
+			{
+				if (Settings.GroupStyle == Setting.GroupStyles.Category)
+				{
+					Tasual_ListView_ModelDropped_Category(sender, Args);
+				}
+				else if (Settings.GroupStyle == Setting.GroupStyles.DueTime)
+				{
+					Tasual_ListView_ModelDropped_DueTime(sender, Args);
+				}
+			}
+		}
+
 		private void Tasual_ListView_Setup()
 		{
 			Tasual_ListView.ShowItemCountOnGroups = false;
@@ -346,6 +617,13 @@ namespace Tasual
 
 			Tasual_ListView.IsSimpleDragSource = true;
 			Tasual_ListView.IsSimpleDropSink = true;
+			SimpleDropSink Sink = (SimpleDropSink)Tasual_ListView.DropSink;
+			Sink.CanDropOnItem = false;
+			Sink.CanDropBetween = true;
+			Sink.FeedbackColor = Color.FromArgb(255, 222, 232, 246);
+			//Tasual_ListView.
+			Tasual_ListView.ModelCanDrop += new EventHandler<ModelDropEventArgs>(Tasual_ListView_ModelCanDrop_ChooseHandler);
+			Tasual_ListView.ModelDropped += new EventHandler<ModelDropEventArgs>(Tasual_ListView_ModelDropped_ChooseHandler);
 
 			Tasual_ListView.BooleanCheckStateGetter = delegate (object RowObject)
 			{

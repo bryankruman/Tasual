@@ -461,6 +461,62 @@ namespace Tasual
 			}
 		}
 
+		public enum GroupTypes
+		{
+			Overdue = 1,
+			Today = 2,
+			Standard = 3,
+			Completed = 4
+		}
+
+		public static GroupTypes GetGroupTypeFromTask(Task Task, Setting Settings)
+		{
+			if (Task.Checked && Settings.AlwaysShowCompletedGroup)
+			{
+				return GroupTypes.Completed; // completed
+			}
+			else if (Scheduled(Task.Time))
+			{
+				if ((DateTime.Now > Task.Time.Next) && Settings.AlwaysShowOverdueGroup)
+				{
+					return GroupTypes.Overdue; // overdue
+				}
+				else if (Settings.AlwaysShowTodayGroup)
+				{
+					DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
+					DateTime TargetDay = Task.Time.Next - Task.Time.Next.TimeOfDay;
+					if (TargetDay == Today)
+					{
+						return GroupTypes.Today; // today
+					}
+					else
+					{
+						return GroupTypes.Standard; 
+					}
+				}
+				else
+				{
+					return GroupTypes.Standard;
+				}
+			}
+			else
+			{
+				return GroupTypes.Standard;
+			}
+		}
+
+		public static bool CompareGroupFromTasks(Task Source, Task Target, Setting Settings)
+		{
+			if (GetGroupStringFromTask(Source, Settings) == GetGroupStringFromTask(Target, Settings))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
 		public static string GetGroupStringFromTask(Task Task, Setting Settings)
 		{
 			if (Task.Checked && Settings.AlwaysShowCompletedGroup)
@@ -572,6 +628,18 @@ namespace Tasual
 				case 15: return "Future";
 				case 16: return "Completed";
 				default: return "Broken!";
+			}
+		}
+
+		public static bool CompareDueIntFromTasks(Task Source, Task Target)
+		{
+			if (GetDueIntFromTask(Source) == GetDueIntFromTask(Target))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
 			}
 		}
 
