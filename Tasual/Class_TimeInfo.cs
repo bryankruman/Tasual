@@ -469,6 +469,79 @@ namespace Tasual
 			Completed = 4
 		}
 
+		public enum DueTypes
+		{
+			Overdue = 1,
+			Today = 2,
+			Tomorrow = 3,
+			Weekday = 4,
+			OneWeek = 5, 
+			TwoWeeks = 6,
+			ThreeWeeks = 7, 
+			OneMonth = 8,
+			Future = 9, 
+			Completed = 10
+		}
+
+		public static DueTypes GetDueTypeFromTask(Task Task)
+		{
+			DateTime Time = Task.Time.Next;
+			if (Task.Checked)
+			{
+				return DueTypes.Completed;
+			}
+
+			if (Scheduled(Task.Time))
+			{
+				if (DateTime.Now > Time)
+				{
+					return DueTypes.Overdue;
+				}
+				else
+				{
+					DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
+					DateTime TargetDay = Time - Time.TimeOfDay;
+					TimeSpan Span = TargetDay - Today;
+					if (TargetDay == Today)
+					{
+						return DueTypes.Today;
+					}
+					else if (Span.Days <= 1)
+					{
+						return DueTypes.Tomorrow;
+					}
+					else if (Span.Days <= 7)
+					{
+						return DueTypes.Weekday;
+					}
+					else if (Span.Days <= 14)
+					{
+						return DueTypes.OneWeek;
+					}
+					else if (Span.Days <= 21)
+					{
+						return DueTypes.TwoWeeks;
+					}
+					else if (Span.Days <= 30)
+					{
+						return DueTypes.ThreeWeeks;
+					}
+					else if (TargetDay.Month == Today.AddMonths(1).Month)
+					{
+						return DueTypes.OneMonth;
+					}
+					else
+					{
+						return DueTypes.Future;
+					}
+				}
+			}
+			else
+			{
+				return DueTypes.Future;
+			}
+		}
+
 		public static GroupTypes GetGroupTypeFromTask(Task Task, Setting Settings)
 		{
 			if (Task.Checked && Settings.AlwaysShowCompletedGroup)

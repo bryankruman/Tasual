@@ -342,29 +342,17 @@ namespace Tasual
 			Task Target = (Task)Args.TargetModel;
 			Args.Effect = DragDropEffects.None;
 
-			if (Target != null)
-			{
-				var SourceTasks = Args.SourceModels.Cast<Task>();
-				//bool AnySourceUndraggable = SourceTasks.Any(Source => (!TimeInfo.CanDragDropCategory(Source, Settings)));
-				//if (AnySourceUndraggable)
-				//{
-				//	Args.InfoMessage = "Cannot drag from undraggable category";
-				//}
-				//else if (!TimeInfo.CanDragDropCategory(Target, Settings))
-				//{
-				//	Args.InfoMessage = "Cannot drag to undraggable category";
-				//}
+			if (Target == null) { return; }
 
-				// both source and target are draggable, now lets check whether they're the same
-				if (SourceTasks.Any(Source => (TimeInfo.CompareGroupFromTasks(Source, Target, Settings))))
-				{
-					Args.InfoMessage = "Cannot drop to same category";
-				}
-				else
-				{
-					// looks good!
-					Args.Effect = DragDropEffects.Move;
-				}
+			var SourceTasks = Args.SourceModels.Cast<Task>();
+			if (SourceTasks.Any(Source => (TimeInfo.CompareGroupFromTasks(Source, Target, Settings))))
+			{
+				Args.InfoMessage = "Cannot drop to same category";
+			}
+			else
+			{
+				// looks good!
+				Args.Effect = DragDropEffects.Move;
 			}
 		}
 
@@ -373,21 +361,17 @@ namespace Tasual
 			Task Target = (Task)Args.TargetModel;
 			Args.Effect = DragDropEffects.None;
 
-			if (Target != null)
+			if (Target == null) { return; }
+
+			var SourceTasks = Args.SourceModels.Cast<Task>();
+			if (SourceTasks.Any(Source => (TimeInfo.CompareDueStringFromTasks(Source, Target))))
 			{
-				var SourceTasks = Args.SourceModels.Cast<Task>();
-				if (Settings.GroupStyle == Setting.GroupStyles.DueTime)
-				{
-					if (SourceTasks.Any(Source => (TimeInfo.CompareDueStringFromTasks(Source, Target))))
-					{
-						Args.InfoMessage = "Cannot drag to the same time";
-					}
-					else
-					{
-						// looks good!
-						Args.Effect = DragDropEffects.Move;
-					}
-				}
+				Args.InfoMessage = "Cannot drag to the same time";
+			}
+			else
+			{
+				// looks good!
+				Args.Effect = DragDropEffects.Move;
 			}
 		}
 
@@ -427,8 +411,7 @@ namespace Tasual
 										TimeInfo NewTime = new TimeInfo();
 										NewTime.Created = Task.Time.Created;
 										NewTime.Modified = DateTime.Now;
-										DateTime NewDate = DateTime.Now;
-										NewDate = NewDate.AddSeconds(-1);
+										DateTime NewDate = DateTime.Now.AddSeconds(-1);
 										NewTime.Start = NewDate;
 										NewTime.Next = NewDate;
 										Task.Time = NewTime;
@@ -442,8 +425,7 @@ namespace Tasual
 										TimeInfo NewTime = new TimeInfo();
 										NewTime.Created = Task.Time.Created;
 										NewTime.Modified = DateTime.Now;
-										DateTime NewDate = DateTime.Now;
-										NewDate = NewDate.AddSeconds(-1);
+										DateTime NewDate = DateTime.Now.AddSeconds(-1);
 										NewTime.Start = NewDate;
 										NewTime.Next = NewDate;
 										NewTime.CheckedTime = DateTime.MinValue;
@@ -567,31 +549,188 @@ namespace Tasual
 			}
 			
 			ArrayHandler.Save(ref TaskArray, Settings);
-			Tasual_UpdateGroupKeys();
+			Tasual_UpdateGroupKeys(); // TODO: Only cycle through the objects that got updated
 			Tasual_ListView.BuildList();
 		}
 
 		private void Tasual_ListView_ModelDropped_DueTime(object sender, ModelDropEventArgs Args)
 		{
 			Task Target = (Task)Args.TargetModel;
-			Args.Effect = DragDropEffects.None;
+			if (Target == null) { return; }
 
-			if (Target != null)
+			var SourceTasks = Args.SourceModels.Cast<Task>();
+			switch (TimeInfo.GetDueTypeFromTask(Target))
 			{
-				var SourceTasks = Args.SourceModels.Cast<Task>();
-				if (Settings.GroupStyle == Setting.GroupStyles.DueTime)
-				{
-					if (SourceTasks.Any(Source => (TimeInfo.CompareDueStringFromTasks(Source, Target))))
+				case TimeInfo.DueTypes.Overdue:
 					{
-						Args.InfoMessage = "Cannot drag to the same time";
+						foreach (Task Task in Args.SourceModels)
+						{
+							Task.Checked = false;
+							TimeInfo NewTime = new TimeInfo();
+							NewTime.Created = Task.Time.Created;
+							NewTime.Modified = DateTime.Now;
+							DateTime NewDate = DateTime.Now.AddSeconds(-1);
+							NewTime.Start = NewDate;
+							NewTime.Next = NewDate;
+							NewTime.CheckedTime = DateTime.MinValue;
+							Task.Time = NewTime;
+						}
+						break;
 					}
-					else
+				case TimeInfo.DueTypes.Today:
 					{
-						// looks good!
-						Args.Effect = DragDropEffects.Move;
+						foreach (Task Task in Args.SourceModels)
+						{
+							Task.Checked = false;
+							TimeInfo NewTime = new TimeInfo();
+							NewTime.Created = Task.Time.Created;
+							NewTime.Modified = DateTime.Now;
+							DateTime NewDate = DateTime.Now;
+							NewDate = NewDate - NewDate.TimeOfDay;
+							NewDate = NewDate + TimeSpan.FromSeconds(86399);
+							NewTime.Start = NewDate;
+							NewTime.Next = NewDate;
+							NewTime.CheckedTime = DateTime.MinValue;
+							Task.Time = NewTime;
+						}
+						break;
 					}
-				}
+				case TimeInfo.DueTypes.Tomorrow:
+					{
+						foreach (Task Task in Args.SourceModels)
+						{
+							Task.Checked = false;
+							TimeInfo NewTime = new TimeInfo();
+							NewTime.Created = Task.Time.Created;
+							NewTime.Modified = DateTime.Now;
+							DateTime NewDate = DateTime.Now.AddDays(1);
+							NewDate = NewDate - NewDate.TimeOfDay;
+							NewDate = NewDate + TimeSpan.FromSeconds(86399);
+							NewTime.Start = NewDate;
+							NewTime.Next = NewDate;
+							NewTime.CheckedTime = DateTime.MinValue;
+							Task.Time = NewTime;
+						}
+						break;
+					}
+				case TimeInfo.DueTypes.Weekday:
+					{
+						foreach (Task Task in Args.SourceModels)
+						{
+							Task.Checked = false;
+							TimeInfo NewTime = new TimeInfo();
+							NewTime.Created = Task.Time.Created;
+							NewTime.Modified = DateTime.Now;
+							DateTime NewDate = Target.Time.Next;
+							NewDate = NewDate - NewDate.TimeOfDay;
+							NewDate = NewDate + TimeSpan.FromSeconds(86399);
+							NewTime.Start = NewDate;
+							NewTime.Next = NewDate;
+							NewTime.CheckedTime = DateTime.MinValue;
+							Task.Time = NewTime;
+						}
+						break;
+					}
+				case TimeInfo.DueTypes.OneWeek:
+					{
+						foreach (Task Task in Args.SourceModels)
+						{
+							Task.Checked = false;
+							TimeInfo NewTime = new TimeInfo();
+							NewTime.Created = Task.Time.Created;
+							NewTime.Modified = DateTime.Now;
+							DateTime NewDate = DateTime.Now.AddDays(8);
+							NewDate = NewDate - NewDate.TimeOfDay;
+							NewDate = NewDate + TimeSpan.FromSeconds(86399);
+							NewTime.Start = NewDate;
+							NewTime.Next = NewDate;
+							NewTime.CheckedTime = DateTime.MinValue;
+							Task.Time = NewTime;
+						}
+						break;
+					}
+				case TimeInfo.DueTypes.TwoWeeks:
+					{
+						foreach (Task Task in Args.SourceModels)
+						{
+							Task.Checked = false;
+							TimeInfo NewTime = new TimeInfo();
+							NewTime.Created = Task.Time.Created;
+							NewTime.Modified = DateTime.Now;
+							DateTime NewDate = DateTime.Now.AddDays(15);
+							NewDate = NewDate - NewDate.TimeOfDay;
+							NewDate = NewDate + TimeSpan.FromSeconds(86399);
+							NewTime.Start = NewDate;
+							NewTime.Next = NewDate;
+							NewTime.CheckedTime = DateTime.MinValue;
+							Task.Time = NewTime;
+						}
+						break;
+					}
+				case TimeInfo.DueTypes.ThreeWeeks:
+					{
+						foreach (Task Task in Args.SourceModels)
+						{
+							Task.Checked = false;
+							TimeInfo NewTime = new TimeInfo();
+							NewTime.Created = Task.Time.Created;
+							NewTime.Modified = DateTime.Now;
+							DateTime NewDate = DateTime.Now.AddDays(22);
+							NewDate = NewDate - NewDate.TimeOfDay;
+							NewDate = NewDate + TimeSpan.FromSeconds(86399);
+							NewTime.Start = NewDate;
+							NewTime.Next = NewDate;
+							NewTime.CheckedTime = DateTime.MinValue;
+							Task.Time = NewTime;
+						}
+						break;
+					}
+				case TimeInfo.DueTypes.OneMonth:
+					{
+						foreach (Task Task in Args.SourceModels)
+						{
+							Task.Checked = false;
+							TimeInfo NewTime = new TimeInfo();
+							NewTime.Created = Task.Time.Created;
+							NewTime.Modified = DateTime.Now;
+							DateTime NewDate = DateTime.Now.AddMonths(1);
+							NewDate = NewDate.AddDays(1 - NewDate.Day);
+							NewDate = NewDate - NewDate.TimeOfDay;
+							NewDate = NewDate + TimeSpan.FromSeconds(86399);
+							NewTime.Start = NewDate;
+							NewTime.Next = NewDate;
+							NewTime.CheckedTime = DateTime.MinValue;
+							Task.Time = NewTime;
+						}
+						break;
+					}
+				case TimeInfo.DueTypes.Future:
+					{
+						foreach (Task Task in Args.SourceModels)
+						{
+							Task.Checked = false;
+							TimeInfo NewTime = new TimeInfo();
+							NewTime.Created = Task.Time.Created;
+							NewTime.Modified = DateTime.Now;
+							NewTime.CheckedTime = DateTime.MinValue;
+							Task.Time = NewTime;
+						}
+						break;
+					}
+				case TimeInfo.DueTypes.Completed:
+					{
+						foreach (Task Task in Args.SourceModels)
+						{
+							Task.Checked = true;
+							Task.Time.CheckedTime = DateTime.Now;
+						}
+						break;
+					}
 			}
+
+			ArrayHandler.Save(ref TaskArray, Settings);
+			Tasual_UpdateGroupKeys(); // TODO: Only cycle through the objects that got updated
+			Tasual_ListView.BuildList();
 		}
 
 		private void Tasual_ListView_ModelDropped_ChooseHandler(object sender, ModelDropEventArgs Args)
