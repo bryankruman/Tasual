@@ -696,24 +696,28 @@ namespace Tasual
 
 		private void Tasual_Create_DateTimePicker_StartDate_ValueChanged(object sender, EventArgs e)
 		{
-			if (Tasual_Create_DateTimePicker_StartDate.Value < Tasual_Create_DateTimePicker_StartTime.Value)
+			// This didn't quite work as desired, instead lets just check when clicking the create 
+			// button whether or not the dates are acceptable.
+			/*if (Tasual_Create_DateTimePicker_StartDate.Value < Tasual_Create_DateTimePicker_StartTime.Value)
 			{
 				Console.WriteLine("date before time!");
-			}
+			}*/
 			Tasual_Create_SetSpecificDay();
 			Tasual_Create_UpdateSummaryLabel();
 		}
 
 		private void Tasual_Create_DateTimePicker_StartTime_ValueChanged(object sender, EventArgs e)
 		{
-			DateTime Readjust = Tasual_Create_DateTimePicker_StartDate.Value;
+			// This didn't quite work as desired, instead lets just check when clicking the create 
+			// button whether or not the dates are acceptable.
+			/*DateTime Readjust = Tasual_Create_DateTimePicker_StartDate.Value;
 			Readjust = Readjust - Readjust.TimeOfDay;
 			Readjust = Readjust + Tasual_Create_DateTimePicker_StartTime.Value.TimeOfDay;
 			if (Readjust < Tasual_Create_DateTimePicker_StartDate.MinDate)
 			{
 				Readjust = Readjust.AddDays(1);
 			}
-			Tasual_Create_DateTimePicker_StartDate.Value = Readjust;
+			Tasual_Create_DateTimePicker_StartDate.Value = Readjust;*/
 			Tasual_Create_UpdateSummaryLabel();
 		}
 
@@ -796,7 +800,7 @@ namespace Tasual
 
 		private void Tasual_Create_RadioButton_Ends_Never_CheckedChanged(object sender, EventArgs e)
 		{
-
+			Tasual_Create_UpdateSummaryLabel();
 		}
 
 		private void Tasual_Create_RadioButton_Ends_Occurences_CheckedChanged(object sender, EventArgs e)
@@ -951,22 +955,14 @@ namespace Tasual
 			NotesForm.ShowDialog(this);
 		}
 
-		// TODO: Filter unwanted characters from text input on Tasual_ListView and all other textboxes
-		// TODO: Force DateTimePicker_EndDate.MinValue to be later than StartDate
-		// TODO: Force DateTimePicker_StartDate.MinValue to be later than DateTime.Now
-		// See: http://stackoverflow.com/questions/12607087/only-allow-specific-characters-in-textbox
-		// Regex AllowedCharacters = new Regex("^[\\w\\s]+$"); // todo: Make this not suck as much
-
 		private void Tasual_Create_Button_Create_Click(object sender, EventArgs e)
 		{
 			Task Task = new Task();
 
-			if ((!string.IsNullOrWhiteSpace(Tasual_Create_TextBox_Description.Text)) && (Tasual_Create_TextBox_Description.Text != "Description"))
-			{
-				Task.Description = Tasual_Create_TextBox_Description.Text;
-			}
-			else
-			{
+			Task.Description = Tasual_Create_TextBox_Description.Text;
+
+			if (string.IsNullOrWhiteSpace(Task.Description) || (Task.Description == "Description"))
+			{ 
 				Console.WriteLine("Tasual_Create_Button_Create_Click(): Description cannot be blank!");
 				return;
 			}
@@ -985,23 +981,31 @@ namespace Tasual
 			}
 
 			TimeInfo TimeInfo = new TimeInfo();
-			TimeInfo.Created = DateTime.Now;
+			TimeInfo.Created = DateTime.Now; // TODO: Should we check EditMode here and use the old date?
 			TimeInfo.Modified = DateTime.Now;
+
 			if (Tasual_Create_CheckBox_Scheduled.Checked)
 			{
 				TimeInfo.Start = Tasual_Create_DateTimePicker_StartDate.Value;
+				TimeInfo.Start = TimeInfo.Start - TimeInfo.Start.TimeOfDay;
 
 				if (Tasual_Create_RadioButton_Time_AllDay.Checked)
 				{
-					TimeInfo.Start = TimeInfo.Start - TimeInfo.Start.TimeOfDay;
-					TimeInfo.Start = TimeInfo.Start + TimeSpan.FromSeconds(86399);
 					TimeInfo.TimeOfDay = TimeSpan.FromSeconds(86399);
 				}
 				else
 				{
-					TimeInfo.Start = TimeInfo.Start - TimeInfo.Start.TimeOfDay;
-					TimeInfo.Start = TimeInfo.Start + Tasual_Create_DateTimePicker_StartTime.Value.TimeOfDay;
 					TimeInfo.TimeOfDay = Tasual_Create_DateTimePicker_StartTime.Value.TimeOfDay;
+				}
+
+				TimeInfo.Start = TimeInfo.Start + TimeInfo.TimeOfDay;
+
+				if (DateTime.Now >= TimeInfo.Start)
+				{
+					// Picked time is before current time
+					// Show warning message and cancel edit/creation
+					Console.WriteLine("Tasual_Create_Button_Create_Click(): Start time cannot be before current time!");
+					return;
 				}
 
 				TimeInfo.Dismiss = (TimeInfo.DismissType)Tasual_Create_ComboBox_Dismiss.SelectedIndex;
@@ -1010,28 +1014,13 @@ namespace Tasual
 				{
 					if (Tasual_Create_RadioButton_Type_RepeatSimple.Checked == true)
 					{
+						int RepeatValue = (int)Tasual_Create_NumericUpDown_Type_RepeatSimple.Value;
 						switch (Tasual_Create_ComboBox_RepeatSimple.SelectedIndex)
 						{
-							case 0: // days
-								{
-									TimeInfo.Daily = (int)Tasual_Create_NumericUpDown_Type_RepeatSimple.Value;
-									break;
-								}
-							case 1: // weeks
-								{
-									TimeInfo.Weekly = (int)Tasual_Create_NumericUpDown_Type_RepeatSimple.Value;
-									break;
-								}
-							case 2: // months
-								{
-									TimeInfo.Monthly = (int)Tasual_Create_NumericUpDown_Type_RepeatSimple.Value;
-									break;
-								}
-							case 3: // years
-								{
-									TimeInfo.Yearly = (int)Tasual_Create_NumericUpDown_Type_RepeatSimple.Value;
-									break;
-								}
+							case 0: { TimeInfo.Daily = RepeatValue; break; }
+							case 1: { TimeInfo.Weekly = RepeatValue; break; }
+							case 2: { TimeInfo.Monthly = RepeatValue; break; }
+							case 3: { TimeInfo.Yearly = RepeatValue; break; }
 						}
 					}
 					else if (Tasual_Create_RadioButton_Type_RepeatCustom.Checked == true)
@@ -1079,13 +1068,18 @@ namespace Tasual
 				else if (Tasual_Create_RadioButton_Ends_OnDate.Checked == true)
 				{
 					TimeInfo.End = Tasual_Create_DateTimePicker_EndDate.Value;
+					if (DateTime.Now >= TimeInfo.End)
+					{
+						// Picked time is before current time
+						// Show warning message and cancel edit/creation
+						Console.WriteLine("Tasual_Create_Button_Create_Click(): End time cannot be before current time!");
+						return;
+					}
 				}
 			}
 
 			DateTime Next = TimeInfo.FindNextIteration(TimeInfo);
-
 			//int Count = TimeInfo.FindIterationCount(ref TimeInfo);
-
 			if (Next != DateTime.MinValue)
 			{
 				TimeInfo.Next = Next;
