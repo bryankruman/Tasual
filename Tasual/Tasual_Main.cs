@@ -82,6 +82,7 @@ namespace Tasual
 			TaskArray.Clear();
 			ArrayHandler.Save(ref TaskArray, Settings);
 			ArrayHandler.Load(ref TaskArray, Settings);
+			Tasual_UpdateGroupKeys();
 			Tasual_ListView.SetObjects(TaskArray);
 			Tasual_ListView.BuildList();
 		}
@@ -130,6 +131,12 @@ namespace Tasual
 				Task.CategoryGroupKey = TimeInfo.GetGroupStringFromTask(Task, Settings);
 				Task.DueGroupKey = TimeInfo.GetDueStringFromTask(Task);
 			}
+		}
+
+		public void Tasual_UpdateGroupKeys(Task Task)
+		{
+			Task.CategoryGroupKey = TimeInfo.GetGroupStringFromTask(Task, Settings);
+			Task.DueGroupKey = TimeInfo.GetDueStringFromTask(Task);
 		}
 
 		public void Tasual_CheckNeedsUpdate()
@@ -266,6 +273,7 @@ namespace Tasual
 			if (UpdateList)
 			{
 				ArrayHandler.Save(ref TaskArray, Settings);
+				Tasual_UpdateGroupKeys();
 				Tasual_ListView.BuildList();
 				Tasual_StatusLabel_UpdateCounts();
 			}
@@ -304,6 +312,7 @@ namespace Tasual
 
 			TaskArray.Add(Task);
 			ArrayHandler.Save(ref TaskArray, Settings);
+			Tasual_UpdateGroupKeys(Task);
 			Tasual_ListView.BuildList();
 			Tasual_StatusLabel_UpdateCounts();
 			Tasual_ListView.PossibleFinishCellEditing();
@@ -558,6 +567,7 @@ namespace Tasual
 			}
 			
 			ArrayHandler.Save(ref TaskArray, Settings);
+			Tasual_UpdateGroupKeys();
 			Tasual_ListView.BuildList();
 		}
 
@@ -665,6 +675,7 @@ namespace Tasual
 				}
 
 				ArrayHandler.Save(ref TaskArray, Settings);
+				Tasual_UpdateGroupKeys(Task);
 				Tasual_ListView.BuildList();
 				Tasual_StatusLabel_UpdateCounts();
 				return NewValue;
@@ -736,7 +747,6 @@ namespace Tasual
 			IconColumn.DisplayIndex = 2;
 			IconColumn.LastDisplayIndex = 2;
 			IconColumn.TextAlign = HorizontalAlignment.Right;
-			//IconColumn.HeaderTextAlign = HorizontalAlignment.Center;
 			IconColumn.ShowTextInHeader = false;
 			Tasual_ListView.AllColumns.Add(IconColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { IconColumn });
@@ -748,14 +758,9 @@ namespace Tasual
 			CategoryColumn.Sortable = true;
 			CategoryColumn.DisplayIndex = 3;
 			CategoryColumn.LastDisplayIndex = 3;
-			//CategoryColumn.GroupKeyGetter = delegate (object Input)
-			//{
-			//	Task Task = (Task)Input;
-			//	return TimeInfo.GetGroupStringFromTask(Task, Settings);
-			//};
 			CategoryColumn.GroupKeyToTitleConverter = delegate (object Input)
 			{
-				return ((string)Input).Remove(0, Math.Min(1, ((string)Input).Length));
+				return (Input as string).Remove(0, Math.Min(1, (Input as string).Length));
 			};
 			CategoryColumn.TextAlign = Settings.SubItemTextAlign;
 			CategoryColumn.HeaderTextAlign = Settings.SubItemHeaderAlign;
@@ -773,18 +778,11 @@ namespace Tasual
 			DueColumn.HeaderTextAlign = Settings.SubItemHeaderAlign;
 			DueColumn.AspectToStringConverter = delegate (object Input)
 			{
-				//Task Task = (Task)Input;
-				//return TimeInfo.GetDueStringFromTask(Task).Remove(0, 2);
-				return ((string)Input).Remove(0, Math.Min(2, ((string)Input).Length));
+				return (Input as string).Remove(0, Math.Min(2, (Input as string).Length));
 			};
-			//DueColumn.GroupKeyGetter = delegate (object Input)
-			//{
-			//	Task Task = (Task)Input;
-			//	return TimeInfo.GetDueStringFromTask(Task);
-			//};
 			DueColumn.GroupKeyToTitleConverter = delegate (object Input)
 			{
-				return ((string)Input).Remove(0, Math.Min(2, ((string)Input).Length));
+				return (Input as string).Remove(0, Math.Min(2, (Input as string).Length));
 			};
 			Tasual_ListView.AllColumns.Add(DueColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { DueColumn });
@@ -906,6 +904,7 @@ namespace Tasual
 			ToolStripDropDownItem Item = (ToolStripDropDownItem)sender;
 			OLVGroup Group = (OLVGroup)Tasual_MenuStrip_Group.Tag;
 			ArrayHandler.ReAssignGroup(TaskArray, Group.Name, Item.Text);
+			Tasual_UpdateGroupKeys();
 			Tasual_ListView.BuildList();
 		}
 
@@ -997,6 +996,7 @@ namespace Tasual
 			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
 			Task.Link = "";
 			ArrayHandler.Save(ref TaskArray, Settings);
+			//Tasual_UpdateGroupKeys(Task);
 			Tasual_ListView.BuildList();
 		}
 
@@ -1024,6 +1024,7 @@ namespace Tasual
 			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
 			Task.Location = "";
 			ArrayHandler.Save(ref TaskArray, Settings);
+			//Tasual_UpdateGroupKeys();
 			Tasual_ListView.BuildList();
 		}
 
@@ -1045,6 +1046,7 @@ namespace Tasual
 			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
 			Task.Notes = "";
 			ArrayHandler.Save(ref TaskArray, Settings);
+			// Tasual_UpdateGroupKeys();
 			Tasual_ListView.BuildList();
 		}
 
@@ -1154,6 +1156,7 @@ namespace Tasual
 			);
 
 			TaskArray.Add(NewTask);
+			Tasual_UpdateGroupKeys(NewTask);
 			Tasual_ListView.BuildList();
 			Tasual_StatusLabel_UpdateCounts();
 		}
@@ -1177,6 +1180,7 @@ namespace Tasual
 			ToolStripDropDownItem Item = (ToolStripDropDownItem)sender;
 			Task Task = (Task)Tasual_MenuStrip_Item.Tag;
 			Task.Group = Item.Text;
+			Tasual_UpdateGroupKeys(Task);
 			Tasual_ListView.BuildList();
 		}
 

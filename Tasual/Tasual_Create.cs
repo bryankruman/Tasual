@@ -1106,6 +1106,7 @@ namespace Tasual
 
 			_Tasual_Main.TaskArray.Add(Task);
 			_Tasual_Main.Tasual_Array_Save();
+			_Tasual_Main.Tasual_UpdateGroupKeys(Task);
 			_Tasual_Main.Tasual_ListView.BuildList();
 			_Tasual_Main.Tasual_ListView.EnsureModelVisible(Task);
 			_Tasual_Main.Tasual_ListView.SelectObject(Task);

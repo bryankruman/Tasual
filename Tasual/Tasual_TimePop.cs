@@ -187,6 +187,7 @@ namespace Tasual
 			}
 
 			_Tasual_Main.Tasual_Array_Save();
+			_Tasual_Main.Tasual_UpdateGroupKeys(_Task);
 			_Tasual_Main.Tasual_ListView.BuildList();
 			_Tasual_Main.Tasual_ListView.EnsureModelVisible(_Task);
 			Close();
