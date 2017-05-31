@@ -366,7 +366,7 @@ namespace Tasual
 			var SourceTasks = Args.SourceModels.Cast<Task>();
 			if (SourceTasks.Any(Source => (TimeInfo.CompareDueStringFromTasks(Source, Target))))
 			{
-				Args.InfoMessage = "Cannot drag to the same time";
+				Args.InfoMessage = "Cannot drag to the same time or status";
 			}
 			else
 			{
