@@ -1034,6 +1034,11 @@ namespace Tasual
 
 		private void Tasual_MenuStrip_Group_Create_Quick_Click(object sender, EventArgs e)
 		{
+			OLVGroup Group = (OLVGroup)Tasual_MenuStrip_Group.Tag;
+			if (TaskArray.Any(Task => (Task.Group == Group.Name)))
+			{
+				Tasual_LastSelectedGroup = Group.Name;
+			}
 			Tasual_QuickCreate();
 		}
 
