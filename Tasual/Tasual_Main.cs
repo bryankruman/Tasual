@@ -303,7 +303,7 @@ namespace Tasual
 				false,
 				0,
 				GroupName,
-				"New task",
+				"",
 				"",
 				"",
 				"",
@@ -1475,6 +1475,14 @@ namespace Tasual
 
 		private void Tasual_ListView_CellEditFinished(object sender, CellEditEventArgs e)
 		{
+			Task Task = e.RowObject as Task;
+			if (Task == null) { return; }
+
+			if (string.IsNullOrEmpty(Task.Description))
+			{
+				TaskArray.Remove(Task);
+			}
+
 			ArrayHandler.Save(ref TaskArray, Settings);
 			//Tasual_ListView.UpdateObject(e.RowObject);
 			// TODO: We should be able to do this for just one object, not the whole list...
