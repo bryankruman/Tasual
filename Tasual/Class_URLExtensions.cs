@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Net;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace Tasual
 {
@@ -33,14 +36,40 @@ namespace Tasual
 			}
 		}
 
+		public static bool ValidateIPv4(string IPString)
+		{
+			if (IPString.Count(c => c == '.') != 3) { return false; }
+			IPAddress address;
+			return IPAddress.TryParse(IPString, out address);
+		}
+
 		public static void Follow(string Input)
 		{
 			if (UrlMatch.IsMatch(Input))
 			{
 				try
 				{
-					//Console.WriteLine("We tried this");
-					System.Diagnostics.Process.Start(Input);
+					// If it's not formatted as a URL already
+					if (!Input.Contains("http://"))
+					{
+						// Check to see if it's an IP address
+						if (ValidateIPv4(Input))
+						{
+							// Prefix http:// so it'll launch correctly
+							Process.Start(("http://" + Input));
+						}
+						else
+						{
+							// It wasn't an IP address, lets just launch it as normal
+							// (It could very well be a file or executable command or anything like that)
+							Process.Start(Input);
+						}
+					}
+					// Already formatted as an HTTP URL, just pass it through
+					else 
+					{
+						Process.Start(Input);
+					}
 				}
 				catch { }
 			}
