@@ -789,7 +789,6 @@ namespace Tasual
 			Sink.CanDropOnItem = false;
 			Sink.CanDropBetween = true;
 			Sink.FeedbackColor = Color.FromArgb(255, 222, 232, 246);
-			//Tasual_ListView.
 			Tasual_ListView.ModelCanDrop += new EventHandler<ModelDropEventArgs>(Tasual_ListView_ModelCanDrop_ChooseHandler);
 			Tasual_ListView.ModelDropped += new EventHandler<ModelDropEventArgs>(Tasual_ListView_ModelDropped_ChooseHandler);
 
@@ -1477,6 +1476,9 @@ namespace Tasual
 		private void Tasual_ListView_CellEditFinished(object sender, CellEditEventArgs e)
 		{
 			ArrayHandler.Save(ref TaskArray, Settings);
+			//Tasual_ListView.UpdateObject(e.RowObject);
+			// TODO: We should be able to do this for just one object, not the whole list...
+			Tasual_ListView.BuildList();
 			Tasual_MenuStrip_Edit.Enabled = false;
 		}
 
