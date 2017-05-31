@@ -119,12 +119,6 @@
     <Compile Include="Tasual_TimePop.Designer.cs">
       <DependentUpon>Tasual_TimePop.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tasual_Confirm_Clear.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Tasual_Confirm_Clear.Designer.cs">
-      <DependentUpon>Tasual_Confirm_Clear.cs</DependentUpon>
-    </Compile>
     <Compile Include="Tasual_Create.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -162,9 +156,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Tasual_TimePop.resx">
       <DependentUpon>Tasual_TimePop.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tasual_Confirm_Clear.resx">
-      <DependentUpon>Tasual_Confirm_Clear.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tasual_Create.resx">
       <DependentUpon>Tasual_Create.cs</DependentUpon>

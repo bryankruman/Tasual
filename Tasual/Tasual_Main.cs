@@ -87,6 +87,24 @@ namespace Tasual
 			Tasual_ListView.BuildList();
 		}
 
+		private bool ConfirmAction(bool Prompt, string Action)
+		{
+			if (!Prompt) { return true; }
+
+			DialogResult Result = MessageBox.Show(
+				string.Format("Are you sure you want to {0}?", Action),
+				"Tasual",
+				MessageBoxButtons.YesNo,
+				MessageBoxIcon.Warning);
+
+			if (Result == DialogResult.Yes)
+			{
+				return true;
+			}
+
+			return false;
+		}
+
 		public void Tasual_Settings_Apply()
 		{
 			TopMost = Settings.AlwaysOnTop;
@@ -1010,6 +1028,8 @@ namespace Tasual
 		// Tasual_ListView: "Group"
 		private void Tasual_MenuStrip_Group_Delete_Click(object sender, EventArgs e)
 		{
+			if (!ConfirmAction(Settings.PromptDelete, "delete this group")) { return; }
+
 			OLVGroup Group = (OLVGroup)Tasual_MenuStrip_Group.Tag;
 			List<Task> RemovalList = new List<Task>();
 
@@ -1247,11 +1267,14 @@ namespace Tasual
 
 		private void Tasual_MenuStrip_Item_Delete_Click(object sender, EventArgs e)
 		{
-			Task Task = (Task)Tasual_MenuStrip_Item.Tag;
-			TaskArray.Remove(Task);
-			ArrayHandler.Save(ref TaskArray, Settings);
-			Tasual_ListView.BuildList();
-			Tasual_StatusLabel_UpdateCounts();
+			if (ConfirmAction(Settings.PromptDelete, "delete this task"))
+			{
+				Task Task = (Task)Tasual_MenuStrip_Item.Tag;
+				TaskArray.Remove(Task);
+				ArrayHandler.Save(ref TaskArray, Settings);
+				Tasual_ListView.BuildList();
+				Tasual_StatusLabel_UpdateCounts();
+			}
 		}
 
 		private void Tasual_MenuStrip_Item_Duplicate_Click(object sender, EventArgs e)
@@ -1366,8 +1389,10 @@ namespace Tasual
 		// Tasual_StatusLabel: "Status"
 		private void Tasual_MenuStrip_Status_Clear_Click(object sender, EventArgs e)
 		{
-			Tasual_Confirm_Clear ConfirmForm = new Tasual_Confirm_Clear(this);
-			ConfirmForm.ShowDialog(this);
+			if (ConfirmAction(Settings.PromptClear, "clear all tasks"))
+			{ 
+				Tasual_Array_ClearAll();
+			}
 		}
 
 
@@ -1682,11 +1707,14 @@ namespace Tasual
 					{
 						if (Tasual_ListView.SelectedItem != null)
 						{
-							Task Task = (Task)Tasual_ListView.SelectedItem.RowObject;
-							TaskArray.Remove(Task);
-							ArrayHandler.Save(ref TaskArray, Settings);
-							Tasual_ListView.BuildList();
-							Tasual_StatusLabel_UpdateCounts();
+							if (ConfirmAction(Settings.PromptDelete, "delete this task"))
+							{
+								Task Task = (Task)Tasual_ListView.SelectedItem.RowObject;
+								TaskArray.Remove(Task);
+								ArrayHandler.Save(ref TaskArray, Settings);
+								Tasual_ListView.BuildList();
+								Tasual_StatusLabel_UpdateCounts();
+							}
 						}
 						break;
 					}

@@ -964,6 +964,12 @@ namespace Tasual
 			if (string.IsNullOrWhiteSpace(Task.Description) || (Task.Description == "Description"))
 			{ 
 				Console.WriteLine("Tasual_Create_Button_Create_Click(): Description cannot be blank!");
+				MessageBox.Show(
+					"Task description cannot be blank",
+					"Tasual",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Asterisk
+				);
 				return;
 			}
 
@@ -1005,6 +1011,12 @@ namespace Tasual
 					// Picked time is before current time
 					// Show warning message and cancel edit/creation
 					Console.WriteLine("Tasual_Create_Button_Create_Click(): Start time cannot be before current time!");
+					MessageBox.Show(
+						"Start time cannot be in the past",
+						"Tasual",
+						MessageBoxButtons.OK,
+						MessageBoxIcon.Asterisk
+					);
 					return;
 				}
 
@@ -1073,6 +1085,12 @@ namespace Tasual
 						// Picked time is before current time
 						// Show warning message and cancel edit/creation
 						Console.WriteLine("Tasual_Create_Button_Create_Click(): End time cannot be before current time!");
+						MessageBox.Show(
+							"End time cannot be in the past",
+							"Tasual",
+							MessageBoxButtons.OK,
+							MessageBoxIcon.Asterisk
+						);
 						return;
 					}
 				}

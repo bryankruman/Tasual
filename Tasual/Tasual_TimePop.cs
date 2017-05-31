@@ -166,6 +166,12 @@ namespace Tasual
 				if (NewTime < DateTime.Now)
 				{
 					Console.WriteLine("Can't have a date that is before now!");
+					MessageBox.Show(_Tasual_Main,
+						"Scheduled time cannot be in the past",
+						"Tasual",
+						MessageBoxButtons.OK,
+						MessageBoxIcon.Asterisk
+					);
 					return;
 				}
 				else
