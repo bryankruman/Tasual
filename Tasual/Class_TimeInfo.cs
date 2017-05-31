@@ -906,13 +906,10 @@ namespace Tasual
 						bool FindingLastWeek = false;
 						if ((Rules.WeekFilter & WeekFlag.Last) != 0)
 						{
-							FindingLastWeek = true;
-							NextTime = NextTime.AddDays(DateTime.DaysInMonth(NextTime.Year, NextTime.Month) - 7);
-							/*Console.WriteLine(
-							 * "Last week {0} {1}", 
-							 * DateTime.DaysInMonth(NextTime.Year, NextTime.Month), 
-							 * DateTime.DaysInMonth(NextTime.Year, NextTime.Month) - 7
-							);*/
+							if (NextTime.Day >= (DateTime.DaysInMonth(NextTime.Year, NextTime.Month) - 7))
+							{
+								FindingLastWeek = true;
+							}
 						}
 
 						if (((Rules.WeekFilter & FromWeekToFlag(NextTime.Day)) != 0) || FindingLastWeek)
