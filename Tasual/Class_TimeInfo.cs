@@ -553,87 +553,9 @@ namespace Tasual
 			}
 		}
 
-		public static string GetDueStringFromTimeInfo(TimeInfo TimeInfo)
+		public static bool CompareDueStringFromTasks(Task Source, Task Target)
 		{
-			DateTime Time = TimeInfo.Next;
-			if (Scheduled(TimeInfo))
-			{
-				if (DateTime.Now > Time)
-				{
-					return "Overdue";
-				}
-				else
-				{
-					DateTime Today = DateTime.Now - DateTime.Now.TimeOfDay;
-					DateTime TargetDay = Time - Time.TimeOfDay;
-					TimeSpan Span = TargetDay - Today;
-					if (TargetDay == Today)
-					{
-						return "Today";
-					}
-					else if (Span.Days <= 1)
-					{
-						return "Tomorrow";
-					}
-					else if (Span.Days <= 7)
-					{
-						return Time.DayOfWeek.ToString();
-					}
-					else if (Span.Days <= 14)
-					{
-						return "Next Week";
-					}
-					else if (Span.Days <= 21)
-					{
-						return "2 Weeks";
-					}
-					else if (Span.Days <= 30)
-					{
-						return "3 Weeks";
-					}
-					else if (TargetDay.Month == Today.AddMonths(1).Month)
-					{
-						return "Next Month";
-					}
-					else
-					{
-						return "Future";
-					}
-				}
-			}
-			else
-			{
-				return "Future";
-			}
-		}
-
-		public static string GetDueStringFromInt(int Key)
-		{
-			switch (Key)
-			{
-				case 1: return "Overdue";
-				case 2: return "Today";
-				case 3: return "Tomorrow";
-				case 4: return "Sunday";
-				case 5: return "Monday";
-				case 6: return "Tuesday";
-				case 7: return "Wednesday";
-				case 8: return "Thursday";
-				case 9: return "Friday";
-				case 10: return "Saturday";
-				case 11: return "Next Week";
-				case 12: return "2 Weeks";
-				case 13: return "3 Weeks";
-				case 14: return "Next Month";
-				case 15: return "Future";
-				case 16: return "Completed";
-				default: return "Broken!";
-			}
-		}
-
-		public static bool CompareDueIntFromTasks(Task Source, Task Target)
-		{
-			if (GetDueIntFromTask(Source) == GetDueIntFromTask(Target))
+			if (GetDueStringFromTask(Source) == GetDueStringFromTask(Target))
 			{
 				return true;
 			}
@@ -643,19 +565,19 @@ namespace Tasual
 			}
 		}
 
-		public static int GetDueIntFromTask(Task Task)
+		public static string GetDueStringFromTask(Task Task)
 		{
 			DateTime Time = Task.Time.Next;
-			//TimeInfo Time = (TimeInfo)Input;
 			if (Task.Checked)
 			{
-				return 16; // "Completed";
+				return "17Completed";
 			}
-			else if (Scheduled(Task.Time))
-			{ 
+
+			if (Scheduled(Task.Time))
+			{
 				if (DateTime.Now > Time)
 				{
-					return 1; // "Overdue";
+					return "01Overdue";
 				}
 				else
 				{
@@ -664,41 +586,41 @@ namespace Tasual
 					TimeSpan Span = TargetDay - Today;
 					if (TargetDay == Today)
 					{
-						return 2; // "Today";
+						return "02Today";
 					}
 					else if (Span.Days <= 1)
 					{
-						return 3; //  "Tomorrow";
+						return "03Tomorrow";
 					}
 					else if (Span.Days <= 7)
 					{
-						return 4 + (int)Time.DayOfWeek; //Time.DayOfWeek.ToString();
+						return string.Format("{0}{1}", (4 + Span.Days).ToString("D2"), Time.DayOfWeek.ToString());
 					}
 					else if (Span.Days <= 14)
 					{
-						return 11; //"Next Week";
+						return "121 Week";
 					}
 					else if (Span.Days <= 21)
 					{
-						return 12; // "2 Weeks";
+						return "132 Weeks";
 					}
 					else if (Span.Days <= 30)
 					{
-						return 13; // "3 Weeks";
+						return "143 Weeks";
 					}
 					else if (TargetDay.Month == Today.AddMonths(1).Month)
 					{
-						return 14; // "Next Month";
+						return "151 Month";
 					}
 					else
 					{
-						return 15; // "Future";
+						return "16Future";
 					}
 				}
 			}
 			else
 			{
-				return 15; // "Future";
+				return "16Future";
 			}
 		}
 

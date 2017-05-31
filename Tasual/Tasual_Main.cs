@@ -123,6 +123,15 @@ namespace Tasual
 			}
 		}
 
+		public void Tasual_UpdateGroupKeys()
+		{
+			foreach (Task Task in TaskArray)
+			{
+				Task.CategoryGroupKey = TimeInfo.GetGroupStringFromTask(Task, Settings);
+				Task.DueGroupKey = TimeInfo.GetDueStringFromTask(Task);
+			}
+		}
+
 		public void Tasual_CheckNeedsUpdate()
 		{
 			/* 
@@ -360,7 +369,7 @@ namespace Tasual
 				var SourceTasks = Args.SourceModels.Cast<Task>();
 				if (Settings.GroupStyle == Setting.GroupStyles.DueTime)
 				{
-					if (SourceTasks.Any(Source => (TimeInfo.CompareDueIntFromTasks(Source, Target))))
+					if (SourceTasks.Any(Source => (TimeInfo.CompareDueStringFromTasks(Source, Target))))
 					{
 						Args.InfoMessage = "Cannot drag to the same time";
 					}
@@ -562,7 +571,7 @@ namespace Tasual
 				var SourceTasks = Args.SourceModels.Cast<Task>();
 				if (Settings.GroupStyle == Setting.GroupStyles.DueTime)
 				{
-					if (SourceTasks.Any(Source => (TimeInfo.CompareDueIntFromTasks(Source, Target))))
+					if (SourceTasks.Any(Source => (TimeInfo.CompareDueStringFromTasks(Source, Target))))
 					{
 						Args.InfoMessage = "Cannot drag to the same time";
 					}
@@ -676,6 +685,7 @@ namespace Tasual
 
 		private void Tasual_ListView_AddColumns()
 		{
+			Tasual_UpdateGroupKeys();
 			DescriptionColumn = new OLVColumn("Description", "Description");
 			DescriptionColumn.MinimumWidth = 100;
 			DescriptionColumn.FillsFreeSpace = true;
@@ -721,28 +731,28 @@ namespace Tasual
 			Tasual_ListView.AllColumns.Add(IconColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { IconColumn });
 
-			CategoryColumn = new OLVColumn("Category", "Group");
+			CategoryColumn = new OLVColumn("Category", "CategoryGroupKey");
 			CategoryColumn.MinimumWidth = 100;
 			CategoryColumn.IsVisible = false;
 			CategoryColumn.IsEditable = true;
 			CategoryColumn.Sortable = true;
 			CategoryColumn.DisplayIndex = 3;
 			CategoryColumn.LastDisplayIndex = 3;
-			CategoryColumn.GroupKeyGetter = delegate (object Input)
-			{
-				Task Task = (Task)Input;
-				return TimeInfo.GetGroupStringFromTask(Task, Settings);
-			};
+			//CategoryColumn.GroupKeyGetter = delegate (object Input)
+			//{
+			//	Task Task = (Task)Input;
+			//	return TimeInfo.GetGroupStringFromTask(Task, Settings);
+			//};
 			CategoryColumn.GroupKeyToTitleConverter = delegate (object Input)
 			{
-				return ((string)Input).Remove(0, 1);
+				return ((string)Input).Remove(0, Math.Min(1, ((string)Input).Length));
 			};
 			CategoryColumn.TextAlign = Settings.SubItemTextAlign;
 			CategoryColumn.HeaderTextAlign = Settings.SubItemHeaderAlign;
 			Tasual_ListView.AllColumns.Add(CategoryColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { CategoryColumn });
 
-			DueColumn = new OLVColumn("Due", "Time");
+			DueColumn = new OLVColumn("Due", "DueGroupKey");
 			DueColumn.MinimumWidth = 80;
 			DueColumn.IsVisible = false;
 			DueColumn.IsEditable = false;
@@ -753,18 +763,18 @@ namespace Tasual
 			DueColumn.HeaderTextAlign = Settings.SubItemHeaderAlign;
 			DueColumn.AspectToStringConverter = delegate (object Input)
 			{
-				TimeInfo TimeInfo = (TimeInfo)Input;
-				return TimeInfo.GetDueStringFromTimeInfo(TimeInfo);
+				//Task Task = (Task)Input;
+				//return TimeInfo.GetDueStringFromTask(Task).Remove(0, 2);
+				return ((string)Input).Remove(0, Math.Min(2, ((string)Input).Length));
 			};
-			DueColumn.GroupKeyGetter = delegate (object Input)
-			{
-				Task Task = (Task)Input;
-				return TimeInfo.GetDueIntFromTask(Task);
-			};
+			//DueColumn.GroupKeyGetter = delegate (object Input)
+			//{
+			//	Task Task = (Task)Input;
+			//	return TimeInfo.GetDueStringFromTask(Task);
+			//};
 			DueColumn.GroupKeyToTitleConverter = delegate (object Input)
 			{
-				int Key = (int)Input;
-				return TimeInfo.GetDueStringFromInt(Key);
+				return ((string)Input).Remove(0, Math.Min(2, ((string)Input).Length));
 			};
 			Tasual_ListView.AllColumns.Add(DueColumn);
 			Tasual_ListView.Columns.AddRange(new ColumnHeader[] { DueColumn });

@@ -30,6 +30,15 @@ namespace Tasual
 		[JsonProperty("time")]
 		public TimeInfo Time { get; set; }
 
+
+		// Used only for display/grouping in ObjectListView
+		[JsonIgnore]
+		public string CategoryGroupKey { get; set; } = "";
+
+		[JsonIgnore]
+		public string DueGroupKey { get; set; } = "";
+
+
 		public enum Arguments
 		{
 			Checked,
