@@ -619,6 +619,16 @@ namespace Tasual
 			Tasual_ListView.HeaderUsesThemes = false;
 			Tasual_ListView.HeaderFormatStyle = FormatStyle;
 
+			TextOverlay Overlay = new TextOverlay();
+			Overlay.Font = this.Font;
+			Overlay.Text = "All tasks completed. Create some tasks!";
+			Overlay.TextColor = Color.FromArgb(255, 36, 90, 150);
+			Overlay.BackColor = Color.FromArgb(255, 222, 232, 246);
+			Overlay.BorderColor = Color.FromArgb(255, 36, 90, 150);
+			Overlay.BorderWidth = 3;
+			Overlay.CornerRounding = 0;
+			Tasual_ListView.EmptyListMsgOverlay = Overlay;
+
 			Tasual_ListView.PersistentCheckBoxes = true;
 			Tasual_ListView.CheckBoxes = true;
 			Tasual_ListView.CheckedAspectName = "Checked";

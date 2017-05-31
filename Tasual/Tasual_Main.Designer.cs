@@ -206,8 +206,6 @@
 			this.Tasual_ListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.Tasual_ListView.CellEditUseWholeCell = false;
 			this.Tasual_ListView.Cursor = System.Windows.Forms.Cursors.Default;
-			this.Tasual_ListView.EmptyListMsg = "All tasks completed. Create some tasks!";
-			this.Tasual_ListView.EmptyListMsgFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Tasual_ListView.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Tasual_ListView.FullRowSelect = true;
 			this.Tasual_ListView.HeaderMaximumHeight = 24;
@@ -367,13 +365,13 @@
 			// Tasual_MenuStrip_Status_Export_Clipboard
 			// 
 			this.Tasual_MenuStrip_Status_Export_Clipboard.Name = "Tasual_MenuStrip_Status_Export_Clipboard";
-			this.Tasual_MenuStrip_Status_Export_Clipboard.Size = new System.Drawing.Size(141, 22);
+			this.Tasual_MenuStrip_Status_Export_Clipboard.Size = new System.Drawing.Size(140, 22);
 			this.Tasual_MenuStrip_Status_Export_Clipboard.Text = "To clipboard";
 			// 
 			// Tasual_MenuStrip_Status_Export_SaveFile
 			// 
 			this.Tasual_MenuStrip_Status_Export_SaveFile.Name = "Tasual_MenuStrip_Status_Export_SaveFile";
-			this.Tasual_MenuStrip_Status_Export_SaveFile.Size = new System.Drawing.Size(141, 22);
+			this.Tasual_MenuStrip_Status_Export_SaveFile.Size = new System.Drawing.Size(140, 22);
 			this.Tasual_MenuStrip_Status_Export_SaveFile.Text = "To save file";
 			// 
 			// Tasual_MenuStrip_Status_Clear
@@ -398,7 +396,7 @@
             this.Tasual_MenuStrip_Group_MoveTasks,
             this.Tasual_MenuStrip_Group_Delete});
 			this.Tasual_MenuStrip_Group.Name = "Tasual_MenuStrip_Header";
-			this.Tasual_MenuStrip_Group.Size = new System.Drawing.Size(140, 136);
+			this.Tasual_MenuStrip_Group.Size = new System.Drawing.Size(139, 136);
 			this.Tasual_MenuStrip_Group.Opening += new System.ComponentModel.CancelEventHandler(this.Tasual_MenuStrip_Group_Opening);
 			// 
 			// Tasual_MenuStrip_Group_Create
@@ -407,7 +405,7 @@
             this.Tasual_MenuStrip_Group_Create_Quick,
             this.Tasual_MenuStrip_Group_Create_Advanced});
 			this.Tasual_MenuStrip_Group_Create.Name = "Tasual_MenuStrip_Group_Create";
-			this.Tasual_MenuStrip_Group_Create.Size = new System.Drawing.Size(139, 22);
+			this.Tasual_MenuStrip_Group_Create.Size = new System.Drawing.Size(138, 22);
 			this.Tasual_MenuStrip_Group_Create.Text = "Create Task";
 			// 
 			// Tasual_MenuStrip_Group_Create_Quick
@@ -425,14 +423,14 @@
 			// Tasual_MenuStrip_Group_Show
 			// 
 			this.Tasual_MenuStrip_Group_Show.Name = "Tasual_MenuStrip_Group_Show";
-			this.Tasual_MenuStrip_Group_Show.Size = new System.Drawing.Size(139, 22);
+			this.Tasual_MenuStrip_Group_Show.Size = new System.Drawing.Size(138, 22);
 			this.Tasual_MenuStrip_Group_Show.Text = "Show";
 			this.Tasual_MenuStrip_Group_Show.Click += new System.EventHandler(this.Tasual_MenuStrip_Group_Show_Click);
 			// 
 			// Tasual_MenuStrip_Group_Hide
 			// 
 			this.Tasual_MenuStrip_Group_Hide.Name = "Tasual_MenuStrip_Group_Hide";
-			this.Tasual_MenuStrip_Group_Hide.Size = new System.Drawing.Size(139, 22);
+			this.Tasual_MenuStrip_Group_Hide.Size = new System.Drawing.Size(138, 22);
 			this.Tasual_MenuStrip_Group_Hide.Text = "Hide";
 			this.Tasual_MenuStrip_Group_Hide.Click += new System.EventHandler(this.Tasual_MenuStrip_Group_Hide_Click);
 			// 
@@ -440,7 +438,7 @@
 			// 
 			this.Tasual_MenuStrip_Group_Rename.Enabled = false;
 			this.Tasual_MenuStrip_Group_Rename.Name = "Tasual_MenuStrip_Group_Rename";
-			this.Tasual_MenuStrip_Group_Rename.Size = new System.Drawing.Size(139, 22);
+			this.Tasual_MenuStrip_Group_Rename.Size = new System.Drawing.Size(138, 22);
 			this.Tasual_MenuStrip_Group_Rename.Text = "Rename";
 			// 
 			// Tasual_MenuStrip_Group_MoveTasks
@@ -449,7 +447,7 @@
 			this.Tasual_MenuStrip_Group_MoveTasks.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Tasual_MenuStrip_Group_Move_Blank});
 			this.Tasual_MenuStrip_Group_MoveTasks.Name = "Tasual_MenuStrip_Group_MoveTasks";
-			this.Tasual_MenuStrip_Group_MoveTasks.Size = new System.Drawing.Size(139, 22);
+			this.Tasual_MenuStrip_Group_MoveTasks.Size = new System.Drawing.Size(138, 22);
 			this.Tasual_MenuStrip_Group_MoveTasks.Text = "Move Tasks";
 			this.Tasual_MenuStrip_Group_MoveTasks.DropDownOpening += new System.EventHandler(this.Tasual_MenuStrip_Group_MoveTasks_DropDownOpening);
 			// 
@@ -463,7 +461,7 @@
 			// Tasual_MenuStrip_Group_Delete
 			// 
 			this.Tasual_MenuStrip_Group_Delete.Name = "Tasual_MenuStrip_Group_Delete";
-			this.Tasual_MenuStrip_Group_Delete.Size = new System.Drawing.Size(139, 22);
+			this.Tasual_MenuStrip_Group_Delete.Size = new System.Drawing.Size(138, 22);
 			this.Tasual_MenuStrip_Group_Delete.Text = "Delete Tasks";
 			this.Tasual_MenuStrip_Group_Delete.Click += new System.EventHandler(this.Tasual_MenuStrip_Group_Delete_Click);
 			// 
@@ -543,7 +541,7 @@
 			// Tasual_MenuStrip_Item_Move_Blank
 			// 
 			this.Tasual_MenuStrip_Item_Move_Blank.Name = "Tasual_MenuStrip_Item_Move_Blank";
-			this.Tasual_MenuStrip_Item_Move_Blank.Size = new System.Drawing.Size(152, 22);
+			this.Tasual_MenuStrip_Item_Move_Blank.Size = new System.Drawing.Size(130, 22);
 			this.Tasual_MenuStrip_Item_Move_Blank.Text = "Blank Item";
 			this.Tasual_MenuStrip_Item_Move_Blank.Visible = false;
 			// 
