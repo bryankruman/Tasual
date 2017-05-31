@@ -151,8 +151,8 @@
 			// 
 			// Tasual_About_Button_Donate
 			// 
-			this.Tasual_About_Button_Donate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.Tasual_About_Button_Donate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.Tasual_About_Button_Donate.Location = new System.Drawing.Point(156, 230);
 			this.Tasual_About_Button_Donate.Margin = new System.Windows.Forms.Padding(15, 3, 10, 3);
 			this.Tasual_About_Button_Donate.Name = "Tasual_About_Button_Donate";
@@ -164,8 +164,8 @@
 			// 
 			// Tasual_About_Button_Close
 			// 
-			this.Tasual_About_Button_Close.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.Tasual_About_Button_Close.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.Tasual_About_Button_Close.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.Tasual_About_Button_Close.Location = new System.Drawing.Point(288, 230);
 			this.Tasual_About_Button_Close.Margin = new System.Windows.Forms.Padding(10, 3, 15, 3);

@@ -56,6 +56,9 @@
   <PropertyGroup>
     <StartupObject>Tasual.Program</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Costura, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Costura.Fody.1.6.0\lib\dotnet\Costura.dll</HintPath>

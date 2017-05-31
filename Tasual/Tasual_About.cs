@@ -109,7 +109,11 @@ namespace Tasual
 
 		private void Tasual_About_Button_Donate_Click(object sender, EventArgs e)
 		{
-
+			try
+			{
+				System.Diagnostics.Process.Start("http://www.bryankruman.com/");
+			}
+			catch { }
 		}
 
 		private void Tasual_About_LinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

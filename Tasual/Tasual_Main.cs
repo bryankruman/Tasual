@@ -1026,6 +1026,17 @@ namespace Tasual
 		}
 
 		// Tasual_ListView: "Group"
+		private void Tasual_MenuStrip_Group_Create_Advanced_Click(object sender, EventArgs e)
+		{
+			Tasual_Create CreateForm = new Tasual_Create(this);
+			CreateForm.ShowDialog(this);
+		}
+
+		private void Tasual_MenuStrip_Group_Create_Quick_Click(object sender, EventArgs e)
+		{
+			Tasual_QuickCreate();
+		}
+
 		private void Tasual_MenuStrip_Group_Delete_Click(object sender, EventArgs e)
 		{
 			if (!ConfirmAction(Settings.PromptDelete, "delete this group")) { return; }
@@ -1451,6 +1462,12 @@ namespace Tasual
 			}
 		}
 
+		// Update timer
+		private void Tasual_Timer_CheckUpdate_Tick(object sender, EventArgs e)
+		{
+			Tasual_CheckNeedsUpdate();
+		}
+
 		// Notification Icon
 		private void Tasual_Notify_MouseClick(object sender, MouseEventArgs e)
 		{
@@ -1725,14 +1742,6 @@ namespace Tasual
 						break;
 					}
 			}
-		}
-
-
-
-
-		private void Tasual_Timer_CheckUpdate_Tick(object sender, EventArgs e)
-		{
-			Tasual_CheckNeedsUpdate();
 		}
 	}
 }
