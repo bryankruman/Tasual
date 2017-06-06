@@ -33,10 +33,10 @@
 			this.labelProductName = new System.Windows.Forms.Label();
 			this.labelVersion = new System.Windows.Forms.Label();
 			this.labelCopyright = new System.Windows.Forms.Label();
-			this.Tasual_About_LinkLabel = new System.Windows.Forms.LinkLabel();
+			this.LinkLabel = new System.Windows.Forms.LinkLabel();
 			this.label1 = new System.Windows.Forms.Label();
-			this.Tasual_About_Button_Donate = new System.Windows.Forms.Button();
-			this.Tasual_About_Button_Close = new System.Windows.Forms.Button();
+			this.Button_Donate = new System.Windows.Forms.Button();
+			this.Button_Close = new System.Windows.Forms.Button();
 			this.tableLayoutPanel.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
 			this.SuspendLayout();
@@ -51,10 +51,10 @@
 			this.tableLayoutPanel.Controls.Add(this.labelProductName, 1, 0);
 			this.tableLayoutPanel.Controls.Add(this.labelVersion, 1, 1);
 			this.tableLayoutPanel.Controls.Add(this.labelCopyright, 1, 2);
-			this.tableLayoutPanel.Controls.Add(this.Tasual_About_LinkLabel, 1, 3);
+			this.tableLayoutPanel.Controls.Add(this.LinkLabel, 1, 3);
 			this.tableLayoutPanel.Controls.Add(this.label1, 1, 4);
-			this.tableLayoutPanel.Controls.Add(this.Tasual_About_Button_Donate, 1, 5);
-			this.tableLayoutPanel.Controls.Add(this.Tasual_About_Button_Close, 2, 5);
+			this.tableLayoutPanel.Controls.Add(this.Button_Donate, 1, 5);
+			this.tableLayoutPanel.Controls.Add(this.Button_Close, 2, 5);
 			this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel.Location = new System.Drawing.Point(9, 9);
 			this.tableLayoutPanel.Name = "tableLayoutPanel";
@@ -121,21 +121,21 @@
 			this.labelCopyright.Text = "Copyright";
 			this.labelCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// Tasual_About_LinkLabel
+			// LinkLabel
 			// 
-			this.tableLayoutPanel.SetColumnSpan(this.Tasual_About_LinkLabel, 2);
-			this.Tasual_About_LinkLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.Tasual_About_LinkLabel.Location = new System.Drawing.Point(147, 75);
-			this.Tasual_About_LinkLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-			this.Tasual_About_LinkLabel.MaximumSize = new System.Drawing.Size(0, 17);
-			this.Tasual_About_LinkLabel.Name = "Tasual_About_LinkLabel";
-			this.Tasual_About_LinkLabel.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.Tasual_About_LinkLabel.Size = new System.Drawing.Size(264, 17);
-			this.Tasual_About_LinkLabel.TabIndex = 25;
-			this.Tasual_About_LinkLabel.TabStop = true;
-			this.Tasual_About_LinkLabel.Text = "www.bryankruman.com";
-			this.Tasual_About_LinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.Tasual_About_LinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Tasual_About_LinkLabel_LinkClicked);
+			this.tableLayoutPanel.SetColumnSpan(this.LinkLabel, 2);
+			this.LinkLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.LinkLabel.Location = new System.Drawing.Point(147, 75);
+			this.LinkLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+			this.LinkLabel.MaximumSize = new System.Drawing.Size(0, 17);
+			this.LinkLabel.Name = "LinkLabel";
+			this.LinkLabel.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.LinkLabel.Size = new System.Drawing.Size(264, 17);
+			this.LinkLabel.TabIndex = 25;
+			this.LinkLabel.TabStop = true;
+			this.LinkLabel.Text = "www.bryankruman.com";
+			this.LinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.LinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel_LinkClicked);
 			// 
 			// label1
 			// 
@@ -149,35 +149,35 @@
 			this.label1.Text = resources.GetString("label1.Text");
 			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// Tasual_About_Button_Donate
+			// Button_Donate
 			// 
-			this.Tasual_About_Button_Donate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+			this.Button_Donate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.Tasual_About_Button_Donate.Location = new System.Drawing.Point(156, 230);
-			this.Tasual_About_Button_Donate.Margin = new System.Windows.Forms.Padding(15, 3, 10, 3);
-			this.Tasual_About_Button_Donate.Name = "Tasual_About_Button_Donate";
-			this.Tasual_About_Button_Donate.Size = new System.Drawing.Size(112, 22);
-			this.Tasual_About_Button_Donate.TabIndex = 27;
-			this.Tasual_About_Button_Donate.Text = "Donate with PayPal";
-			this.Tasual_About_Button_Donate.UseVisualStyleBackColor = true;
-			this.Tasual_About_Button_Donate.Click += new System.EventHandler(this.Tasual_About_Button_Donate_Click);
+			this.Button_Donate.Location = new System.Drawing.Point(156, 230);
+			this.Button_Donate.Margin = new System.Windows.Forms.Padding(15, 3, 10, 3);
+			this.Button_Donate.Name = "Button_Donate";
+			this.Button_Donate.Size = new System.Drawing.Size(112, 22);
+			this.Button_Donate.TabIndex = 27;
+			this.Button_Donate.Text = "Donate with PayPal";
+			this.Button_Donate.UseVisualStyleBackColor = true;
+			this.Button_Donate.Click += new System.EventHandler(this.Button_Donate_Click);
 			// 
-			// Tasual_About_Button_Close
+			// Button_Close
 			// 
-			this.Tasual_About_Button_Close.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+			this.Button_Close.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.Tasual_About_Button_Close.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.Tasual_About_Button_Close.Location = new System.Drawing.Point(288, 230);
-			this.Tasual_About_Button_Close.Margin = new System.Windows.Forms.Padding(10, 3, 15, 3);
-			this.Tasual_About_Button_Close.Name = "Tasual_About_Button_Close";
-			this.Tasual_About_Button_Close.Size = new System.Drawing.Size(114, 22);
-			this.Tasual_About_Button_Close.TabIndex = 24;
-			this.Tasual_About_Button_Close.Text = "&Close";
-			this.Tasual_About_Button_Close.Click += new System.EventHandler(this.Tasual_About_Button_Close_Click);
+			this.Button_Close.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.Button_Close.Location = new System.Drawing.Point(288, 230);
+			this.Button_Close.Margin = new System.Windows.Forms.Padding(10, 3, 15, 3);
+			this.Button_Close.Name = "Button_Close";
+			this.Button_Close.Size = new System.Drawing.Size(114, 22);
+			this.Button_Close.TabIndex = 24;
+			this.Button_Close.Text = "&Close";
+			this.Button_Close.Click += new System.EventHandler(this.Button_Close_Click);
 			// 
 			// Tasual_About
 			// 
-			this.AcceptButton = this.Tasual_About_Button_Close;
+			this.AcceptButton = this.Button_Close;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(435, 273);
@@ -205,9 +205,9 @@
 		private System.Windows.Forms.Label labelProductName;
 		private System.Windows.Forms.Label labelVersion;
 		private System.Windows.Forms.Label labelCopyright;
-		private System.Windows.Forms.Button Tasual_About_Button_Close;
-		private System.Windows.Forms.LinkLabel Tasual_About_LinkLabel;
+		private System.Windows.Forms.Button Button_Close;
+		private System.Windows.Forms.LinkLabel LinkLabel;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Button Tasual_About_Button_Donate;
+		private System.Windows.Forms.Button Button_Donate;
 	}
 }

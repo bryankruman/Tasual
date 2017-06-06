@@ -13,7 +13,7 @@ namespace Tasual
 			this.labelProductName.Text = AssemblyProduct;
 			this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
 			this.labelCopyright.Text = AssemblyCopyright;
-			this.Tasual_About_LinkLabel.Text = AssemblyCompany;
+			this.LinkLabel.Text = AssemblyCompany;
 			//this.textBoxDescription.Text = AssemblyDescription;
 		}
 
@@ -97,12 +97,12 @@ namespace Tasual
 		}
 		#endregion
 
-		private void Tasual_About_Button_Close_Click(object sender, EventArgs e)
+		private void Button_Close_Click(object sender, EventArgs e)
 		{
 			this.Close();
 		}
 
-		private void Tasual_About_Button_Donate_Click(object sender, EventArgs e)
+		private void Button_Donate_Click(object sender, EventArgs e)
 		{
 			try
 			{
@@ -111,7 +111,7 @@ namespace Tasual
 			catch { }
 		}
 
-		private void Tasual_About_LinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		private void LinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
 			try
 			{
