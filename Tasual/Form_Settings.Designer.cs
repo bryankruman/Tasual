@@ -28,258 +28,258 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.Tasual_Settings_CheckBox_GroupTasks = new System.Windows.Forms.CheckBox();
-			this.Tasual_Settings_ComboBox_GroupStyle = new System.Windows.Forms.ComboBox();
-			this.Tasual_Settings_CheckBox_AlwaysShowCompletedGroup = new System.Windows.Forms.CheckBox();
-			this.Tasual_Settings_CheckBox_AlwaysShowOverdueGroup = new System.Windows.Forms.CheckBox();
-			this.Tasual_Settings_CheckBox_AlwaysShowTodayGroup = new System.Windows.Forms.CheckBox();
-			this.Tasual_Settings_CheckBox_LaunchOnStartup = new System.Windows.Forms.CheckBox();
-			this.Tasual_Settings_CheckBox_MinimizeToTray = new System.Windows.Forms.CheckBox();
-			this.Tasual_Settings_CheckBox_PromptClear = new System.Windows.Forms.CheckBox();
-			this.Tasual_Settings_CheckBox_PromptDelete = new System.Windows.Forms.CheckBox();
-			this.Tasual_Settings_GroupBox_Application = new System.Windows.Forms.GroupBox();
-			this.Tasual_Settings_CheckBox_EnterToSave = new System.Windows.Forms.CheckBox();
-			this.Tasual_Settings_CheckBox_AlwaysOnTop = new System.Windows.Forms.CheckBox();
-			this.Tasual_Settings_GroupBox_Display = new System.Windows.Forms.GroupBox();
-			this.Tasual_Settings_CheckBox_ShowItemCounts = new System.Windows.Forms.CheckBox();
-			this.Tasual_Settings_ListBox_EnabledColumns = new System.Windows.Forms.ListBox();
-			this.Tasual_Settings_Label_Columns = new System.Windows.Forms.Label();
-			this.Tasual_Settings_Button_Save = new System.Windows.Forms.Button();
-			this.Tasual_Settings_Button_Cancel = new System.Windows.Forms.Button();
-			this.Tasual_Settings_CheckBox_SaveWindowPos = new System.Windows.Forms.CheckBox();
-			this.Tasual_Settings_GroupBox_Application.SuspendLayout();
-			this.Tasual_Settings_GroupBox_Display.SuspendLayout();
+			this.CheckBox_GroupTasks = new System.Windows.Forms.CheckBox();
+			this.ComboBox_GroupStyle = new System.Windows.Forms.ComboBox();
+			this.CheckBox_AlwaysShowCompletedGroup = new System.Windows.Forms.CheckBox();
+			this.CheckBox_AlwaysShowOverdueGroup = new System.Windows.Forms.CheckBox();
+			this.CheckBox_AlwaysShowTodayGroup = new System.Windows.Forms.CheckBox();
+			this.CheckBox_LaunchOnStartup = new System.Windows.Forms.CheckBox();
+			this.CheckBox_MinimizeToTray = new System.Windows.Forms.CheckBox();
+			this.CheckBox_PromptClear = new System.Windows.Forms.CheckBox();
+			this.CheckBox_PromptDelete = new System.Windows.Forms.CheckBox();
+			this.GroupBox_Application = new System.Windows.Forms.GroupBox();
+			this.CheckBox_EnterToSave = new System.Windows.Forms.CheckBox();
+			this.CheckBox_AlwaysOnTop = new System.Windows.Forms.CheckBox();
+			this.GroupBox_Display = new System.Windows.Forms.GroupBox();
+			this.CheckBox_ShowItemCounts = new System.Windows.Forms.CheckBox();
+			this.ListBox_EnabledColumns = new System.Windows.Forms.ListBox();
+			this.Label_Columns = new System.Windows.Forms.Label();
+			this.Button_Save = new System.Windows.Forms.Button();
+			this.Button_Cancel = new System.Windows.Forms.Button();
+			this.CheckBox_SaveWindowPos = new System.Windows.Forms.CheckBox();
+			this.GroupBox_Application.SuspendLayout();
+			this.GroupBox_Display.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// Tasual_Settings_CheckBox_GroupTasks
+			// CheckBox_GroupTasks
 			// 
-			this.Tasual_Settings_CheckBox_GroupTasks.AutoSize = true;
-			this.Tasual_Settings_CheckBox_GroupTasks.Location = new System.Drawing.Point(12, 30);
-			this.Tasual_Settings_CheckBox_GroupTasks.Name = "Tasual_Settings_CheckBox_GroupTasks";
-			this.Tasual_Settings_CheckBox_GroupTasks.Size = new System.Drawing.Size(83, 17);
-			this.Tasual_Settings_CheckBox_GroupTasks.TabIndex = 0;
-			this.Tasual_Settings_CheckBox_GroupTasks.Text = "Group tasks";
-			this.Tasual_Settings_CheckBox_GroupTasks.UseVisualStyleBackColor = true;
-			this.Tasual_Settings_CheckBox_GroupTasks.CheckedChanged += new System.EventHandler(this.Tasual_Settings_CheckBox_GroupTasks_CheckedChanged);
+			this.CheckBox_GroupTasks.AutoSize = true;
+			this.CheckBox_GroupTasks.Location = new System.Drawing.Point(12, 30);
+			this.CheckBox_GroupTasks.Name = "CheckBox_GroupTasks";
+			this.CheckBox_GroupTasks.Size = new System.Drawing.Size(83, 17);
+			this.CheckBox_GroupTasks.TabIndex = 0;
+			this.CheckBox_GroupTasks.Text = "Group tasks";
+			this.CheckBox_GroupTasks.UseVisualStyleBackColor = true;
+			this.CheckBox_GroupTasks.CheckedChanged += new System.EventHandler(this.CheckBox_GroupTasks_CheckedChanged);
 			// 
-			// Tasual_Settings_ComboBox_GroupStyle
+			// ComboBox_GroupStyle
 			// 
-			this.Tasual_Settings_ComboBox_GroupStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.Tasual_Settings_ComboBox_GroupStyle.FormattingEnabled = true;
-			this.Tasual_Settings_ComboBox_GroupStyle.Items.AddRange(new object[] {
+			this.ComboBox_GroupStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ComboBox_GroupStyle.FormattingEnabled = true;
+			this.ComboBox_GroupStyle.Items.AddRange(new object[] {
             "by category",
             "by due time"});
-			this.Tasual_Settings_ComboBox_GroupStyle.Location = new System.Drawing.Point(111, 27);
-			this.Tasual_Settings_ComboBox_GroupStyle.Name = "Tasual_Settings_ComboBox_GroupStyle";
-			this.Tasual_Settings_ComboBox_GroupStyle.Size = new System.Drawing.Size(157, 21);
-			this.Tasual_Settings_ComboBox_GroupStyle.TabIndex = 1;
-			this.Tasual_Settings_ComboBox_GroupStyle.SelectedIndexChanged += new System.EventHandler(this.Tasual_Settings_ComboBox_GroupStyle_SelectedIndexChanged);
+			this.ComboBox_GroupStyle.Location = new System.Drawing.Point(111, 27);
+			this.ComboBox_GroupStyle.Name = "ComboBox_GroupStyle";
+			this.ComboBox_GroupStyle.Size = new System.Drawing.Size(157, 21);
+			this.ComboBox_GroupStyle.TabIndex = 1;
+			this.ComboBox_GroupStyle.SelectedIndexChanged += new System.EventHandler(this.ComboBox_GroupStyle_SelectedIndexChanged);
 			// 
-			// Tasual_Settings_CheckBox_AlwaysShowCompletedGroup
+			// CheckBox_AlwaysShowCompletedGroup
 			// 
-			this.Tasual_Settings_CheckBox_AlwaysShowCompletedGroup.AutoSize = true;
-			this.Tasual_Settings_CheckBox_AlwaysShowCompletedGroup.Location = new System.Drawing.Point(26, 55);
-			this.Tasual_Settings_CheckBox_AlwaysShowCompletedGroup.Name = "Tasual_Settings_CheckBox_AlwaysShowCompletedGroup";
-			this.Tasual_Settings_CheckBox_AlwaysShowCompletedGroup.Size = new System.Drawing.Size(220, 17);
-			this.Tasual_Settings_CheckBox_AlwaysShowCompletedGroup.TabIndex = 2;
-			this.Tasual_Settings_CheckBox_AlwaysShowCompletedGroup.Text = "Split completed tasks into separate group";
-			this.Tasual_Settings_CheckBox_AlwaysShowCompletedGroup.UseVisualStyleBackColor = true;
+			this.CheckBox_AlwaysShowCompletedGroup.AutoSize = true;
+			this.CheckBox_AlwaysShowCompletedGroup.Location = new System.Drawing.Point(26, 55);
+			this.CheckBox_AlwaysShowCompletedGroup.Name = "CheckBox_AlwaysShowCompletedGroup";
+			this.CheckBox_AlwaysShowCompletedGroup.Size = new System.Drawing.Size(220, 17);
+			this.CheckBox_AlwaysShowCompletedGroup.TabIndex = 2;
+			this.CheckBox_AlwaysShowCompletedGroup.Text = "Split completed tasks into separate group";
+			this.CheckBox_AlwaysShowCompletedGroup.UseVisualStyleBackColor = true;
 			// 
-			// Tasual_Settings_CheckBox_AlwaysShowOverdueGroup
+			// CheckBox_AlwaysShowOverdueGroup
 			// 
-			this.Tasual_Settings_CheckBox_AlwaysShowOverdueGroup.AutoSize = true;
-			this.Tasual_Settings_CheckBox_AlwaysShowOverdueGroup.Location = new System.Drawing.Point(26, 79);
-			this.Tasual_Settings_CheckBox_AlwaysShowOverdueGroup.Name = "Tasual_Settings_CheckBox_AlwaysShowOverdueGroup";
-			this.Tasual_Settings_CheckBox_AlwaysShowOverdueGroup.Size = new System.Drawing.Size(210, 17);
-			this.Tasual_Settings_CheckBox_AlwaysShowOverdueGroup.TabIndex = 3;
-			this.Tasual_Settings_CheckBox_AlwaysShowOverdueGroup.Text = "Split overdue tasks into separate group";
-			this.Tasual_Settings_CheckBox_AlwaysShowOverdueGroup.UseVisualStyleBackColor = true;
+			this.CheckBox_AlwaysShowOverdueGroup.AutoSize = true;
+			this.CheckBox_AlwaysShowOverdueGroup.Location = new System.Drawing.Point(26, 79);
+			this.CheckBox_AlwaysShowOverdueGroup.Name = "CheckBox_AlwaysShowOverdueGroup";
+			this.CheckBox_AlwaysShowOverdueGroup.Size = new System.Drawing.Size(210, 17);
+			this.CheckBox_AlwaysShowOverdueGroup.TabIndex = 3;
+			this.CheckBox_AlwaysShowOverdueGroup.Text = "Split overdue tasks into separate group";
+			this.CheckBox_AlwaysShowOverdueGroup.UseVisualStyleBackColor = true;
 			// 
-			// Tasual_Settings_CheckBox_AlwaysShowTodayGroup
+			// CheckBox_AlwaysShowTodayGroup
 			// 
-			this.Tasual_Settings_CheckBox_AlwaysShowTodayGroup.AutoSize = true;
-			this.Tasual_Settings_CheckBox_AlwaysShowTodayGroup.Location = new System.Drawing.Point(26, 103);
-			this.Tasual_Settings_CheckBox_AlwaysShowTodayGroup.Name = "Tasual_Settings_CheckBox_AlwaysShowTodayGroup";
-			this.Tasual_Settings_CheckBox_AlwaysShowTodayGroup.Size = new System.Drawing.Size(218, 17);
-			this.Tasual_Settings_CheckBox_AlwaysShowTodayGroup.TabIndex = 4;
-			this.Tasual_Settings_CheckBox_AlwaysShowTodayGroup.Text = "Split tasks due today into separate group";
-			this.Tasual_Settings_CheckBox_AlwaysShowTodayGroup.UseVisualStyleBackColor = true;
+			this.CheckBox_AlwaysShowTodayGroup.AutoSize = true;
+			this.CheckBox_AlwaysShowTodayGroup.Location = new System.Drawing.Point(26, 103);
+			this.CheckBox_AlwaysShowTodayGroup.Name = "CheckBox_AlwaysShowTodayGroup";
+			this.CheckBox_AlwaysShowTodayGroup.Size = new System.Drawing.Size(218, 17);
+			this.CheckBox_AlwaysShowTodayGroup.TabIndex = 4;
+			this.CheckBox_AlwaysShowTodayGroup.Text = "Split tasks due today into separate group";
+			this.CheckBox_AlwaysShowTodayGroup.UseVisualStyleBackColor = true;
 			// 
-			// Tasual_Settings_CheckBox_LaunchOnStartup
+			// CheckBox_LaunchOnStartup
 			// 
-			this.Tasual_Settings_CheckBox_LaunchOnStartup.AutoSize = true;
-			this.Tasual_Settings_CheckBox_LaunchOnStartup.Location = new System.Drawing.Point(12, 23);
-			this.Tasual_Settings_CheckBox_LaunchOnStartup.Name = "Tasual_Settings_CheckBox_LaunchOnStartup";
-			this.Tasual_Settings_CheckBox_LaunchOnStartup.Size = new System.Drawing.Size(168, 17);
-			this.Tasual_Settings_CheckBox_LaunchOnStartup.TabIndex = 5;
-			this.Tasual_Settings_CheckBox_LaunchOnStartup.Text = "Start Tasual on system startup";
-			this.Tasual_Settings_CheckBox_LaunchOnStartup.UseVisualStyleBackColor = true;
+			this.CheckBox_LaunchOnStartup.AutoSize = true;
+			this.CheckBox_LaunchOnStartup.Location = new System.Drawing.Point(12, 23);
+			this.CheckBox_LaunchOnStartup.Name = "CheckBox_LaunchOnStartup";
+			this.CheckBox_LaunchOnStartup.Size = new System.Drawing.Size(168, 17);
+			this.CheckBox_LaunchOnStartup.TabIndex = 5;
+			this.CheckBox_LaunchOnStartup.Text = "Start Tasual on system startup";
+			this.CheckBox_LaunchOnStartup.UseVisualStyleBackColor = true;
 			// 
-			// Tasual_Settings_CheckBox_MinimizeToTray
+			// CheckBox_MinimizeToTray
 			// 
-			this.Tasual_Settings_CheckBox_MinimizeToTray.AutoSize = true;
-			this.Tasual_Settings_CheckBox_MinimizeToTray.Location = new System.Drawing.Point(12, 46);
-			this.Tasual_Settings_CheckBox_MinimizeToTray.Name = "Tasual_Settings_CheckBox_MinimizeToTray";
-			this.Tasual_Settings_CheckBox_MinimizeToTray.Size = new System.Drawing.Size(133, 17);
-			this.Tasual_Settings_CheckBox_MinimizeToTray.TabIndex = 6;
-			this.Tasual_Settings_CheckBox_MinimizeToTray.Text = "Minimize Tasual to tray";
-			this.Tasual_Settings_CheckBox_MinimizeToTray.UseVisualStyleBackColor = true;
+			this.CheckBox_MinimizeToTray.AutoSize = true;
+			this.CheckBox_MinimizeToTray.Location = new System.Drawing.Point(12, 46);
+			this.CheckBox_MinimizeToTray.Name = "CheckBox_MinimizeToTray";
+			this.CheckBox_MinimizeToTray.Size = new System.Drawing.Size(133, 17);
+			this.CheckBox_MinimizeToTray.TabIndex = 6;
+			this.CheckBox_MinimizeToTray.Text = "Minimize Tasual to tray";
+			this.CheckBox_MinimizeToTray.UseVisualStyleBackColor = true;
 			// 
-			// Tasual_Settings_CheckBox_PromptClear
+			// CheckBox_PromptClear
 			// 
-			this.Tasual_Settings_CheckBox_PromptClear.AutoSize = true;
-			this.Tasual_Settings_CheckBox_PromptClear.Location = new System.Drawing.Point(12, 123);
-			this.Tasual_Settings_CheckBox_PromptClear.Name = "Tasual_Settings_CheckBox_PromptClear";
-			this.Tasual_Settings_CheckBox_PromptClear.Size = new System.Drawing.Size(169, 17);
-			this.Tasual_Settings_CheckBox_PromptClear.TabIndex = 7;
-			this.Tasual_Settings_CheckBox_PromptClear.Text = "Prompt when clearing all tasks";
-			this.Tasual_Settings_CheckBox_PromptClear.UseVisualStyleBackColor = true;
+			this.CheckBox_PromptClear.AutoSize = true;
+			this.CheckBox_PromptClear.Location = new System.Drawing.Point(12, 123);
+			this.CheckBox_PromptClear.Name = "CheckBox_PromptClear";
+			this.CheckBox_PromptClear.Size = new System.Drawing.Size(169, 17);
+			this.CheckBox_PromptClear.TabIndex = 7;
+			this.CheckBox_PromptClear.Text = "Prompt when clearing all tasks";
+			this.CheckBox_PromptClear.UseVisualStyleBackColor = true;
 			// 
-			// Tasual_Settings_CheckBox_PromptDelete
+			// CheckBox_PromptDelete
 			// 
-			this.Tasual_Settings_CheckBox_PromptDelete.AutoSize = true;
-			this.Tasual_Settings_CheckBox_PromptDelete.Location = new System.Drawing.Point(12, 146);
-			this.Tasual_Settings_CheckBox_PromptDelete.Name = "Tasual_Settings_CheckBox_PromptDelete";
-			this.Tasual_Settings_CheckBox_PromptDelete.Size = new System.Drawing.Size(210, 17);
-			this.Tasual_Settings_CheckBox_PromptDelete.TabIndex = 8;
-			this.Tasual_Settings_CheckBox_PromptDelete.Text = "Prompt when deleting tasks individually";
-			this.Tasual_Settings_CheckBox_PromptDelete.UseVisualStyleBackColor = true;
+			this.CheckBox_PromptDelete.AutoSize = true;
+			this.CheckBox_PromptDelete.Location = new System.Drawing.Point(12, 146);
+			this.CheckBox_PromptDelete.Name = "CheckBox_PromptDelete";
+			this.CheckBox_PromptDelete.Size = new System.Drawing.Size(210, 17);
+			this.CheckBox_PromptDelete.TabIndex = 8;
+			this.CheckBox_PromptDelete.Text = "Prompt when deleting tasks individually";
+			this.CheckBox_PromptDelete.UseVisualStyleBackColor = true;
 			// 
-			// Tasual_Settings_GroupBox_Application
+			// GroupBox_Application
 			// 
-			this.Tasual_Settings_GroupBox_Application.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.GroupBox_Application.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.Tasual_Settings_GroupBox_Application.Controls.Add(this.Tasual_Settings_CheckBox_SaveWindowPos);
-			this.Tasual_Settings_GroupBox_Application.Controls.Add(this.Tasual_Settings_CheckBox_EnterToSave);
-			this.Tasual_Settings_GroupBox_Application.Controls.Add(this.Tasual_Settings_CheckBox_AlwaysOnTop);
-			this.Tasual_Settings_GroupBox_Application.Controls.Add(this.Tasual_Settings_CheckBox_MinimizeToTray);
-			this.Tasual_Settings_GroupBox_Application.Controls.Add(this.Tasual_Settings_CheckBox_PromptDelete);
-			this.Tasual_Settings_GroupBox_Application.Controls.Add(this.Tasual_Settings_CheckBox_LaunchOnStartup);
-			this.Tasual_Settings_GroupBox_Application.Controls.Add(this.Tasual_Settings_CheckBox_PromptClear);
-			this.Tasual_Settings_GroupBox_Application.Location = new System.Drawing.Point(13, 13);
-			this.Tasual_Settings_GroupBox_Application.Name = "Tasual_Settings_GroupBox_Application";
-			this.Tasual_Settings_GroupBox_Application.Size = new System.Drawing.Size(391, 197);
-			this.Tasual_Settings_GroupBox_Application.TabIndex = 9;
-			this.Tasual_Settings_GroupBox_Application.TabStop = false;
-			this.Tasual_Settings_GroupBox_Application.Text = "Application";
+			this.GroupBox_Application.Controls.Add(this.CheckBox_SaveWindowPos);
+			this.GroupBox_Application.Controls.Add(this.CheckBox_EnterToSave);
+			this.GroupBox_Application.Controls.Add(this.CheckBox_AlwaysOnTop);
+			this.GroupBox_Application.Controls.Add(this.CheckBox_MinimizeToTray);
+			this.GroupBox_Application.Controls.Add(this.CheckBox_PromptDelete);
+			this.GroupBox_Application.Controls.Add(this.CheckBox_LaunchOnStartup);
+			this.GroupBox_Application.Controls.Add(this.CheckBox_PromptClear);
+			this.GroupBox_Application.Location = new System.Drawing.Point(13, 13);
+			this.GroupBox_Application.Name = "GroupBox_Application";
+			this.GroupBox_Application.Size = new System.Drawing.Size(391, 197);
+			this.GroupBox_Application.TabIndex = 9;
+			this.GroupBox_Application.TabStop = false;
+			this.GroupBox_Application.Text = "Application";
 			// 
-			// Tasual_Settings_CheckBox_EnterToSave
+			// CheckBox_EnterToSave
 			// 
-			this.Tasual_Settings_CheckBox_EnterToSave.AutoSize = true;
-			this.Tasual_Settings_CheckBox_EnterToSave.Location = new System.Drawing.Point(12, 169);
-			this.Tasual_Settings_CheckBox_EnterToSave.Name = "Tasual_Settings_CheckBox_EnterToSave";
-			this.Tasual_Settings_CheckBox_EnterToSave.Size = new System.Drawing.Size(208, 17);
-			this.Tasual_Settings_CheckBox_EnterToSave.TabIndex = 9;
-			this.Tasual_Settings_CheckBox_EnterToSave.Text = "Press Enter to save while editing notes";
-			this.Tasual_Settings_CheckBox_EnterToSave.UseVisualStyleBackColor = true;
+			this.CheckBox_EnterToSave.AutoSize = true;
+			this.CheckBox_EnterToSave.Location = new System.Drawing.Point(12, 169);
+			this.CheckBox_EnterToSave.Name = "CheckBox_EnterToSave";
+			this.CheckBox_EnterToSave.Size = new System.Drawing.Size(208, 17);
+			this.CheckBox_EnterToSave.TabIndex = 9;
+			this.CheckBox_EnterToSave.Text = "Press Enter to save while editing notes";
+			this.CheckBox_EnterToSave.UseVisualStyleBackColor = true;
 			// 
-			// Tasual_Settings_CheckBox_AlwaysOnTop
+			// CheckBox_AlwaysOnTop
 			// 
-			this.Tasual_Settings_CheckBox_AlwaysOnTop.AutoSize = true;
-			this.Tasual_Settings_CheckBox_AlwaysOnTop.Location = new System.Drawing.Point(12, 69);
-			this.Tasual_Settings_CheckBox_AlwaysOnTop.Name = "Tasual_Settings_CheckBox_AlwaysOnTop";
-			this.Tasual_Settings_CheckBox_AlwaysOnTop.Size = new System.Drawing.Size(154, 17);
-			this.Tasual_Settings_CheckBox_AlwaysOnTop.TabIndex = 7;
-			this.Tasual_Settings_CheckBox_AlwaysOnTop.Text = "Keep Tasual always on top";
-			this.Tasual_Settings_CheckBox_AlwaysOnTop.UseVisualStyleBackColor = true;
+			this.CheckBox_AlwaysOnTop.AutoSize = true;
+			this.CheckBox_AlwaysOnTop.Location = new System.Drawing.Point(12, 69);
+			this.CheckBox_AlwaysOnTop.Name = "CheckBox_AlwaysOnTop";
+			this.CheckBox_AlwaysOnTop.Size = new System.Drawing.Size(154, 17);
+			this.CheckBox_AlwaysOnTop.TabIndex = 7;
+			this.CheckBox_AlwaysOnTop.Text = "Keep Tasual always on top";
+			this.CheckBox_AlwaysOnTop.UseVisualStyleBackColor = true;
 			// 
-			// Tasual_Settings_GroupBox_Display
+			// GroupBox_Display
 			// 
-			this.Tasual_Settings_GroupBox_Display.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.GroupBox_Display.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.Tasual_Settings_GroupBox_Display.Controls.Add(this.Tasual_Settings_CheckBox_ShowItemCounts);
-			this.Tasual_Settings_GroupBox_Display.Controls.Add(this.Tasual_Settings_ListBox_EnabledColumns);
-			this.Tasual_Settings_GroupBox_Display.Controls.Add(this.Tasual_Settings_Label_Columns);
-			this.Tasual_Settings_GroupBox_Display.Controls.Add(this.Tasual_Settings_CheckBox_GroupTasks);
-			this.Tasual_Settings_GroupBox_Display.Controls.Add(this.Tasual_Settings_ComboBox_GroupStyle);
-			this.Tasual_Settings_GroupBox_Display.Controls.Add(this.Tasual_Settings_CheckBox_AlwaysShowCompletedGroup);
-			this.Tasual_Settings_GroupBox_Display.Controls.Add(this.Tasual_Settings_CheckBox_AlwaysShowOverdueGroup);
-			this.Tasual_Settings_GroupBox_Display.Controls.Add(this.Tasual_Settings_CheckBox_AlwaysShowTodayGroup);
-			this.Tasual_Settings_GroupBox_Display.Location = new System.Drawing.Point(13, 216);
-			this.Tasual_Settings_GroupBox_Display.Name = "Tasual_Settings_GroupBox_Display";
-			this.Tasual_Settings_GroupBox_Display.Size = new System.Drawing.Size(391, 160);
-			this.Tasual_Settings_GroupBox_Display.TabIndex = 10;
-			this.Tasual_Settings_GroupBox_Display.TabStop = false;
-			this.Tasual_Settings_GroupBox_Display.Text = "Display";
+			this.GroupBox_Display.Controls.Add(this.CheckBox_ShowItemCounts);
+			this.GroupBox_Display.Controls.Add(this.ListBox_EnabledColumns);
+			this.GroupBox_Display.Controls.Add(this.Label_Columns);
+			this.GroupBox_Display.Controls.Add(this.CheckBox_GroupTasks);
+			this.GroupBox_Display.Controls.Add(this.ComboBox_GroupStyle);
+			this.GroupBox_Display.Controls.Add(this.CheckBox_AlwaysShowCompletedGroup);
+			this.GroupBox_Display.Controls.Add(this.CheckBox_AlwaysShowOverdueGroup);
+			this.GroupBox_Display.Controls.Add(this.CheckBox_AlwaysShowTodayGroup);
+			this.GroupBox_Display.Location = new System.Drawing.Point(13, 216);
+			this.GroupBox_Display.Name = "GroupBox_Display";
+			this.GroupBox_Display.Size = new System.Drawing.Size(391, 160);
+			this.GroupBox_Display.TabIndex = 10;
+			this.GroupBox_Display.TabStop = false;
+			this.GroupBox_Display.Text = "Display";
 			// 
-			// Tasual_Settings_CheckBox_ShowItemCounts
+			// CheckBox_ShowItemCounts
 			// 
-			this.Tasual_Settings_CheckBox_ShowItemCounts.AutoSize = true;
-			this.Tasual_Settings_CheckBox_ShowItemCounts.Location = new System.Drawing.Point(26, 127);
-			this.Tasual_Settings_CheckBox_ShowItemCounts.Name = "Tasual_Settings_CheckBox_ShowItemCounts";
-			this.Tasual_Settings_CheckBox_ShowItemCounts.Size = new System.Drawing.Size(211, 17);
-			this.Tasual_Settings_CheckBox_ShowItemCounts.TabIndex = 7;
-			this.Tasual_Settings_CheckBox_ShowItemCounts.Text = "Show item counts next to group header";
-			this.Tasual_Settings_CheckBox_ShowItemCounts.UseVisualStyleBackColor = true;
+			this.CheckBox_ShowItemCounts.AutoSize = true;
+			this.CheckBox_ShowItemCounts.Location = new System.Drawing.Point(26, 127);
+			this.CheckBox_ShowItemCounts.Name = "CheckBox_ShowItemCounts";
+			this.CheckBox_ShowItemCounts.Size = new System.Drawing.Size(211, 17);
+			this.CheckBox_ShowItemCounts.TabIndex = 7;
+			this.CheckBox_ShowItemCounts.Text = "Show item counts next to group header";
+			this.CheckBox_ShowItemCounts.UseVisualStyleBackColor = true;
 			// 
-			// Tasual_Settings_ListBox_EnabledColumns
+			// ListBox_EnabledColumns
 			// 
-			this.Tasual_Settings_ListBox_EnabledColumns.FormattingEnabled = true;
-			this.Tasual_Settings_ListBox_EnabledColumns.Items.AddRange(new object[] {
+			this.ListBox_EnabledColumns.FormattingEnabled = true;
+			this.ListBox_EnabledColumns.Items.AddRange(new object[] {
             "Notes",
             "Category",
             "Due",
             "Time"});
-			this.Tasual_Settings_ListBox_EnabledColumns.Location = new System.Drawing.Point(292, 40);
-			this.Tasual_Settings_ListBox_EnabledColumns.Name = "Tasual_Settings_ListBox_EnabledColumns";
-			this.Tasual_Settings_ListBox_EnabledColumns.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-			this.Tasual_Settings_ListBox_EnabledColumns.Size = new System.Drawing.Size(82, 95);
-			this.Tasual_Settings_ListBox_EnabledColumns.TabIndex = 6;
+			this.ListBox_EnabledColumns.Location = new System.Drawing.Point(292, 40);
+			this.ListBox_EnabledColumns.Name = "ListBox_EnabledColumns";
+			this.ListBox_EnabledColumns.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+			this.ListBox_EnabledColumns.Size = new System.Drawing.Size(82, 95);
+			this.ListBox_EnabledColumns.TabIndex = 6;
 			// 
-			// Tasual_Settings_Label_Columns
+			// Label_Columns
 			// 
-			this.Tasual_Settings_Label_Columns.AutoSize = true;
-			this.Tasual_Settings_Label_Columns.Location = new System.Drawing.Point(311, 22);
-			this.Tasual_Settings_Label_Columns.Name = "Tasual_Settings_Label_Columns";
-			this.Tasual_Settings_Label_Columns.Size = new System.Drawing.Size(47, 13);
-			this.Tasual_Settings_Label_Columns.TabIndex = 5;
-			this.Tasual_Settings_Label_Columns.Text = "Columns";
+			this.Label_Columns.AutoSize = true;
+			this.Label_Columns.Location = new System.Drawing.Point(311, 22);
+			this.Label_Columns.Name = "Label_Columns";
+			this.Label_Columns.Size = new System.Drawing.Size(47, 13);
+			this.Label_Columns.TabIndex = 5;
+			this.Label_Columns.Text = "Columns";
 			// 
-			// Tasual_Settings_Button_Save
+			// Button_Save
 			// 
-			this.Tasual_Settings_Button_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.Tasual_Settings_Button_Save.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.Tasual_Settings_Button_Save.Location = new System.Drawing.Point(248, 382);
-			this.Tasual_Settings_Button_Save.Name = "Tasual_Settings_Button_Save";
-			this.Tasual_Settings_Button_Save.Size = new System.Drawing.Size(75, 23);
-			this.Tasual_Settings_Button_Save.TabIndex = 11;
-			this.Tasual_Settings_Button_Save.Text = "Save";
-			this.Tasual_Settings_Button_Save.UseVisualStyleBackColor = true;
-			this.Tasual_Settings_Button_Save.Click += new System.EventHandler(this.Tasual_Settings_Button_Save_Click);
+			this.Button_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.Button_Save.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.Button_Save.Location = new System.Drawing.Point(248, 382);
+			this.Button_Save.Name = "Button_Save";
+			this.Button_Save.Size = new System.Drawing.Size(75, 23);
+			this.Button_Save.TabIndex = 11;
+			this.Button_Save.Text = "Save";
+			this.Button_Save.UseVisualStyleBackColor = true;
+			this.Button_Save.Click += new System.EventHandler(this.Button_Save_Click);
 			// 
-			// Tasual_Settings_Button_Cancel
+			// Button_Cancel
 			// 
-			this.Tasual_Settings_Button_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.Tasual_Settings_Button_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.Tasual_Settings_Button_Cancel.Location = new System.Drawing.Point(329, 382);
-			this.Tasual_Settings_Button_Cancel.Name = "Tasual_Settings_Button_Cancel";
-			this.Tasual_Settings_Button_Cancel.Size = new System.Drawing.Size(75, 23);
-			this.Tasual_Settings_Button_Cancel.TabIndex = 12;
-			this.Tasual_Settings_Button_Cancel.Text = "Cancel";
-			this.Tasual_Settings_Button_Cancel.UseVisualStyleBackColor = true;
+			this.Button_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.Button_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.Button_Cancel.Location = new System.Drawing.Point(329, 382);
+			this.Button_Cancel.Name = "Button_Cancel";
+			this.Button_Cancel.Size = new System.Drawing.Size(75, 23);
+			this.Button_Cancel.TabIndex = 12;
+			this.Button_Cancel.Text = "Cancel";
+			this.Button_Cancel.UseVisualStyleBackColor = true;
 			// 
-			// Tasual_Settings_CheckBox_SaveWindowPos
+			// CheckBox_SaveWindowPos
 			// 
-			this.Tasual_Settings_CheckBox_SaveWindowPos.AutoSize = true;
-			this.Tasual_Settings_CheckBox_SaveWindowPos.Location = new System.Drawing.Point(12, 92);
-			this.Tasual_Settings_CheckBox_SaveWindowPos.Name = "Tasual_Settings_CheckBox_SaveWindowPos";
-			this.Tasual_Settings_CheckBox_SaveWindowPos.Size = new System.Drawing.Size(155, 17);
-			this.Tasual_Settings_CheckBox_SaveWindowPos.TabIndex = 10;
-			this.Tasual_Settings_CheckBox_SaveWindowPos.Text = "Remember window position";
-			this.Tasual_Settings_CheckBox_SaveWindowPos.UseVisualStyleBackColor = true;
+			this.CheckBox_SaveWindowPos.AutoSize = true;
+			this.CheckBox_SaveWindowPos.Location = new System.Drawing.Point(12, 92);
+			this.CheckBox_SaveWindowPos.Name = "CheckBox_SaveWindowPos";
+			this.CheckBox_SaveWindowPos.Size = new System.Drawing.Size(155, 17);
+			this.CheckBox_SaveWindowPos.TabIndex = 10;
+			this.CheckBox_SaveWindowPos.Text = "Remember window position";
+			this.CheckBox_SaveWindowPos.UseVisualStyleBackColor = true;
 			// 
 			// Tasual_Settings
 			// 
-			this.AcceptButton = this.Tasual_Settings_Button_Save;
+			this.AcceptButton = this.Button_Save;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.CancelButton = this.Tasual_Settings_Button_Cancel;
+			this.CancelButton = this.Button_Cancel;
 			this.ClientSize = new System.Drawing.Size(416, 417);
-			this.Controls.Add(this.Tasual_Settings_Button_Cancel);
-			this.Controls.Add(this.Tasual_Settings_Button_Save);
-			this.Controls.Add(this.Tasual_Settings_GroupBox_Display);
-			this.Controls.Add(this.Tasual_Settings_GroupBox_Application);
+			this.Controls.Add(this.Button_Cancel);
+			this.Controls.Add(this.Button_Save);
+			this.Controls.Add(this.GroupBox_Display);
+			this.Controls.Add(this.GroupBox_Application);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "Tasual_Settings";
@@ -288,35 +288,35 @@
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Settings";
-			this.Load += new System.EventHandler(this.Tasual_Settings_Load);
-			this.Tasual_Settings_GroupBox_Application.ResumeLayout(false);
-			this.Tasual_Settings_GroupBox_Application.PerformLayout();
-			this.Tasual_Settings_GroupBox_Display.ResumeLayout(false);
-			this.Tasual_Settings_GroupBox_Display.PerformLayout();
+			this.Load += new System.EventHandler(this.Load);
+			this.GroupBox_Application.ResumeLayout(false);
+			this.GroupBox_Application.PerformLayout();
+			this.GroupBox_Display.ResumeLayout(false);
+			this.GroupBox_Display.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
 
 		#endregion
 
-		private System.Windows.Forms.CheckBox Tasual_Settings_CheckBox_GroupTasks;
-		private System.Windows.Forms.ComboBox Tasual_Settings_ComboBox_GroupStyle;
-		private System.Windows.Forms.CheckBox Tasual_Settings_CheckBox_AlwaysShowCompletedGroup;
-		private System.Windows.Forms.CheckBox Tasual_Settings_CheckBox_AlwaysShowOverdueGroup;
-		private System.Windows.Forms.CheckBox Tasual_Settings_CheckBox_AlwaysShowTodayGroup;
-		private System.Windows.Forms.CheckBox Tasual_Settings_CheckBox_LaunchOnStartup;
-		private System.Windows.Forms.CheckBox Tasual_Settings_CheckBox_MinimizeToTray;
-		private System.Windows.Forms.CheckBox Tasual_Settings_CheckBox_PromptClear;
-		private System.Windows.Forms.CheckBox Tasual_Settings_CheckBox_PromptDelete;
-		private System.Windows.Forms.GroupBox Tasual_Settings_GroupBox_Application;
-		private System.Windows.Forms.CheckBox Tasual_Settings_CheckBox_AlwaysOnTop;
-		private System.Windows.Forms.GroupBox Tasual_Settings_GroupBox_Display;
-		private System.Windows.Forms.ListBox Tasual_Settings_ListBox_EnabledColumns;
-		private System.Windows.Forms.Label Tasual_Settings_Label_Columns;
-		private System.Windows.Forms.Button Tasual_Settings_Button_Save;
-		private System.Windows.Forms.Button Tasual_Settings_Button_Cancel;
-		private System.Windows.Forms.CheckBox Tasual_Settings_CheckBox_ShowItemCounts;
-		private System.Windows.Forms.CheckBox Tasual_Settings_CheckBox_EnterToSave;
-		private System.Windows.Forms.CheckBox Tasual_Settings_CheckBox_SaveWindowPos;
+		private System.Windows.Forms.CheckBox CheckBox_GroupTasks;
+		private System.Windows.Forms.ComboBox ComboBox_GroupStyle;
+		private System.Windows.Forms.CheckBox CheckBox_AlwaysShowCompletedGroup;
+		private System.Windows.Forms.CheckBox CheckBox_AlwaysShowOverdueGroup;
+		private System.Windows.Forms.CheckBox CheckBox_AlwaysShowTodayGroup;
+		private System.Windows.Forms.CheckBox CheckBox_LaunchOnStartup;
+		private System.Windows.Forms.CheckBox CheckBox_MinimizeToTray;
+		private System.Windows.Forms.CheckBox CheckBox_PromptClear;
+		private System.Windows.Forms.CheckBox CheckBox_PromptDelete;
+		private System.Windows.Forms.GroupBox GroupBox_Application;
+		private System.Windows.Forms.CheckBox CheckBox_AlwaysOnTop;
+		private System.Windows.Forms.GroupBox GroupBox_Display;
+		private System.Windows.Forms.ListBox ListBox_EnabledColumns;
+		private System.Windows.Forms.Label Label_Columns;
+		private System.Windows.Forms.Button Button_Save;
+		private System.Windows.Forms.Button Button_Cancel;
+		private System.Windows.Forms.CheckBox CheckBox_ShowItemCounts;
+		private System.Windows.Forms.CheckBox CheckBox_EnterToSave;
+		private System.Windows.Forms.CheckBox CheckBox_SaveWindowPos;
 	}
 }

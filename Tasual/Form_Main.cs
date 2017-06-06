@@ -41,8 +41,8 @@ namespace Tasual
 
 			// Load Settings
 			Setting.Load(ref Settings);
-			Tasual_Settings_Relocate();
-			Tasual_Settings_Apply();
+			Relocate();
+			Apply();
 
 			// Load TaskArray
 			ArrayHandler.Load(ref TaskArray, Settings);
@@ -104,13 +104,13 @@ namespace Tasual
 			return false;
 		}
 
-		public void Tasual_Settings_Apply()
+		public void Apply()
 		{
 			TopMost = Settings.AlwaysOnTop;
 			StartupManager.SetStartupStatus(Settings.LaunchOnStartup);
 		}
 
-		public void Tasual_Settings_Relocate()
+		public void Relocate()
 		{
 			if (Settings.SaveWindowPos)
 			{
@@ -121,7 +121,7 @@ namespace Tasual
 			}
 		}
 
-		public void Tasual_Settings_Save()
+		public void Save()
 		{
 			Setting.Save(ref Settings);
 		}

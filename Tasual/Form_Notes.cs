@@ -74,7 +74,7 @@ namespace Tasual
 		{
 			TextBox.AcceptsReturn = !CheckBox.Checked;
 			MainForm.Settings.EnterToSave = CheckBox.Checked;
-			MainForm.Tasual_Settings_Save();
+			MainForm.Save();
 		}
 
 		private void FormLoad(object sender, EventArgs e)
