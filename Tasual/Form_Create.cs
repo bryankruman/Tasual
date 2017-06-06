@@ -665,36 +665,36 @@ namespace Tasual
 			}
 		}
 
-		private void FormLoad(object sender, EventArgs e)
+		private void FormLoad(object Sender, EventArgs Args)
 		{
 			CheckGroupBoxSize();
 			UpdateSummaryLabel();
 		}
 
-		private void TextBox_Description_TextChanged(object sender, EventArgs e)
+		private void TextBox_Description_TextChanged(object Sender, EventArgs Args)
 		{
 			// TODO: Parse this text to make sure we don't get any unwanted characters
 			// Note: This is probably the wrong eventhandler for this... we might need keydown or such
 		}
 
-		private void TextBox_Link_TextChanged(object sender, EventArgs e)
+		private void TextBox_Link_TextChanged(object Sender, EventArgs Args)
 		{
 			// TODO: Parse this text to make sure we don't get any unwanted characters
 			// Note: This is probably the wrong eventhandler for this... we might need keydown or such
 		}
 
-		private void TextBox_Location_TextChanged(object sender, EventArgs e)
+		private void TextBox_Location_TextChanged(object Sender, EventArgs Args)
 		{
 			// TODO: Parse this text to make sure we don't get any unwanted characters
 			// Note: This is probably the wrong eventhandler for this... we might need keydown or such
 		}
 
-		private void ComboBox_RepeatSimple_SelectedIndexChanged(object sender, EventArgs e)
+		private void ComboBox_RepeatSimple_SelectedIndexChanged(object Sender, EventArgs Args)
 		{
 			UpdateSummaryLabel();
 		}
 
-		private void DateTimePicker_StartDate_ValueChanged(object sender, EventArgs e)
+		private void DateTimePicker_StartDate_ValueChanged(object Sender, EventArgs Args)
 		{
 			// This didn't quite work as desired, instead lets just check when clicking the create 
 			// button whether or not the dates are acceptable.
@@ -706,7 +706,7 @@ namespace Tasual
 			UpdateSummaryLabel();
 		}
 
-		private void DateTimePicker_StartTime_ValueChanged(object sender, EventArgs e)
+		private void DateTimePicker_StartTime_ValueChanged(object Sender, EventArgs Args)
 		{
 			// This didn't quite work as desired, instead lets just check when clicking the create 
 			// button whether or not the dates are acceptable.
@@ -721,27 +721,27 @@ namespace Tasual
 			UpdateSummaryLabel();
 		}
 
-		private void DateTimePicker_EndDate_ValueChanged(object sender, EventArgs e)
+		private void DateTimePicker_EndDate_ValueChanged(object Sender, EventArgs Args)
 		{
 			UpdateSummaryLabel();
 		}
 
-		private void NumericUpDown_Type_RepeatSimple_ValueChanged(object sender, EventArgs e)
+		private void NumericUpDown_Type_RepeatSimple_ValueChanged(object Sender, EventArgs Args)
 		{
 			UpdateSummaryLabel();
 		}
 
-		private void NumericUpDown_Ends_Occurences_ValueChanged(object sender, EventArgs e)
+		private void NumericUpDown_Ends_Occurences_ValueChanged(object Sender, EventArgs Args)
 		{
 			UpdateSummaryLabel();
 		}
 
-		private void RadioButton_Time_AllDay_CheckedChanged(object sender, EventArgs e)
+		private void RadioButton_Time_AllDay_CheckedChanged(object Sender, EventArgs Args)
 		{
 			UpdateSummaryLabel();
 		}
 
-		private void RadioButton_Time_Specific_CheckedChanged(object sender, EventArgs e)
+		private void RadioButton_Time_Specific_CheckedChanged(object Sender, EventArgs Args)
 		{
 			if (RadioButton_Time_Specific.Checked)
 			{
@@ -754,7 +754,7 @@ namespace Tasual
 			UpdateSummaryLabel();
 		}
 
-		private void RadioButton_Type_Singular_CheckedChanged(object sender, EventArgs e)
+		private void RadioButton_Type_Singular_CheckedChanged(object Sender, EventArgs Args)
 		{
 			if (RadioButton_Type_Singular.Checked)
 			{
@@ -768,7 +768,7 @@ namespace Tasual
 			UpdateSummaryLabel();
 		}
 
-		private void RadioButton_Type_RepeatSimple_CheckedChanged(object sender, EventArgs e)
+		private void RadioButton_Type_RepeatSimple_CheckedChanged(object Sender, EventArgs Args)
 		{
 			if (RadioButton_Type_RepeatSimple.Checked)
 			{
@@ -784,7 +784,7 @@ namespace Tasual
 			UpdateSummaryLabel();
 		}
 
-		private void RadioButton_Type_RepeatCustom_CheckedChanged(object sender, EventArgs e)
+		private void RadioButton_Type_RepeatCustom_CheckedChanged(object Sender, EventArgs Args)
 		{
 			if (RadioButton_Type_RepeatCustom.Checked)
 			{
@@ -798,12 +798,12 @@ namespace Tasual
 			UpdateSummaryLabel();
 		}
 
-		private void RadioButton_Ends_Never_CheckedChanged(object sender, EventArgs e)
+		private void RadioButton_Ends_Never_CheckedChanged(object Sender, EventArgs Args)
 		{
 			UpdateSummaryLabel();
 		}
 
-		private void RadioButton_Ends_Occurences_CheckedChanged(object sender, EventArgs e)
+		private void RadioButton_Ends_Occurences_CheckedChanged(object Sender, EventArgs Args)
 		{
 			if (RadioButton_Ends_Occurences.Checked)
 			{
@@ -816,7 +816,7 @@ namespace Tasual
 			UpdateSummaryLabel();
 		}
 
-		private void RadioButton_Ends_OnDate_CheckedChanged(object sender, EventArgs e)
+		private void RadioButton_Ends_OnDate_CheckedChanged(object Sender, EventArgs Args)
 		{
 			if (RadioButton_Ends_OnDate.Checked)
 			{
@@ -829,7 +829,7 @@ namespace Tasual
 			UpdateSummaryLabel();
 		}
 
-		private void CheckBox_Scheduled_CheckedChanged(object sender, EventArgs e)
+		private void CheckBox_Scheduled_CheckedChanged(object Sender, EventArgs Args)
 		{
 			if (CheckBox_Scheduled.Checked)
 			{
@@ -842,9 +842,9 @@ namespace Tasual
 			UpdateSummaryLabel();
 		}
 
-		private void Label_DaySel_Specific_Click(object sender, EventArgs e)
+		private void Label_DaySel_Specific_Click(object Sender, EventArgs Args)
 		{
-			Label Label = sender as Label;
+			Label Label = Sender as Label;
 
 			bool Selected = false;
 			if (Label.Tag == null)
@@ -869,28 +869,28 @@ namespace Tasual
 			UpdateSummaryLabel();
 		}
 
-		private void Label_DaySel_All_Click(object sender, EventArgs e)
+		private void Label_DaySel_All_Click(object Sender, EventArgs Args)
 		{
-			AllNoneSelection((Label)sender, SelectionLabels_Days);
+			AllNoneSelection((Label)Sender, SelectionLabels_Days);
 			TagLabel(Label_DaySel_Specific, false);
 			UpdateSummaryLabel();
 		}
 
-		private void Label_WeekSel_All_Click(object sender, EventArgs e)
+		private void Label_WeekSel_All_Click(object Sender, EventArgs Args)
 		{
-			AllNoneSelection((Label)sender, SelectionLabels_Weeks);
+			AllNoneSelection((Label)Sender, SelectionLabels_Weeks);
 			UpdateSummaryLabel();
 		}
 
-		private void Label_MonthSel_All_Click(object sender, EventArgs e)
+		private void Label_MonthSel_All_Click(object Sender, EventArgs Args)
 		{
-			AllNoneSelection((Label)sender, SelectionLabels_Months);
+			AllNoneSelection((Label)Sender, SelectionLabels_Months);
 			UpdateSummaryLabel();
 		}
 
-		private void Label_DaySel_ClickHandler(object sender, EventArgs e)
+		private void Label_DaySel_ClickHandler(object Sender, EventArgs Args)
 		{
-			Label Label = sender as Label;
+			Label Label = Sender as Label;
 
 			if (Label.Tag == null)
 			{
@@ -909,9 +909,9 @@ namespace Tasual
 			UpdateSummaryLabel();
 		}
 
-		private void Label_WeekSel_ClickHandler(object sender, EventArgs e)
+		private void Label_WeekSel_ClickHandler(object Sender, EventArgs Args)
 		{
-			Label Label = sender as Label;
+			Label Label = Sender as Label;
 
 			if (Label.Tag == null)
 			{
@@ -929,9 +929,9 @@ namespace Tasual
 			UpdateSummaryLabel();
 		}
 
-		private void Label_MonthSel_ClickHandler(object sender, EventArgs e)
+		private void Label_MonthSel_ClickHandler(object Sender, EventArgs Args)
 		{
-			Label Label = sender as Label;
+			Label Label = Sender as Label;
 
 			if (Label.Tag == null)
 			{
@@ -949,13 +949,13 @@ namespace Tasual
 			UpdateSummaryLabel();
 		}
 
-		private void Button_Notes_Click(object sender, EventArgs e)
+		private void Button_Notes_Click(object Sender, EventArgs Args)
 		{
 			Form_Notes NotesForm = new Form_Notes(MainForm, this);
 			NotesForm.ShowDialog(this);
 		}
 
-		private void Button_Create_Click(object sender, EventArgs e)
+		private void Button_Create_Click(object Sender, EventArgs Args)
 		{
 			Task Task = new Task();
 
@@ -1127,7 +1127,7 @@ namespace Tasual
 			Close();
 		}
 
-		private void Button_Cancel_Click(object sender, EventArgs e)
+		private void Button_Cancel_Click(object Sender, EventArgs Args)
 		{
 			Close();
 		}
@@ -1168,7 +1168,7 @@ namespace Tasual
 			}
 		}
 
-		private void TextBox_Link_Enter(object sender, EventArgs e)
+		private void TextBox_Link_Enter(object Sender, EventArgs Args)
 		{
 			if (TextBox_Link.Text == "Link")
 			{
@@ -1177,7 +1177,7 @@ namespace Tasual
 			TextBox_Link_CheckColor();
 		}
 
-		private void TextBox_Link_Leave(object sender, EventArgs e)
+		private void TextBox_Link_Leave(object Sender, EventArgs Args)
 		{
 			if (TextBox_Link.Text == "")
 			{
@@ -1186,7 +1186,7 @@ namespace Tasual
 			TextBox_Link_CheckColor();
 		}
 
-		private void TextBox_Location_Enter(object sender, EventArgs e)
+		private void TextBox_Location_Enter(object Sender, EventArgs Args)
 		{
 			if (TextBox_Location.Text == "Location")
 			{
@@ -1195,7 +1195,7 @@ namespace Tasual
 			TextBox_Location_CheckColor();
 		}
 
-		private void TextBox_Location_Leave(object sender, EventArgs e)
+		private void TextBox_Location_Leave(object Sender, EventArgs Args)
 		{
 			if (TextBox_Location.Text == "")
 			{
@@ -1204,7 +1204,7 @@ namespace Tasual
 			TextBox_Location_CheckColor();
 		}
 
-		private void TextBox_Description_Enter(object sender, EventArgs e)
+		private void TextBox_Description_Enter(object Sender, EventArgs Args)
 		{
 			if (TextBox_Description.Text == "Description")
 			{
@@ -1213,7 +1213,7 @@ namespace Tasual
 			TextBox_Description_CheckColor();
 		}
 
-		private void TextBox_Description_Leave(object sender, EventArgs e)
+		private void TextBox_Description_Leave(object Sender, EventArgs Args)
 		{
 			if (TextBox_Description.Text == "")
 			{

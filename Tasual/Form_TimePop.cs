@@ -110,34 +110,34 @@ namespace Tasual
 			CheckEnableStatus();
 		}
 
-		private void Tasual_CalendarPopout_Deactivate(object sender, EventArgs e)
+		private void Tasual_CalendarPopout_Deactivate(object Sender, EventArgs Args)
 		{
 			this.Close();
 		}
 
-		private void CheckBox_CheckedChanged(object sender, EventArgs e)
+		private void CheckBox_CheckedChanged(object Sender, EventArgs Args)
 		{
 			CheckEnableStatus();
 		}
 
-		private void RadioButton_AllDay_CheckedChanged(object sender, EventArgs e)
+		private void RadioButton_AllDay_CheckedChanged(object Sender, EventArgs Args)
 		{
 			CheckEnableStatus();
 		}
 
-		private void RadioButton_Specific_CheckedChanged(object sender, EventArgs e)
+		private void RadioButton_Specific_CheckedChanged(object Sender, EventArgs Args)
 		{
 			CheckEnableStatus();
 		}
 
-		private void LinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		private void LinkLabel_LinkClicked(object Sender, LinkLabelLinkClickedEventArgs Args)
 		{
 			Form_Create CreateForm = new Form_Create(MainForm, MainForm.TaskArray.IndexOf(_Task));
 			CreateForm.ShowDialog(MainForm);
 			Close();
 		}
 
-		private void Button_Save_Click(object sender, EventArgs e)
+		private void Button_Save_Click(object Sender, EventArgs Args)
 		{
 			DateTime NewTime = new DateTime();
 			NewTime = Calendar.SelectionStart;
@@ -199,7 +199,7 @@ namespace Tasual
 			Close();
 		}
 
-		private void Button_Cancel_Click(object sender, EventArgs e)
+		private void Button_Cancel_Click(object Sender, EventArgs Args)
 		{
 			Close();
 		}

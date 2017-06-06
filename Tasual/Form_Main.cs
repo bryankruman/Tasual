@@ -342,19 +342,19 @@ namespace Tasual
 		//  ListView Functions
 		// ====================
 
-		private void ListView_FormatRow(object sender, FormatRowEventArgs e)
+		private void ListView_FormatRow(object Sender, FormatRowEventArgs Args)
 		{
-			if (e.Item.Checked)
+			if (Args.Item.Checked)
 			{
-				e.Item.ForeColor = Color.FromArgb(255, 189, 208, 230);
+				Args.Item.ForeColor = Color.FromArgb(255, 189, 208, 230);
 			}
 			else
 			{
-				e.Item.ForeColor = Color.FromArgb(255, 36, 90, 150);
+				Args.Item.ForeColor = Color.FromArgb(255, 36, 90, 150);
 			}
 		}
 
-		private void ListView_ModelCanDrop_Category(object sender, ModelDropEventArgs Args)
+		private void ListView_ModelCanDrop_Category(object Sender, ModelDropEventArgs Args)
 		{
 			Task Target = (Task)Args.TargetModel;
 			Args.Effect = DragDropEffects.None;
@@ -373,7 +373,7 @@ namespace Tasual
 			}
 		}
 
-		private void ListView_ModelCanDrop_DueTime(object sender, ModelDropEventArgs Args)
+		private void ListView_ModelCanDrop_DueTime(object Sender, ModelDropEventArgs Args)
 		{
 			Task Target = (Task)Args.TargetModel;
 			Args.Effect = DragDropEffects.None;
@@ -392,22 +392,22 @@ namespace Tasual
 			}
 		}
 
-		private void ListView_ModelCanDrop_ChooseHandler(object sender, ModelDropEventArgs Args)
+		private void ListView_ModelCanDrop_ChooseHandler(object Sender, ModelDropEventArgs Args)
 		{
 			if (Settings.GroupTasks)
 			{
 				if (Settings.GroupStyle == Setting.GroupStyles.Category)
 				{
-					ListView_ModelCanDrop_Category(sender, Args);
+					ListView_ModelCanDrop_Category(Sender, Args);
 				}
 				else if (Settings.GroupStyle == Setting.GroupStyles.DueTime)
 				{
-					ListView_ModelCanDrop_DueTime(sender, Args);
+					ListView_ModelCanDrop_DueTime(Sender, Args);
 				}
 			}
 		}
 
-		private void ListView_ModelDropped_Category(object sender, ModelDropEventArgs Args)
+		private void ListView_ModelDropped_Category(object Sender, ModelDropEventArgs Args)
 		{
 			Task Target = (Task)Args.TargetModel;
 			if (Target == null) { return; }
@@ -570,7 +570,7 @@ namespace Tasual
 			ListView.BuildList();
 		}
 
-		private void ListView_ModelDropped_DueTime(object sender, ModelDropEventArgs Args)
+		private void ListView_ModelDropped_DueTime(object Sender, ModelDropEventArgs Args)
 		{
 			Task Target = (Task)Args.TargetModel;
 			if (Target == null) { return; }
@@ -750,17 +750,17 @@ namespace Tasual
 			ListView.BuildList();
 		}
 
-		private void ListView_ModelDropped_ChooseHandler(object sender, ModelDropEventArgs Args)
+		private void ListView_ModelDropped_ChooseHandler(object Sender, ModelDropEventArgs Args)
 		{
 			if (Settings.GroupTasks)
 			{
 				if (Settings.GroupStyle == Setting.GroupStyles.Category)
 				{
-					ListView_ModelDropped_Category(sender, Args);
+					ListView_ModelDropped_Category(Sender, Args);
 				}
 				else if (Settings.GroupStyle == Setting.GroupStyles.DueTime)
 				{
-					ListView_ModelDropped_DueTime(sender, Args);
+					ListView_ModelDropped_DueTime(Sender, Args);
 				}
 			}
 		}
@@ -978,19 +978,19 @@ namespace Tasual
 		// ====================
 
 		// Main: "Create"
-		private void MenuStrip_Create_Advanced_Click(object sender, EventArgs e)
+		private void MenuStrip_Create_Advanced_Click(object Sender, EventArgs Args)
 		{
 			Form_Create CreateForm = new Form_Create(this);
 			CreateForm.ShowDialog(this);
 		}
 
-		private void MenuStrip_Create_Quick_Click(object sender, EventArgs e)
+		private void MenuStrip_Create_Quick_Click(object Sender, EventArgs Args)
 		{
 			QuickCreate();
 		}
 
 		// Main: "Edit"
-		private void MenuStrip_Edit_Advanced_Click(object sender, EventArgs e)
+		private void MenuStrip_Edit_Advanced_Click(object Sender, EventArgs Args)
 		{
 			if (ListView.SelectedItem != null)
 			{
@@ -1000,7 +1000,7 @@ namespace Tasual
 			}
 		}
 
-		private void MenuStrip_Edit_Quick_Click(object sender, EventArgs e)
+		private void MenuStrip_Edit_Quick_Click(object Sender, EventArgs Args)
 		{
 			if (ListView.SelectedItem != null)
 			{
@@ -1012,26 +1012,26 @@ namespace Tasual
 		}
 
 		// Main: "Settings"
-		private void MenuStrip_Settings_Click(object sender, EventArgs e)
+		private void MenuStrip_Settings_Click(object Sender, EventArgs Args)
 		{
 			Form_Settings SettingsForm = new Form_Settings(this);
 			SettingsForm.ShowDialog(this);
 		}
 
 		// Main: "Sources"
-		private void MenuStrip_Sources_Click(object sender, EventArgs e)
+		private void MenuStrip_Sources_Click(object Sender, EventArgs Args)
 		{
 			// Currently unused
 		}
 
 		// ListView: "Group"
-		private void MenuStrip_Group_Create_Advanced_Click(object sender, EventArgs e)
+		private void MenuStrip_Group_Create_Advanced_Click(object Sender, EventArgs Args)
 		{
 			Form_Create CreateForm = new Form_Create(this);
 			CreateForm.ShowDialog(this);
 		}
 
-		private void MenuStrip_Group_Create_Quick_Click(object sender, EventArgs e)
+		private void MenuStrip_Group_Create_Quick_Click(object Sender, EventArgs Args)
 		{
 			OLVGroup Group = (OLVGroup)MenuStrip_Group.Tag;
 			if (TaskArray.Any(Task => (Task.Group == Group.Name)))
@@ -1041,7 +1041,7 @@ namespace Tasual
 			QuickCreate();
 		}
 
-		private void MenuStrip_Group_Delete_Click(object sender, EventArgs e)
+		private void MenuStrip_Group_Delete_Click(object Sender, EventArgs Args)
 		{
 			if (!ConfirmAction(Settings.PromptDelete, "delete this group")) { return; }
 
@@ -1066,22 +1066,22 @@ namespace Tasual
 			StatusLabel_UpdateCounts();
 		}
 
-		private void MenuStrip_Group_Hide_Click(object sender, EventArgs e)
+		private void MenuStrip_Group_Hide_Click(object Sender, EventArgs Args)
 		{
 			OLVGroup Group = (OLVGroup)MenuStrip_Group.Tag;
 			Group.Collapsed = true;
 		}
 
-		private void MenuStrip_Group_MoveTasks_ClickHandler(object sender, EventArgs e)
+		private void MenuStrip_Group_MoveTasks_ClickHandler(object Sender, EventArgs Args)
 		{
-			ToolStripDropDownItem Item = (ToolStripDropDownItem)sender;
+			ToolStripDropDownItem Item = (ToolStripDropDownItem)Sender;
 			OLVGroup Group = (OLVGroup)MenuStrip_Group.Tag;
 			ArrayHandler.ReAssignGroup(TaskArray, Group.Name, Item.Text);
 			UpdateGroupKeys();
 			ListView.BuildList();
 		}
 
-		private void MenuStrip_Group_MoveTasks_DropDownOpening(object sender, EventArgs e)
+		private void MenuStrip_Group_MoveTasks_DropDownOpening(object Sender, EventArgs Args)
 		{
 			OLVGroup Group = (OLVGroup)MenuStrip_Group.Tag;
 			List<string> AlreadySelectedGroups = new List<string>();
@@ -1105,7 +1105,7 @@ namespace Tasual
 			}
 		}
 
-		private void MenuStrip_Group_Opening(object sender, CancelEventArgs e)
+		private void MenuStrip_Group_Opening(object Sender, CancelEventArgs Args)
 		{
 			OLVGroup Group = (OLVGroup)MenuStrip_Group.Tag;
 
@@ -1121,54 +1121,54 @@ namespace Tasual
 			}
 		}
 
-		private void MenuStrip_Group_Show_Click(object sender, EventArgs e)
+		private void MenuStrip_Group_Show_Click(object Sender, EventArgs Args)
 		{
 			OLVGroup Group = (OLVGroup)MenuStrip_Group.Tag;
 			Group.Collapsed = false;
 		}
 
 		// ListView: "Icon"
-		private void MenuStrip_Icon_AddLink_Click(object sender, EventArgs e)
+		private void MenuStrip_Icon_AddLink_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 			Form_Link LinkForm = new Form_Link(this, TaskArray.IndexOf(Task));
 			LinkForm.ShowDialog(this);
 		}
 
-		private void MenuStrip_Icon_AddLocation_Click(object sender, EventArgs e)
+		private void MenuStrip_Icon_AddLocation_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 			Form_Location LocationForm = new Form_Location(this, TaskArray.IndexOf(Task));
 			LocationForm.ShowDialog(this);
 		}
 
-		private void MenuStrip_Icon_AddNotes_Click(object sender, EventArgs e)
+		private void MenuStrip_Icon_AddNotes_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 			Form_Notes NotesForm = new Form_Notes(this, TaskArray.IndexOf(Task));
 			NotesForm.ShowDialog(this);
 		}
 
-		private void MenuStrip_Icon_Link_Clipboard_Click(object sender, EventArgs e)
+		private void MenuStrip_Icon_Link_Clipboard_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 			Clipboard.SetText(Task.Link);
 		}
 
-		private void MenuStrip_Icon_Link_Edit_Click(object sender, EventArgs e)
+		private void MenuStrip_Icon_Link_Edit_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 			Form_Link LinkForm = new Form_Link(this, TaskArray.IndexOf(Task));
 			LinkForm.ShowDialog(this);
 		}
 
-		private void MenuStrip_Icon_Link_Follow_Click(object sender, EventArgs e)
+		private void MenuStrip_Icon_Link_Follow_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 			URLExtensions.Follow(Task.Link);
 		}
 
-		private void MenuStrip_Icon_Link_Remove_Click(object sender, EventArgs e)
+		private void MenuStrip_Icon_Link_Remove_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 			Task.Link = "";
@@ -1177,26 +1177,26 @@ namespace Tasual
 			ListView.BuildList();
 		}
 
-		private void MenuStrip_Icon_Location_Clipboard_Click(object sender, EventArgs e)
+		private void MenuStrip_Icon_Location_Clipboard_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 			Clipboard.SetText(Task.Location);
 		}
 
-		private void MenuStrip_Icon_Location_Edit_Click(object sender, EventArgs e)
+		private void MenuStrip_Icon_Location_Edit_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 			Form_Location LocationForm = new Form_Location(this, TaskArray.IndexOf(Task));
 			LocationForm.ShowDialog(this);
 		}
 
-		private void MenuStrip_Icon_Location_Maps_Click(object sender, EventArgs e)
+		private void MenuStrip_Icon_Location_Maps_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 			URLExtensions.Follow(string.Format("http://maps.google.com/?q={0}", Uri.EscapeDataString(Task.Location)));
 		}
 
-		private void MenuStrip_Icon_Location_Remove_Click(object sender, EventArgs e)
+		private void MenuStrip_Icon_Location_Remove_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 			Task.Location = "";
@@ -1205,20 +1205,20 @@ namespace Tasual
 			ListView.BuildList();
 		}
 
-		private void MenuStrip_Icon_Notes_Clipboard_Click(object sender, EventArgs e)
+		private void MenuStrip_Icon_Notes_Clipboard_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 			Clipboard.SetText(Task.Notes);
 		}
 
-		private void MenuStrip_Icon_Notes_Edit_Click(object sender, EventArgs e)
+		private void MenuStrip_Icon_Notes_Edit_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 			Form_Notes NotesForm = new Form_Notes(this, TaskArray.IndexOf(Task));
 			NotesForm.ShowDialog(this);
 		}
 
-		private void MenuStrip_Icon_Notes_Remove_Click(object sender, EventArgs e)
+		private void MenuStrip_Icon_Notes_Remove_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 			Task.Notes = "";
@@ -1227,7 +1227,7 @@ namespace Tasual
 			ListView.BuildList();
 		}
 
-		private void MenuStrip_Icon_Opening(object sender, CancelEventArgs e)
+		private void MenuStrip_Icon_Opening(object Sender, CancelEventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 
@@ -1273,18 +1273,18 @@ namespace Tasual
 		}
 
 		// ListView: "Item"
-		private void MenuStrip_Item_Create_Quick_Click(object sender, EventArgs e)
+		private void MenuStrip_Item_Create_Quick_Click(object Sender, EventArgs Args)
 		{
 			QuickCreate();
 		}
 
-		private void MenuStrip_Item_Create_Advanced_Click(object sender, EventArgs e)
+		private void MenuStrip_Item_Create_Advanced_Click(object Sender, EventArgs Args)
 		{
 			Form_Create CreateForm = new Form_Create(this);
 			CreateForm.ShowDialog(this);
 		}
 
-		private void MenuStrip_Item_Delete_Click(object sender, EventArgs e)
+		private void MenuStrip_Item_Delete_Click(object Sender, EventArgs Args)
 		{
 			if (ConfirmAction(Settings.PromptDelete, "delete this task"))
 			{
@@ -1296,7 +1296,7 @@ namespace Tasual
 			}
 		}
 
-		private void MenuStrip_Item_Duplicate_Click(object sender, EventArgs e)
+		private void MenuStrip_Item_Duplicate_Click(object Sender, EventArgs Args)
 		{
 			// PRETTY MUCH do a clean copy here, but with some minor caveats
 
@@ -1341,30 +1341,30 @@ namespace Tasual
 			StatusLabel_UpdateCounts();
 		}
 
-		private void MenuStrip_Item_Edit_Advanced_Click(object sender, EventArgs e)
+		private void MenuStrip_Item_Edit_Advanced_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Item.Tag;
 			Form_Create CreateForm = new Form_Create(this, TaskArray.IndexOf(Task));
 			CreateForm.ShowDialog(this);
 		}
 
-		private void MenuStrip_Item_Edit_Quick_Click(object sender, EventArgs e)
+		private void MenuStrip_Item_Edit_Quick_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Item.Tag;
 			ListView.PossibleFinishCellEditing();
 			ListView.EditModel(Task);
 		}
 
-		private void MenuStrip_Item_Move_ClickHandler(object sender, EventArgs e)
+		private void MenuStrip_Item_Move_ClickHandler(object Sender, EventArgs Args)
 		{
-			ToolStripDropDownItem Item = (ToolStripDropDownItem)sender;
+			ToolStripDropDownItem Item = (ToolStripDropDownItem)Sender;
 			Task Task = (Task)MenuStrip_Item.Tag;
 			Task.Group = Item.Text;
 			UpdateGroupKeys(Task);
 			ListView.BuildList();
 		}
 
-		private void MenuStrip_Item_Move_DropDownOpening(object sender, EventArgs e)
+		private void MenuStrip_Item_Move_DropDownOpening(object Sender, EventArgs Args)
 		{
 			Task TaggedTask = (Task)MenuStrip_Item.Tag;
 			List<string> AlreadySelectedGroups = new List<string>();
@@ -1385,7 +1385,7 @@ namespace Tasual
 		}
 
 		// Notify: "Notify"
-		private void MenuStrip_Notify_Show_Click(object sender, EventArgs e)
+		private void MenuStrip_Notify_Show_Click(object Sender, EventArgs Args)
 		{
 			if (WindowState == FormWindowState.Minimized)
 			{
@@ -1394,19 +1394,19 @@ namespace Tasual
 			Activate();
 		}
 
-		private void MenuStrip_Notify_Settings_Click(object sender, EventArgs e)
+		private void MenuStrip_Notify_Settings_Click(object Sender, EventArgs Args)
 		{
 			Form_Settings SettingsForm = new Form_Settings(this);
 			SettingsForm.ShowDialog(this);
 		}
 
-		private void MenuStrip_Notify_Quit_Click(object sender, EventArgs e)
+		private void MenuStrip_Notify_Quit_Click(object Sender, EventArgs Args)
 		{
 			Close();
 		}
 
 		// StatusLabel: "Status"
-		private void MenuStrip_Status_Clear_Click(object sender, EventArgs e)
+		private void MenuStrip_Status_Clear_Click(object Sender, EventArgs Args)
 		{
 			if (ConfirmAction(Settings.PromptClear, "clear all tasks"))
 			{ 
@@ -1420,7 +1420,7 @@ namespace Tasual
 		// ================
 
 		// Main Form
-		private void Main_FormClosing(object sender, FormClosingEventArgs e)
+		private void Main_FormClosing(object Sender, FormClosingEventArgs Args)
 		{
 			if (Settings.SaveWindowPos)
 			{
@@ -1451,7 +1451,7 @@ namespace Tasual
 			Notify.Dispose();
 		}
 
-		private void Main_Resize(object sender, EventArgs e)
+		private void Main_Resize(object Sender, EventArgs Args)
 		{
 			if (Settings.MinimizeToTray)
 			{
@@ -1471,15 +1471,15 @@ namespace Tasual
 		}
 
 		// Update timer
-		private void Timer_CheckUpdate_Tick(object sender, EventArgs e)
+		private void Timer_CheckUpdate_Tick(object Sender, EventArgs Args)
 		{
 			CheckNeedsUpdate();
 		}
 
 		// Notification Icon
-		private void Notify_MouseClick(object sender, MouseEventArgs e)
+		private void Notify_MouseClick(object Sender, MouseEventArgs Args)
 		{
-			if (e.Button == MouseButtons.Left)
+			if (Args.Button == MouseButtons.Left)
 			{
 				if (WindowState == FormWindowState.Minimized)
 				{
@@ -1487,28 +1487,28 @@ namespace Tasual
 				}
 				Activate();
 			}
-			else if (e.Button == MouseButtons.Right)
+			else if (Args.Button == MouseButtons.Right)
 			{
 				MenuStrip_Notify.Show(Cursor.Position);
 			}
 		}
 
 		// Labels
-		private void StatusLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		private void StatusLabel_LinkClicked(object Sender, LinkLabelLinkClickedEventArgs Args)
 		{
 			MenuStrip_Status.Show(StatusLabel, new Point(0, StatusLabel.Height));
 		}
 
-		private void AboutLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		private void AboutLabel_LinkClicked(object Sender, LinkLabelLinkClickedEventArgs Args)
 		{
 			Form_About AboutForm = new Form_About();
 			AboutForm.ShowDialog(this);
 		}
 
 		// ListView: Misc handlers
-		private void ListView_AboutToCreateGroups(object sender, CreateGroupsEventArgs e)
+		private void ListView_AboutToCreateGroups(object Sender, CreateGroupsEventArgs Args)
 		{
-			foreach (OLVGroup Group in e.Groups)
+			foreach (OLVGroup Group in Args.Groups)
 			{
 				Group.Name = Group.Header;
 				if (Settings.ShowItemCounts)
@@ -1523,9 +1523,9 @@ namespace Tasual
 			}
 		}
 
-		private void ListView_CellEditFinished(object sender, CellEditEventArgs e)
+		private void ListView_CellEditFinished(object Sender, CellEditEventArgs Args)
 		{
-			Task Task = e.RowObject as Task;
+			Task Task = Args.RowObject as Task;
 			if (Task == null) { return; }
 
 			if (string.IsNullOrEmpty(Task.Description))
@@ -1540,11 +1540,11 @@ namespace Tasual
 			MenuStrip_Edit.Enabled = false;
 		}
 
-		private void ListView_ItemChecked(object sender, ItemCheckedEventArgs e)
+		private void ListView_ItemChecked(object Sender, ItemCheckedEventArgs Args)
 		{
 			/*Console.WriteLine("hmm");
 
-			//e.Item.
+			//Args.Item.
 			\
 
 			CheckedTime = DateTime.MinValue;
@@ -1553,7 +1553,7 @@ namespace Tasual
 			StatusLabel_UpdateCounts();*/
 		}
 
-		private void ListView_SelectedIndexChanged(object sender, EventArgs e)
+		private void ListView_SelectedIndexChanged(object Sender, EventArgs Args)
 		{
 			if (ListView.SelectedItem != null)
 			{
@@ -1567,7 +1567,7 @@ namespace Tasual
 		}
 
 		// ListView: Click handlers
-		private void ListView_SingleClick(MouseEventArgs e)
+		private void ListView_SingleClick(MouseEventArgs Args)
 		{
 			if (ListView_PreviouslySelected == true)
 			{
@@ -1582,9 +1582,9 @@ namespace Tasual
 			}
 		}
 
-		private void ListView_DoubleClick(MouseEventArgs e)
+		private void ListView_DoubleClick(MouseEventArgs Args)
 		{
-			OlvListViewHitTestInfo SecondClickInfo = ListView.OlvHitTest(e.X, e.Y);
+			OlvListViewHitTestInfo SecondClickInfo = ListView.OlvHitTest(Args.X, Args.Y);
 
 			if ((ListView_FirstClickInfo.Item != null) && (SecondClickInfo.Item != null))
 			{
@@ -1601,7 +1601,7 @@ namespace Tasual
 			}
 		}
 
-		private void Timer_ListViewClick_Tick(object sender, EventArgs e)
+		private void Timer_ListViewClick_Tick(object Sender, EventArgs Args)
 		{
 			if ((MouseButtons & MouseButtons.Left) == 0)
 			{
@@ -1612,15 +1612,15 @@ namespace Tasual
 			Timer_ListViewClick.Stop();
 		}
 
-		private void ListView_MouseDown(object sender, MouseEventArgs e)
+		private void ListView_MouseDown(object Sender, MouseEventArgs Args)
 		{
-			OlvListViewHitTestInfo Info = ListView.OlvHitTest(e.X, e.Y);
+			OlvListViewHitTestInfo Info = ListView.OlvHitTest(Args.X, Args.Y);
 
 			if (Info.Group != null)
 			{
 				//Console.WriteLine("Item: {0}", (Info.Column != null) ? Info.Column.Name : "foobar");
 				// TODO: Fix the issue where clicking blank space inside of the group still triggers the group
-				if (e.Button == MouseButtons.Right)
+				if (Args.Button == MouseButtons.Right)
 				{
 					MenuStrip_Group.Tag = Info.Group;
 					MenuStrip_Group.Show(Cursor.Position);
@@ -1628,7 +1628,7 @@ namespace Tasual
 			}
 			else if (Info.Item != null)
 			{
-				if (Timer_ListViewClick.Enabled && (e.Button == MouseButtons.Left)) // second click
+				if (Timer_ListViewClick.Enabled && (Args.Button == MouseButtons.Left)) // second click
 				{
 					if (ListView_FirstClickInfo.Item != null)
 					{
@@ -1648,7 +1648,7 @@ namespace Tasual
 					{
 						case "Description":
 							{
-								if (e.Button == MouseButtons.Left)
+								if (Args.Button == MouseButtons.Left)
 								{
 									Timer_ListViewClick.Start();
 
@@ -1658,7 +1658,7 @@ namespace Tasual
 									}
 
 									ListView_FirstClickInfo = Info;
-									Timer_ListViewClick.Tag = e;
+									Timer_ListViewClick.Tag = Args;
 								}
 								else
 								{
@@ -1699,7 +1699,7 @@ namespace Tasual
 			}*/
 		}
 
-		private void ListView_MouseUp(object sender, MouseEventArgs e)
+		private void ListView_MouseUp(object Sender, MouseEventArgs Args)
 		{
 			if (CalendarPopout != null)
 			{
@@ -1724,9 +1724,9 @@ namespace Tasual
 			}
 		}
 
-		private void ListView_KeyDown(object sender, KeyEventArgs e)
+		private void ListView_KeyDown(object Sender, KeyEventArgs Args)
 		{
-			switch (e.KeyCode)
+			switch (Args.KeyCode)
 			{
 				case Keys.Delete:
 					{

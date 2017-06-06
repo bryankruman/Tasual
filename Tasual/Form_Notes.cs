@@ -22,9 +22,9 @@ namespace Tasual
 
 				TextBox.Text = Task.Notes;
 			}
-			catch (Exception e)
+			catch (Exception Args)
 			{
-				Console.WriteLine(e);
+				Console.WriteLine(Args);
 				Close();
 			}
 		}
@@ -41,14 +41,14 @@ namespace Tasual
 
 				TextBox.Text = _Tasual_Create.Notes;
 			}
-			catch (Exception e)
+			catch (Exception Args)
 			{
-				Console.WriteLine(e);
+				Console.WriteLine(Args);
 				Close();
 			}
 		}
 
-		private void Save_Click(object sender, EventArgs e)
+		private void Save_Click(object Sender, EventArgs Args)
 		{
 			if (Origination == 1)
 			{
@@ -70,14 +70,14 @@ namespace Tasual
 			}
 		}
 
-		private void CheckBox_CheckedChanged(object sender, EventArgs e)
+		private void CheckBox_CheckedChanged(object Sender, EventArgs Args)
 		{
 			TextBox.AcceptsReturn = !CheckBox.Checked;
 			MainForm.Settings.EnterToSave = CheckBox.Checked;
 			MainForm.Save();
 		}
 
-		private void FormLoad(object sender, EventArgs e)
+		private void FormLoad(object Sender, EventArgs Args)
 		{
 			TextBox.AcceptsReturn = !MainForm.Settings.EnterToSave;
 			CheckBox.Checked = MainForm.Settings.EnterToSave;

@@ -54,7 +54,7 @@ namespace Tasual
 			}
 		}
 
-		private void FormLoad(object sender, EventArgs e)
+		private void FormLoad(object Sender, EventArgs Args)
 		{
 			CheckBox_LaunchOnStartup.Checked = MainForm.Settings.LaunchOnStartup;
 			CheckBox_MinimizeToTray.Checked = MainForm.Settings.MinimizeToTray;
@@ -79,17 +79,17 @@ namespace Tasual
 			ListBox_EnabledColumns.SetSelected(3, ((MainForm.Settings.EnabledColumns & Setting.Columns.Time) != 0));
 		}
 
-		private void CheckBox_GroupTasks_CheckedChanged(object sender, EventArgs e)
+		private void CheckBox_GroupTasks_CheckedChanged(object Sender, EventArgs Args)
 		{
 			UpdateGroupTasks();
 		}
 
-		private void ComboBox_GroupStyle_SelectedIndexChanged(object sender, EventArgs e)
+		private void ComboBox_GroupStyle_SelectedIndexChanged(object Sender, EventArgs Args)
 		{
 			UpdateGroupTasks();
 		}
 
-		private void Button_Save_Click(object sender, EventArgs e)
+		private void Button_Save_Click(object Sender, EventArgs Args)
 		{
 			MainForm.Settings.LaunchOnStartup = CheckBox_LaunchOnStartup.Checked;
 			MainForm.Settings.MinimizeToTray = CheckBox_MinimizeToTray.Checked;

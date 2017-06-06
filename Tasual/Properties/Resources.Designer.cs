@@ -65,7 +65,7 @@ namespace Tasual.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Add {
             get {
-                object obj = ResourceManager.GetObject("Add", resourceCulture);
+                object obj = ResourceManager.GetObject("Add", resourceCulturArgs);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -75,7 +75,7 @@ namespace Tasual.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Button_Sync {
             get {
-                object obj = ResourceManager.GetObject("Button_Sync", resourceCulture);
+                object obj = ResourceManager.GetObject("Button_Sync", resourceCulturArgs);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -85,7 +85,7 @@ namespace Tasual.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Error_Symbol {
             get {
-                object obj = ResourceManager.GetObject("Error_Symbol", resourceCulture);
+                object obj = ResourceManager.GetObject("Error_Symbol", resourceCulturArgs);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -95,7 +95,7 @@ namespace Tasual.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap File_List {
             get {
-                object obj = ResourceManager.GetObject("File_List", resourceCulture);
+                object obj = ResourceManager.GetObject("File_List", resourceCulturArgs);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -105,7 +105,7 @@ namespace Tasual.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Gear {
             get {
-                object obj = ResourceManager.GetObject("Gear", resourceCulture);
+                object obj = ResourceManager.GetObject("Gear", resourceCulturArgs);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

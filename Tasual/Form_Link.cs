@@ -33,14 +33,14 @@ namespace Tasual
 				TextBox.Text = Task.Link;
 				Button_Follow_CheckURLValid();
 			}
-			catch (Exception e)
+			catch (Exception Args)
 			{
-				Console.WriteLine(e);
+				Console.WriteLine(Args);
 				Close();
 			}
 		}
 
-		private void Button_Save_Click(object sender, EventArgs e)
+		private void Button_Save_Click(object Sender, EventArgs Args)
 		{
 			if (Task != null)
 			{
@@ -53,12 +53,12 @@ namespace Tasual
 			}
 		}
 
-		private void Button_Follow_Click(object sender, EventArgs e)
+		private void Button_Follow_Click(object Sender, EventArgs Args)
 		{
 			URLExtensions.Follow(TextBox.Text);
 		}
 
-		private void TextBox_TextChanged(object sender, EventArgs e)
+		private void TextBox_TextChanged(object Sender, EventArgs Args)
 		{
 			Button_Follow_CheckURLValid();
 		}

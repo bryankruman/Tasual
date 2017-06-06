@@ -156,9 +156,9 @@ namespace Tasual
 				}
 
 			}
-			catch (Exception e)
+			catch (Exception Args)
 			{
-				Console.WriteLine("Could not write to settings.cfg! Message: {0}", e.Message);
+				Console.WriteLine("Could not write to settings.cfg! Message: {0}", Args.Message);
 			}
 		}
 
@@ -173,13 +173,13 @@ namespace Tasual
 					Settings = (Setting)Serializer.Deserialize(InputJson, typeof(Setting));
 				}
 			}
-			catch (Exception e)
+			catch (Exception Args)
 			{
 				Console.WriteLine(
 					"Could not load settings.cfg! " +
 					"Proceeding with defaults and writing blank new config! " +
 					"Message: {0}",
-					e.Message
+					Args.Message
 				);
 				Save(ref Settings);
 			}

@@ -51,9 +51,9 @@ namespace Tasual
 				}
 
 			}
-			catch (Exception e)
+			catch (Exception Args)
 			{
-				Console.WriteLine("ArrayHandler.Save_JSON(): {0}\nTrace: {1}", e.Message, e.StackTrace);
+				Console.WriteLine("ArrayHandler.Save_JSON(): {0}\nTrace: {1}", Args.Message, Args.StackTrace);
 			}
 		}
 
@@ -69,9 +69,9 @@ namespace Tasual
 					Array = (List<Task>)Serializer.Deserialize(InputJson, typeof(List<Task>));
 				}
 			}
-			catch (Exception e)
+			catch (Exception Args)
 			{
-				Console.WriteLine("ArrayHandler.Load_JSON(): {0}\nTrace: {1}", e.Message, e.StackTrace);
+				Console.WriteLine("ArrayHandler.Load_JSON(): {0}\nTrace: {1}", Args.Message, Args.StackTrace);
 			}
 		}
 	}

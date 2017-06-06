@@ -95,12 +95,14 @@ namespace Tasual
 				WindowsPrincipal Principal = new WindowsPrincipal(User);
 				Admin = Principal.IsInRole(WindowsBuiltInRole.Administrator);
 			}
-			catch (UnauthorizedAccessException Ex)
+			catch (UnauthorizedAccessException)
 			{
+				// Custom handling here
 				Admin = false;
 			}
-			catch (Exception Ex)
+			catch (Exception)
 			{
+				// Custom handling here
 				Admin = false;
 			}
 

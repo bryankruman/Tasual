@@ -83,7 +83,7 @@
 			this.ClientSize = new System.Drawing.Size(378, 73);
 			this.Controls.Add(this.TextBox);
 			this.Controls.Add(this.Button_Follow);
-			this.Controls.Add(this.Button_Save);
+			this.Controls.Add(this.Button_SavArgs);
 			this.Controls.Add(this.Button_Cancel);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
@@ -93,7 +93,7 @@
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Link";
-			this.ResumeLayout(false);
+			this.ResumeLayout(falsArgs);
 			this.PerformLayout();
 
 		}

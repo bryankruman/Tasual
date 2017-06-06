@@ -33,12 +33,12 @@ namespace Tasual
 			Text = _WatermarkText;
 			ForeColor = Color.Gray;
 
-			GotFocus += (source, e) =>
+			GotFocus += (source, Args) =>
 			{
 				RemoveWatermark();
 			};
 
-			LostFocus += (source, e) =>
+			LostFocus += (source, Args) =>
 			{
 				ApplyWatermark();
 			};
@@ -48,7 +48,7 @@ namespace Tasual
 		// Remove watermark from the textbox
 		public void RemoveWatermark()
 		{
-			if (_WatermarkActive)
+			if (_WatermarkActivArgs)
 			{
 				_WatermarkActive = false;
 				Text = "";

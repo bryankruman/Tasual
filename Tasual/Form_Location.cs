@@ -39,14 +39,14 @@ namespace Tasual
 				TextBox.Text = Task.Location;
 				Button_GoogleMaps_CheckStatus();
 			}
-			catch (Exception e)
+			catch (Exception Args)
 			{
-				Console.WriteLine(e);
+				Console.WriteLine(Args);
 				Close();
 			}
 		}
 
-		private void Button_Save_Click(object sender, EventArgs e)
+		private void Button_Save_Click(object Sender, EventArgs Args)
 		{
 			if (Task != null)
 			{
@@ -59,12 +59,12 @@ namespace Tasual
 			}
 		}
 
-		private void TextBox_TextChanged(object sender, EventArgs e)
+		private void TextBox_TextChanged(object Sender, EventArgs Args)
 		{
 			Button_GoogleMaps_CheckStatus();
 		}
 
-		private void Button_GoogleMaps_Click(object sender, EventArgs e)
+		private void Button_GoogleMaps_Click(object Sender, EventArgs Args)
 		{
 			URLExtensions.Follow(string.Format("http://maps.google.com/?q={0}", Uri.EscapeDataString(TextBox.Text)));
 		}

@@ -97,12 +97,12 @@ namespace Tasual
 		}
 		#endregion
 
-		private void Button_Close_Click(object sender, EventArgs e)
+		private void Button_Close_Click(object Sender, EventArgs Args)
 		{
 			this.Close();
 		}
 
-		private void Button_Donate_Click(object sender, EventArgs e)
+		private void Button_Donate_Click(object Sender, EventArgs Args)
 		{
 			try
 			{
@@ -111,7 +111,7 @@ namespace Tasual
 			catch { }
 		}
 
-		private void LinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		private void LinkLabel_LinkClicked(object Sender, LinkLabelLinkClickedEventArgs Args)
 		{
 			try
 			{
