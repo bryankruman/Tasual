@@ -55,7 +55,7 @@ namespace Tasual
 				if (Task != null)
 				{
 					Task.Notes = TextBox.Text;
-					MainForm.Tasual_Array_Save();
+					MainForm.Array_Save();
 					//ArrayHandler.Save(ref MainForm.TaskArray, MainForm.Settings);
 					//MainForm.Tasual_Array_Save();
 				}

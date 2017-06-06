@@ -1117,12 +1117,12 @@ namespace Tasual
 			}
 
 			MainForm.TaskArray.Add(Task);
-			MainForm.Tasual_Array_Save();
-			MainForm.Tasual_UpdateGroupKeys(Task);
-			MainForm.Tasual_ListView.BuildList();
-			MainForm.Tasual_ListView.EnsureModelVisible(Task);
-			MainForm.Tasual_ListView.SelectObject(Task);
-			MainForm.Tasual_StatusLabel_UpdateCounts();
+			MainForm.Array_Save();
+			MainForm.UpdateGroupKeys(Task);
+			MainForm.ListView.BuildList();
+			MainForm.ListView.EnsureModelVisible(Task);
+			MainForm.ListView.SelectObject(Task);
+			MainForm.StatusLabel_UpdateCounts();
 
 			Close();
 		}

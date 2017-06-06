@@ -127,10 +127,10 @@ namespace Tasual
 
 			MainForm.Save();
 			MainForm.Apply();
-			MainForm.Tasual_ListView_UpdateColumnSettings();
-			MainForm.Tasual_UpdateGroupKeys();
-			MainForm.Tasual_ListView.BuildList();
-			MainForm.Tasual_ListView.RebuildColumns();
+			MainForm.ListView_UpdateColumnSettings();
+			MainForm.UpdateGroupKeys();
+			MainForm.ListView.BuildList();
+			MainForm.ListView.RebuildColumns();
 		}
 	}
 }

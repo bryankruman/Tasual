@@ -192,10 +192,10 @@ namespace Tasual
 					DateTime.MinValue);
 			}
 
-			MainForm.Tasual_Array_Save();
-			MainForm.Tasual_UpdateGroupKeys(_Task);
-			MainForm.Tasual_ListView.BuildList();
-			MainForm.Tasual_ListView.EnsureModelVisible(_Task);
+			MainForm.Array_Save();
+			MainForm.UpdateGroupKeys(_Task);
+			MainForm.ListView.BuildList();
+			MainForm.ListView.EnsureModelVisible(_Task);
 			Close();
 		}
 
