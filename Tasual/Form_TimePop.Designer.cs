@@ -28,139 +28,139 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.Tasual_TimePop_Calendar = new System.Windows.Forms.MonthCalendar();
-			this.Tasual_TimePop_Panel = new System.Windows.Forms.Panel();
-			this.Tasual_TimePop_Button_Cancel = new System.Windows.Forms.Button();
-			this.Tasual_TimePop_Button_Save = new System.Windows.Forms.Button();
-			this.Tasual_TimePop_Label_CantEdit = new System.Windows.Forms.Label();
-			this.Tasual_TimePop_LinkLabel = new System.Windows.Forms.LinkLabel();
-			this.Tasual_TimePop_DateTimePicker = new System.Windows.Forms.DateTimePicker();
-			this.Tasual_TimePop_RadioButton_Specific = new System.Windows.Forms.RadioButton();
-			this.Tasual_TimePop_RadioButton_AllDay = new System.Windows.Forms.RadioButton();
-			this.Tasual_TimePop_CheckBox = new System.Windows.Forms.CheckBox();
-			this.Tasual_TimePop_Panel.SuspendLayout();
+			this.Calendar = new System.Windows.Forms.MonthCalendar();
+			this.Panel = new System.Windows.Forms.Panel();
+			this.Button_Cancel = new System.Windows.Forms.Button();
+			this.Button_Save = new System.Windows.Forms.Button();
+			this.Label_CantEdit = new System.Windows.Forms.Label();
+			this.LinkLabel = new System.Windows.Forms.LinkLabel();
+			this.DateTimePicker = new System.Windows.Forms.DateTimePicker();
+			this.RadioButton_Specific = new System.Windows.Forms.RadioButton();
+			this.RadioButton_AllDay = new System.Windows.Forms.RadioButton();
+			this.CheckBox = new System.Windows.Forms.CheckBox();
+			this.Panel.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// Tasual_TimePop_Calendar
+			// Calendar
 			// 
-			this.Tasual_TimePop_Calendar.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.Tasual_TimePop_Calendar.Enabled = false;
-			this.Tasual_TimePop_Calendar.Location = new System.Drawing.Point(5, 0);
-			this.Tasual_TimePop_Calendar.Name = "Tasual_TimePop_Calendar";
-			this.Tasual_TimePop_Calendar.TabIndex = 0;
-			this.Tasual_TimePop_Calendar.TitleBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
+			this.Calendar.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.Calendar.Enabled = false;
+			this.Calendar.Location = new System.Drawing.Point(5, 0);
+			this.Calendar.Name = "Calendar";
+			this.Calendar.TabIndex = 0;
+			this.Calendar.TitleBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
 			// 
-			// Tasual_TimePop_Panel
+			// Panel
 			// 
-			this.Tasual_TimePop_Panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(232)))), ((int)(((byte)(246)))));
-			this.Tasual_TimePop_Panel.Controls.Add(this.Tasual_TimePop_Button_Cancel);
-			this.Tasual_TimePop_Panel.Controls.Add(this.Tasual_TimePop_Button_Save);
-			this.Tasual_TimePop_Panel.Controls.Add(this.Tasual_TimePop_Label_CantEdit);
-			this.Tasual_TimePop_Panel.Controls.Add(this.Tasual_TimePop_LinkLabel);
-			this.Tasual_TimePop_Panel.Controls.Add(this.Tasual_TimePop_DateTimePicker);
-			this.Tasual_TimePop_Panel.Controls.Add(this.Tasual_TimePop_RadioButton_Specific);
-			this.Tasual_TimePop_Panel.Controls.Add(this.Tasual_TimePop_Calendar);
-			this.Tasual_TimePop_Panel.Controls.Add(this.Tasual_TimePop_RadioButton_AllDay);
-			this.Tasual_TimePop_Panel.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.Tasual_TimePop_Panel.Location = new System.Drawing.Point(0, 26);
-			this.Tasual_TimePop_Panel.Name = "Tasual_TimePop_Panel";
-			this.Tasual_TimePop_Panel.Size = new System.Drawing.Size(237, 250);
-			this.Tasual_TimePop_Panel.TabIndex = 2;
+			this.Panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(232)))), ((int)(((byte)(246)))));
+			this.Panel.Controls.Add(this.Button_Cancel);
+			this.Panel.Controls.Add(this.Button_Save);
+			this.Panel.Controls.Add(this.Label_CantEdit);
+			this.Panel.Controls.Add(this.LinkLabel);
+			this.Panel.Controls.Add(this.DateTimePicker);
+			this.Panel.Controls.Add(this.RadioButton_Specific);
+			this.Panel.Controls.Add(this.Calendar);
+			this.Panel.Controls.Add(this.RadioButton_AllDay);
+			this.Panel.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.Panel.Location = new System.Drawing.Point(0, 26);
+			this.Panel.Name = "Panel";
+			this.Panel.Size = new System.Drawing.Size(237, 250);
+			this.Panel.TabIndex = 2;
 			// 
-			// Tasual_TimePop_Button_Cancel
+			// Button_Cancel
 			// 
-			this.Tasual_TimePop_Button_Cancel.Location = new System.Drawing.Point(122, 218);
-			this.Tasual_TimePop_Button_Cancel.Name = "Tasual_TimePop_Button_Cancel";
-			this.Tasual_TimePop_Button_Cancel.Size = new System.Drawing.Size(103, 23);
-			this.Tasual_TimePop_Button_Cancel.TabIndex = 16;
-			this.Tasual_TimePop_Button_Cancel.Text = "Cancel";
-			this.Tasual_TimePop_Button_Cancel.UseVisualStyleBackColor = true;
-			this.Tasual_TimePop_Button_Cancel.Click += new System.EventHandler(this.Tasual_TimePop_Button_Cancel_Click);
+			this.Button_Cancel.Location = new System.Drawing.Point(122, 218);
+			this.Button_Cancel.Name = "Button_Cancel";
+			this.Button_Cancel.Size = new System.Drawing.Size(103, 23);
+			this.Button_Cancel.TabIndex = 16;
+			this.Button_Cancel.Text = "Cancel";
+			this.Button_Cancel.UseVisualStyleBackColor = true;
+			this.Button_Cancel.Click += new System.EventHandler(this.Button_Cancel_Click);
 			// 
-			// Tasual_TimePop_Button_Save
+			// Button_Save
 			// 
-			this.Tasual_TimePop_Button_Save.Location = new System.Drawing.Point(12, 218);
-			this.Tasual_TimePop_Button_Save.Name = "Tasual_TimePop_Button_Save";
-			this.Tasual_TimePop_Button_Save.Size = new System.Drawing.Size(103, 23);
-			this.Tasual_TimePop_Button_Save.TabIndex = 15;
-			this.Tasual_TimePop_Button_Save.Text = "Save";
-			this.Tasual_TimePop_Button_Save.UseVisualStyleBackColor = true;
-			this.Tasual_TimePop_Button_Save.Click += new System.EventHandler(this.Tasual_TimePop_Button_Save_Click);
+			this.Button_Save.Location = new System.Drawing.Point(12, 218);
+			this.Button_Save.Name = "Button_Save";
+			this.Button_Save.Size = new System.Drawing.Size(103, 23);
+			this.Button_Save.TabIndex = 15;
+			this.Button_Save.Text = "Save";
+			this.Button_Save.UseVisualStyleBackColor = true;
+			this.Button_Save.Click += new System.EventHandler(this.Button_Save_Click);
 			// 
-			// Tasual_TimePop_Label_CantEdit
+			// Label_CantEdit
 			// 
-			this.Tasual_TimePop_Label_CantEdit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
-			this.Tasual_TimePop_Label_CantEdit.ForeColor = System.Drawing.Color.Silver;
-			this.Tasual_TimePop_Label_CantEdit.Location = new System.Drawing.Point(51, 70);
-			this.Tasual_TimePop_Label_CantEdit.Name = "Tasual_TimePop_Label_CantEdit";
-			this.Tasual_TimePop_Label_CantEdit.Size = new System.Drawing.Size(137, 32);
-			this.Tasual_TimePop_Label_CantEdit.TabIndex = 14;
-			this.Tasual_TimePop_Label_CantEdit.Text = "Cannot edit date/time from here, use advanced edit";
-			this.Tasual_TimePop_Label_CantEdit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.Label_CantEdit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
+			this.Label_CantEdit.ForeColor = System.Drawing.Color.Silver;
+			this.Label_CantEdit.Location = new System.Drawing.Point(51, 70);
+			this.Label_CantEdit.Name = "Label_CantEdit";
+			this.Label_CantEdit.Size = new System.Drawing.Size(137, 32);
+			this.Label_CantEdit.TabIndex = 14;
+			this.Label_CantEdit.Text = "Cannot edit date/time from here, use advanced edit";
+			this.Label_CantEdit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// Tasual_TimePop_LinkLabel
+			// LinkLabel
 			// 
-			this.Tasual_TimePop_LinkLabel.LinkColor = System.Drawing.Color.Black;
-			this.Tasual_TimePop_LinkLabel.Location = new System.Drawing.Point(0, 192);
-			this.Tasual_TimePop_LinkLabel.Name = "Tasual_TimePop_LinkLabel";
-			this.Tasual_TimePop_LinkLabel.Padding = new System.Windows.Forms.Padding(2, 0, 0, 6);
-			this.Tasual_TimePop_LinkLabel.Size = new System.Drawing.Size(237, 23);
-			this.Tasual_TimePop_LinkLabel.TabIndex = 13;
-			this.Tasual_TimePop_LinkLabel.TabStop = true;
-			this.Tasual_TimePop_LinkLabel.Text = "Use advanced edit to change other attributes";
-			this.Tasual_TimePop_LinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.Tasual_TimePop_LinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Tasual_TimePop_LinkLabel_LinkClicked);
+			this.LinkLabel.LinkColor = System.Drawing.Color.Black;
+			this.LinkLabel.Location = new System.Drawing.Point(0, 192);
+			this.LinkLabel.Name = "LinkLabel";
+			this.LinkLabel.Padding = new System.Windows.Forms.Padding(2, 0, 0, 6);
+			this.LinkLabel.Size = new System.Drawing.Size(237, 23);
+			this.LinkLabel.TabIndex = 13;
+			this.LinkLabel.TabStop = true;
+			this.LinkLabel.Text = "Use advanced edit to change other attributes";
+			this.LinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.LinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel_LinkClicked);
 			// 
-			// Tasual_TimePop_DateTimePicker
+			// DateTimePicker
 			// 
-			this.Tasual_TimePop_DateTimePicker.CustomFormat = "h:mm tt";
-			this.Tasual_TimePop_DateTimePicker.Enabled = false;
-			this.Tasual_TimePop_DateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-			this.Tasual_TimePop_DateTimePicker.Location = new System.Drawing.Point(123, 167);
-			this.Tasual_TimePop_DateTimePicker.Name = "Tasual_TimePop_DateTimePicker";
-			this.Tasual_TimePop_DateTimePicker.ShowUpDown = true;
-			this.Tasual_TimePop_DateTimePicker.Size = new System.Drawing.Size(73, 20);
-			this.Tasual_TimePop_DateTimePicker.TabIndex = 12;
+			this.DateTimePicker.CustomFormat = "h:mm tt";
+			this.DateTimePicker.Enabled = false;
+			this.DateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+			this.DateTimePicker.Location = new System.Drawing.Point(123, 167);
+			this.DateTimePicker.Name = "DateTimePicker";
+			this.DateTimePicker.ShowUpDown = true;
+			this.DateTimePicker.Size = new System.Drawing.Size(73, 20);
+			this.DateTimePicker.TabIndex = 12;
 			// 
-			// Tasual_TimePop_RadioButton_Specific
+			// RadioButton_Specific
 			// 
-			this.Tasual_TimePop_RadioButton_Specific.AutoSize = true;
-			this.Tasual_TimePop_RadioButton_Specific.Location = new System.Drawing.Point(105, 170);
-			this.Tasual_TimePop_RadioButton_Specific.Name = "Tasual_TimePop_RadioButton_Specific";
-			this.Tasual_TimePop_RadioButton_Specific.Size = new System.Drawing.Size(14, 13);
-			this.Tasual_TimePop_RadioButton_Specific.TabIndex = 1;
-			this.Tasual_TimePop_RadioButton_Specific.TabStop = true;
-			this.Tasual_TimePop_RadioButton_Specific.UseVisualStyleBackColor = true;
-			this.Tasual_TimePop_RadioButton_Specific.CheckedChanged += new System.EventHandler(this.Tasual_TimePop_RadioButton_Specific_CheckedChanged);
+			this.RadioButton_Specific.AutoSize = true;
+			this.RadioButton_Specific.Location = new System.Drawing.Point(105, 170);
+			this.RadioButton_Specific.Name = "RadioButton_Specific";
+			this.RadioButton_Specific.Size = new System.Drawing.Size(14, 13);
+			this.RadioButton_Specific.TabIndex = 1;
+			this.RadioButton_Specific.TabStop = true;
+			this.RadioButton_Specific.UseVisualStyleBackColor = true;
+			this.RadioButton_Specific.CheckedChanged += new System.EventHandler(this.RadioButton_Specific_CheckedChanged);
 			// 
-			// Tasual_TimePop_RadioButton_AllDay
+			// RadioButton_AllDay
 			// 
-			this.Tasual_TimePop_RadioButton_AllDay.AutoSize = true;
-			this.Tasual_TimePop_RadioButton_AllDay.ForeColor = System.Drawing.Color.Black;
-			this.Tasual_TimePop_RadioButton_AllDay.Location = new System.Drawing.Point(40, 168);
-			this.Tasual_TimePop_RadioButton_AllDay.Name = "Tasual_TimePop_RadioButton_AllDay";
-			this.Tasual_TimePop_RadioButton_AllDay.Size = new System.Drawing.Size(56, 17);
-			this.Tasual_TimePop_RadioButton_AllDay.TabIndex = 0;
-			this.Tasual_TimePop_RadioButton_AllDay.TabStop = true;
-			this.Tasual_TimePop_RadioButton_AllDay.Text = "All day";
-			this.Tasual_TimePop_RadioButton_AllDay.UseVisualStyleBackColor = true;
-			this.Tasual_TimePop_RadioButton_AllDay.CheckedChanged += new System.EventHandler(this.Tasual_TimePop_RadioButton_AllDay_CheckedChanged);
+			this.RadioButton_AllDay.AutoSize = true;
+			this.RadioButton_AllDay.ForeColor = System.Drawing.Color.Black;
+			this.RadioButton_AllDay.Location = new System.Drawing.Point(40, 168);
+			this.RadioButton_AllDay.Name = "RadioButton_AllDay";
+			this.RadioButton_AllDay.Size = new System.Drawing.Size(56, 17);
+			this.RadioButton_AllDay.TabIndex = 0;
+			this.RadioButton_AllDay.TabStop = true;
+			this.RadioButton_AllDay.Text = "All day";
+			this.RadioButton_AllDay.UseVisualStyleBackColor = true;
+			this.RadioButton_AllDay.CheckedChanged += new System.EventHandler(this.RadioButton_AllDay_CheckedChanged);
 			// 
-			// Tasual_TimePop_CheckBox
+			// CheckBox
 			// 
-			this.Tasual_TimePop_CheckBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
-			this.Tasual_TimePop_CheckBox.Dock = System.Windows.Forms.DockStyle.Top;
-			this.Tasual_TimePop_CheckBox.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Tasual_TimePop_CheckBox.ForeColor = System.Drawing.Color.White;
-			this.Tasual_TimePop_CheckBox.Location = new System.Drawing.Point(0, 0);
-			this.Tasual_TimePop_CheckBox.Name = "Tasual_TimePop_CheckBox";
-			this.Tasual_TimePop_CheckBox.Padding = new System.Windows.Forms.Padding(10, 4, 22, 0);
-			this.Tasual_TimePop_CheckBox.Size = new System.Drawing.Size(237, 23);
-			this.Tasual_TimePop_CheckBox.TabIndex = 1;
-			this.Tasual_TimePop_CheckBox.Text = "Scheduled";
-			this.Tasual_TimePop_CheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.Tasual_TimePop_CheckBox.UseVisualStyleBackColor = false;
-			this.Tasual_TimePop_CheckBox.CheckedChanged += new System.EventHandler(this.Tasual_TimePop_CheckBox_CheckedChanged);
+			this.CheckBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
+			this.CheckBox.Dock = System.Windows.Forms.DockStyle.Top;
+			this.CheckBox.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.CheckBox.ForeColor = System.Drawing.Color.White;
+			this.CheckBox.Location = new System.Drawing.Point(0, 0);
+			this.CheckBox.Name = "CheckBox";
+			this.CheckBox.Padding = new System.Windows.Forms.Padding(10, 4, 22, 0);
+			this.CheckBox.Size = new System.Drawing.Size(237, 23);
+			this.CheckBox.TabIndex = 1;
+			this.CheckBox.Text = "Scheduled";
+			this.CheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.CheckBox.UseVisualStyleBackColor = false;
+			this.CheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
 			// 
 			// Tasual_TimePop
 			// 
@@ -169,8 +169,8 @@
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
 			this.ClientSize = new System.Drawing.Size(237, 276);
 			this.ControlBox = false;
-			this.Controls.Add(this.Tasual_TimePop_Panel);
-			this.Controls.Add(this.Tasual_TimePop_CheckBox);
+			this.Controls.Add(this.Panel);
+			this.Controls.Add(this.CheckBox);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.Name = "Tasual_TimePop";
 			this.ShowIcon = false;
@@ -179,23 +179,23 @@
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "Tasual_CalendarPopout";
 			this.Deactivate += new System.EventHandler(this.Tasual_CalendarPopout_Deactivate);
-			this.Tasual_TimePop_Panel.ResumeLayout(false);
-			this.Tasual_TimePop_Panel.PerformLayout();
+			this.Panel.ResumeLayout(false);
+			this.Panel.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
 
 		#endregion
 
-		private System.Windows.Forms.MonthCalendar Tasual_TimePop_Calendar;
-		private System.Windows.Forms.Panel Tasual_TimePop_Panel;
-		private System.Windows.Forms.RadioButton Tasual_TimePop_RadioButton_Specific;
-		private System.Windows.Forms.RadioButton Tasual_TimePop_RadioButton_AllDay;
-		private System.Windows.Forms.DateTimePicker Tasual_TimePop_DateTimePicker;
-		private System.Windows.Forms.CheckBox Tasual_TimePop_CheckBox;
-		private System.Windows.Forms.LinkLabel Tasual_TimePop_LinkLabel;
-		private System.Windows.Forms.Label Tasual_TimePop_Label_CantEdit;
-		private System.Windows.Forms.Button Tasual_TimePop_Button_Cancel;
-		private System.Windows.Forms.Button Tasual_TimePop_Button_Save;
+		private System.Windows.Forms.MonthCalendar Calendar;
+		private System.Windows.Forms.Panel Panel;
+		private System.Windows.Forms.RadioButton RadioButton_Specific;
+		private System.Windows.Forms.RadioButton RadioButton_AllDay;
+		private System.Windows.Forms.DateTimePicker DateTimePicker;
+		private System.Windows.Forms.CheckBox CheckBox;
+		private System.Windows.Forms.LinkLabel LinkLabel;
+		private System.Windows.Forms.Label Label_CantEdit;
+		private System.Windows.Forms.Button Button_Cancel;
+		private System.Windows.Forms.Button Button_Save;
 	}
 }

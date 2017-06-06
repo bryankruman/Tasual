@@ -15,39 +15,39 @@ namespace Tasual
 		private readonly Form_Main MainForm;
 		private readonly Task _Task;
 
-		private void Tasual_TimePop_CheckEnableStatus()
+		private void CheckEnableStatus()
 		{
 			TimeInfo.RepeatType RepeatType = TimeInfo.GetRepeatType(_Task.Time);
-			if (Tasual_TimePop_CheckBox.Checked)
+			if (CheckBox.Checked)
 			{
 				switch (RepeatType)
 				{
 					case TimeInfo.RepeatType.ComplexRepeat:
 					case TimeInfo.RepeatType.SimpleRepeat:
 						{
-							Tasual_TimePop_CheckBox.Enabled = false; // TODO: Allow scheduling to be cancelled from here
-							Tasual_TimePop_Calendar.Enabled = false;
-							Tasual_TimePop_RadioButton_AllDay.Enabled = false;
-							Tasual_TimePop_RadioButton_Specific.Enabled = false;
-							Tasual_TimePop_DateTimePicker.Enabled = false;
-							Tasual_TimePop_Button_Save.Enabled = false;
-							Tasual_TimePop_Label_CantEdit.Visible = true;
+							CheckBox.Enabled = false; // TODO: Allow scheduling to be cancelled from here
+							Calendar.Enabled = false;
+							RadioButton_AllDay.Enabled = false;
+							RadioButton_Specific.Enabled = false;
+							DateTimePicker.Enabled = false;
+							Button_Save.Enabled = false;
+							Label_CantEdit.Visible = true;
 							break;
 						}
 					case TimeInfo.RepeatType.Singular:
 						{
-							Tasual_TimePop_Calendar.Enabled = true;
-							Tasual_TimePop_Button_Save.Enabled = true;
-							Tasual_TimePop_RadioButton_AllDay.Enabled = true;
-							Tasual_TimePop_RadioButton_Specific.Enabled = true;
-							Tasual_TimePop_Label_CantEdit.Visible = false;
-							if (Tasual_TimePop_RadioButton_Specific.Checked)
+							Calendar.Enabled = true;
+							Button_Save.Enabled = true;
+							RadioButton_AllDay.Enabled = true;
+							RadioButton_Specific.Enabled = true;
+							Label_CantEdit.Visible = false;
+							if (RadioButton_Specific.Checked)
 							{
-								Tasual_TimePop_DateTimePicker.Enabled = true;
+								DateTimePicker.Enabled = true;
 							}
 							else
 							{
-								Tasual_TimePop_DateTimePicker.Enabled = false;
+								DateTimePicker.Enabled = false;
 							}
 							break;
 						}
@@ -55,19 +55,19 @@ namespace Tasual
 			}
 			else
 			{
-				Tasual_TimePop_Calendar.Enabled = false;
-				Tasual_TimePop_RadioButton_AllDay.Enabled = false;
-				Tasual_TimePop_RadioButton_Specific.Enabled = false;
-				Tasual_TimePop_DateTimePicker.Enabled = false;
+				Calendar.Enabled = false;
+				RadioButton_AllDay.Enabled = false;
+				RadioButton_Specific.Enabled = false;
+				DateTimePicker.Enabled = false;
 
 				if (RepeatType == TimeInfo.RepeatType.Singular)
 				{
-					Tasual_TimePop_Button_Save.Enabled = true;
-					Tasual_TimePop_Label_CantEdit.Visible = false;
+					Button_Save.Enabled = true;
+					Label_CantEdit.Visible = false;
 				}
 				else
 				{
-					Tasual_TimePop_Button_Save.Enabled = false;
+					Button_Save.Enabled = false;
 				}
 			}
 		}
@@ -78,36 +78,36 @@ namespace Tasual
 			MainForm = PassedForm;
 			_Task = MainForm.TaskArray[PassedIndex];
 
-			Tasual_TimePop_Calendar.MinDate = DateTime.Now;
+			Calendar.MinDate = DateTime.Now;
 
 			DateTime NextOrNow = new DateTime(Math.Max(_Task.Time.Next.Ticks, DateTime.Now.Ticks));
-			Tasual_TimePop_Calendar.SetDate(NextOrNow);
+			Calendar.SetDate(NextOrNow);
 
 			if (TimeInfo.Scheduled(_Task.Time))
 			{
-				Tasual_TimePop_CheckBox.Checked = true;
+				CheckBox.Checked = true;
 				if (_Task.Time.TimeOfDay == TimeSpan.FromSeconds(86399))
 				{
-					Tasual_TimePop_RadioButton_AllDay.Checked = true;
-					Tasual_TimePop_RadioButton_Specific.Checked = false;
-					Tasual_TimePop_DateTimePicker.Value = TimeInfo.PickRoundedUpTime(DateTime.Now);
+					RadioButton_AllDay.Checked = true;
+					RadioButton_Specific.Checked = false;
+					DateTimePicker.Value = TimeInfo.PickRoundedUpTime(DateTime.Now);
 				}
 				else
 				{
-					Tasual_TimePop_RadioButton_AllDay.Checked = false;
-					Tasual_TimePop_RadioButton_Specific.Checked = true;
-					Tasual_TimePop_DateTimePicker.Value = NextOrNow;
+					RadioButton_AllDay.Checked = false;
+					RadioButton_Specific.Checked = true;
+					DateTimePicker.Value = NextOrNow;
 				}
 			}
 			else
 			{
-				Tasual_TimePop_CheckBox.Checked = false;
-				Tasual_TimePop_RadioButton_AllDay.Checked = true;
-				Tasual_TimePop_RadioButton_Specific.Checked = false;
-				Tasual_TimePop_DateTimePicker.Value = TimeInfo.PickRoundedUpTime(DateTime.Now);
+				CheckBox.Checked = false;
+				RadioButton_AllDay.Checked = true;
+				RadioButton_Specific.Checked = false;
+				DateTimePicker.Value = TimeInfo.PickRoundedUpTime(DateTime.Now);
 			}
 
-			Tasual_TimePop_CheckEnableStatus();
+			CheckEnableStatus();
 		}
 
 		private void Tasual_CalendarPopout_Deactivate(object sender, EventArgs e)
@@ -115,32 +115,32 @@ namespace Tasual
 			this.Close();
 		}
 
-		private void Tasual_TimePop_CheckBox_CheckedChanged(object sender, EventArgs e)
+		private void CheckBox_CheckedChanged(object sender, EventArgs e)
 		{
-			Tasual_TimePop_CheckEnableStatus();
+			CheckEnableStatus();
 		}
 
-		private void Tasual_TimePop_RadioButton_AllDay_CheckedChanged(object sender, EventArgs e)
+		private void RadioButton_AllDay_CheckedChanged(object sender, EventArgs e)
 		{
-			Tasual_TimePop_CheckEnableStatus();
+			CheckEnableStatus();
 		}
 
-		private void Tasual_TimePop_RadioButton_Specific_CheckedChanged(object sender, EventArgs e)
+		private void RadioButton_Specific_CheckedChanged(object sender, EventArgs e)
 		{
-			Tasual_TimePop_CheckEnableStatus();
+			CheckEnableStatus();
 		}
 
-		private void Tasual_TimePop_LinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		private void LinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
 			Form_Create CreateForm = new Form_Create(MainForm, MainForm.TaskArray.IndexOf(_Task));
 			CreateForm.ShowDialog(MainForm);
 			Close();
 		}
 
-		private void Tasual_TimePop_Button_Save_Click(object sender, EventArgs e)
+		private void Button_Save_Click(object sender, EventArgs e)
 		{
 			DateTime NewTime = new DateTime();
-			NewTime = Tasual_TimePop_Calendar.SelectionStart;
+			NewTime = Calendar.SelectionStart;
 
 			TimeSpan TimeOfDay = new TimeSpan();
 
@@ -148,13 +148,13 @@ namespace Tasual
 
 			NewTime = NewTime - NewTime.TimeOfDay;
 
-			if (Tasual_TimePop_CheckBox.Checked)
+			if (CheckBox.Checked)
 			{
-				if (Tasual_TimePop_RadioButton_Specific.Checked)
+				if (RadioButton_Specific.Checked)
 				{
-					NewTime = NewTime + Tasual_TimePop_DateTimePicker.Value.TimeOfDay;
-					TimeOfDay = Tasual_TimePop_DateTimePicker.Value.TimeOfDay;
-					//_Task.Time.TimeOfDay = Tasual_TimePop_DateTimePicker.Value.TimeOfDay;
+					NewTime = NewTime + DateTimePicker.Value.TimeOfDay;
+					TimeOfDay = DateTimePicker.Value.TimeOfDay;
+					//_Task.Time.TimeOfDay = DateTimePicker.Value.TimeOfDay;
 				}
 				else
 				{
@@ -199,7 +199,7 @@ namespace Tasual
 			Close();
 		}
 
-		private void Tasual_TimePop_Button_Cancel_Click(object sender, EventArgs e)
+		private void Button_Cancel_Click(object sender, EventArgs e)
 		{
 			Close();
 		}
