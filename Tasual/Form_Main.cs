@@ -1200,7 +1200,10 @@ namespace Tasual
 		private void MenuStrip_Icon_Location_Maps_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
-			URLExtensions.Follow(string.Format("http://maps.google.com/?q={0}", Uri.EscapeDataString(Task.Location)));
+			URLExtensions.Follow(string.Format(
+				"http://maps.google.com/?q={0}", 
+				Uri.EscapeDataString(Task.Location)
+			));
 		}
 
 		private void MenuStrip_Icon_Location_Remove_Click(object Sender, EventArgs Args)
@@ -1305,7 +1308,7 @@ namespace Tasual
 
 		private void MenuStrip_Item_Duplicate_Click(object Sender, EventArgs Args)
 		{
-			// PRETTY MUCH do a clean copy here, but with some minor caveats
+			// PRETTY MUCH do a clean copy here, but with some minor adjustments
 
 			Task Task = (Task)MenuStrip_Item.Tag;
 			TimeInfo NewTime = new TimeInfo(
@@ -1384,7 +1387,11 @@ namespace Tasual
 			{
 				if (!AlreadySelectedGroups.Contains(Task.Group) && (TaggedTask.Group != Task.Group))
 				{
-					MenuStrip_Item_Move.DropDownItems.Add(Task.Group, null, MenuStrip_Item_Move_ClickHandler);
+					MenuStrip_Item_Move.DropDownItems.Add(
+						Task.Group, 
+						null, 
+						MenuStrip_Item_Move_ClickHandler
+					);
 					AlreadySelectedGroups.Add(Task.Group);
 					MenuStrip_Item_Move.DropDownItems[0].Visible = false;
 				}
@@ -1545,19 +1552,6 @@ namespace Tasual
 			// TODO: We should be able to do this for just one object, not the whole list...
 			ListView.BuildList();
 			MenuStrip_Edit.Enabled = false;
-		}
-
-		private void ListView_ItemChecked(object Sender, ItemCheckedEventArgs Args)
-		{
-			/*Console.WriteLine("hmm");
-
-			//Args.Item.
-			\
-
-			CheckedTime = DateTime.MinValue;
-			ArrayHandler.Save(ref TaskArray, Settings);
-			ListView.BuildList();
-			StatusLabel_UpdateCounts();*/
 		}
 
 		private void ListView_SelectedIndexChanged(object Sender, EventArgs Args)
