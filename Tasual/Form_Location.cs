@@ -12,7 +12,7 @@ namespace Tasual
 {
 	public partial class Form_Location : Form
 	{
-		private readonly Form_Main _Tasual_Main;
+		private readonly Form_Main MainForm;
 		private readonly Task Task;
 
 		private void Tasual_Location_Button_GoogleMaps_CheckStatus()
@@ -33,8 +33,8 @@ namespace Tasual
 			{
 				InitializeComponent();
 
-				_Tasual_Main = PassedForm;
-				Task = _Tasual_Main.TaskArray[PassedIndex];
+				MainForm = PassedForm;
+				Task = MainForm.TaskArray[PassedIndex];
 
 				Tasual_Location_TextBox.Text = Task.Location;
 				Tasual_Location_Button_GoogleMaps_CheckStatus();
@@ -51,7 +51,7 @@ namespace Tasual
 			if (Task != null)
 			{
 				Task.Location = Tasual_Location_TextBox.Text;
-				_Tasual_Main.Tasual_Array_Save();
+				MainForm.Tasual_Array_Save();
 			}
 			else
 			{

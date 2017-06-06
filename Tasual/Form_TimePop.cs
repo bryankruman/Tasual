@@ -12,7 +12,7 @@ namespace Tasual
 {
 	public partial class Form_TimePop : Form
 	{
-		private readonly Form_Main _Tasual_Main;
+		private readonly Form_Main MainForm;
 		private readonly Task _Task;
 
 		private void Tasual_TimePop_CheckEnableStatus()
@@ -75,8 +75,8 @@ namespace Tasual
 		public Form_TimePop(Form_Main PassedForm, int PassedIndex)
 		{
 			InitializeComponent();
-			_Tasual_Main = PassedForm;
-			_Task = _Tasual_Main.TaskArray[PassedIndex];
+			MainForm = PassedForm;
+			_Task = MainForm.TaskArray[PassedIndex];
 
 			Tasual_TimePop_Calendar.MinDate = DateTime.Now;
 
@@ -132,8 +132,8 @@ namespace Tasual
 
 		private void Tasual_TimePop_LinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			Form_Create CreateForm = new Form_Create(_Tasual_Main, _Tasual_Main.TaskArray.IndexOf(_Task));
-			CreateForm.ShowDialog(_Tasual_Main);
+			Form_Create CreateForm = new Form_Create(MainForm, MainForm.TaskArray.IndexOf(_Task));
+			CreateForm.ShowDialog(MainForm);
 			Close();
 		}
 
@@ -166,7 +166,7 @@ namespace Tasual
 				if (NewTime < DateTime.Now)
 				{
 					Console.WriteLine("Can't have a date that is before now!");
-					MessageBox.Show(_Tasual_Main,
+					MessageBox.Show(MainForm,
 						"Scheduled time cannot be in the past",
 						"Tasual",
 						MessageBoxButtons.OK,
@@ -192,10 +192,10 @@ namespace Tasual
 					DateTime.MinValue);
 			}
 
-			_Tasual_Main.Tasual_Array_Save();
-			_Tasual_Main.Tasual_UpdateGroupKeys(_Task);
-			_Tasual_Main.Tasual_ListView.BuildList();
-			_Tasual_Main.Tasual_ListView.EnsureModelVisible(_Task);
+			MainForm.Tasual_Array_Save();
+			MainForm.Tasual_UpdateGroupKeys(_Task);
+			MainForm.Tasual_ListView.BuildList();
+			MainForm.Tasual_ListView.EnsureModelVisible(_Task);
 			Close();
 		}
 

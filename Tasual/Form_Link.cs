@@ -6,18 +6,18 @@ namespace Tasual
 {
 	public partial class Form_Link : Form
 	{
-		private readonly Form_Main _Tasual_Main;
+		private readonly Form_Main MainForm;
 		private readonly Task Task;
 
-		private void Tasual_Link_Button_Follow_CheckURLValid()
+		private void Button_Follow_CheckURLValid()
 		{
-			if (URLExtensions.Valid(Tasual_Link_TextBox.Text))
+			if (URLExtensions.Valid(TextBox.Text))
 			{
-				Tasual_Link_Button_Follow.Enabled = true;
+				Button_Follow.Enabled = true;
 			}
 			else
 			{
-				Tasual_Link_Button_Follow.Enabled = false;
+				Button_Follow.Enabled = false;
 			}
 		}
 
@@ -27,11 +27,11 @@ namespace Tasual
 			{
 				InitializeComponent();
 
-				_Tasual_Main = PassedForm;
-				Task = _Tasual_Main.TaskArray[PassedIndex];
+				MainForm = PassedForm;
+				Task = MainForm.TaskArray[PassedIndex];
 
-				Tasual_Link_TextBox.Text = Task.Link;
-				Tasual_Link_Button_Follow_CheckURLValid();
+				TextBox.Text = Task.Link;
+				Button_Follow_CheckURLValid();
 			}
 			catch (Exception e)
 			{
@@ -40,27 +40,27 @@ namespace Tasual
 			}
 		}
 
-		private void Tasual_Link_Button_Save_Click(object sender, EventArgs e)
+		private void Button_Save_Click(object sender, EventArgs e)
 		{
 			if (Task != null)
 			{
-				Task.Link = Tasual_Link_TextBox.Text;
-				_Tasual_Main.Tasual_Array_Save();
+				Task.Link = TextBox.Text;
+				MainForm.Tasual_Array_Save();
 			}
 			else
 			{
-				Console.WriteLine("Tasual_Link_Button_Save_Click(): Somehow Task was null!");
+				Console.WriteLine("Button_Save_Click(): Somehow Task was null!");
 			}
 		}
 
-		private void Tasual_Link_Button_Follow_Click(object sender, EventArgs e)
+		private void Button_Follow_Click(object sender, EventArgs e)
 		{
-			URLExtensions.Follow(Tasual_Link_TextBox.Text);
+			URLExtensions.Follow(TextBox.Text);
 		}
 
-		private void Tasual_Link_TextBox_TextChanged(object sender, EventArgs e)
+		private void TextBox_TextChanged(object sender, EventArgs e)
 		{
-			Tasual_Link_Button_Follow_CheckURLValid();
+			Button_Follow_CheckURLValid();
 		}
 	}
 }

@@ -6,7 +6,7 @@ namespace Tasual
 	public partial class Form_Notes : Form
 	{
 		private readonly Form_Create _Tasual_Create;
-		private readonly Form_Main _Tasual_Main;
+		private readonly Form_Main MainForm;
 		private readonly Task Task;
 		private readonly int Origination; // 1 = Main, 2 = Create
 
@@ -17,8 +17,8 @@ namespace Tasual
 				InitializeComponent();
 
 				Origination = 1;
-				_Tasual_Main = PassedMain;
-				Task = _Tasual_Main.TaskArray[PassedIndex];
+				MainForm = PassedMain;
+				Task = MainForm.TaskArray[PassedIndex];
 
 				Tasual_Notes_TextBox.Text = Task.Notes;
 			}
@@ -36,7 +36,7 @@ namespace Tasual
 				InitializeComponent();
 
 				Origination = 2;
-				_Tasual_Main = PassedMain;
+				MainForm = PassedMain;
 				_Tasual_Create = PassedCreate;
 
 				Tasual_Notes_TextBox.Text = _Tasual_Create.Notes;
@@ -55,9 +55,9 @@ namespace Tasual
 				if (Task != null)
 				{
 					Task.Notes = Tasual_Notes_TextBox.Text;
-					_Tasual_Main.Tasual_Array_Save();
-					//ArrayHandler.Save(ref _Tasual_Main.TaskArray, _Tasual_Main.Settings);
-					//_Tasual_Main.Tasual_Array_Save();
+					MainForm.Tasual_Array_Save();
+					//ArrayHandler.Save(ref MainForm.TaskArray, MainForm.Settings);
+					//MainForm.Tasual_Array_Save();
 				}
 				else
 				{
@@ -73,14 +73,14 @@ namespace Tasual
 		private void Tasual_Notes_CheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			Tasual_Notes_TextBox.AcceptsReturn = !Tasual_Notes_CheckBox.Checked;
-			_Tasual_Main.Settings.EnterToSave = Tasual_Notes_CheckBox.Checked;
-			_Tasual_Main.Tasual_Settings_Save();
+			MainForm.Settings.EnterToSave = Tasual_Notes_CheckBox.Checked;
+			MainForm.Tasual_Settings_Save();
 		}
 
 		private void Tasual_Notes_Load(object sender, EventArgs e)
 		{
-			Tasual_Notes_TextBox.AcceptsReturn = !_Tasual_Main.Settings.EnterToSave;
-			Tasual_Notes_CheckBox.Checked = _Tasual_Main.Settings.EnterToSave;
+			Tasual_Notes_TextBox.AcceptsReturn = !MainForm.Settings.EnterToSave;
+			Tasual_Notes_CheckBox.Checked = MainForm.Settings.EnterToSave;
 		}
 	}
 }
