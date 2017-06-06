@@ -175,7 +175,7 @@
 			this.Button_Close.Text = "&Close";
 			this.Button_Close.Click += new System.EventHandler(this.Button_Close_Click);
 			// 
-			// Tasual_About
+			// Form_About
 			// 
 			this.AcceptButton = this.Button_Close;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -185,7 +185,7 @@
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "Tasual_About";
+			this.Name = "Form_About";
 			this.Padding = new System.Windows.Forms.Padding(9);
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;

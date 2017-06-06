@@ -113,7 +113,7 @@ namespace Tasual
 		{
 			try
 			{
-				System.Diagnostics.Process.Start("http://www.bryankruman.com/");
+				System.Diagnostics.Process.Start("https://www.paypal.com/donate/?token=7XZwBMQUS8SN3-2ZubZjcPKkGITV5K2ljLmc6X_baq2MO37KEKIa2AFU7rLAPprJG2U6HG");
 			}
 			catch { }
 		}
