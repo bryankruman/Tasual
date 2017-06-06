@@ -1,4 +1,11 @@
-﻿using System.Reflection;
+﻿// ===========================================
+//  Copyright (c) 2017 Bryan Kruman
+//
+//  See LICENSE.txt file in the project root
+//  for full license information.
+// ===========================================
+
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 

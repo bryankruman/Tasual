@@ -1,4 +1,11 @@
-﻿using System;
+﻿// ===========================================
+//  Copyright (c) 2017 Bryan Kruman
+//
+//  See LICENSE.txt file in the project root
+//  for full license information.
+// ===========================================
+
+using System;
 using Newtonsoft.Json;
 
 namespace Tasual

@@ -1,4 +1,11 @@
-﻿using System.Windows.Forms;
+﻿// ===========================================
+//  Copyright (c) 2017 Bryan Kruman
+//
+//  See LICENSE.txt file in the project root
+//  for full license information.
+// ===========================================
+
+using System.Windows.Forms;
 using System.Drawing;
 
 namespace Tasual
@@ -48,7 +55,7 @@ namespace Tasual
 		// Remove watermark from the textbox
 		public void RemoveWatermark()
 		{
-			if (_WatermarkActivArgs)
+			if (_WatermarkActive)
 			{
 				_WatermarkActive = false;
 				Text = "";
