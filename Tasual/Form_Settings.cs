@@ -54,7 +54,7 @@ namespace Tasual
 			}
 		}
 
-		private void Load(object sender, EventArgs e)
+		private void FormLoad(object sender, EventArgs e)
 		{
 			CheckBox_LaunchOnStartup.Checked = MainForm.Settings.LaunchOnStartup;
 			CheckBox_MinimizeToTray.Checked = MainForm.Settings.MinimizeToTray;

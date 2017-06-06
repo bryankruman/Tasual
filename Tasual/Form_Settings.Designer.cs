@@ -288,7 +288,7 @@
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Settings";
-			this.Load += new System.EventHandler(this.Load);
+			this.Load += new System.EventHandler(this.FormLoad);
 			this.GroupBox_Application.ResumeLayout(false);
 			this.GroupBox_Application.PerformLayout();
 			this.GroupBox_Display.ResumeLayout(false);
