@@ -49,7 +49,7 @@ namespace Tasual
 			// Load Settings
 			Setting.Load(ref Settings);
 			Relocate();
-			Apply();
+			Settings_Apply();
 
 			// Load TaskArray
 			ArrayHandler.Load(ref TaskArray, Settings);
@@ -61,7 +61,7 @@ namespace Tasual
 			ListView.RebuildColumns();
 
 			// Update StatusLabel to reflect item counts
-			StatusLabel_UpdateCounts();
+			UpdateStatusLabel();
 
 			// Other initialization
 			Timer_ListViewClick.Interval = SystemInformation.DoubleClickTime;
@@ -111,7 +111,7 @@ namespace Tasual
 			return false;
 		}
 
-		public void Apply()
+		public void Settings_Apply()
 		{
 			TopMost = Settings.AlwaysOnTop;
 			StartupManager.SetStartupStatus(Settings.LaunchOnStartup);
@@ -128,12 +128,12 @@ namespace Tasual
 			}
 		}
 
-		public void Save()
+		public void Settings_Save()
 		{
 			Setting.Save(ref Settings);
 		}
 
-		public void StatusLabel_UpdateCounts()
+		public void UpdateStatusLabel()
 		{
 			int Complete = ListView.CheckedItems.Count;
 			int Total = ListView.GetItemCount();
@@ -163,7 +163,7 @@ namespace Tasual
 			Task.DueGroupKey = TimeInfo.GetDueStringFromTask(Task);
 		}
 
-		public void CheckNeedsUpdate()
+		public void CheckTaskStatus()
 		{
 			/* 
 			 * When a singular task expires
@@ -299,7 +299,7 @@ namespace Tasual
 				ArrayHandler.Save(ref TaskArray, Settings);
 				UpdateGroupKeys();
 				ListView.BuildList();
-				StatusLabel_UpdateCounts();
+				UpdateStatusLabel();
 			}
 		}
 
@@ -338,7 +338,7 @@ namespace Tasual
 			ArrayHandler.Save(ref TaskArray, Settings);
 			UpdateGroupKeys(Task);
 			ListView.BuildList();
-			StatusLabel_UpdateCounts();
+			UpdateStatusLabel();
 			ListView.PossibleFinishCellEditing();
 			ListView.EnsureModelVisible(Task);
 			ListView.EditModel(Task);
@@ -839,7 +839,7 @@ namespace Tasual
 				ArrayHandler.Save(ref TaskArray, Settings);
 				UpdateGroupKeys(Task);
 				ListView.BuildList();
-				StatusLabel_UpdateCounts();
+				UpdateStatusLabel();
 				return NewValue;
 			};
 		}
@@ -1070,7 +1070,7 @@ namespace Tasual
 
 			ArrayHandler.Save(ref TaskArray, Settings);
 			ListView.BuildList();
-			StatusLabel_UpdateCounts();
+			UpdateStatusLabel();
 		}
 
 		private void MenuStrip_Group_Hide_Click(object Sender, EventArgs Args)
@@ -1302,7 +1302,7 @@ namespace Tasual
 				TaskArray.Remove(Task);
 				ArrayHandler.Save(ref TaskArray, Settings);
 				ListView.BuildList();
-				StatusLabel_UpdateCounts();
+				UpdateStatusLabel();
 			}
 		}
 
@@ -1348,7 +1348,7 @@ namespace Tasual
 			TaskArray.Add(NewTask);
 			UpdateGroupKeys(NewTask);
 			ListView.BuildList();
-			StatusLabel_UpdateCounts();
+			UpdateStatusLabel();
 		}
 
 		private void MenuStrip_Item_Edit_Advanced_Click(object Sender, EventArgs Args)
@@ -1487,7 +1487,7 @@ namespace Tasual
 		// Update timer
 		private void Timer_CheckUpdate_Tick(object Sender, EventArgs Args)
 		{
-			CheckNeedsUpdate();
+			CheckTaskStatus();
 		}
 
 		// Notification Icon
@@ -1567,7 +1567,7 @@ namespace Tasual
 			}
 		}
 
-		// ListView: Click handlers
+		// ListView: Click and input handlers
 		private void ListView_SingleClick(MouseEventArgs Args)
 		{
 			if (ListView_PreviouslySelected == true)
@@ -1595,7 +1595,6 @@ namespace Tasual
 					{
 						Task Task = (Task)ListView.SelectedItem.RowObject;
 						ListView.PossibleFinishCellEditing();
-						//ListView.Edit
 						ListView.EditModel(Task);
 					}
 				}
@@ -1704,7 +1703,10 @@ namespace Tasual
 		{
 			if (CalendarPopout != null)
 			{
-				Form_TimePop Calendar = new Form_TimePop(this, TaskArray.IndexOf((Task)ListView.SelectedItem.RowObject));
+				Form_TimePop Calendar = new Form_TimePop(
+					this, 
+					TaskArray.IndexOf((Task)ListView.SelectedItem.RowObject)
+				);
 
 				Rectangle Bounds = CalendarPopout.SubItem.Bounds;
 				Calendar.Location = PointToScreen(new Point(Bounds.Left, Bounds.Bottom + Bounds.Height + 5));
@@ -1739,7 +1741,7 @@ namespace Tasual
 								TaskArray.Remove(Task);
 								ArrayHandler.Save(ref TaskArray, Settings);
 								ListView.BuildList();
-								StatusLabel_UpdateCounts();
+								UpdateStatusLabel();
 							}
 						}
 						break;

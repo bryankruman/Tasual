@@ -153,7 +153,7 @@ namespace Tasual
 		{
 			try
 			{
-				using (FileStream OutputFile = File.Open("settings.cfg", FileMode.Create))
+				using (FileStream OutputFile = File.Open(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings.cfg"), FileMode.Create))
 				using (StreamWriter OutputStream = new StreamWriter(OutputFile))
 				using (JsonWriter OutputJson = new JsonTextWriter(OutputStream))
 				{
@@ -173,7 +173,7 @@ namespace Tasual
 		{
 			try
 			{
-				using (StreamReader InputFile = File.OpenText("settings.cfg"))
+				using (StreamReader InputFile = File.OpenText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings.cfg")))
 				using (JsonReader InputJson = new JsonTextReader(InputFile))
 				{
 					JsonSerializer Serializer = new JsonSerializer();

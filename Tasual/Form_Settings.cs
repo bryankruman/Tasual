@@ -125,8 +125,8 @@ namespace Tasual
 				MainForm.Settings.EnabledColumns |= Setting.Columns.Time;
 			}
 
-			MainForm.Save();
-			MainForm.Apply();
+			MainForm.Settings_Save();
+			MainForm.Settings_Apply();
 			MainForm.ListView_UpdateColumnSettings();
 			MainForm.UpdateGroupKeys();
 			MainForm.ListView.BuildList();

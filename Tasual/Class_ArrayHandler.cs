@@ -48,6 +48,10 @@ namespace Tasual
 		{
 			try
 			{
+				if (!PathToFile.Contains("\\"))
+				{
+					PathToFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, PathToFile);
+				}
 				using (FileStream OutputFile = File.Open(PathToFile, FileMode.Create))
 				using (StreamWriter OutputStream = new StreamWriter(OutputFile))
 				using (JsonWriter OutputJson = new JsonTextWriter(OutputStream))
@@ -68,6 +72,10 @@ namespace Tasual
 		{
 			try
 			{
+				if (!PathToFile.Contains("\\"))
+				{
+					PathToFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, PathToFile);
+				}
 				using (StreamReader InputFile = File.OpenText(PathToFile))
 				using (JsonReader InputJson = new JsonTextReader(InputFile))
 				{

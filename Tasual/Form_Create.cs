@@ -1122,7 +1122,7 @@ namespace Tasual
 			MainForm.ListView.BuildList();
 			MainForm.ListView.EnsureModelVisible(Task);
 			MainForm.ListView.SelectObject(Task);
-			MainForm.StatusLabel_UpdateCounts();
+			MainForm.UpdateStatusLabel();
 
 			Close();
 		}
