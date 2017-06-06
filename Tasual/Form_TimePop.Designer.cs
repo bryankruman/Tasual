@@ -1,6 +1,6 @@
 ﻿namespace Tasual
 {
-	partial class Tasual_TimePop
+	partial class Form_TimePop
 	{
 		/// <summary>
 		/// Required designer variable.

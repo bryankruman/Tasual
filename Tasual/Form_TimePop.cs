@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Tasual
 {
-	public partial class Tasual_TimePop : Form
+	public partial class Form_TimePop : Form
 	{
-		private readonly Tasual_Main _Tasual_Main;
+		private readonly Form_Main _Tasual_Main;
 		private readonly Task _Task;
 
 		private void Tasual_TimePop_CheckEnableStatus()
@@ -72,7 +72,7 @@ namespace Tasual
 			}
 		}
 
-		public Tasual_TimePop(Tasual_Main PassedForm, int PassedIndex)
+		public Form_TimePop(Form_Main PassedForm, int PassedIndex)
 		{
 			InitializeComponent();
 			_Tasual_Main = PassedForm;
@@ -132,7 +132,7 @@ namespace Tasual
 
 		private void Tasual_TimePop_LinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			Tasual_Create CreateForm = new Tasual_Create(_Tasual_Main, _Tasual_Main.TaskArray.IndexOf(_Task));
+			Form_Create CreateForm = new Form_Create(_Tasual_Main, _Tasual_Main.TaskArray.IndexOf(_Task));
 			CreateForm.ShowDialog(_Tasual_Main);
 			Close();
 		}

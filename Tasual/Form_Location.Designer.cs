@@ -1,6 +1,6 @@
 ﻿namespace Tasual
 {
-	partial class Tasual_Location
+	partial class Form_Location
 	{
 		/// <summary>
 		/// Required designer variable.

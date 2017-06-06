@@ -1,6 +1,6 @@
 ﻿namespace Tasual
 {
-	partial class Tasual_Main
+	partial class Form_Main
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Tasual_Main));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Main));
 			this.Tasual_MenuStrip = new System.Windows.Forms.MenuStrip();
 			this.Tasual_MenuStrip_Create = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tasual_MenuStrip_Create_Quick = new System.Windows.Forms.ToolStripMenuItem();

@@ -8,7 +8,7 @@ using BrightIdeasSoftware;
 
 namespace Tasual
 {
-	public partial class Tasual_Main : Form
+	public partial class Form_Main : Form
 	{
 		// ==============
 		//  Declarations
@@ -34,7 +34,7 @@ namespace Tasual
 		//  Initialization
 		// ================
 
-		public Tasual_Main()
+		public Form_Main()
 		{
 			// Initialize interface objects
 			InitializeComponent();
@@ -980,7 +980,7 @@ namespace Tasual
 		// Tasual_Main: "Create"
 		private void Tasual_MenuStrip_Create_Advanced_Click(object sender, EventArgs e)
 		{
-			Tasual_Create CreateForm = new Tasual_Create(this);
+			Form_Create CreateForm = new Form_Create(this);
 			CreateForm.ShowDialog(this);
 		}
 
@@ -995,7 +995,7 @@ namespace Tasual
 			if (Tasual_ListView.SelectedItem != null)
 			{
 				Task Task = (Task)Tasual_ListView.SelectedItem.RowObject;
-				Tasual_Create CreateForm = new Tasual_Create(this, TaskArray.IndexOf(Task));
+				Form_Create CreateForm = new Form_Create(this, TaskArray.IndexOf(Task));
 				CreateForm.ShowDialog(this);
 			}
 		}
@@ -1014,7 +1014,7 @@ namespace Tasual
 		// Tasual_Main: "Settings"
 		private void Tasual_MenuStrip_Settings_Click(object sender, EventArgs e)
 		{
-			Tasual_Settings SettingsForm = new Tasual_Settings(this);
+			Form_Settings SettingsForm = new Form_Settings(this);
 			SettingsForm.ShowDialog(this);
 		}
 
@@ -1027,7 +1027,7 @@ namespace Tasual
 		// Tasual_ListView: "Group"
 		private void Tasual_MenuStrip_Group_Create_Advanced_Click(object sender, EventArgs e)
 		{
-			Tasual_Create CreateForm = new Tasual_Create(this);
+			Form_Create CreateForm = new Form_Create(this);
 			CreateForm.ShowDialog(this);
 		}
 
@@ -1127,21 +1127,21 @@ namespace Tasual
 		private void Tasual_MenuStrip_Icon_AddLink_Click(object sender, EventArgs e)
 		{
 			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
-			Tasual_Link LinkForm = new Tasual_Link(this, TaskArray.IndexOf(Task));
+			Form_Link LinkForm = new Form_Link(this, TaskArray.IndexOf(Task));
 			LinkForm.ShowDialog(this);
 		}
 
 		private void Tasual_MenuStrip_Icon_AddLocation_Click(object sender, EventArgs e)
 		{
 			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
-			Tasual_Location LocationForm = new Tasual_Location(this, TaskArray.IndexOf(Task));
+			Form_Location LocationForm = new Form_Location(this, TaskArray.IndexOf(Task));
 			LocationForm.ShowDialog(this);
 		}
 
 		private void Tasual_MenuStrip_Icon_AddNotes_Click(object sender, EventArgs e)
 		{
 			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
-			Tasual_Notes NotesForm = new Tasual_Notes(this, TaskArray.IndexOf(Task));
+			Form_Notes NotesForm = new Form_Notes(this, TaskArray.IndexOf(Task));
 			NotesForm.ShowDialog(this);
 		}
 
@@ -1154,7 +1154,7 @@ namespace Tasual
 		private void Tasual_MenuStrip_Icon_Link_Edit_Click(object sender, EventArgs e)
 		{
 			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
-			Tasual_Link LinkForm = new Tasual_Link(this, TaskArray.IndexOf(Task));
+			Form_Link LinkForm = new Form_Link(this, TaskArray.IndexOf(Task));
 			LinkForm.ShowDialog(this);
 		}
 
@@ -1182,7 +1182,7 @@ namespace Tasual
 		private void Tasual_MenuStrip_Icon_Location_Edit_Click(object sender, EventArgs e)
 		{
 			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
-			Tasual_Location LocationForm = new Tasual_Location(this, TaskArray.IndexOf(Task));
+			Form_Location LocationForm = new Form_Location(this, TaskArray.IndexOf(Task));
 			LocationForm.ShowDialog(this);
 		}
 
@@ -1210,7 +1210,7 @@ namespace Tasual
 		private void Tasual_MenuStrip_Icon_Notes_Edit_Click(object sender, EventArgs e)
 		{
 			Task Task = (Task)Tasual_MenuStrip_Icon.Tag;
-			Tasual_Notes NotesForm = new Tasual_Notes(this, TaskArray.IndexOf(Task));
+			Form_Notes NotesForm = new Form_Notes(this, TaskArray.IndexOf(Task));
 			NotesForm.ShowDialog(this);
 		}
 
@@ -1276,7 +1276,7 @@ namespace Tasual
 
 		private void Tasual_MenuStrip_Item_Create_Advanced_Click(object sender, EventArgs e)
 		{
-			Tasual_Create CreateForm = new Tasual_Create(this);
+			Form_Create CreateForm = new Form_Create(this);
 			CreateForm.ShowDialog(this);
 		}
 
@@ -1340,7 +1340,7 @@ namespace Tasual
 		private void Tasual_MenuStrip_Item_Edit_Advanced_Click(object sender, EventArgs e)
 		{
 			Task Task = (Task)Tasual_MenuStrip_Item.Tag;
-			Tasual_Create CreateForm = new Tasual_Create(this, TaskArray.IndexOf(Task));
+			Form_Create CreateForm = new Form_Create(this, TaskArray.IndexOf(Task));
 			CreateForm.ShowDialog(this);
 		}
 
@@ -1392,7 +1392,7 @@ namespace Tasual
 
 		private void Tasual_MenuStrip_Notify_Settings_Click(object sender, EventArgs e)
 		{
-			Tasual_Settings SettingsForm = new Tasual_Settings(this);
+			Form_Settings SettingsForm = new Form_Settings(this);
 			SettingsForm.ShowDialog(this);
 		}
 
@@ -1497,7 +1497,7 @@ namespace Tasual
 
 		private void Tasual_AboutLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			Tasual_About AboutForm = new Tasual_About();
+			Form_About AboutForm = new Form_About();
 			AboutForm.ShowDialog(this);
 		}
 
@@ -1699,7 +1699,7 @@ namespace Tasual
 		{
 			if (CalendarPopout != null)
 			{
-				Tasual_TimePop Calendar = new Tasual_TimePop(this, TaskArray.IndexOf((Task)Tasual_ListView.SelectedItem.RowObject));
+				Form_TimePop Calendar = new Form_TimePop(this, TaskArray.IndexOf((Task)Tasual_ListView.SelectedItem.RowObject));
 
 				Rectangle Bounds = CalendarPopout.SubItem.Bounds;
 				Calendar.Location = PointToScreen(new Point(Bounds.Left, Bounds.Bottom + Bounds.Height + 5));

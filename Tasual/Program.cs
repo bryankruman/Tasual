@@ -16,7 +16,7 @@ namespace Tasual
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new Tasual_Main());
+			Application.Run(new Form_Main());
 		}
 	}
 }

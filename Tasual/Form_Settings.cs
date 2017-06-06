@@ -10,11 +10,11 @@ using System.Windows.Forms;
 
 namespace Tasual
 {
-	public partial class Tasual_Settings : Form
+	public partial class Form_Settings : Form
 	{
-		private readonly Tasual_Main _Tasual_Main;
+		private readonly Form_Main _Tasual_Main;
 
-		public Tasual_Settings(Tasual_Main PassedForm)
+		public Form_Settings(Form_Main PassedForm)
 		{
 			InitializeComponent();
 

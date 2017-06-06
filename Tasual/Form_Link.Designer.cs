@@ -1,6 +1,6 @@
 ﻿namespace Tasual
 {
-	partial class Tasual_Link
+	partial class Form_Link
 	{
 		/// <summary>
 		/// Required designer variable.

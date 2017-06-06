@@ -4,9 +4,9 @@ using System.Windows.Forms;
 
 namespace Tasual
 {
-	partial class Tasual_About : Form
+	partial class Form_About : Form
 	{
-		public Tasual_About()
+		public Form_About()
 		{
 			InitializeComponent();
 			this.Text = String.Format("About {0}", AssemblyTitle);

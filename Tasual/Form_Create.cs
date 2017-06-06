@@ -12,9 +12,9 @@ using BrightIdeasSoftware;
 
 namespace Tasual
 {
-	public partial class Tasual_Create : Form
+	public partial class Form_Create : Form
 	{
-		private readonly Tasual_Main _Tasual_Main;
+		private readonly Form_Main _Tasual_Main;
 		private readonly Task TaskToEdit;
 		bool EditMode = false;
 
@@ -410,7 +410,7 @@ namespace Tasual
 			}
 		}
 
-		public Tasual_Create(Tasual_Main PassedForm)
+		public Form_Create(Form_Main PassedForm)
 		{
 			// Treat as normal "Create" dialog
 			InitializeComponent();
@@ -441,7 +441,7 @@ namespace Tasual
 			Tasual_Create_ComboBox_Priority.SelectedIndex = 1;
 		}
 
-		public Tasual_Create(Tasual_Main PassedForm, int PassedIndex)
+		public Form_Create(Form_Main PassedForm, int PassedIndex)
 		{
 			// Treat as "Edit" dialog
 			InitializeComponent();
@@ -951,7 +951,7 @@ namespace Tasual
 
 		private void Tasual_Create_Button_Notes_Click(object sender, EventArgs e)
 		{
-			Tasual_Notes NotesForm = new Tasual_Notes(_Tasual_Main, this);
+			Form_Notes NotesForm = new Form_Notes(_Tasual_Main, this);
 			NotesForm.ShowDialog(this);
 		}
 

@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Tasual
 {
-	public partial class Tasual_Location : Form
+	public partial class Form_Location : Form
 	{
-		private readonly Tasual_Main _Tasual_Main;
+		private readonly Form_Main _Tasual_Main;
 		private readonly Task Task;
 
 		private void Tasual_Location_Button_GoogleMaps_CheckStatus()
@@ -27,7 +27,7 @@ namespace Tasual
 			}
 		}
 
-		public Tasual_Location(Tasual_Main PassedForm, int PassedIndex)
+		public Form_Location(Form_Main PassedForm, int PassedIndex)
 		{
 			try
 			{

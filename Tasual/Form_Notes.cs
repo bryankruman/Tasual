@@ -3,14 +3,14 @@ using System.Windows.Forms;
 
 namespace Tasual
 {
-	public partial class Tasual_Notes : Form
+	public partial class Form_Notes : Form
 	{
-		private readonly Tasual_Create _Tasual_Create;
-		private readonly Tasual_Main _Tasual_Main;
+		private readonly Form_Create _Tasual_Create;
+		private readonly Form_Main _Tasual_Main;
 		private readonly Task Task;
 		private readonly int Origination; // 1 = Main, 2 = Create
 
-		public Tasual_Notes(Tasual_Main PassedMain, int PassedIndex)
+		public Form_Notes(Form_Main PassedMain, int PassedIndex)
 		{
 			try
 			{
@@ -29,7 +29,7 @@ namespace Tasual
 			}
 		}
 
-		public Tasual_Notes(Tasual_Main PassedMain, Tasual_Create PassedCreate)
+		public Form_Notes(Form_Main PassedMain, Form_Create PassedCreate)
 		{
 			try
 			{

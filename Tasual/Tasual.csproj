@@ -98,84 +98,84 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Tasual_About.cs">
+    <Compile Include="Form_About.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tasual_About.Designer.cs">
-      <DependentUpon>Tasual_About.cs</DependentUpon>
+    <Compile Include="Form_About.Designer.cs">
+      <DependentUpon>Form_About.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tasual_Link.cs">
+    <Compile Include="Form_Link.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tasual_Link.Designer.cs">
-      <DependentUpon>Tasual_Link.cs</DependentUpon>
+    <Compile Include="Form_Link.Designer.cs">
+      <DependentUpon>Form_Link.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tasual_Location.cs">
+    <Compile Include="Form_Location.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tasual_Location.Designer.cs">
-      <DependentUpon>Tasual_Location.cs</DependentUpon>
+    <Compile Include="Form_Location.Designer.cs">
+      <DependentUpon>Form_Location.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tasual_TimePop.cs">
+    <Compile Include="Form_TimePop.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tasual_TimePop.Designer.cs">
-      <DependentUpon>Tasual_TimePop.cs</DependentUpon>
+    <Compile Include="Form_TimePop.Designer.cs">
+      <DependentUpon>Form_TimePop.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tasual_Create.cs">
+    <Compile Include="Form_Create.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tasual_Create.Designer.cs">
-      <DependentUpon>Tasual_Create.cs</DependentUpon>
+    <Compile Include="Form_Create.Designer.cs">
+      <DependentUpon>Form_Create.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tasual_Main.cs">
+    <Compile Include="Form_Main.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tasual_Main.Designer.cs">
-      <DependentUpon>Tasual_Main.cs</DependentUpon>
+    <Compile Include="Form_Main.Designer.cs">
+      <DependentUpon>Form_Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tasual_Notes.cs">
+    <Compile Include="Form_Notes.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tasual_Notes.Designer.cs">
-      <DependentUpon>Tasual_Notes.cs</DependentUpon>
+    <Compile Include="Form_Notes.Designer.cs">
+      <DependentUpon>Form_Notes.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tasual_Settings.cs">
+    <Compile Include="Form_Settings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tasual_Settings.Designer.cs">
-      <DependentUpon>Tasual_Settings.cs</DependentUpon>
+    <Compile Include="Form_Settings.Designer.cs">
+      <DependentUpon>Form_Settings.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Tasual_About.resx">
-      <DependentUpon>Tasual_About.cs</DependentUpon>
+    <EmbeddedResource Include="Form_About.resx">
+      <DependentUpon>Form_About.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tasual_Link.resx">
-      <DependentUpon>Tasual_Link.cs</DependentUpon>
+    <EmbeddedResource Include="Form_Link.resx">
+      <DependentUpon>Form_Link.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tasual_Location.resx">
-      <DependentUpon>Tasual_Location.cs</DependentUpon>
+    <EmbeddedResource Include="Form_Location.resx">
+      <DependentUpon>Form_Location.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tasual_TimePop.resx">
-      <DependentUpon>Tasual_TimePop.cs</DependentUpon>
+    <EmbeddedResource Include="Form_TimePop.resx">
+      <DependentUpon>Form_TimePop.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tasual_Create.resx">
-      <DependentUpon>Tasual_Create.cs</DependentUpon>
+    <EmbeddedResource Include="Form_Create.resx">
+      <DependentUpon>Form_Create.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tasual_Main.resx">
-      <DependentUpon>Tasual_Main.cs</DependentUpon>
+    <EmbeddedResource Include="Form_Main.resx">
+      <DependentUpon>Form_Main.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tasual_Notes.resx">
-      <DependentUpon>Tasual_Notes.cs</DependentUpon>
+    <EmbeddedResource Include="Form_Notes.resx">
+      <DependentUpon>Form_Notes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tasual_Settings.resx">
-      <DependentUpon>Tasual_Settings.cs</DependentUpon>
+    <EmbeddedResource Include="Form_Settings.resx">
+      <DependentUpon>Form_Settings.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

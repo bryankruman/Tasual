@@ -4,9 +4,9 @@ using System.Windows.Forms;
 
 namespace Tasual
 {
-	public partial class Tasual_Link : Form
+	public partial class Form_Link : Form
 	{
-		private readonly Tasual_Main _Tasual_Main;
+		private readonly Form_Main _Tasual_Main;
 		private readonly Task Task;
 
 		private void Tasual_Link_Button_Follow_CheckURLValid()
@@ -21,7 +21,7 @@ namespace Tasual
 			}
 		}
 
-		public Tasual_Link(Tasual_Main PassedForm, int PassedIndex)
+		public Form_Link(Form_Main PassedForm, int PassedIndex)
 		{
 			try
 			{

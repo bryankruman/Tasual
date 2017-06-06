@@ -1,6 +1,6 @@
 ﻿namespace Tasual
 {
-	partial class Tasual_Create
+	partial class Form_Create
 	{
 		/// <summary>
 		/// Required designer variable.
