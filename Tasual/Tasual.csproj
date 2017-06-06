@@ -218,6 +218,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Button_Sync.png" />
+    <None Include="Resources\link.png" />
+    <None Include="Resources\link-checked.png" />
+    <None Include="Resources\location.png" />
+    <None Include="Resources\location-checked.png" />
+    <None Include="Resources\note.png" />
+    <None Include="Resources\note-checked.png" />
+    <None Include="Resources\attach-checked.png" />
     <Content Include="Tasual.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

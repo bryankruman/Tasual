@@ -31,14 +31,6 @@
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Main));
 			this.MenuStrip = new System.Windows.Forms.MenuStrip();
-			this.MenuStrip_Create = new System.Windows.Forms.ToolStripMenuItem();
-			this.MenuStrip_Create_Quick = new System.Windows.Forms.ToolStripMenuItem();
-			this.MenuStrip_Create_Advanced = new System.Windows.Forms.ToolStripMenuItem();
-			this.MenuStrip_Edit = new System.Windows.Forms.ToolStripMenuItem();
-			this.MenuStrip_Edit_Quick = new System.Windows.Forms.ToolStripMenuItem();
-			this.MenuStrip_Edit_Advanced = new System.Windows.Forms.ToolStripMenuItem();
-			this.MenuStrip_Settings = new System.Windows.Forms.ToolStripMenuItem();
-			this.MenuStrip_Sources = new System.Windows.Forms.ToolStripMenuItem();
 			this.ListView = new BrightIdeasSoftware.ObjectListView();
 			this.TaskIcons = new System.Windows.Forms.ImageList(this.components);
 			this.Notify = new System.Windows.Forms.NotifyIcon(this.components);
@@ -98,6 +90,14 @@
 			this.MenuStrip_Icon_Location_Remove = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuStrip_Icon_AddLocation = new System.Windows.Forms.ToolStripMenuItem();
 			this.Timer_CheckUpdate = new System.Windows.Forms.Timer(this.components);
+			this.MenuStrip_Create = new System.Windows.Forms.ToolStripMenuItem();
+			this.MenuStrip_Create_Quick = new System.Windows.Forms.ToolStripMenuItem();
+			this.MenuStrip_Create_Advanced = new System.Windows.Forms.ToolStripMenuItem();
+			this.MenuStrip_Edit = new System.Windows.Forms.ToolStripMenuItem();
+			this.MenuStrip_Edit_Quick = new System.Windows.Forms.ToolStripMenuItem();
+			this.MenuStrip_Edit_Advanced = new System.Windows.Forms.ToolStripMenuItem();
+			this.MenuStrip_Settings = new System.Windows.Forms.ToolStripMenuItem();
+			this.MenuStrip_Sources = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ListView)).BeginInit();
 			this.MenuStrip_Notify.SuspendLayout();
@@ -121,79 +121,6 @@
 			this.MenuStrip.Size = new System.Drawing.Size(513, 24);
 			this.MenuStrip.TabIndex = 1;
 			this.MenuStrip.Text = "menuStrip1";
-			// 
-			// MenuStrip_Create
-			// 
-			this.MenuStrip_Create.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MenuStrip_Create_Quick,
-            this.MenuStrip_Create_Advanced});
-			this.MenuStrip_Create.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
-			this.MenuStrip_Create.Image = global::Tasual.Properties.Resources.Add;
-			this.MenuStrip_Create.Name = "MenuStrip_Create";
-			this.MenuStrip_Create.Size = new System.Drawing.Size(69, 20);
-			this.MenuStrip_Create.Text = "Create";
-			// 
-			// MenuStrip_Create_Quick
-			// 
-			this.MenuStrip_Create_Quick.Name = "MenuStrip_Create_Quick";
-			this.MenuStrip_Create_Quick.Size = new System.Drawing.Size(127, 22);
-			this.MenuStrip_Create_Quick.Text = "Quick";
-			this.MenuStrip_Create_Quick.Click += new System.EventHandler(this.MenuStrip_Create_Quick_Click);
-			// 
-			// MenuStrip_Create_Advanced
-			// 
-			this.MenuStrip_Create_Advanced.Name = "MenuStrip_Create_Advanced";
-			this.MenuStrip_Create_Advanced.Size = new System.Drawing.Size(127, 22);
-			this.MenuStrip_Create_Advanced.Text = "Advanced";
-			this.MenuStrip_Create_Advanced.Click += new System.EventHandler(this.MenuStrip_Create_Advanced_Click);
-			// 
-			// MenuStrip_Edit
-			// 
-			this.MenuStrip_Edit.BackColor = System.Drawing.Color.Transparent;
-			this.MenuStrip_Edit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MenuStrip_Edit_Quick,
-            this.MenuStrip_Edit_Advanced});
-			this.MenuStrip_Edit.Enabled = false;
-			this.MenuStrip_Edit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
-			this.MenuStrip_Edit.Image = global::Tasual.Properties.Resources.File_List;
-			this.MenuStrip_Edit.Name = "MenuStrip_Edit";
-			this.MenuStrip_Edit.Size = new System.Drawing.Size(55, 20);
-			this.MenuStrip_Edit.Text = "Edit";
-			// 
-			// MenuStrip_Edit_Quick
-			// 
-			this.MenuStrip_Edit_Quick.Name = "MenuStrip_Edit_Quick";
-			this.MenuStrip_Edit_Quick.Size = new System.Drawing.Size(127, 22);
-			this.MenuStrip_Edit_Quick.Text = "Quick";
-			this.MenuStrip_Edit_Quick.Click += new System.EventHandler(this.MenuStrip_Edit_Quick_Click);
-			// 
-			// MenuStrip_Edit_Advanced
-			// 
-			this.MenuStrip_Edit_Advanced.Name = "MenuStrip_Edit_Advanced";
-			this.MenuStrip_Edit_Advanced.Size = new System.Drawing.Size(127, 22);
-			this.MenuStrip_Edit_Advanced.Text = "Advanced";
-			this.MenuStrip_Edit_Advanced.Click += new System.EventHandler(this.MenuStrip_Edit_Advanced_Click);
-			// 
-			// MenuStrip_Settings
-			// 
-			this.MenuStrip_Settings.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-			this.MenuStrip_Settings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
-			this.MenuStrip_Settings.Image = global::Tasual.Properties.Resources.Gear;
-			this.MenuStrip_Settings.Name = "MenuStrip_Settings";
-			this.MenuStrip_Settings.Size = new System.Drawing.Size(77, 20);
-			this.MenuStrip_Settings.Text = "Settings";
-			this.MenuStrip_Settings.Click += new System.EventHandler(this.MenuStrip_Settings_Click);
-			// 
-			// MenuStrip_Sources
-			// 
-			this.MenuStrip_Sources.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-			this.MenuStrip_Sources.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
-			this.MenuStrip_Sources.Image = global::Tasual.Properties.Resources.Button_Sync;
-			this.MenuStrip_Sources.Name = "MenuStrip_Sources";
-			this.MenuStrip_Sources.Size = new System.Drawing.Size(76, 20);
-			this.MenuStrip_Sources.Text = "Sources";
-			this.MenuStrip_Sources.Visible = false;
-			this.MenuStrip_Sources.Click += new System.EventHandler(this.MenuStrip_Sources_Click);
 			// 
 			// ListView
 			// 
@@ -242,7 +169,6 @@
 			// Notify
 			// 
 			this.Notify.ContextMenuStrip = this.MenuStrip_Notify;
-			this.Notify.Icon = ((System.Drawing.Icon)(resources.GetObject("Notify.Icon")));
 			this.Notify.Text = "Tasual";
 			this.Notify.Visible = true;
 			this.Notify.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Notify_MouseClick);
@@ -396,7 +322,7 @@
             this.MenuStrip_Group_MoveTasks,
             this.MenuStrip_Group_Delete});
 			this.MenuStrip_Group.Name = "MenuStrip_Header";
-			this.MenuStrip_Group.Size = new System.Drawing.Size(153, 158);
+			this.MenuStrip_Group.Size = new System.Drawing.Size(140, 136);
 			this.MenuStrip_Group.Opening += new System.ComponentModel.CancelEventHandler(this.MenuStrip_Group_Opening);
 			// 
 			// MenuStrip_Group_Create
@@ -405,34 +331,34 @@
             this.MenuStrip_Group_Create_Quick,
             this.MenuStrip_Group_Create_Advanced});
 			this.MenuStrip_Group_Create.Name = "MenuStrip_Group_Create";
-			this.MenuStrip_Group_Create.Size = new System.Drawing.Size(152, 22);
+			this.MenuStrip_Group_Create.Size = new System.Drawing.Size(139, 22);
 			this.MenuStrip_Group_Create.Text = "Create Task";
 			// 
 			// MenuStrip_Group_Create_Quick
 			// 
 			this.MenuStrip_Group_Create_Quick.Name = "MenuStrip_Group_Create_Quick";
-			this.MenuStrip_Group_Create_Quick.Size = new System.Drawing.Size(152, 22);
+			this.MenuStrip_Group_Create_Quick.Size = new System.Drawing.Size(127, 22);
 			this.MenuStrip_Group_Create_Quick.Text = "Quick";
 			this.MenuStrip_Group_Create_Quick.Click += new System.EventHandler(this.MenuStrip_Group_Create_Quick_Click);
 			// 
 			// MenuStrip_Group_Create_Advanced
 			// 
 			this.MenuStrip_Group_Create_Advanced.Name = "MenuStrip_Group_Create_Advanced";
-			this.MenuStrip_Group_Create_Advanced.Size = new System.Drawing.Size(152, 22);
+			this.MenuStrip_Group_Create_Advanced.Size = new System.Drawing.Size(127, 22);
 			this.MenuStrip_Group_Create_Advanced.Text = "Advanced";
 			this.MenuStrip_Group_Create_Advanced.Click += new System.EventHandler(this.MenuStrip_Group_Create_Advanced_Click);
 			// 
 			// MenuStrip_Group_Show
 			// 
 			this.MenuStrip_Group_Show.Name = "MenuStrip_Group_Show";
-			this.MenuStrip_Group_Show.Size = new System.Drawing.Size(152, 22);
+			this.MenuStrip_Group_Show.Size = new System.Drawing.Size(139, 22);
 			this.MenuStrip_Group_Show.Text = "Show";
 			this.MenuStrip_Group_Show.Click += new System.EventHandler(this.MenuStrip_Group_Show_Click);
 			// 
 			// MenuStrip_Group_Hide
 			// 
 			this.MenuStrip_Group_Hide.Name = "MenuStrip_Group_Hide";
-			this.MenuStrip_Group_Hide.Size = new System.Drawing.Size(152, 22);
+			this.MenuStrip_Group_Hide.Size = new System.Drawing.Size(139, 22);
 			this.MenuStrip_Group_Hide.Text = "Hide";
 			this.MenuStrip_Group_Hide.Click += new System.EventHandler(this.MenuStrip_Group_Hide_Click);
 			// 
@@ -440,7 +366,7 @@
 			// 
 			this.MenuStrip_Group_Rename.Enabled = false;
 			this.MenuStrip_Group_Rename.Name = "MenuStrip_Group_Rename";
-			this.MenuStrip_Group_Rename.Size = new System.Drawing.Size(152, 22);
+			this.MenuStrip_Group_Rename.Size = new System.Drawing.Size(139, 22);
 			this.MenuStrip_Group_Rename.Text = "Rename";
 			// 
 			// MenuStrip_Group_MoveTasks
@@ -449,7 +375,7 @@
 			this.MenuStrip_Group_MoveTasks.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuStrip_Group_Move_Blank});
 			this.MenuStrip_Group_MoveTasks.Name = "MenuStrip_Group_MoveTasks";
-			this.MenuStrip_Group_MoveTasks.Size = new System.Drawing.Size(152, 22);
+			this.MenuStrip_Group_MoveTasks.Size = new System.Drawing.Size(139, 22);
 			this.MenuStrip_Group_MoveTasks.Text = "Move Tasks";
 			this.MenuStrip_Group_MoveTasks.DropDownOpening += new System.EventHandler(this.MenuStrip_Group_MoveTasks_DropDownOpening);
 			// 
@@ -463,7 +389,7 @@
 			// MenuStrip_Group_Delete
 			// 
 			this.MenuStrip_Group_Delete.Name = "MenuStrip_Group_Delete";
-			this.MenuStrip_Group_Delete.Size = new System.Drawing.Size(152, 22);
+			this.MenuStrip_Group_Delete.Size = new System.Drawing.Size(139, 22);
 			this.MenuStrip_Group_Delete.Text = "Delete Tasks";
 			this.MenuStrip_Group_Delete.Click += new System.EventHandler(this.MenuStrip_Group_Delete_Click);
 			// 
@@ -703,7 +629,80 @@
 			this.Timer_CheckUpdate.Interval = 60000;
 			this.Timer_CheckUpdate.Tick += new System.EventHandler(this.Timer_CheckUpdate_Tick);
 			// 
-			// Main
+			// MenuStrip_Create
+			// 
+			this.MenuStrip_Create.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuStrip_Create_Quick,
+            this.MenuStrip_Create_Advanced});
+			this.MenuStrip_Create.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
+			this.MenuStrip_Create.Image = global::Tasual.Properties.Resources.Add;
+			this.MenuStrip_Create.Name = "MenuStrip_Create";
+			this.MenuStrip_Create.Size = new System.Drawing.Size(69, 20);
+			this.MenuStrip_Create.Text = "Create";
+			// 
+			// MenuStrip_Create_Quick
+			// 
+			this.MenuStrip_Create_Quick.Name = "MenuStrip_Create_Quick";
+			this.MenuStrip_Create_Quick.Size = new System.Drawing.Size(127, 22);
+			this.MenuStrip_Create_Quick.Text = "Quick";
+			this.MenuStrip_Create_Quick.Click += new System.EventHandler(this.MenuStrip_Create_Quick_Click);
+			// 
+			// MenuStrip_Create_Advanced
+			// 
+			this.MenuStrip_Create_Advanced.Name = "MenuStrip_Create_Advanced";
+			this.MenuStrip_Create_Advanced.Size = new System.Drawing.Size(127, 22);
+			this.MenuStrip_Create_Advanced.Text = "Advanced";
+			this.MenuStrip_Create_Advanced.Click += new System.EventHandler(this.MenuStrip_Create_Advanced_Click);
+			// 
+			// MenuStrip_Edit
+			// 
+			this.MenuStrip_Edit.BackColor = System.Drawing.Color.Transparent;
+			this.MenuStrip_Edit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuStrip_Edit_Quick,
+            this.MenuStrip_Edit_Advanced});
+			this.MenuStrip_Edit.Enabled = false;
+			this.MenuStrip_Edit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
+			this.MenuStrip_Edit.Image = global::Tasual.Properties.Resources.File_List;
+			this.MenuStrip_Edit.Name = "MenuStrip_Edit";
+			this.MenuStrip_Edit.Size = new System.Drawing.Size(55, 20);
+			this.MenuStrip_Edit.Text = "Edit";
+			// 
+			// MenuStrip_Edit_Quick
+			// 
+			this.MenuStrip_Edit_Quick.Name = "MenuStrip_Edit_Quick";
+			this.MenuStrip_Edit_Quick.Size = new System.Drawing.Size(127, 22);
+			this.MenuStrip_Edit_Quick.Text = "Quick";
+			this.MenuStrip_Edit_Quick.Click += new System.EventHandler(this.MenuStrip_Edit_Quick_Click);
+			// 
+			// MenuStrip_Edit_Advanced
+			// 
+			this.MenuStrip_Edit_Advanced.Name = "MenuStrip_Edit_Advanced";
+			this.MenuStrip_Edit_Advanced.Size = new System.Drawing.Size(127, 22);
+			this.MenuStrip_Edit_Advanced.Text = "Advanced";
+			this.MenuStrip_Edit_Advanced.Click += new System.EventHandler(this.MenuStrip_Edit_Advanced_Click);
+			// 
+			// MenuStrip_Settings
+			// 
+			this.MenuStrip_Settings.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.MenuStrip_Settings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
+			this.MenuStrip_Settings.Image = global::Tasual.Properties.Resources.Gear;
+			this.MenuStrip_Settings.Name = "MenuStrip_Settings";
+			this.MenuStrip_Settings.Size = new System.Drawing.Size(77, 20);
+			this.MenuStrip_Settings.Text = "Settings";
+			this.MenuStrip_Settings.Click += new System.EventHandler(this.MenuStrip_Settings_Click);
+			// 
+			// MenuStrip_Sources
+			// 
+			this.MenuStrip_Sources.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.MenuStrip_Sources.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(90)))), ((int)(((byte)(150)))));
+			this.MenuStrip_Sources.Image = global::Tasual.Properties.Resources.Button_Sync;
+			this.MenuStrip_Sources.Name = "MenuStrip_Sources";
+			this.MenuStrip_Sources.Size = new System.Drawing.Size(76, 20);
+			this.MenuStrip_Sources.Text = "Sources";
+			this.MenuStrip_Sources.Visible = false;
+			this.MenuStrip_Sources.Click += new System.EventHandler(this.MenuStrip_Sources_Click);
+			// 
+			// Form_Main
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -717,7 +716,7 @@
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.MenuStrip;
 			this.MinimumSize = new System.Drawing.Size(300, 200);
-			this.Name = "Main";
+			this.Name = "Form_Main";
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
 			this.Text = "Tasual";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
