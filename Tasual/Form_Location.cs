@@ -15,15 +15,15 @@ namespace Tasual
 		private readonly Form_Main MainForm;
 		private readonly Task Task;
 
-		private void Tasual_Location_Button_GoogleMaps_CheckStatus()
+		private void Button_GoogleMaps_CheckStatus()
 		{
-			if (!string.IsNullOrEmpty(Tasual_Location_TextBox.Text))
+			if (!string.IsNullOrEmpty(TextBox.Text))
 			{
-				Tasual_Location_Button_GoogleMaps.Enabled = true;
+				Button_GoogleMaps.Enabled = true;
 			}
 			else
 			{
-				Tasual_Location_Button_GoogleMaps.Enabled = false;
+				Button_GoogleMaps.Enabled = false;
 			}
 		}
 
@@ -36,8 +36,8 @@ namespace Tasual
 				MainForm = PassedForm;
 				Task = MainForm.TaskArray[PassedIndex];
 
-				Tasual_Location_TextBox.Text = Task.Location;
-				Tasual_Location_Button_GoogleMaps_CheckStatus();
+				TextBox.Text = Task.Location;
+				Button_GoogleMaps_CheckStatus();
 			}
 			catch (Exception e)
 			{
@@ -46,27 +46,27 @@ namespace Tasual
 			}
 		}
 
-		private void Tasual_Location_Button_Save_Click(object sender, EventArgs e)
+		private void Button_Save_Click(object sender, EventArgs e)
 		{
 			if (Task != null)
 			{
-				Task.Location = Tasual_Location_TextBox.Text;
+				Task.Location = TextBox.Text;
 				MainForm.Tasual_Array_Save();
 			}
 			else
 			{
-				Console.WriteLine("Tasual_Location_Button_Done_Click(): Somehow Task was null!");
+				Console.WriteLine("Button_Done_Click(): Somehow Task was null!");
 			}
 		}
 
-		private void Tasual_Location_TextBox_TextChanged(object sender, EventArgs e)
+		private void TextBox_TextChanged(object sender, EventArgs e)
 		{
-			Tasual_Location_Button_GoogleMaps_CheckStatus();
+			Button_GoogleMaps_CheckStatus();
 		}
 
-		private void Tasual_Location_Button_GoogleMaps_Click(object sender, EventArgs e)
+		private void Button_GoogleMaps_Click(object sender, EventArgs e)
 		{
-			URLExtensions.Follow(string.Format("http://maps.google.com/?q={0}", Uri.EscapeDataString(Tasual_Location_TextBox.Text)));
+			URLExtensions.Follow(string.Format("http://maps.google.com/?q={0}", Uri.EscapeDataString(TextBox.Text)));
 		}
 	}
 }
