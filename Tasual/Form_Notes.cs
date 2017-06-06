@@ -12,7 +12,7 @@ namespace Tasual
 {
 	public partial class Form_Notes : Form
 	{
-		private readonly Form_Create _Tasual_Create;
+		private readonly Form_Create CreateForm;
 		private readonly Form_Main MainForm;
 		private readonly Task Task;
 		private readonly int Origination; // 1 = Main, 2 = Create
@@ -44,9 +44,9 @@ namespace Tasual
 
 				Origination = 2;
 				MainForm = PassedMain;
-				_Tasual_Create = PassedCreate;
+				CreateForm = PassedCreate;
 
-				TextBox.Text = _Tasual_Create.Notes;
+				TextBox.Text = CreateForm.Notes;
 			}
 			catch (Exception Args)
 			{
@@ -73,7 +73,7 @@ namespace Tasual
 			}
 			else
 			{
-				_Tasual_Create.Notes = TextBox.Text;
+				CreateForm.Notes = TextBox.Text;
 			}
 		}
 
