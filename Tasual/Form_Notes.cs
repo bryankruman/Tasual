@@ -20,7 +20,7 @@ namespace Tasual
 				MainForm = PassedMain;
 				Task = MainForm.TaskArray[PassedIndex];
 
-				Tasual_Notes_TextBox.Text = Task.Notes;
+				TextBox.Text = Task.Notes;
 			}
 			catch (Exception e)
 			{
@@ -39,7 +39,7 @@ namespace Tasual
 				MainForm = PassedMain;
 				_Tasual_Create = PassedCreate;
 
-				Tasual_Notes_TextBox.Text = _Tasual_Create.Notes;
+				TextBox.Text = _Tasual_Create.Notes;
 			}
 			catch (Exception e)
 			{
@@ -48,39 +48,39 @@ namespace Tasual
 			}
 		}
 
-		private void Tasual_Notes_Save_Click(object sender, EventArgs e)
+		private void Save_Click(object sender, EventArgs e)
 		{
 			if (Origination == 1)
 			{
 				if (Task != null)
 				{
-					Task.Notes = Tasual_Notes_TextBox.Text;
+					Task.Notes = TextBox.Text;
 					MainForm.Tasual_Array_Save();
 					//ArrayHandler.Save(ref MainForm.TaskArray, MainForm.Settings);
 					//MainForm.Tasual_Array_Save();
 				}
 				else
 				{
-					Console.WriteLine("Tasual_Notes_Done_Click(): Somehow Task was null!");
+					Console.WriteLine("Done_Click(): Somehow Task was null!");
 				}
 			}
 			else
 			{
-				_Tasual_Create.Notes = Tasual_Notes_TextBox.Text;
+				_Tasual_Create.Notes = TextBox.Text;
 			}
 		}
 
-		private void Tasual_Notes_CheckBox_CheckedChanged(object sender, EventArgs e)
+		private void CheckBox_CheckedChanged(object sender, EventArgs e)
 		{
-			Tasual_Notes_TextBox.AcceptsReturn = !Tasual_Notes_CheckBox.Checked;
-			MainForm.Settings.EnterToSave = Tasual_Notes_CheckBox.Checked;
+			TextBox.AcceptsReturn = !CheckBox.Checked;
+			MainForm.Settings.EnterToSave = CheckBox.Checked;
 			MainForm.Tasual_Settings_Save();
 		}
 
-		private void Tasual_Notes_Load(object sender, EventArgs e)
+		private void FormLoad(object sender, EventArgs e)
 		{
-			Tasual_Notes_TextBox.AcceptsReturn = !MainForm.Settings.EnterToSave;
-			Tasual_Notes_CheckBox.Checked = MainForm.Settings.EnterToSave;
+			TextBox.AcceptsReturn = !MainForm.Settings.EnterToSave;
+			CheckBox.Checked = MainForm.Settings.EnterToSave;
 		}
 	}
 }
