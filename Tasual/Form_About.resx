@@ -602,6 +602,6 @@
 </value>
   </data>
   <data name="label1.Text" xml:space="preserve">
-    <value>Tasual is a task management application that aims to be simple while also providing flexibility and quality of life improvements not seen in other utilities available. Tasual is free to use, however I ask that you please support it with a donation if you have found this app to be useful!</value>
+    <value>Tasual is a task management application that aims to be simple while also providing flexibility and quality of life improvements not seen in other utilities available. Tasual is open-source and licensed under the GPL v3, so it is free to use. However, I ask that if you have found this program useful that you support further development with a donation.</value>
   </data>
 </root>
