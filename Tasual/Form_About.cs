@@ -16,11 +16,11 @@ namespace Tasual
 		public Form_About()
 		{
 			InitializeComponent();
-			this.Text = String.Format("About {0}", AssemblyTitle);
-			this.labelProductName.Text = AssemblyProduct;
-			this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
-			this.labelCopyright.Text = AssemblyCopyright;
-			this.LinkLabel.Text = AssemblyCompany;
+			Text = String.Format("About {0}", AssemblyTitle);
+			labelProductName.Text = AssemblyProduct;
+			labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
+			labelCopyright.Text = AssemblyCopyright;
+			LinkLabel.Text = AssemblyCompany;
 			//this.textBoxDescription.Text = AssemblyDescription;
 		}
 
@@ -122,7 +122,7 @@ namespace Tasual
 		{
 			try
 			{
-				System.Diagnostics.Process.Start("http://www.bryankruman.com/");
+				System.Diagnostics.Process.Start("http://www.bryankruman.com/tasual");
 			}
 			catch { }
 		}

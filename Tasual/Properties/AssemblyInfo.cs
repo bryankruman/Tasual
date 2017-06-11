@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Tasual")]
-[assembly: AssemblyDescription("Better todoing")]
+[assembly: AssemblyDescription("Task management application")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("www.bryankruman.com")]
 [assembly: AssemblyProduct("Tasual")]
