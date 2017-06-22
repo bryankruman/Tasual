@@ -21,19 +21,40 @@ namespace Tasual
 		//  Declarations
 		// ==============
 
+		/// <summary>Primary array containing list of tasks.</summary>
 		public List<Task> TaskArray = new List<Task>();
+
+		/// <summary>Settings object containing current application settings.</summary>
 		public Setting Settings = new Setting();
 
+		/// <summary>Persistent OlvListViewHitTestInfo for the calendar popout window.</summary>
 		OlvListViewHitTestInfo CalendarPopout = null;
+
+		/// <summary>Persistent OlvListViewHitTestInfo for the first registered click in the ListView.</summary>
 		OlvListViewHitTestInfo ListView_FirstClickInfo = null;
+
+		/// <summary>Whether or not this double click should result in an edit.</summary>
 		bool ListView_DoubleClickEdit = false;
+
+		/// <summary>Whether or not we have previously selected the same item.</summary>
 		bool ListView_PreviouslySelected = false;
+
+		/// <summary>The group that was most recently selected.</summary>
 		string LastSelectedGroup;
 
+		/// <summary>OLVColumn for the description column.</summary>
 		OLVColumn DescriptionColumn;
+
+		/// <summary>OLVColumn for the icon column.</summary>
 		OLVColumn IconColumn;
+
+		/// <summary>OLVColumn for the category column.</summary>
 		OLVColumn CategoryColumn;
+
+		/// <summary>OLVColumn for the due column.</summary>
 		OLVColumn DueColumn;
+
+		/// <summary>OLVColumn for the time column.</summary>
 		OLVColumn TimeColumn;
 
 
@@ -41,6 +62,9 @@ namespace Tasual
 		//  Initialization
 		// ================
 
+		/// <summary>
+		/// Initialization for the Tasual main form.
+		/// </summary>
 		public Form_Main()
 		{
 			// Initialize interface objects
@@ -72,17 +96,25 @@ namespace Tasual
 		//  Common/Supporting Functions
 		// =============================
 
-		// Allow other dialogs to trigger a save
-		// This was necessary as simply calling ArrayHandler.Save() from other classes would give a CS1690 warning for
-		// using a field of a marshal-by-reference class. Additionally, these methods must continue using references 
-		// otherwise other functions in the program cease to be able to retrieve data from TaskArray.
-		// TODO: Is this really the right way to handle this? Should we keep the array handling code purely in the 
-		//       Main class? Or is there another way to handle it.
+		/// <summary>
+		/// Outside reference wrapper to save the array.
+		/// </summary>
+		/// <remarks>
+		/// This was necessary as simply calling ArrayHandler.Save() from other classes would give a CS1690 warning for
+		/// using a field of a marshal-by-reference class. Additionally, these methods must continue using references 
+		/// otherwise other functions in the program cease to be able to retrieve data from TaskArray.
+		/// 
+		/// TODO: Is this really the right way to handle this? Should we keep the array handling code purely in the 
+		/// main class? or is there another way to handle it...
+		/// </remarks>
 		public void Array_Save()
 		{
 			ArrayHandler.Save(ref TaskArray, Settings);
 		}
 
+		/// <summary>
+		/// Shorthand function to clear the entire task array, delete the local database, and reset the ListView.
+		/// </summary>
 		public void Array_ClearAll()
 		{
 			TaskArray.Clear();
@@ -93,6 +125,12 @@ namespace Tasual
 			ListView.BuildList();
 		}
 
+		/// <summary>
+		/// Check whether we should prompt to confirm an action to take, if so then show a messagebox to get that information.
+		/// </summary>
+		/// <param name="Prompt">Should we skip prompting and just do the action anyway.</param>
+		/// <param name="Action">Description of action to perform.</param>
+		/// <returns>Whether or not to proceed with an action.</returns>
 		private bool ConfirmAction(bool Prompt, string Action)
 		{
 			if (!Prompt) { return true; }
@@ -111,12 +149,18 @@ namespace Tasual
 			return false;
 		}
 
+		/// <summary>
+		/// Apply application properties that are changeable in settings.
+		/// </summary>
 		public void Settings_Apply()
 		{
 			TopMost = Settings.AlwaysOnTop;
 			StartupManager.SetStartupStatus(Settings.LaunchOnStartup);
 		}
 
+		/// <summary>
+		/// Re-locate the Tasual main form based upon the properties saved in settings.
+		/// </summary>
 		public void Relocate()
 		{
 			if (Settings.SaveWindowPos)
@@ -128,11 +172,17 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Outside reference wrapper to save settings.
+		/// </summary>
 		public void Settings_Save()
 		{
 			Setting.Save(ref Settings);
 		}
 
+		/// <summary>
+		/// Update the status label at the bottom of the main form.
+		/// </summary>
 		public void UpdateStatusLabel()
 		{
 			int Complete = ListView.CheckedItems.Count;
@@ -148,6 +198,9 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Generate new GroupKeys for all tasks in the array.
+		/// </summary>
 		public void UpdateGroupKeys()
 		{
 			foreach (Task Task in TaskArray)
@@ -157,12 +210,24 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Generate new GroupKey for selected task.
+		/// </summary>
+		/// <param name="Task">Task for which to generate a new group key.</param>
 		public void UpdateGroupKeys(Task Task)
 		{
 			Task.CategoryGroupKey = TimeInfo.GetGroupStringFromTask(Task, Settings);
 			Task.DueGroupKey = TimeInfo.GetDueStringFromTask(Task);
 		}
 
+		/// <summary>
+		/// Process through task array and check the status of all items.
+		/// </summary>
+		/// <remarks>
+		/// This function may be a bit complicated, however it is relatively straightforward
+		/// when you break it down and take it step by step. All we're doing is checking 
+		/// each task and seeing if there is any work that needs to be done.
+		/// </remarks>
 		public void CheckTaskStatus()
 		{
 			/* 
@@ -303,6 +368,9 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Create a new semi-setup empty task and add it to the ListView.
+		/// </summary>
 		private void QuickCreate()
 		{
 			string GroupName = "Tasks";
@@ -349,6 +417,11 @@ namespace Tasual
 		//  ListView Functions
 		// ====================
 
+		/// <summary>
+		/// Set formatting for the description row based upon whether the item is checked or not.
+		/// </summary>
+		/// <param name="Sender">Sender of the FormatRow event.</param>
+		/// <param name="Args">FormatRow event arguments.</param>
 		private void ListView_FormatRow(object Sender, FormatRowEventArgs Args)
 		{
 			if (Args.Item.Checked)
@@ -361,6 +434,11 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Handler for ModelCanDrop event when sorted by category.
+		/// </summary>
+		/// <param name="Sender">Sender of the ModelCanDrop event.</param>
+		/// <param name="Args">Model drop event arguments.</param>
 		private void ListView_ModelCanDrop_Category(object Sender, ModelDropEventArgs Args)
 		{
 			Task Target = (Task)Args.TargetModel;
@@ -380,6 +458,11 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Handler for ModelCanDrop event when sorted by due time.
+		/// </summary>
+		/// <param name="Sender">Sender of the ModelCanDrop event.</param>
+		/// <param name="Args">Model drop event arguments.</param>
 		private void ListView_ModelCanDrop_DueTime(object Sender, ModelDropEventArgs Args)
 		{
 			Task Target = (Task)Args.TargetModel;
@@ -399,6 +482,11 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Select the handler for ModelCanDrop event depending on whether we group by category or due time.
+		/// </summary>
+		/// <param name="Sender">Sender of the ModelCanDrop event.</param>
+		/// <param name="Args">Model drop event arguments.</param>
 		private void ListView_ModelCanDrop_ChooseHandler(object Sender, ModelDropEventArgs Args)
 		{
 			if (Settings.GroupTasks)
@@ -414,6 +502,11 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Handler for ModelDropped event when sorted by category.
+		/// </summary>
+		/// <param name="Sender">Sender of the ModelDropped event.</param>
+		/// <param name="Args">Model drop event arguments.</param>
 		private void ListView_ModelDropped_Category(object Sender, ModelDropEventArgs Args)
 		{
 			Task Target = (Task)Args.TargetModel;
@@ -460,7 +553,7 @@ namespace Tasual
 						}
 						break;
 					}
-				
+
 				// TODAY TARGET TASK
 				case TimeInfo.GroupTypes.Today:
 					{
@@ -564,19 +657,24 @@ namespace Tasual
 										Task.Time.CheckedTime = DateTime.Now;
 										break;
 									}
-								
-								// We don't need to do anything if source was already checked
+
+									// We don't need to do anything if source was already checked
 							}
 						}
 						break;
 					}
 			}
-			
+
 			ArrayHandler.Save(ref TaskArray, Settings);
 			UpdateGroupKeys(); // TODO: Only cycle through the objects that got updated
 			ListView.BuildList();
 		}
 
+		/// <summary>
+		/// Handler for ModelDropped event when sorted by due time.
+		/// </summary>
+		/// <param name="Sender">Sender of the ModelDropped event.</param>
+		/// <param name="Args">Model drop event arguments.</param>
 		private void ListView_ModelDropped_DueTime(object Sender, ModelDropEventArgs Args)
 		{
 			Task Target = (Task)Args.TargetModel;
@@ -757,6 +855,11 @@ namespace Tasual
 			ListView.BuildList();
 		}
 
+		/// <summary>
+		/// Select the handler for ModelDropped event depending on whether we group by category or due time.
+		/// </summary>
+		/// <param name="Sender">Sender of the ModelDropped event.</param>
+		/// <param name="Args">Model drop event arguments.</param>
 		private void ListView_ModelDropped_ChooseHandler(object Sender, ModelDropEventArgs Args)
 		{
 			if (Settings.GroupTasks)
@@ -772,6 +875,9 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Initial setup of the main ListView control.
+		/// </summary>
 		private void ListView_Setup()
 		{
 			ListView.ShowItemCountOnGroups = false;
@@ -844,6 +950,9 @@ namespace Tasual
 			};
 		}
 
+		/// <summary>
+		/// Update columns properties that are changeable in settings.
+		/// </summary>
 		public void ListView_UpdateColumnSettings()
 		{
 			ListView.ShowGroups = Settings.GroupTasks;
@@ -866,6 +975,9 @@ namespace Tasual
 			ListView.PrimarySortColumn = SelectedColumn;// CategoryColumn DueColumn
 		}
 
+		/// <summary>
+		/// Populate columns into the ObjectListView.
+		/// </summary>
 		private void ListView_AddColumns()
 		{
 			UpdateGroupKeys();
@@ -958,7 +1070,7 @@ namespace Tasual
 			TimeColumn.LastDisplayIndex = 5;
 			TimeColumn.TextAlign = Settings.SubItemTextAlign;
 			TimeColumn.HeaderTextAlign = Settings.SubItemHeaderAlign;
-			TimeColumn.AspectToStringConverter = delegate(object Input)
+			TimeColumn.AspectToStringConverter = delegate (object Input)
 			{
 				TimeInfo Time = (TimeInfo)Input;
 				if (TimeInfo.Scheduled(Time))
@@ -1102,8 +1214,8 @@ namespace Tasual
 				if (!AlreadySelectedGroups.Contains(Task.Group) && (Group.Name != Task.Group))
 				{
 					MenuStrip_Group_MoveTasks.DropDownItems.Add(
-						Task.Group, 
-						null, 
+						Task.Group,
+						null,
 						MenuStrip_Group_MoveTasks_ClickHandler
 					);
 					AlreadySelectedGroups.Add(Task.Group);
@@ -1201,7 +1313,7 @@ namespace Tasual
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 			URLExtensions.Follow(string.Format(
-				"http://maps.google.com/?q={0}", 
+				"http://maps.google.com/?q={0}",
 				Uri.EscapeDataString(Task.Location)
 			));
 		}
@@ -1388,8 +1500,8 @@ namespace Tasual
 				if (!AlreadySelectedGroups.Contains(Task.Group) && (TaggedTask.Group != Task.Group))
 				{
 					MenuStrip_Item_Move.DropDownItems.Add(
-						Task.Group, 
-						null, 
+						Task.Group,
+						null,
 						MenuStrip_Item_Move_ClickHandler
 					);
 					AlreadySelectedGroups.Add(Task.Group);
@@ -1423,7 +1535,7 @@ namespace Tasual
 		private void MenuStrip_Status_Clear_Click(object Sender, EventArgs Args)
 		{
 			if (ConfirmAction(Settings.PromptClear, "clear all tasks"))
-			{ 
+			{
 				Array_ClearAll();
 			}
 		}
@@ -1704,7 +1816,7 @@ namespace Tasual
 			if (CalendarPopout != null)
 			{
 				Form_TimePop Calendar = new Form_TimePop(
-					this, 
+					this,
 					TaskArray.IndexOf((Task)ListView.SelectedItem.RowObject)
 				);
 
