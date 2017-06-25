@@ -250,11 +250,13 @@ namespace Tasual
 			 */
 
 			bool UpdateList = false;
-			List<Task> RemovalList = new List<Task>();
+			//List<Task> RemovalList = new List<Task>();
 			List<Task> AddedList = new List<Task>();
 
 			foreach (Task Task in TaskArray)
 			{
+				if (Task.Removed) { continue; }
+
 				if (Task.Checked)
 				{
 					if (Settings.RemoveCompleted != Setting.RemoveType.Never)
@@ -262,7 +264,8 @@ namespace Tasual
 						if (DateTime.Now > (Task.Time.CheckedTime + Setting.GetRemoveTimeSpan(Settings.RemoveCompleted)))
 						{
 							// Delete task
-							RemovalList.Add(Task);
+							//RemovalList.Add(Task);
+							Task.Removed = true;
 							UpdateList = true;
 						}
 					}
@@ -276,7 +279,8 @@ namespace Tasual
 							if (DateTime.Now > (Task.Time.Next + TimeInfo.GetDismissTimeSpan(Task.Time.Dismiss)))
 							{
 								// Delete task
-								RemovalList.Add(Task);
+								//RemovalList.Add(Task);
+								Task.Removed = true;
 								UpdateList = true;
 							}
 						}
@@ -289,7 +293,8 @@ namespace Tasual
 						if (Task.Time.Dismiss == TimeInfo.DismissType.Immediate) // immediate deletion
 						{
 							// Delete task
-							RemovalList.Add(Task);
+							//RemovalList.Add(Task);
+							Task.Removed = true;
 							UpdateList = true;
 						}
 
@@ -334,6 +339,8 @@ namespace Tasual
 							);
 
 							Task NewTask = new Task(
+								Task.ID,
+								false,
 								false,
 								Task.Priority,
 								Task.Group,
@@ -352,10 +359,10 @@ namespace Tasual
 				}
 			}
 
-			foreach (Task RemoveTask in RemovalList)
-			{
-				TaskArray.Remove(RemoveTask);
-			}
+			//foreach (Task RemoveTask in RemovalList)
+			//{
+			//	TaskArray.Remove(RemoveTask);
+			//}
 
 			foreach (Task AddTask in AddedList)
 			{
@@ -395,6 +402,8 @@ namespace Tasual
 			}
 
 			Task Task = new Task(
+				Task.GenerateID(),
+				false,
 				false,
 				0,
 				GroupName,
@@ -925,6 +934,12 @@ namespace Tasual
 			ListView.ModelCanDrop += new EventHandler<ModelDropEventArgs>(ListView_ModelCanDrop_ChooseHandler);
 			ListView.ModelDropped += new EventHandler<ModelDropEventArgs>(ListView_ModelDropped_ChooseHandler);
 
+			ListView.UseFiltering = true;
+			ListView.ModelFilter = new ModelFilter(delegate (object x)
+			{
+				return !((Task)x).Removed;
+			});
+
 			ListView.BooleanCheckStateGetter = delegate (object RowObject)
 			{
 				return ((Task)RowObject).Checked;
@@ -1168,19 +1183,14 @@ namespace Tasual
 			if (!ConfirmAction(Settings.PromptDelete, "delete this group")) { return; }
 
 			OLVGroup Group = (OLVGroup)MenuStrip_Group.Tag;
-			List<Task> RemovalList = new List<Task>();
 
 			foreach (Task Task in TaskArray)
 			{
 				if (TimeInfo.GetGroupStringFromTask(Task, Settings).Remove(0, 1) == Group.Name)
 				{
-					RemovalList.Add(Task);
+					//RemovalList.Add(Task);
+					Task.Removed = true;
 				}
-			}
-
-			foreach (Task RemoveTask in RemovalList)
-			{
-				TaskArray.Remove(RemoveTask);
 			}
 
 			ArrayHandler.Save(ref TaskArray, Settings);
@@ -1414,7 +1424,8 @@ namespace Tasual
 			if (ConfirmAction(Settings.PromptDelete, "delete this task"))
 			{
 				Task Task = (Task)MenuStrip_Item.Tag;
-				TaskArray.Remove(Task);
+				//TaskArray.Remove(Task);
+				Task.Removed = true;
 				ArrayHandler.Save(ref TaskArray, Settings);
 				ListView.BuildList();
 				UpdateStatusLabel();
@@ -1450,6 +1461,8 @@ namespace Tasual
 			);
 
 			Task NewTask = new Task(
+				Task.GenerateID(),
+				false,
 				Task.Checked,
 				Task.Priority,
 				Task.Group,
@@ -1665,6 +1678,7 @@ namespace Tasual
 
 			if (string.IsNullOrEmpty(Task.Description))
 			{
+				// This one will ACTUALLY remove the task, not just hide it from the list
 				TaskArray.Remove(Task);
 			}
 
@@ -1859,7 +1873,7 @@ namespace Tasual
 							if (ConfirmAction(Settings.PromptDelete, "delete this task"))
 							{
 								Task Task = (Task)ListView.SelectedItem.RowObject;
-								TaskArray.Remove(Task);
+								Task.Removed = true;
 								ArrayHandler.Save(ref TaskArray, Settings);
 								ListView.BuildList();
 								UpdateStatusLabel();

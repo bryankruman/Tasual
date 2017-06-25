@@ -16,6 +16,9 @@ namespace Tasual
 		[JsonProperty("id")]
 		public string ID { get; set; }
 
+		[JsonProperty("removed")]
+		public bool Removed { get; set; }
+
 		[JsonProperty("checked")]
 		public bool Checked { get; set; }
 
@@ -40,27 +43,12 @@ namespace Tasual
 		[JsonProperty("time")]
 		public TimeInfo Time { get; set; }
 
-
 		// Used only for display/grouping in ObjectListView
 		[JsonIgnore]
 		public string CategoryGroupKey { get; set; } = "";
 
 		[JsonIgnore]
 		public string DueGroupKey { get; set; } = "";
-
-
-		public enum Arguments
-		{
-			ID,
-			Checked,
-			Priority,
-			Group,
-			Description,
-			Created,
-			Ending,
-			Next,
-			Count
-		}
 
 		public enum Types
 		{
@@ -90,6 +78,7 @@ namespace Tasual
 		public Task()
 		{
 			ID = GenerateID();
+			Removed = false;
 			Checked = false;
 			Priority = (int)Priorities.Normal;
 			Time = new TimeInfo();
@@ -98,6 +87,7 @@ namespace Tasual
 		// Specific Constructor
 		public Task(
 			string ID,
+			bool Removed,
 			bool Checked,
 			int Priority,
 			string Group,
@@ -108,6 +98,7 @@ namespace Tasual
 			TimeInfo Time)
 		{
 			this.ID = ID;
+			this.Removed = Removed;
 			this.Checked = Checked;
 			this.Priority = Priority;
 			this.Group = Group;
@@ -127,8 +118,9 @@ namespace Tasual
 		public static void PrintToConsoleBasic(Task Task)
 		{
 			Console.WriteLine(
-				"TaskItem: '{0}', '{1}', '{2}', '{3}', '{4}', ('{5}', '{6}', '{7}')",
+				"TaskItem: '{0}', '{1}', '{2}', '{3}', '{4}', '{5}', ('{6}', '{7}', '{8}')",
 				Task.ID,
+				Task.Removed,
 				Task.Checked,
 				Task.Priority,
 				Task.Group,

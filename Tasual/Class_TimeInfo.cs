@@ -344,6 +344,7 @@ namespace Tasual
 
 		public static bool Scheduled(TimeInfo Time)
 		{
+			// TODO: Should a removed task be scheduled here?
 			if (Time.Next != DateTime.MinValue)
 			{
 				return true;
