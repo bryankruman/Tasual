@@ -14,6 +14,8 @@ namespace Tasual
 {
 	class ArrayHandler
 	{
+		public static DateTime ProgramLastWriteTime { get; set; }
+
 		public static void ReAssignGroup(List<Task> Array, string OldTaskGroup, string NewTaskGroup)
 		{
 			foreach (Task Task in Array)
@@ -95,6 +97,22 @@ namespace Tasual
 				{
 					PathToFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, PathToFile);
 				}
+
+				DateTime FileLastWriteTime = File.GetLastWriteTime(PathToFile);
+
+				if (FileLastWriteTime > ProgramLastWriteTime)
+				{
+					// File in storage is newer than our internal array
+					// Lets compare the changed array and the internal array before saving just to be safe
+
+					Console.WriteLine("Database was newer than internal array {0} - {1}", FileLastWriteTime.ToString(), ProgramLastWriteTime.ToString());
+
+					List<Task> ChangedArray = new List<Task>();
+
+					Load_JSON(ref ChangedArray, PathToFile);
+					Compare(ref Array, ref ChangedArray);
+				}
+
 				using (FileStream OutputFile = File.Open(PathToFile, FileMode.Create))
 				using (StreamWriter OutputStream = new StreamWriter(OutputFile))
 				using (JsonWriter OutputJson = new JsonTextWriter(OutputStream))
@@ -104,6 +122,7 @@ namespace Tasual
 					Serializer.Serialize(OutputJson, Array);
 				}
 
+				ProgramLastWriteTime = FileLastWriteTime;
 			}
 			catch (Exception Args)
 			{

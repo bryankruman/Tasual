@@ -415,7 +415,7 @@ namespace Tasual
 			);
 
 			TaskArray.Add(Task);
-			ArrayHandler.Save(ref TaskArray, Settings);
+			//ArrayHandler.Save(ref TaskArray, Settings); // Actually, don't save until after we're sure we want to keep this
 			UpdateGroupKeys(Task);
 			ListView.BuildList();
 			UpdateStatusLabel();
