@@ -156,6 +156,9 @@ namespace Tasual
 		{
 			TopMost = Settings.AlwaysOnTop;
 			StartupManager.SetStartupStatus(Settings.LaunchOnStartup);
+
+			// TODO: Allow this to be dynamically set
+			FileSystemWatcher.Path = AppDomain.CurrentDomain.BaseDirectory;
 		}
 
 		/// <summary>
@@ -1594,6 +1597,12 @@ namespace Tasual
 			{
 				ShowInTaskbar = true;
 			}
+		}
+
+		// Filesystem Watcher
+		private void FileSystemWatcher_Changed(object Sender, System.IO.FileSystemEventArgs Args)
+		{
+			Console.WriteLine("FileSystemWatcher_Changed(): {0}", Args.ChangeType.ToString());
 		}
 
 		// Update timer

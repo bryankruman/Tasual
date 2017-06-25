@@ -13,6 +13,9 @@ namespace Tasual
 {
 	public class Task
 	{
+		[JsonProperty("id")]
+		public string ID { get; set; }
+
 		[JsonProperty("checked")]
 		public bool Checked { get; set; }
 
@@ -48,6 +51,7 @@ namespace Tasual
 
 		public enum Arguments
 		{
+			ID,
 			Checked,
 			Priority,
 			Group,
@@ -85,6 +89,7 @@ namespace Tasual
 		// Blank Constructor
 		public Task()
 		{
+			ID = GenerateID();
 			Checked = false;
 			Priority = (int)Priorities.Normal;
 			Time = new TimeInfo();
@@ -92,6 +97,7 @@ namespace Tasual
 
 		// Specific Constructor
 		public Task(
+			string ID,
 			bool Checked,
 			int Priority,
 			string Group,
@@ -101,7 +107,7 @@ namespace Tasual
 			string Location,
 			TimeInfo Time)
 		{
-
+			this.ID = ID;
 			this.Checked = Checked;
 			this.Priority = Priority;
 			this.Group = Group;
@@ -113,10 +119,16 @@ namespace Tasual
 		}
 
 		// Supporting Functions
+		public static string GenerateID()
+		{
+			return Guid.NewGuid().ToString("N");
+		}
+
 		public static void PrintToConsoleBasic(Task Task)
 		{
 			Console.WriteLine(
-				"TaskItem: '{0}', '{1}', '{2}', '{3}', ('{4}', '{5}', '{6}')",
+				"TaskItem: '{0}', '{1}', '{2}', '{3}', '{4}', ('{5}', '{6}', '{7}')",
+				Task.ID,
 				Task.Checked,
 				Task.Priority,
 				Task.Group,

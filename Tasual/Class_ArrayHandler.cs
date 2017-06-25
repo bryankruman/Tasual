@@ -6,6 +6,7 @@
 // ===========================================
 
 using System;
+using System.Linq;
 using System.IO;
 using System.Collections.Generic;
 using Newtonsoft.Json;
@@ -23,6 +24,44 @@ namespace Tasual
 				{
 					Task.Group = NewTaskGroup;
 				}
+			}
+		}
+
+		public static void Compare(ref List<Task> Internal, ref List<Task> Changed)
+		{
+			foreach (Task ChangedTask in Changed)
+			{
+				bool FoundSameID = false;
+
+				// Check to see if there is a task in the internal list that matches this one
+				foreach (Task InternalTask in Internal)
+				{
+					if (InternalTask.ID != ChangedTask.ID) { continue; }
+
+					FoundSameID = true;
+
+					if (ChangedTask.Time.Modified > InternalTask.Time.Modified)
+					{
+						// Changed task is newer
+						// Remove internal task
+						// Add changed task
+					}
+					// else
+					// Keep the existing internal task as it is newer than the changed file
+				}
+
+				// We didn't find any tasks with the same ID, which means Changed has a task which Internal doesn't.
+				if (!FoundSameID)
+				{
+					// Check to see if Internal has this task deleted
+				}
+
+
+				// If we didn't find the same ID, that means Changed has a task which Internal doesn't.
+				// Lets see if Changed is newer than Internal--
+				//   -- If Internal is newer, then we can assume that Internal 
+				//if (TaskArray.Any(Task => (Task.Group == Group.Name)))
+				//Internal.Any(InternalTask => DoCompareID(InternalTask, ChangedTask));
 			}
 		}
 

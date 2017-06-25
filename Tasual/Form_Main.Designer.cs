@@ -98,6 +98,7 @@
 			this.MenuStrip_Icon_Location_Remove = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuStrip_Icon_AddLocation = new System.Windows.Forms.ToolStripMenuItem();
 			this.Timer_CheckUpdate = new System.Windows.Forms.Timer(this.components);
+			this.FileSystemWatcher = new System.IO.FileSystemWatcher();
 			this.MenuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ListView)).BeginInit();
 			this.MenuStrip_Notify.SuspendLayout();
@@ -105,6 +106,7 @@
 			this.MenuStrip_Group.SuspendLayout();
 			this.MenuStrip_Item.SuspendLayout();
 			this.MenuStrip_Icon.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.FileSystemWatcher)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// MenuStrip
@@ -701,6 +703,13 @@
 			this.Timer_CheckUpdate.Interval = 60000;
 			this.Timer_CheckUpdate.Tick += new System.EventHandler(this.Timer_CheckUpdate_Tick);
 			// 
+			// FileSystemWatcher
+			// 
+			this.FileSystemWatcher.EnableRaisingEvents = true;
+			this.FileSystemWatcher.Filter = "tasks.db";
+			this.FileSystemWatcher.SynchronizingObject = this;
+			this.FileSystemWatcher.Changed += new System.IO.FileSystemEventHandler(this.FileSystemWatcher_Changed);
+			// 
 			// Form_Main
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -728,6 +737,7 @@
 			this.MenuStrip_Group.ResumeLayout(false);
 			this.MenuStrip_Item.ResumeLayout(false);
 			this.MenuStrip_Icon.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.FileSystemWatcher)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -804,6 +814,7 @@
 		private System.Windows.Forms.ToolStripMenuItem MenuStrip_Item_Create_Quick;
 		private System.Windows.Forms.ToolStripMenuItem MenuStrip_Item_Create_Advanced;
 		private System.Windows.Forms.ToolStripMenuItem MenuStrip_Item_Move_Blank;
+		private System.IO.FileSystemWatcher FileSystemWatcher;
 	}
 }
 
