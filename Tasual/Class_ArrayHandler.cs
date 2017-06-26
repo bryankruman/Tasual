@@ -15,6 +15,17 @@ namespace Tasual
 	class ArrayHandler
 	{
 		public static DateTime ProgramLastWriteTime { get; set; }
+		public static DateTime ProgramLastReadTime { get; set; }
+
+		public static string GetFilePath(Setting Settings)
+		{
+			string PathToFile = Settings.TextFile;
+			if (!PathToFile.Contains("\\"))
+			{
+				PathToFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, PathToFile);
+			}
+			return PathToFile;
+		}
 
 		public static void ReAssignGroup(List<Task> Array, string OldTaskGroup, string NewTaskGroup)
 		{
@@ -76,7 +87,7 @@ namespace Tasual
 			switch (Settings.Protocol)
 			{
 				default:
-				case Setting.Protocols.JSON: Save_JSON(ref Array, Settings.TextFile); break;
+				case Setting.Protocols.JSON: Save_JSON(ref Array, GetFilePath(Settings)); break;
 			}
 		}
 
@@ -85,7 +96,7 @@ namespace Tasual
 			switch (Settings.Protocol)
 			{
 				default:
-				case Setting.Protocols.JSON: Load_JSON(ref Array, Settings.TextFile); break;
+				case Setting.Protocols.JSON: Load_JSON(ref Array, GetFilePath(Settings)); break;
 			}
 		}
 
@@ -93,20 +104,13 @@ namespace Tasual
 		{
 			try
 			{
-				if (!PathToFile.Contains("\\"))
-				{
-					PathToFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, PathToFile);
-				}
-
 				DateTime FileLastWriteTime = File.GetLastWriteTime(PathToFile);
 
-				if (FileLastWriteTime > ProgramLastWriteTime)
+				Console.WriteLine("{0} && {1}", (FileLastWriteTime > ProgramLastWriteTime).ToString(), (FileLastWriteTime > ProgramLastReadTime).ToString());
+				if ((FileLastWriteTime > ProgramLastWriteTime) && (FileLastWriteTime > ProgramLastReadTime))
 				{
 					// File in storage is newer than our internal array
 					// Lets compare the changed array and the internal array before saving just to be safe
-
-					Console.WriteLine("Database was newer than internal array {0} - {1}", FileLastWriteTime.ToString(), ProgramLastWriteTime.ToString());
-
 					List<Task> ChangedArray = new List<Task>();
 
 					Load_JSON(ref ChangedArray, PathToFile);
@@ -122,7 +126,8 @@ namespace Tasual
 					Serializer.Serialize(OutputJson, Array);
 				}
 
-				ProgramLastWriteTime = FileLastWriteTime;
+				// Set the last write time 
+				ProgramLastWriteTime = File.GetLastWriteTime(PathToFile);
 			}
 			catch (Exception Args)
 			{
@@ -134,10 +139,6 @@ namespace Tasual
 		{
 			try
 			{
-				if (!PathToFile.Contains("\\"))
-				{
-					PathToFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, PathToFile);
-				}
 				using (StreamReader InputFile = File.OpenText(PathToFile))
 				using (JsonReader InputJson = new JsonTextReader(InputFile))
 				{
@@ -145,6 +146,9 @@ namespace Tasual
 					JsonSerializer Serializer = new JsonSerializer();
 					Array = (List<Task>)Serializer.Deserialize(InputJson, typeof(List<Task>));
 				}
+				
+				// Set the last read time
+				ProgramLastReadTime = DateTime.Now;
 			}
 			catch (Exception Args)
 			{
