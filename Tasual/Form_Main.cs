@@ -401,6 +401,10 @@ namespace Tasual
 				}
 			}
 
+			TimeInfo NewTime = new TimeInfo();
+			NewTime.Created = DateTime.Now;
+			NewTime.Modified = DateTime.Now;
+
 			Task Task = new Task(
 				Task.GenerateID(),
 				false,
@@ -411,7 +415,7 @@ namespace Tasual
 				"",
 				"",
 				"",
-				new TimeInfo()
+				NewTime
 			);
 
 			TaskArray.Add(Task);
