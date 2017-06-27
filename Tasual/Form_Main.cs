@@ -118,12 +118,16 @@ namespace Tasual
 		/// </summary>
 		public void Array_ClearAll()
 		{
-			TaskArray.Clear();
+			foreach(Task Task in TaskArray)
+			{
+				Task.Removed = true;
+			}
 			ArrayHandler.Save(ref TaskArray, Settings);
 			ArrayHandler.Load(ref TaskArray, Settings);
 			UpdateGroupKeys();
 			ListView.SetObjects(TaskArray);
 			ListView.BuildList();
+			UpdateStatusLabel();
 		}
 
 		/// <summary>
