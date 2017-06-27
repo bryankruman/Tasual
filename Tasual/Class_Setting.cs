@@ -19,8 +19,11 @@ namespace Tasual
 		public Protocols Protocol { get; set; } = Protocols.JSON;
 
 
-		[JsonProperty("textfile")]
-		public string TextFile { get; set; } = "tasks.db";
+		[JsonProperty("storagefolder")]
+		public string StorageFolder { get; set; } // this will get set by Load()
+
+		[JsonIgnore]
+		private string SettingsPath { get; set; } // this will get set by Load()
 
 		[JsonProperty("launchonstartup")]
 		public bool LaunchOnStartup { get; set; } = false;
@@ -153,7 +156,7 @@ namespace Tasual
 		{
 			try
 			{
-				using (FileStream OutputFile = File.Open(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings.cfg"), FileMode.Create))
+				using (FileStream OutputFile = File.Open(Path.Combine(Settings.SettingsPath, "settings.cfg"), FileMode.Create))
 				using (StreamWriter OutputStream = new StreamWriter(OutputFile))
 				using (JsonWriter OutputJson = new JsonTextWriter(OutputStream))
 				{
@@ -173,22 +176,93 @@ namespace Tasual
 		{
 			try
 			{
-				using (StreamReader InputFile = File.OpenText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings.cfg")))
+				// Check to see three things:
+				// - If this is the first time we're loading the settings this instance (i.e. application load)
+				// - If the settings file that was selected still exists
+				// - If we're able to write to the settings file
+				// If either of these two conditions fail, then lets search our default directories to see if any
+				// of those contain settings files. Finally, if not, then lets just create a new settings file
+				// based upon the default and save the file appropriately.
+				string BasePath = AppDomain.CurrentDomain.BaseDirectory;
+				string AppDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Tasual");
+
+				string SettingsPath;
+
+				if (string.IsNullOrEmpty(Settings.SettingsPath) || !File.Exists(Path.Combine(Settings.SettingsPath, "settings.cfg")))
+				{
+					// 1st Priority: Base directory
+					if (File.Exists(Path.Combine(BasePath, "settings.cfg")))
+					{
+						Settings.SettingsPath = BasePath;
+					}
+
+					// 2nd Priority: Application Data directory
+					else if (File.Exists(Path.Combine(AppDataPath, "settings.cfg")))
+					{
+						Settings.SettingsPath = AppDataPath;
+					}
+
+					// Both directories don't have settings already
+					// Lets create a new settings file in the Application Data directory
+					else
+					{ 
+						if (File.Exists(Path.Combine(BasePath, "tasks.db")))
+						{
+							// If a tasks database already exists in the Base directory, choose that
+							Settings.StorageFolder = BasePath;
+						}
+						else
+						{
+							// Otherwise just pick the Application Data directory
+							Settings.StorageFolder = AppDataPath;
+						}
+
+						Settings.SettingsPath = AppDataPath;
+
+						Save(ref Settings);
+						return;
+					}
+				}
+
+				// Load in the settings from the selected settings.cfg file
+				using (StreamReader InputFile = File.OpenText(Path.Combine(Settings.SettingsPath, "settings.cfg")))
 				using (JsonReader InputJson = new JsonTextReader(InputFile))
 				{
+					SettingsPath = Settings.SettingsPath;
+
 					JsonSerializer Serializer = new JsonSerializer();
 					Settings = (Setting)Serializer.Deserialize(InputJson, typeof(Setting));
+
+					Settings.SettingsPath = SettingsPath;
+				}
+
+				// Check if there is a StorageFolder specified and whether it will work for us
+				if (!string.IsNullOrWhiteSpace(Settings.StorageFolder) && Directory.Exists(Settings.StorageFolder))
+				{
+					// Directory is fine, do nothing
+				}
+				else if (File.Exists(Path.Combine(BasePath, "tasks.db")))
+				{
+					// If a tasks database already exists in the Base directory, choose that
+					Settings.StorageFolder = BasePath;
+					Save(ref Settings);
+				}
+				else if (File.Exists(Path.Combine(AppDataPath, "tasks.db")))
+				{
+					// If a tasks database already exists in the Application Data directory, choose that
+					Settings.StorageFolder = AppDataPath;
+					Save(ref Settings);
+				}
+				else
+				{
+					// If no database was found already, just save to the same location as the settings file
+					Settings.StorageFolder = Settings.SettingsPath;
+					Save(ref Settings);
 				}
 			}
 			catch (Exception Args)
 			{
-				Console.WriteLine(
-					"Could not load settings.cfg! " +
-					"Proceeding with defaults and writing blank new config! " +
-					"Message: {0}",
-					Args.Message
-				);
-				Save(ref Settings);
+				Console.WriteLine("Could not load settings.cfg! Message: {0}", Args.Message);
 			}
 		}
 	}

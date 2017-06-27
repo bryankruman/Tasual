@@ -17,16 +17,6 @@ namespace Tasual
 		public static DateTime ProgramLastWriteTime { get; set; }
 		public static DateTime ProgramLastReadTime { get; set; }
 
-		public static string GetFilePath(Setting Settings)
-		{
-			string PathToFile = Settings.TextFile;
-			if (!PathToFile.Contains("\\"))
-			{
-				PathToFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, PathToFile);
-			}
-			return PathToFile;
-		}
-
 		public static void ReAssignGroup(List<Task> Array, string OldTaskGroup, string NewTaskGroup)
 		{
 			foreach (Task Task in Array)
@@ -87,7 +77,7 @@ namespace Tasual
 			switch (Settings.Protocol)
 			{
 				default:
-				case Setting.Protocols.JSON: Save_JSON(ref Array, GetFilePath(Settings)); break;
+				case Setting.Protocols.JSON: Save_JSON(ref Array, Settings.StorageFolder); break;
 			}
 		}
 
@@ -96,14 +86,15 @@ namespace Tasual
 			switch (Settings.Protocol)
 			{
 				default:
-				case Setting.Protocols.JSON: Load_JSON(ref Array, GetFilePath(Settings)); break;
+				case Setting.Protocols.JSON: Load_JSON(ref Array, Settings.StorageFolder); break;
 			}
 		}
 
-		private static void Save_JSON(ref List<Task> Array, string PathToFile)
+		private static void Save_JSON(ref List<Task> Array, string FolderPath)
 		{
 			try
 			{
+				string PathToFile = Path.Combine(FolderPath, "tasks.db");
 				DateTime FileLastWriteTime = File.GetLastWriteTime(PathToFile);
 
 				Console.WriteLine("{0} && {1}", (FileLastWriteTime > ProgramLastWriteTime).ToString(), (FileLastWriteTime > ProgramLastReadTime).ToString());
@@ -116,6 +107,8 @@ namespace Tasual
 					Load_JSON(ref ChangedArray, PathToFile);
 					Compare(ref Array, ref ChangedArray);
 				}
+
+				DirectoryInfo DI = Directory.CreateDirectory(FolderPath);
 
 				using (FileStream OutputFile = File.Open(PathToFile, FileMode.Create))
 				using (StreamWriter OutputStream = new StreamWriter(OutputFile))
@@ -135,10 +128,11 @@ namespace Tasual
 			}
 		}
 
-		private static void Load_JSON(ref List<Task> Array, string PathToFile)
+		private static void Load_JSON(ref List<Task> Array, string FolderPath)
 		{
 			try
 			{
+				string PathToFile = Path.Combine(FolderPath, "tasks.db");
 				using (StreamReader InputFile = File.OpenText(PathToFile))
 				using (JsonReader InputJson = new JsonTextReader(InputFile))
 				{

@@ -6,6 +6,7 @@
 // ===========================================
 
 using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Tasual
@@ -13,6 +14,7 @@ namespace Tasual
 	public partial class Form_Settings : Form
 	{
 		private readonly Form_Main MainForm;
+		private bool ChangedStorageFolder;
 
 		public Form_Settings(Form_Main PassedForm)
 		{
@@ -64,6 +66,8 @@ namespace Tasual
 			CheckBox_PromptDelete.Checked = MainForm.Settings.PromptDelete;
 			CheckBox_EnterToSave.Checked = MainForm.Settings.EnterToSave;
 
+			TextBox_Folder.Text = MainForm.Settings.StorageFolder;
+
 			CheckBox_GroupTasks.Checked = MainForm.Settings.GroupTasks;
 			ComboBox_GroupStyle.SelectedIndex = (int)MainForm.Settings.GroupStyle;
 			CheckBox_AlwaysShowCompletedGroup.Checked = MainForm.Settings.AlwaysShowCompletedGroup;
@@ -99,6 +103,8 @@ namespace Tasual
 			MainForm.Settings.PromptDelete = CheckBox_PromptDelete.Checked;
 			MainForm.Settings.EnterToSave = CheckBox_EnterToSave.Checked;
 
+			MainForm.Settings.StorageFolder = TextBox_Folder.Text;
+
 			MainForm.Settings.GroupTasks = CheckBox_GroupTasks.Checked;
 			MainForm.Settings.GroupStyle = (Setting.GroupStyles)ComboBox_GroupStyle.SelectedIndex; // WONDER IF THIS WORKS
 			MainForm.Settings.AlwaysShowCompletedGroup = CheckBox_AlwaysShowCompletedGroup.Checked;
@@ -125,12 +131,49 @@ namespace Tasual
 				MainForm.Settings.EnabledColumns |= Setting.Columns.Time;
 			}
 
+			if (ChangedStorageFolder)
+			{
+				MainForm.Array_Save();
+			}
+
 			MainForm.Settings_Save();
 			MainForm.Settings_Apply();
 			MainForm.ListView_UpdateColumnSettings();
 			MainForm.UpdateGroupKeys();
 			MainForm.ListView.BuildList();
 			MainForm.ListView.RebuildColumns();
+		}
+
+		private void Button_ChangeFolder_Click(object sender, EventArgs e)
+		{
+			MenuStrip_ChangeFolder.Show(MousePosition);
+		}
+
+		private void MenuStrip_ChangeFolder_Custom_Click(object sender, EventArgs e)
+		{
+			DialogResult Result = FolderBrowserDialog.ShowDialog();
+			if (Result != DialogResult.OK)
+			{
+				return;
+			}
+
+			TextBox_Folder.Text = FolderBrowserDialog.SelectedPath;
+			ChangedStorageFolder = true;
+
+			// TODO: Check to make sure we have read AND write access to this directory
+			//       Show messagebox if not and reset back to previous selection.
+		}
+
+		private void MenuStrip_ChangeFolder_BaseDirectory_Click(object sender, EventArgs e)
+		{
+			TextBox_Folder.Text = AppDomain.CurrentDomain.BaseDirectory;
+			ChangedStorageFolder = true;
+		}
+
+		private void MenuStrip_ChangeFolder_AppData_Click(object sender, EventArgs e)
+		{
+			TextBox_Folder.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Tasual");
+			ChangedStorageFolder = true;
 		}
 	}
 }
