@@ -130,7 +130,7 @@ namespace Tasual
 					// Lets compare the changed array and the internal array before saving just to be safe
 					List<Task> ChangedArray = new List<Task>();
 
-					Load_JSON(ref ChangedArray, PathToFile);
+					Load_JSON(ref ChangedArray, FolderPath);
 					Compare(ref Array, ref ChangedArray);
 				}
 
