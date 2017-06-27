@@ -16,6 +16,9 @@ using BrightIdeasSoftware;
 
 namespace Tasual
 {
+	/// <summary>
+	/// Main form for the Tasual application.
+	/// </summary>
 	public partial class Form_Main : Form
 	{
 		// ==============
@@ -29,34 +32,34 @@ namespace Tasual
 		public Setting Settings = new Setting();
 
 		/// <summary>Persistent OlvListViewHitTestInfo for the calendar popout window.</summary>
-		OlvListViewHitTestInfo CalendarPopout = null;
+		private OlvListViewHitTestInfo CalendarPopout = null;
 
 		/// <summary>Persistent OlvListViewHitTestInfo for the first registered click in the ListView.</summary>
-		OlvListViewHitTestInfo ListView_FirstClickInfo = null;
+		private OlvListViewHitTestInfo ListView_FirstClickInfo = null;
 
 		/// <summary>Whether or not this double click should result in an edit.</summary>
-		bool ListView_DoubleClickEdit = false;
+		private bool ListView_DoubleClickEdit = false;
 
 		/// <summary>Whether or not we have previously selected the same item.</summary>
-		bool ListView_PreviouslySelected = false;
+		private bool ListView_PreviouslySelected = false;
 
 		/// <summary>The group that was most recently selected.</summary>
-		string LastSelectedGroup;
+		private string LastSelectedGroup;
 
 		/// <summary>OLVColumn for the description column.</summary>
-		OLVColumn DescriptionColumn;
+		private OLVColumn DescriptionColumn;
 
 		/// <summary>OLVColumn for the icon column.</summary>
-		OLVColumn IconColumn;
+		private OLVColumn IconColumn;
 
 		/// <summary>OLVColumn for the category column.</summary>
-		OLVColumn CategoryColumn;
+		private OLVColumn CategoryColumn;
 
 		/// <summary>OLVColumn for the due column.</summary>
-		OLVColumn DueColumn;
+		private OLVColumn DueColumn;
 
 		/// <summary>OLVColumn for the time column.</summary>
-		OLVColumn TimeColumn;
+		private OLVColumn TimeColumn;
 
 
 		// ================
@@ -166,7 +169,7 @@ namespace Tasual
 		/// <summary>
 		/// Re-locate the Tasual main form based upon the properties saved in settings.
 		/// </summary>
-		public void Relocate()
+		private void Relocate()
 		{
 			if (Settings.SaveWindowPos)
 			{
@@ -247,7 +250,7 @@ namespace Tasual
 		/// - Set expired flag and delete if dismissal is immediate
 		/// - Update listview
 		/// </remarks>
-		public void CheckTaskStatus()
+		private void CheckTaskStatus()
 		{
 			string PathToFile = Path.Combine(Settings.StorageFolder, "tasks.db");
 			bool UpdateList = false;
@@ -294,7 +297,6 @@ namespace Tasual
 								UpdateList = true;
 							}
 						}
-						// else do nothing
 					}
 					else if (DateTime.Now > Task.Time.Next)
 					{
@@ -1117,6 +1119,11 @@ namespace Tasual
 			ListView.SecondarySortColumn = DescriptionColumn;
 		}
 
+		/// <summary>
+		/// Event handler for when ObjectListView is creating groups.
+		/// </summary>
+		/// <param name="Sender">Sender of the AboutToCreateGroups event.</param>
+		/// <param name="Args">Create groups event arguments.</param>
 		private void ListView_AboutToCreateGroups(object Sender, CreateGroupsEventArgs Args)
 		{
 			foreach (OLVGroup Group in Args.Groups)
@@ -1134,6 +1141,11 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Event handler for when we finish editing a cell in the ListView control.
+		/// </summary>
+		/// <param name="Sender">Sender of the CellEditFinished event.</param>
+		/// <param name="Args">Cell edit event arguments.</param>
 		private void ListView_CellEditFinished(object Sender, CellEditEventArgs Args)
 		{
 			Task Task = Args.RowObject as Task;
@@ -1152,6 +1164,11 @@ namespace Tasual
 			MenuStrip_Edit.Enabled = false;
 		}
 
+		/// <summary>
+		/// Event handler for when you 
+		/// </summary>
+		/// <param name="Sender"></param>
+		/// <param name="Args"></param>
 		private void ListView_SelectedIndexChanged(object Sender, EventArgs Args)
 		{
 			if (ListView.SelectedItem != null)
