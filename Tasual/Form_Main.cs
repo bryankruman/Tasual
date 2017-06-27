@@ -232,25 +232,23 @@ namespace Tasual
 		/// This function may be a bit complicated, however it is relatively straightforward
 		/// when you break it down and take it step by step. All we're doing is checking 
 		/// each task and seeing if there is any work that needs to be done.
+		/// 
+		/// When a singular task expires
+		/// - TODO: Check to see if we should push a notification
+		/// - Set expired flag and delete if dismissal is immediate
+		/// - Update listview
+		/// 
+		/// When a simple or recurring task expires
+		/// - Check to see if task has another iteration on the way
+		///   - Compare current count to total iterations allowed
+		///   - Check end date to make sure the next iteration wouldn't be after the end date
+		///   - If both conditions pass, create a new iteration
+		/// - TODO: Check to see if we should push a notification
+		/// - Set expired flag and delete if dismissal is immediate
+		/// - Update listview
 		/// </remarks>
 		public void CheckTaskStatus()
 		{
-			/* 
-			 * When a singular task expires
-			 *  - TODO: Check to see if we should push a notification
-			 *  - Set expired flag and delete if dismissal is immediate
-			 *  - Update listview
-			 *  
-			 * When a simple or recurring task expires
-			 *  - Check to see if task has another iteration on the way
-			 *    - Compare current count to total iterations allowed
-			 *    - Check end date to make sure the next iteration wouldn't be after the end date
-			 *    - If both conditions pass, create a new iteration
-			 *  - TODO: Check to see if we should push a notification
-			 *  - Set expired flag and delete if dismissal is immediate
-			 *  - Update listview
-			 */
-
 			string PathToFile = Path.Combine(Settings.StorageFolder, "tasks.db");
 			bool UpdateList = false;
 			List<Task> AddedList = new List<Task>();
