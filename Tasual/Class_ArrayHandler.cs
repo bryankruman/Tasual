@@ -101,15 +101,16 @@ namespace Tasual
 			bool WrittenAfterProgram = (FileLastWriteTime > ProgramLastWriteTime);
 			bool WrittenAfterRead = (FileLastWriteTime > ProgramLastReadTime);
 
-			Console.WriteLine(
+			/*Console.WriteLine(
 				"File written after program: {0}, file written after read: {1}, needs update: {2}",
 				WrittenAfterProgram.ToString(),
 				WrittenAfterRead.ToString(),
 				(WrittenAfterProgram && WrittenAfterRead).ToString()
-			);
+			);*/
 
 			if (WrittenAfterProgram && WrittenAfterRead)
 			{
+				Console.WriteLine("Resyncing database at {0}", DateTime.Now.ToString());
 				return true;
 			}
 			else
