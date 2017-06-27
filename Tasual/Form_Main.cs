@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.IO;
 using System.Windows.Forms;
 using BrightIdeasSoftware;
 
@@ -156,9 +157,6 @@ namespace Tasual
 		{
 			TopMost = Settings.AlwaysOnTop;
 			StartupManager.SetStartupStatus(Settings.LaunchOnStartup);
-
-			// TODO: Allow this to be dynamically set
-			FileSystemWatcher.Path = AppDomain.CurrentDomain.BaseDirectory;
 		}
 
 		/// <summary>
@@ -249,9 +247,21 @@ namespace Tasual
 			 *  - Update listview
 			 */
 
+			string PathToFile = Path.Combine(Settings.StorageFolder, "tasks.db");
 			bool UpdateList = false;
-			//List<Task> RemovalList = new List<Task>();
 			List<Task> AddedList = new List<Task>();
+
+			if (ArrayHandler.StorageNewerThanProgram(PathToFile))
+			{
+				// File in storage is newer than our internal array
+				// Lets compare the changed array and the internal array before saving just to be safe
+				List<Task> ChangedArray = new List<Task>();
+
+				ArrayHandler.Load(ref ChangedArray, Settings);
+				ArrayHandler.Compare(ref TaskArray, ref ChangedArray);
+
+				UpdateList = true;
+			}
 
 			foreach (Task Task in TaskArray)
 			{
@@ -264,7 +274,6 @@ namespace Tasual
 						if (DateTime.Now > (Task.Time.CheckedTime + Setting.GetRemoveTimeSpan(Settings.RemoveCompleted)))
 						{
 							// Delete task
-							//RemovalList.Add(Task);
 							Task.Removed = true;
 							UpdateList = true;
 						}
@@ -279,7 +288,6 @@ namespace Tasual
 							if (DateTime.Now > (Task.Time.Next + TimeInfo.GetDismissTimeSpan(Task.Time.Dismiss)))
 							{
 								// Delete task
-								//RemovalList.Add(Task);
 								Task.Removed = true;
 								UpdateList = true;
 							}
@@ -293,7 +301,6 @@ namespace Tasual
 						if (Task.Time.Dismiss == TimeInfo.DismissType.Immediate) // immediate deletion
 						{
 							// Delete task
-							//RemovalList.Add(Task);
 							Task.Removed = true;
 							UpdateList = true;
 						}
@@ -358,11 +365,6 @@ namespace Tasual
 					}
 				}
 			}
-
-			//foreach (Task RemoveTask in RemovalList)
-			//{
-			//	TaskArray.Remove(RemoveTask);
-			//}
 
 			foreach (Task AddTask in AddedList)
 			{
@@ -1614,12 +1616,6 @@ namespace Tasual
 			{
 				ShowInTaskbar = true;
 			}
-		}
-
-		// Filesystem Watcher
-		private void FileSystemWatcher_Changed(object Sender, System.IO.FileSystemEventArgs Args)
-		{
-			Console.WriteLine("FileSystemWatcher_Changed(): {0}", Args.ChangeType.ToString());
 		}
 
 		// Update timer

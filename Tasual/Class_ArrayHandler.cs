@@ -14,8 +14,9 @@ namespace Tasual
 {
 	class ArrayHandler
 	{
-		public static DateTime ProgramLastWriteTime { get; set; }
-		public static DateTime ProgramLastReadTime { get; set; }
+		private static DateTime ProgramLastWriteTime { get; set; }
+		private static DateTime ProgramLastReadTime { get; set; }
+		//private static string ProgramLastWriteFile { get; set; }
 
 		public static void ReAssignGroup(List<Task> Array, string OldTaskGroup, string NewTaskGroup)
 		{
@@ -90,15 +91,40 @@ namespace Tasual
 			}
 		}
 
+		public static bool StorageNewerThanProgram(string PathToFile)
+		{
+			if (!File.Exists(PathToFile)) { return false; }
+			//if (ProgramLastWriteFile != PathToFile) { return false; }
+
+			DateTime FileLastWriteTime = File.GetLastWriteTime(PathToFile);
+
+			bool WrittenAfterProgram = (FileLastWriteTime > ProgramLastWriteTime);
+			bool WrittenAfterRead = (FileLastWriteTime > ProgramLastReadTime);
+
+			Console.WriteLine(
+				"File written after program: {0}, file written after read: {1}, needs update: {2}",
+				WrittenAfterProgram.ToString(),
+				WrittenAfterRead.ToString(),
+				(WrittenAfterProgram && WrittenAfterRead).ToString()
+			);
+
+			if (WrittenAfterProgram && WrittenAfterRead)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
 		private static void Save_JSON(ref List<Task> Array, string FolderPath)
 		{
 			try
 			{
 				string PathToFile = Path.Combine(FolderPath, "tasks.db");
-				DateTime FileLastWriteTime = File.GetLastWriteTime(PathToFile);
 
-				Console.WriteLine("{0} && {1}", (FileLastWriteTime > ProgramLastWriteTime).ToString(), (FileLastWriteTime > ProgramLastReadTime).ToString());
-				if ((FileLastWriteTime > ProgramLastWriteTime) && (FileLastWriteTime > ProgramLastReadTime))
+				if (StorageNewerThanProgram(PathToFile))
 				{
 					// File in storage is newer than our internal array
 					// Lets compare the changed array and the internal array before saving just to be safe
@@ -108,8 +134,10 @@ namespace Tasual
 					Compare(ref Array, ref ChangedArray);
 				}
 
+				// Create directory just in case it doesn't already exist
 				DirectoryInfo DI = Directory.CreateDirectory(FolderPath);
 
+				// Save database
 				using (FileStream OutputFile = File.Open(PathToFile, FileMode.Create))
 				using (StreamWriter OutputStream = new StreamWriter(OutputFile))
 				using (JsonWriter OutputJson = new JsonTextWriter(OutputStream))
@@ -121,6 +149,7 @@ namespace Tasual
 
 				// Set the last write time 
 				ProgramLastWriteTime = File.GetLastWriteTime(PathToFile);
+				//ProgramLastWriteFile = PathToFile;
 			}
 			catch (Exception Args)
 			{
