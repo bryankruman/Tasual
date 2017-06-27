@@ -1119,6 +1119,333 @@ namespace Tasual
 			ListView.SecondarySortColumn = DescriptionColumn;
 		}
 
+		private void ListView_AboutToCreateGroups(object Sender, CreateGroupsEventArgs Args)
+		{
+			foreach (OLVGroup Group in Args.Groups)
+			{
+				Group.Name = Group.Header;
+				if (Settings.ShowItemCounts)
+				{
+					Group.Header = String.Format(
+						"{0} ({1} {2})",
+						Group.Name,
+						Group.Items.Count(),
+						((Group.Items.Count() > 1) ? "items" : "item")
+					);
+				}
+			}
+		}
+
+		private void ListView_CellEditFinished(object Sender, CellEditEventArgs Args)
+		{
+			Task Task = Args.RowObject as Task;
+			if (Task == null) { return; }
+
+			if (string.IsNullOrEmpty(Task.Description))
+			{
+				// This one will ACTUALLY remove the task, not just hide it from the list
+				TaskArray.Remove(Task);
+			}
+
+			ArrayHandler.Save(ref TaskArray, Settings);
+			//ListView.UpdateObject(e.RowObject);
+			// TODO: We should be able to do this for just one object, not the whole list...
+			ListView.BuildList();
+			MenuStrip_Edit.Enabled = false;
+		}
+
+		private void ListView_SelectedIndexChanged(object Sender, EventArgs Args)
+		{
+			if (ListView.SelectedItem != null)
+			{
+				MenuStrip_Edit.Enabled = true;
+				LastSelectedGroup = ((Task)ListView.SelectedItem.RowObject).Group;
+			}
+			else
+			{
+				MenuStrip_Edit.Enabled = false;
+			}
+		}
+
+		// ListView: Click and input handlers
+		private void ListView_SingleClick(MouseEventArgs Args)
+		{
+			if (ListView_PreviouslySelected == true)
+			{
+				if (ListView.SelectedItem != null)
+				{
+					ListView.EditModel(ListView.SelectedItem.RowObject);
+				}
+			}
+			else
+			{
+				// do nothing
+			}
+		}
+
+		private void ListView_DoubleClick(MouseEventArgs Args)
+		{
+			OlvListViewHitTestInfo SecondClickInfo = ListView.OlvHitTest(Args.X, Args.Y);
+
+			if ((ListView_FirstClickInfo.Item != null) && (SecondClickInfo.Item != null))
+			{
+				if (ListView_FirstClickInfo.Item == SecondClickInfo.Item)
+				{
+					if (ListView.SelectedItem != null)
+					{
+						Task Task = (Task)ListView.SelectedItem.RowObject;
+						ListView.PossibleFinishCellEditing();
+						ListView.EditModel(Task);
+					}
+				}
+			}
+		}
+
+		private void Timer_ListViewClick_Tick(object Sender, EventArgs Args)
+		{
+			if ((MouseButtons & MouseButtons.Left) == 0)
+			{
+				ListView_SingleClick((MouseEventArgs)Timer_ListViewClick.Tag);
+			}
+			ListView_FirstClickInfo = null;
+			ListView_PreviouslySelected = false;
+			Timer_ListViewClick.Stop();
+		}
+
+		private void ListView_MouseDown(object Sender, MouseEventArgs Args)
+		{
+			OlvListViewHitTestInfo Info = ListView.OlvHitTest(Args.X, Args.Y);
+
+			if (Info.Group != null)
+			{
+				//Console.WriteLine("Item: {0}", (Info.Column != null) ? Info.Column.Name : "foobar");
+				// TODO: Fix the issue where clicking blank space inside of the group still triggers the group
+				if (Args.Button == MouseButtons.Right)
+				{
+					MenuStrip_Group.Tag = Info.Group;
+					MenuStrip_Group.Show(Cursor.Position);
+				}
+			}
+			else if (Info.Item != null)
+			{
+				if (Timer_ListViewClick.Enabled && (Args.Button == MouseButtons.Left)) // second click
+				{
+					if (ListView_FirstClickInfo.Item != null)
+					{
+						if (ListView_FirstClickInfo.Item == Info.Item)
+						{
+							ListView_DoubleClickEdit = true;
+						}
+					}
+
+					ListView_PreviouslySelected = false;
+					ListView_FirstClickInfo = null;
+					Timer_ListViewClick.Stop();
+				}
+				else // first click
+				{
+					switch (Info.Column.AspectName)
+					{
+						case "Description":
+							{
+								if (Args.Button == MouseButtons.Left)
+								{
+									Timer_ListViewClick.Start();
+
+									if (ListView.SelectedItem == Info.Item)
+									{
+										ListView_PreviouslySelected = true;
+									}
+
+									ListView_FirstClickInfo = Info;
+									Timer_ListViewClick.Tag = Args;
+								}
+								else
+								{
+									MenuStrip_Item.Tag = Info.Item.RowObject;
+									MenuStrip_Item.Show(Cursor.Position.X, Cursor.Position.Y);
+								}
+								break;
+							}
+						case "Icons":
+							{
+								MenuStrip_Icon.Tag = Info.Item.RowObject;
+								MenuStrip_Icon.Show(Cursor.Position.X, Cursor.Position.Y);
+								break;
+							}
+						case "Group":
+							{
+								Console.WriteLine("Clicked on a category!");
+								break;
+							}
+						case "Time":
+							{
+								if (Info.SubItem != null)
+								{
+									if (CalendarPopout == null)
+									{
+										CalendarPopout = Info;
+									}
+									else { CalendarPopout = null; }
+								}
+								break;
+							}
+					}
+				}
+			}
+			/* else if (Info != null)
+			{
+				// TODO: Should we handle clicking blank space in any particular way?
+			}*/
+		}
+
+		private void ListView_MouseUp(object Sender, MouseEventArgs Args)
+		{
+			if (CalendarPopout != null)
+			{
+				Form_TimePop Calendar = new Form_TimePop(
+					this,
+					TaskArray.IndexOf((Task)ListView.SelectedItem.RowObject)
+				);
+
+				Rectangle Bounds = CalendarPopout.SubItem.Bounds;
+				Calendar.Location = PointToScreen(new Point(Bounds.Left, Bounds.Bottom + Bounds.Height + 5));
+				Calendar.Show(this);
+
+				CalendarPopout = null;
+			}
+
+			else if (ListView_DoubleClickEdit)
+			{
+				if (ListView.SelectedItem != null)
+				{
+					Task Task = (Task)ListView.SelectedItem.RowObject;
+					ListView.PossibleFinishCellEditing();
+					ListView.EditModel(Task);
+				}
+				ListView_DoubleClickEdit = false;
+			}
+		}
+
+		private void ListView_KeyDown(object Sender, KeyEventArgs Args)
+		{
+			switch (Args.KeyCode)
+			{
+				case Keys.Delete:
+					{
+						if (ListView.SelectedItem != null)
+						{
+							if (ConfirmAction(Settings.PromptDelete, "delete this task"))
+							{
+								Task Task = (Task)ListView.SelectedItem.RowObject;
+								Task.Removed = true;
+								ArrayHandler.Save(ref TaskArray, Settings);
+								ListView.BuildList();
+								UpdateStatusLabel();
+							}
+						}
+						break;
+					}
+
+				case Keys.Enter:
+					{
+						QuickCreate();
+						break;
+					}
+			}
+		}
+
+
+		// ===============
+		//  Misc Handlers
+		// ===============
+
+		// Main Form
+		private void Main_FormClosing(object Sender, FormClosingEventArgs Args)
+		{
+			if (Settings.SaveWindowPos)
+			{
+				if (WindowState != FormWindowState.Normal)
+				{
+					if (WindowState == FormWindowState.Minimized)
+					{
+						// Always load back up with a normal window state when previously minimized
+						Settings.WindowState = FormWindowState.Normal;
+					}
+					else
+					{
+						Settings.WindowState = FormWindowState.Maximized;
+					}
+					Settings.Location = RestoreBounds.Location;
+					Settings.Size = RestoreBounds.Size;
+				}
+				else
+				{
+					Settings.WindowState = FormWindowState.Normal;
+					Settings.Location = Location;
+					Settings.Size = Size;
+				}
+
+				Setting.Save(ref Settings);
+			}
+
+			Notify.Dispose();
+		}
+
+		private void Main_Resize(object Sender, EventArgs Args)
+		{
+			if (Settings.MinimizeToTray)
+			{
+				if (WindowState == FormWindowState.Minimized)
+				{
+					ShowInTaskbar = false;
+				}
+				else
+				{
+					ShowInTaskbar = true;
+				}
+			}
+			else
+			{
+				ShowInTaskbar = true;
+			}
+		}
+
+		// Update timer
+		private void Timer_CheckUpdate_Tick(object Sender, EventArgs Args)
+		{
+			CheckTaskStatus();
+		}
+
+		// Notification Icon
+		private void Notify_MouseClick(object Sender, MouseEventArgs Args)
+		{
+			if (Args.Button == MouseButtons.Left)
+			{
+				if (WindowState == FormWindowState.Minimized)
+				{
+					WindowState = FormWindowState.Normal;
+				}
+				Activate();
+			}
+			else if (Args.Button == MouseButtons.Right)
+			{
+				MenuStrip_Notify.Show(Cursor.Position);
+			}
+		}
+
+		// Labels
+		private void StatusLabel_LinkClicked(object Sender, LinkLabelLinkClickedEventArgs Args)
+		{
+			MenuStrip_Status.Show(StatusLabel, new Point(0, StatusLabel.Height));
+		}
+
+		private void AboutLabel_LinkClicked(object Sender, LinkLabelLinkClickedEventArgs Args)
+		{
+			Form_About AboutForm = new Form_About();
+			AboutForm.ShowDialog(this);
+		}
+
 
 		// ====================
 		//  MenuStrip Handlers
@@ -1563,334 +1890,6 @@ namespace Tasual
 			if (ConfirmAction(Settings.PromptClear, "clear all tasks"))
 			{
 				Array_ClearAll();
-			}
-		}
-
-
-		// ================
-		//  Other Handlers
-		// ================
-
-		// Main Form
-		private void Main_FormClosing(object Sender, FormClosingEventArgs Args)
-		{
-			if (Settings.SaveWindowPos)
-			{
-				if (WindowState != FormWindowState.Normal)
-				{
-					if (WindowState == FormWindowState.Minimized)
-					{
-						// Always load back up with a normal window state when previously minimized
-						Settings.WindowState = FormWindowState.Normal;
-					}
-					else
-					{
-						Settings.WindowState = FormWindowState.Maximized;
-					}
-					Settings.Location = RestoreBounds.Location;
-					Settings.Size = RestoreBounds.Size;
-				}
-				else
-				{
-					Settings.WindowState = FormWindowState.Normal;
-					Settings.Location = Location;
-					Settings.Size = Size;
-				}
-
-				Setting.Save(ref Settings);
-			}
-
-			Notify.Dispose();
-		}
-
-		private void Main_Resize(object Sender, EventArgs Args)
-		{
-			if (Settings.MinimizeToTray)
-			{
-				if (WindowState == FormWindowState.Minimized)
-				{
-					ShowInTaskbar = false;
-				}
-				else
-				{
-					ShowInTaskbar = true;
-				}
-			}
-			else
-			{
-				ShowInTaskbar = true;
-			}
-		}
-
-		// Update timer
-		private void Timer_CheckUpdate_Tick(object Sender, EventArgs Args)
-		{
-			CheckTaskStatus();
-		}
-
-		// Notification Icon
-		private void Notify_MouseClick(object Sender, MouseEventArgs Args)
-		{
-			if (Args.Button == MouseButtons.Left)
-			{
-				if (WindowState == FormWindowState.Minimized)
-				{
-					WindowState = FormWindowState.Normal;
-				}
-				Activate();
-			}
-			else if (Args.Button == MouseButtons.Right)
-			{
-				MenuStrip_Notify.Show(Cursor.Position);
-			}
-		}
-
-		// Labels
-		private void StatusLabel_LinkClicked(object Sender, LinkLabelLinkClickedEventArgs Args)
-		{
-			MenuStrip_Status.Show(StatusLabel, new Point(0, StatusLabel.Height));
-		}
-
-		private void AboutLabel_LinkClicked(object Sender, LinkLabelLinkClickedEventArgs Args)
-		{
-			Form_About AboutForm = new Form_About();
-			AboutForm.ShowDialog(this);
-		}
-
-		// ListView: Misc handlers
-		private void ListView_AboutToCreateGroups(object Sender, CreateGroupsEventArgs Args)
-		{
-			foreach (OLVGroup Group in Args.Groups)
-			{
-				Group.Name = Group.Header;
-				if (Settings.ShowItemCounts)
-				{
-					Group.Header = String.Format(
-						"{0} ({1} {2})",
-						Group.Name,
-						Group.Items.Count(),
-						((Group.Items.Count() > 1) ? "items" : "item")
-					);
-				}
-			}
-		}
-
-		private void ListView_CellEditFinished(object Sender, CellEditEventArgs Args)
-		{
-			Task Task = Args.RowObject as Task;
-			if (Task == null) { return; }
-
-			if (string.IsNullOrEmpty(Task.Description))
-			{
-				// This one will ACTUALLY remove the task, not just hide it from the list
-				TaskArray.Remove(Task);
-			}
-
-			ArrayHandler.Save(ref TaskArray, Settings);
-			//ListView.UpdateObject(e.RowObject);
-			// TODO: We should be able to do this for just one object, not the whole list...
-			ListView.BuildList();
-			MenuStrip_Edit.Enabled = false;
-		}
-
-		private void ListView_SelectedIndexChanged(object Sender, EventArgs Args)
-		{
-			if (ListView.SelectedItem != null)
-			{
-				MenuStrip_Edit.Enabled = true;
-				LastSelectedGroup = ((Task)ListView.SelectedItem.RowObject).Group;
-			}
-			else
-			{
-				MenuStrip_Edit.Enabled = false;
-			}
-		}
-
-		// ListView: Click and input handlers
-		private void ListView_SingleClick(MouseEventArgs Args)
-		{
-			if (ListView_PreviouslySelected == true)
-			{
-				if (ListView.SelectedItem != null)
-				{
-					ListView.EditModel(ListView.SelectedItem.RowObject);
-				}
-			}
-			else
-			{
-				// do nothing
-			}
-		}
-
-		private void ListView_DoubleClick(MouseEventArgs Args)
-		{
-			OlvListViewHitTestInfo SecondClickInfo = ListView.OlvHitTest(Args.X, Args.Y);
-
-			if ((ListView_FirstClickInfo.Item != null) && (SecondClickInfo.Item != null))
-			{
-				if (ListView_FirstClickInfo.Item == SecondClickInfo.Item)
-				{
-					if (ListView.SelectedItem != null)
-					{
-						Task Task = (Task)ListView.SelectedItem.RowObject;
-						ListView.PossibleFinishCellEditing();
-						ListView.EditModel(Task);
-					}
-				}
-			}
-		}
-
-		private void Timer_ListViewClick_Tick(object Sender, EventArgs Args)
-		{
-			if ((MouseButtons & MouseButtons.Left) == 0)
-			{
-				ListView_SingleClick((MouseEventArgs)Timer_ListViewClick.Tag);
-			}
-			ListView_FirstClickInfo = null;
-			ListView_PreviouslySelected = false;
-			Timer_ListViewClick.Stop();
-		}
-
-		private void ListView_MouseDown(object Sender, MouseEventArgs Args)
-		{
-			OlvListViewHitTestInfo Info = ListView.OlvHitTest(Args.X, Args.Y);
-
-			if (Info.Group != null)
-			{
-				//Console.WriteLine("Item: {0}", (Info.Column != null) ? Info.Column.Name : "foobar");
-				// TODO: Fix the issue where clicking blank space inside of the group still triggers the group
-				if (Args.Button == MouseButtons.Right)
-				{
-					MenuStrip_Group.Tag = Info.Group;
-					MenuStrip_Group.Show(Cursor.Position);
-				}
-			}
-			else if (Info.Item != null)
-			{
-				if (Timer_ListViewClick.Enabled && (Args.Button == MouseButtons.Left)) // second click
-				{
-					if (ListView_FirstClickInfo.Item != null)
-					{
-						if (ListView_FirstClickInfo.Item == Info.Item)
-						{
-							ListView_DoubleClickEdit = true;
-						}
-					}
-
-					ListView_PreviouslySelected = false;
-					ListView_FirstClickInfo = null;
-					Timer_ListViewClick.Stop();
-				}
-				else // first click
-				{
-					switch (Info.Column.AspectName)
-					{
-						case "Description":
-							{
-								if (Args.Button == MouseButtons.Left)
-								{
-									Timer_ListViewClick.Start();
-
-									if (ListView.SelectedItem == Info.Item)
-									{
-										ListView_PreviouslySelected = true;
-									}
-
-									ListView_FirstClickInfo = Info;
-									Timer_ListViewClick.Tag = Args;
-								}
-								else
-								{
-									MenuStrip_Item.Tag = Info.Item.RowObject;
-									MenuStrip_Item.Show(Cursor.Position.X, Cursor.Position.Y);
-								}
-								break;
-							}
-						case "Icons":
-							{
-								MenuStrip_Icon.Tag = Info.Item.RowObject;
-								MenuStrip_Icon.Show(Cursor.Position.X, Cursor.Position.Y);
-								break;
-							}
-						case "Group":
-							{
-								Console.WriteLine("Clicked on a category!");
-								break;
-							}
-						case "Time":
-							{
-								if (Info.SubItem != null)
-								{
-									if (CalendarPopout == null)
-									{
-										CalendarPopout = Info;
-									}
-									else { CalendarPopout = null; }
-								}
-								break;
-							}
-					}
-				}
-			}
-			/* else if (Info != null)
-			{
-				// TODO: Should we handle clicking blank space in any particular way?
-			}*/
-		}
-
-		private void ListView_MouseUp(object Sender, MouseEventArgs Args)
-		{
-			if (CalendarPopout != null)
-			{
-				Form_TimePop Calendar = new Form_TimePop(
-					this,
-					TaskArray.IndexOf((Task)ListView.SelectedItem.RowObject)
-				);
-
-				Rectangle Bounds = CalendarPopout.SubItem.Bounds;
-				Calendar.Location = PointToScreen(new Point(Bounds.Left, Bounds.Bottom + Bounds.Height + 5));
-				Calendar.Show(this);
-
-				CalendarPopout = null;
-			}
-
-			else if (ListView_DoubleClickEdit)
-			{
-				if (ListView.SelectedItem != null)
-				{
-					Task Task = (Task)ListView.SelectedItem.RowObject;
-					ListView.PossibleFinishCellEditing();
-					ListView.EditModel(Task);
-				}
-				ListView_DoubleClickEdit = false;
-			}
-		}
-
-		private void ListView_KeyDown(object Sender, KeyEventArgs Args)
-		{
-			switch (Args.KeyCode)
-			{
-				case Keys.Delete:
-					{
-						if (ListView.SelectedItem != null)
-						{
-							if (ConfirmAction(Settings.PromptDelete, "delete this task"))
-							{
-								Task Task = (Task)ListView.SelectedItem.RowObject;
-								Task.Removed = true;
-								ArrayHandler.Save(ref TaskArray, Settings);
-								ListView.BuildList();
-								UpdateStatusLabel();
-							}
-						}
-						break;
-					}
-
-				case Keys.Enter:
-					{
-						QuickCreate();
-						break;
-					}
 			}
 		}
 	}
