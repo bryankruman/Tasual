@@ -1402,7 +1402,11 @@ namespace Tasual
 		//  Misc Handlers
 		// ===============
 
-		// Main Form
+		/// <summary>
+		/// Main window FormClosing event handler.
+		/// </summary>
+		/// <param name="Sender">Sender of the FormClosing event.</param>
+		/// <param name="Args">Form closing event arguments.</param>
 		private void Main_FormClosing(object Sender, FormClosingEventArgs Args)
 		{
 			if (Settings.SaveWindowPos)
@@ -1434,6 +1438,11 @@ namespace Tasual
 			Notify.Dispose();
 		}
 
+		/// <summary>
+		/// Event handler for the main form Resize event.
+		/// </summary>
+		/// <param name="Sender">Sender of the Resize event.</param>
+		/// <param name="Args">Resize event arguments.</param>
 		private void Main_Resize(object Sender, EventArgs Args)
 		{
 			if (Settings.MinimizeToTray)
@@ -1453,13 +1462,21 @@ namespace Tasual
 			}
 		}
 
-		// Update timer
+		/// <summary>
+		/// CheckUpdate timer tick event handler. Triggers a call to CheckTaskStatus().
+		/// </summary>
+		/// <param name="Sender">Sender of the Tick event.</param>
+		/// <param name="Args">Tick event arguments.</param>
 		private void Timer_CheckUpdate_Tick(object Sender, EventArgs Args)
 		{
 			CheckTaskStatus();
 		}
 
-		// Notification Icon
+		/// <summary>
+		/// Event handler for the MouseClick event on the notification icon.
+		/// </summary>
+		/// <param name="Sender">Sender of the MouseClick event.</param>
+		/// <param name="Args">Mouse event arguments.</param>
 		private void Notify_MouseClick(object Sender, MouseEventArgs Args)
 		{
 			if (Args.Button == MouseButtons.Left)
@@ -1476,12 +1493,21 @@ namespace Tasual
 			}
 		}
 
-		// Labels
+		/// <summary>
+		/// LinkClicked event handler for the status label link.
+		/// </summary>
+		/// <param name="Sender">Sender of the LinkClicked event.</param>
+		/// <param name="Args">LinkLabelLinkClicked event arguments.</param>
 		private void StatusLabel_LinkClicked(object Sender, LinkLabelLinkClickedEventArgs Args)
 		{
 			MenuStrip_Status.Show(StatusLabel, new Point(0, StatusLabel.Height));
 		}
 
+		/// <summary>
+		/// LinkClicked event handler for the about label link.
+		/// </summary>
+		/// <param name="Sender">Sender of the LinkClicked event.</param>
+		/// <param name="Args">LinkLabelLinkClicked event arguments.</param>
 		private void AboutLabel_LinkClicked(object Sender, LinkLabelLinkClickedEventArgs Args)
 		{
 			Form_About AboutForm = new Form_About();
@@ -1494,18 +1520,33 @@ namespace Tasual
 		// ====================
 
 		// Main: "Create"
+		/// <summary>
+		/// MenuStrip event handler - Create button: Advanced: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Create_Advanced_Click(object Sender, EventArgs Args)
 		{
 			Form_Create CreateForm = new Form_Create(this);
 			CreateForm.ShowDialog(this);
 		}
 
+		/// <summary>
+		/// MenuStrip event handler - Create button: Quick: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Create_Quick_Click(object Sender, EventArgs Args)
 		{
 			QuickCreate();
 		}
 
 		// Main: "Edit"
+		/// <summary>
+		/// MenuStrip event handler - Edit button: Advanced: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Edit_Advanced_Click(object Sender, EventArgs Args)
 		{
 			if (ListView.SelectedItem != null)
@@ -1516,6 +1557,11 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// MenuStrip event handler - Edit button: Quick: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Edit_Quick_Click(object Sender, EventArgs Args)
 		{
 			if (ListView.SelectedItem != null)
@@ -1528,6 +1574,11 @@ namespace Tasual
 		}
 
 		// Main: "Settings"
+		/// <summary>
+		/// MenuStrip event handler - Settings button: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Settings_Click(object Sender, EventArgs Args)
 		{
 			Form_Settings SettingsForm = new Form_Settings(this);
@@ -1535,18 +1586,33 @@ namespace Tasual
 		}
 
 		// Main: "Sources"
+		/// <summary>
+		/// MenuStrip event handler - Sources button: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Sources_Click(object Sender, EventArgs Args)
 		{
 			// Currently unused
 		}
 
 		// ListView: "Group"
+		/// <summary>
+		/// ContextMenuStrip event handler - Group header: Create: Advanced: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Group_Create_Advanced_Click(object Sender, EventArgs Args)
 		{
 			Form_Create CreateForm = new Form_Create(this);
 			CreateForm.ShowDialog(this);
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - Group header: Create: Quick: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Group_Create_Quick_Click(object Sender, EventArgs Args)
 		{
 			OLVGroup Group = (OLVGroup)MenuStrip_Group.Tag;
@@ -1557,6 +1623,11 @@ namespace Tasual
 			QuickCreate();
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - Group header: Delete: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Group_Delete_Click(object Sender, EventArgs Args)
 		{
 			if (!ConfirmAction(Settings.PromptDelete, "delete this group")) { return; }
@@ -1577,12 +1648,22 @@ namespace Tasual
 			UpdateStatusLabel();
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - Group header: Hide: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Group_Hide_Click(object Sender, EventArgs Args)
 		{
 			OLVGroup Group = (OLVGroup)MenuStrip_Group.Tag;
 			Group.Collapsed = true;
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - Group header: Move Tasks: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Group_MoveTasks_ClickHandler(object Sender, EventArgs Args)
 		{
 			ToolStripDropDownItem Item = (ToolStripDropDownItem)Sender;
@@ -1592,6 +1673,11 @@ namespace Tasual
 			ListView.BuildList();
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - Group header: Move Tasks: DropDownOpening
+		/// </summary>
+		/// <param name="Sender">Sender of the DropDownOpening event.</param>
+		/// <param name="Args">DropDownOpening event arguments.</param>
 		private void MenuStrip_Group_MoveTasks_DropDownOpening(object Sender, EventArgs Args)
 		{
 			OLVGroup Group = (OLVGroup)MenuStrip_Group.Tag;
@@ -1616,6 +1702,11 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - Group header: Opening
+		/// </summary>
+		/// <param name="Sender">Sender of the Opening event.</param>
+		/// <param name="Args">Cancel "Opening" event arguments.</param>
 		private void MenuStrip_Group_Opening(object Sender, CancelEventArgs Args)
 		{
 			OLVGroup Group = (OLVGroup)MenuStrip_Group.Tag;
@@ -1632,6 +1723,11 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - Group header: Show: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Group_Show_Click(object Sender, EventArgs Args)
 		{
 			OLVGroup Group = (OLVGroup)MenuStrip_Group.Tag;
@@ -1639,6 +1735,11 @@ namespace Tasual
 		}
 
 		// ListView: "Icon"
+		/// <summary>
+		/// ContextMenuStrip event handler - Icon column: AddLink: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Icon_AddLink_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
@@ -1646,6 +1747,11 @@ namespace Tasual
 			LinkForm.ShowDialog(this);
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - Icon column: AddLocation: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Icon_AddLocation_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
@@ -1653,6 +1759,11 @@ namespace Tasual
 			LocationForm.ShowDialog(this);
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - Icon column: AddNotes: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Icon_AddNotes_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
@@ -1660,12 +1771,22 @@ namespace Tasual
 			NotesForm.ShowDialog(this);
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - Icon column: Link: Clipboard: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Icon_Link_Clipboard_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 			Clipboard.SetText(Task.Link);
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - Icon column: Link: Edit: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Icon_Link_Edit_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
@@ -1673,12 +1794,22 @@ namespace Tasual
 			LinkForm.ShowDialog(this);
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - Icon column: Link: Follow: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Icon_Link_Follow_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 			URLExtensions.Follow(Task.Link);
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - Icon column: Link: Remove: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Icon_Link_Remove_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
@@ -1688,12 +1819,22 @@ namespace Tasual
 			ListView.BuildList();
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - Icon column: Location: Clipboard: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Icon_Location_Clipboard_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 			Clipboard.SetText(Task.Location);
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - Icon column: Location: Edit: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Icon_Location_Edit_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
@@ -1701,6 +1842,11 @@ namespace Tasual
 			LocationForm.ShowDialog(this);
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - Icon column: Location: Maps: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Icon_Location_Maps_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
@@ -1710,6 +1856,11 @@ namespace Tasual
 			));
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - Icon column: Location: Remove: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Icon_Location_Remove_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
@@ -1719,12 +1870,22 @@ namespace Tasual
 			ListView.BuildList();
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - Icon column: Notes: Clipboard: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Icon_Notes_Clipboard_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 			Clipboard.SetText(Task.Notes);
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - Icon column: Notes: Edit: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Icon_Notes_Edit_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
@@ -1732,6 +1893,11 @@ namespace Tasual
 			NotesForm.ShowDialog(this);
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - Icon column: Notes: Remove: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Icon_Notes_Remove_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
@@ -1741,6 +1907,11 @@ namespace Tasual
 			ListView.BuildList();
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - Icon column: Opening
+		/// </summary>
+		/// <param name="Sender">Sender of the Opening event.</param>
+		/// <param name="Args">Cancel "Opening" event arguments.</param>
 		private void MenuStrip_Icon_Opening(object Sender, CancelEventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
@@ -1787,17 +1958,32 @@ namespace Tasual
 		}
 
 		// ListView: "Item"
+		/// <summary>
+		/// ContextMenuStrip event handler - ListView Item: Create: Quick: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Item_Create_Quick_Click(object Sender, EventArgs Args)
 		{
 			QuickCreate();
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - ListView Item: Create: Advanced: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Item_Create_Advanced_Click(object Sender, EventArgs Args)
 		{
 			Form_Create CreateForm = new Form_Create(this);
 			CreateForm.ShowDialog(this);
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - ListView Item: Delete: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Item_Delete_Click(object Sender, EventArgs Args)
 		{
 			if (ConfirmAction(Settings.PromptDelete, "delete this task"))
@@ -1811,6 +1997,11 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - ListView Item: Duplicate: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Item_Duplicate_Click(object Sender, EventArgs Args)
 		{
 			// PRETTY MUCH do a clean copy here, but with some minor adjustments
@@ -1858,6 +2049,11 @@ namespace Tasual
 			UpdateStatusLabel();
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - ListView Item: Edit: Advanced: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Item_Edit_Advanced_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Item.Tag;
@@ -1865,6 +2061,11 @@ namespace Tasual
 			CreateForm.ShowDialog(this);
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - ListView Item: Edit: Quick: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Item_Edit_Quick_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Item.Tag;
@@ -1872,6 +2073,11 @@ namespace Tasual
 			ListView.EditModel(Task);
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - ListView Item: Move: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Item_Move_ClickHandler(object Sender, EventArgs Args)
 		{
 			ToolStripDropDownItem Item = (ToolStripDropDownItem)Sender;
@@ -1881,6 +2087,11 @@ namespace Tasual
 			ListView.BuildList();
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - ListView Item: Move: DropDownOpening
+		/// </summary>
+		/// <param name="Sender">Sender of the DropDownOpening event.</param>
+		/// <param name="Args">DropDownOpening event arguments.</param>
 		private void MenuStrip_Item_Move_DropDownOpening(object Sender, EventArgs Args)
 		{
 			Task TaggedTask = (Task)MenuStrip_Item.Tag;
@@ -1906,6 +2117,11 @@ namespace Tasual
 		}
 
 		// Notify: "Notify"
+		/// <summary>
+		/// ContextMenuStrip event handler - Notification icon: Show: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Notify_Show_Click(object Sender, EventArgs Args)
 		{
 			if (WindowState == FormWindowState.Minimized)
@@ -1915,18 +2131,33 @@ namespace Tasual
 			Activate();
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - Notification icon: Settings: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Notify_Settings_Click(object Sender, EventArgs Args)
 		{
 			Form_Settings SettingsForm = new Form_Settings(this);
 			SettingsForm.ShowDialog(this);
 		}
 
+		/// <summary>
+		/// ContextMenuStrip event handler - Notification icon: Quit: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Notify_Quit_Click(object Sender, EventArgs Args)
 		{
 			Close();
 		}
 
 		// StatusLabel: "Status"
+		/// <summary>
+		/// ContextMenuStrip event handler - StatusLabel: Clear: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Status_Clear_Click(object Sender, EventArgs Args)
 		{
 			if (ConfirmAction(Settings.PromptClear, "clear all tasks"))
