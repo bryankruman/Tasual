@@ -12,141 +12,204 @@ namespace Tasual
 {
 	public class TimeInfo
 	{
-		// flags
 		[Flags]
 		public enum MonthFlag
 		{
+			/// <summary>Allow complex recurrances matching January.</summary>
 			January = 1,
+			/// <summary>Allow complex recurrances matching February.</summary>
 			February = 2,
+			/// <summary>Allow complex recurrances matching March.</summary>
 			March = 4,
+			/// <summary>Allow complex recurrances matching April.</summary>
 			April = 8,
+			/// <summary>Allow complex recurrances matching May.</summary>
 			May = 16,
+			/// <summary>Allow complex recurrances matching June.</summary>
 			June = 32,
+			/// <summary>Allow complex recurrances matching July.</summary>
 			July = 64,
+			/// <summary>Allow complex recurrances matching August.</summary>
 			August = 128,
+			/// <summary>Allow complex recurrances matching September.</summary>
 			September = 256,
+			/// <summary>Allow complex recurrances matching October.</summary>
 			October = 512,
+			/// <summary>Allow complex recurrances matching November.</summary>
 			November = 1024,
+			/// <summary>Allow complex recurrances matching December.</summary>
 			December = 2048,
+			/// <summary>Allow complex recurrances matching all months.</summary>
 			Everymonth = 4095
 		}
 
 		[Flags]
 		public enum WeekFlag
 		{
+			/// <summary>Allow complex recurrances matching the first week of the month.</summary>
 			First = 1,
+			/// <summary>Allow complex recurrances matching the second week of the month.</summary>
 			Second = 2,
+			/// <summary>Allow complex recurrances matching the third week of the month.</summary>
 			Third = 4,
+			/// <summary>Allow complex recurrances matching the fourth week of the month.</summary>
 			Fourth = 8,
+			/// <summary>Allow complex recurrances matching the fifth week of the month.</summary>
 			Fifth = 16,
+			/// <summary>Allow complex recurrances matching the third, fourth, or fifth week of the month.</summary>
 			Last = 32,
-			FirstThruLast = 39, // (Skips 45th and 5th options as they can't happen via dialog)
+			/// <summary>Combines First, Second, and Last flags.</summary>
+			/// <remarks>Skips 45th and 5th options as they can't happen via dialog.</remarks>
+			FirstThruLast = 39,
+			/// <summary>Combines First, Second, Third, Fourth, and Fifth flags.</summary>
 			Everyweek = 31
 		}
 
 		[Flags]
 		public enum DayFlag
 		{
+			/// <summary>Allow complex recurrances matching Monday.</summary>
 			Monday = 1,
+			/// <summary>Allow complex recurrances matching Tuesday.</summary>
 			Tuesday = 2,
+			/// <summary>Allow complex recurrances matching Wednesday.</summary>
 			Wednesday = 4,
+			/// <summary>Allow complex recurrances matching Thursday.</summary>
 			Thursday = 8,
+			/// <summary>Allow complex recurrances matching Friday.</summary>
 			Friday = 16,
+			/// <summary>Allow complex recurrances matching Saturday.</summary>
 			Saturday = 32,
+			/// <summary>Allow complex recurrances matching Sunday.</summary>
 			Sunday = 64,
+			/// <summary>Allow complex recurrances matching all days.</summary>
 			Everyday = 127
 		}
 
 		public enum TimeFormat
 		{
+			/// <summary>Time string formatted to show elapsed time.</summary>
 			Elapsed,
+			/// <summary>Time string formatted in a short summary: "6/6 - Tue 10pm"</summary>
 			Short,
+			/// <summary>Time string formatted in a medium summary: "Sat, Jun 6th at 10:00pm"</summary>
 			Medium,
+			/// <summary>Time string formatted in a long summary: "Tuesday, June 6th at 10:00pm"</summary>
 			Long
 		}
 
 		public enum RepeatType
 		{
+			/// <summary>Task only has one occurence/does not repeat.</summary>
 			Singular,
+			/// <summary>Task repeats on simple terms (i.e. once a week).</summary>
 			SimpleRepeat,
+			/// <summary>Task repeats on complex terms (i.e. on specific days every few months).</summary>
 			ComplexRepeat
 		}
 
 		public enum DismissType
 		{
+			/// <summary>Never dismiss task.</summary>
 			Never,
+			/// <summary>Dismiss task immediately.</summary>
 			Immediate,
+			/// <summary>Dismiss task after one hour.</summary>
 			OneHour,
+			/// <summary>Dismiss task after twelve hours.</summary>
 			TwelveHours,
+			/// <summary>Dismiss task after one day.</summary>
 			OneDay,
+			/// <summary>Dismiss task after one week.</summary>
 			OneWeek,
+			/// <summary>Dismiss task after one month.</summary>
 			OneMonth
 		}
 
-		// for all tasks
+		// For all tasks
+		/// <summary>Description of this tasks schedule and how it repeats.</summary>
 		[JsonProperty("summary")]
-		public string Summary; // description of this tasks schedule and how it repeats
+		public string Summary;
 
+		/// <summary>Date of task being checked/completed.</summary>
 		[JsonProperty("checkedtime")]
-		public DateTime CheckedTime; // date of task being "checked"/completed
+		public DateTime CheckedTime;
 
+		/// <summary>Date of task creation.</summary>
 		[JsonProperty("created")]
-		public DateTime Created; // date of creation
+		public DateTime Created;
 
+		/// <summary>Date of the last modification to this task.</summary>
 		[JsonProperty("modified")]
-		public DateTime Modified; // date of last modification
+		public DateTime Modified;
 
+		/// <summary>Date of the first occurence for this task.</summary>
 		[JsonProperty("start")]
-		public DateTime Start; // date of first occurence
+		public DateTime Start;
 
+		/// <summary>Date of the next occurence for this task.</summary>
 		[JsonProperty("next")]
-		public DateTime Next; // date of next occurence
+		public DateTime Next;
 
+		/// <summary>DissmissType timespan after due date ("Next") to remove task.</summary>
 		[JsonProperty("dismiss")]
-		public DismissType Dismiss; // time in seconds after due date ("Next") to remove task (-1 for instant)
+		public DismissType Dismiss;
 
+		/// <summary>Boolean for if this task has expired already.</summary>
 		[JsonProperty ("expired")]
-		public bool Expired; // boolean for if this task has expired already 
+		public bool Expired;
 
 
-		// for all recurring tasks
+		// For all recurring tasks
+		/// <summary>Date when task stops recurring.</summary>
 		[JsonProperty("end")]
-		public DateTime End; // date when task stops recurring
+		public DateTime End;
 
+		/// <summary>Number of total occurences allowed.</summary>
 		[JsonProperty("iterations")]
-		public int Iterations; // number of total occurences allowed 
+		public int Iterations;
 
+		/// <summary>Instance count of this task (starts at 1).</summary>
 		[JsonProperty("count")]
-		public int Count; // instance count of this task (starts at 1)
+		public int Count;
 
 
-		// simple recurring tasks
+		// Simple recurring tasks
+		/// <summary>Number of years to iterate for simple recurrance.</summary>
 		[JsonProperty("yearly")]
 		public int Yearly;
 
+		/// <summary>Number of months to iterate for simple recurrance.</summary>
 		[JsonProperty("monthly")]
 		public int Monthly;
 
+		/// <summary>Number of weeks to iterate for simple recurrance.</summary>
 		[JsonProperty("weekly")]
 		public int Weekly;
 
+		/// <summary>Number of days to iterate for simple recurrance.</summary>
 		[JsonProperty("daily")]
 		public int Daily;
 
 
-		// complex recurring tasks
+		// Complex recurring tasks
+		/// <summary>Time of day for complex recurrances.</summary>
 		[JsonProperty("timeofday")]
 		public TimeSpan TimeOfDay;
 
+		/// <summary>Selected months for complex recurrances.</summary>
 		[JsonProperty("monthfilter")]
 		public MonthFlag MonthFilter;
 
+		/// <summary>Selected weeks for complex recurrances.</summary>
 		[JsonProperty("weekfilter")]
 		public WeekFlag WeekFilter;
 
+		/// <summary>Selected days for complex recurrances.</summary>
 		[JsonProperty("dayfilter")]
 		public DayFlag DayFilter;
 
+		/// <summary>Specific day for complex recurrances.</summary>
 		[JsonProperty("specificday")]
 		public int SpecificDay;
 
