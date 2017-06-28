@@ -1668,7 +1668,7 @@ namespace Tasual
 		{
 			ToolStripDropDownItem Item = (ToolStripDropDownItem)Sender;
 			OLVGroup Group = (OLVGroup)MenuStrip_Group.Tag;
-			ArrayHandler.ReAssignGroup(TaskArray, Group.Name, Item.Text);
+			ArrayHandler.ReAssignGroup(ref TaskArray, Group.Name, Item.Text);
 			UpdateGroupKeys();
 			ListView.BuildList();
 		}

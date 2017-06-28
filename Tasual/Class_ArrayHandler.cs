@@ -16,9 +16,14 @@ namespace Tasual
 	{
 		private static DateTime ProgramLastWriteTime { get; set; }
 		private static DateTime ProgramLastReadTime { get; set; }
-		//private static string ProgramLastWriteFile { get; set; }
 
-		public static void ReAssignGroup(List<Task> Array, string OldTaskGroup, string NewTaskGroup)
+		/// <summary>
+		/// Scan through task array and rename existing groups to a new group.
+		/// </summary>
+		/// <param name="Array">Task array to sort through.</param>
+		/// <param name="OldTaskGroup">Old task group to be removed/renamed.</param>
+		/// <param name="NewTaskGroup">New task group with which to replace the old group.</param>
+		public static void ReAssignGroup(ref List<Task> Array, string OldTaskGroup, string NewTaskGroup)
 		{
 			foreach (Task Task in Array)
 			{
@@ -30,6 +35,11 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Merge two task arrays together into one by comparing their tasks and picking the most recently modified items.
+		/// </summary>
+		/// <param name="Internal">Primary task list to be merged into. This list also becomes the output of this function.</param>
+		/// <param name="Changed">Secondary task list to merge into the primary.</param>
 		public static void Compare(ref List<Task> Internal, ref List<Task> Changed)
 		{
 			List<Task> RemovalList = new List<Task>();
@@ -73,6 +83,11 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Save task list from the task array into the selected storage file.
+		/// </summary>
+		/// <param name="Array">Task array from which to save.</param>
+		/// <param name="Settings">Settings to follow for protocol and storagefolder.</param>
 		public static void Save(ref List<Task> Array, Setting Settings)
 		{
 			switch (Settings.Protocol)
@@ -82,6 +97,11 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Load task list from the selected storage file into the task array.
+		/// </summary>
+		/// <param name="Array">Task array to load in to.</param>
+		/// <param name="Settings">Settings to follow for protocol and storagefolder.</param>
 		public static void Load(ref List<Task> Array, Setting Settings)
 		{
 			switch (Settings.Protocol)
@@ -91,6 +111,11 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Check whether the file in storage is newer than the loaded task array in internal memory.
+		/// </summary>
+		/// <param name="PathToFile">Full file path of storage file to check.</param>
+		/// <returns>Boolean of whether or not the locally stored file is newer than our internal memory.</returns>
 		public static bool StorageNewerThanProgram(string PathToFile)
 		{
 			if (!File.Exists(PathToFile)) { return false; }
