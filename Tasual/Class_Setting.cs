@@ -13,125 +13,189 @@ using System.Drawing;
 
 namespace Tasual
 {
+	/// <summary>
+	/// Object and supporting functions for handling Tasual settings.
+	/// </summary>
 	public class Setting
 	{
+		/// <summary>Storage/data protocol to use for data retrieval.</summary>
 		[JsonProperty("protocol")]
 		public Protocols Protocol { get; set; } = Protocols.JSON;
 
-
+		/// <summary>Path to folder determining the location of data storage.</summary>
+		/// <remarks>This field is checked and set when necessary by Load() automatically.</remarks>
 		[JsonProperty("storagefolder")]
-		public string StorageFolder { get; set; } // this will get set by Load()
+		public string StorageFolder { get; set; }
 
+		/// <summary>Path to folder determining the location of the settings.cfg file.</summary>
+		/// <remarks>This field is checked and set when necessary by Load() automatically.</remarks>
 		[JsonIgnore]
-		private string SettingsPath { get; set; } // this will get set by Load()
+		private string SettingsPath { get; set; }
 
+		/// <summary>Setting for whether Tasual is launched on system startup.</summary>
 		[JsonProperty("launchonstartup")]
 		public bool LaunchOnStartup { get; set; } = false;
 
+		/// <summary>Setting for whether Tasual gets minimized to tray instead of taskbar.</summary>
 		[JsonProperty("minimizetotray")]
 		public bool MinimizeToTray { get; set; } = false;
 
+		/// <summary>Setting for whether Tasual is forced to always be on top.</summary>
 		[JsonProperty("alwaysontop")]
 		public bool AlwaysOnTop { get; set; } = false;
 
+		/// <summary>Setting for whether to save the window position of Tasual and resume on startup.</summary>
 		[JsonProperty("savewindowpos")]
 		public bool SaveWindowPos { get; set; } = false;
 
+		/// <summary>Previously saved WindowState.</summary>
+		/// <remarks>Don't set a default value for this field, this way the field is only set
+		/// whenever the SaveWindowPos setting is applied.</remarks>
 		[JsonProperty("windowstate")]
-		public FormWindowState WindowState { get; set; } // don't set defaults on these
+		public FormWindowState WindowState { get; set; }
 
+		/// <summary>Previously saved window Location.</summary>
+		/// <remarks>Don't set a default value for this field, this way the field is only set
+		/// whenever the SaveWindowPos setting is applied.</remarks>
 		[JsonProperty("location")]
-		public Point Location { get; set; } // don't set defaults on these
+		public Point Location { get; set; }
 
+		/// <summary>Previously saved window Size.</summary>
+		/// <remarks>Don't set a default value for this field, this way the field is only set
+		/// whenever the SaveWindowPos setting is applied.</remarks>
 		[JsonProperty("size")]
-		public Size Size { get; set; } // don't set defaults on these
+		public Size Size { get; set; }
 
-
+		/// <summary>Prompt user with messagebox whenever clearing the task list.</summary>
 		[JsonProperty("promptclear")]
 		public bool PromptClear { get; set; } = true;
 
+		/// <summary>Prompt user with messagebox whenever deleting a task.</summary>
 		[JsonProperty("promptdelete")]
 		public bool PromptDelete { get; set; } = true;
 
+		/// <summary>Pressing enter in Notes textboxes causes the dialog to close and save.</summary>
 		[JsonProperty("entertosave")]
 		public bool EnterToSave { get; set; } = true;
 
-
+		/// <summary>List of enabled columns in the Listview.</summary>
+		// TODO: Add "see also"
 		[JsonProperty("columns")]
 		public Columns EnabledColumns { get; set; } = Columns.Normal;
 
+		/// <summary>Setting to determine whether to split tasks into groups.</summary>
 		[JsonProperty("grouptasks")]
 		public bool GroupTasks { get; set; } = true;
 
+		/// <summary>When grouping tasks, this setting decides which style of grouping is used.</summary>
+		// TODO: Add "see also"
 		[JsonProperty("groupstyle")]
 		public GroupStyles GroupStyle { get; set; } = GroupStyles.Category;
 
+		/// <summary>Always display a "Completed" group for tasks that are finished.</summary>
 		[JsonProperty("alwaysshowcompletedgroup")]
 		public bool AlwaysShowCompletedGroup { get; set; } = true;
 
+		/// <summary>Always display a "Overdue" group for tasks that are overdue.</summary>
 		[JsonProperty("alwaysshowoverduegroup")]
 		public bool AlwaysShowOverdueGroup { get; set; } = true;
 
+		/// <summary>Always display a "Today" group for tasks that are ending today.</summary>
 		[JsonProperty("alwaysshowtodaygroup")]
 		public bool AlwaysShowTodayGroup { get; set; } = true;
 
+		/// <summary>Display item counts on group headers.</summary>
 		[JsonProperty("showitemcounts")]
 		public bool ShowItemCounts { get; set; } = true;
 
-
+		/// <summary>Remove completed tasks automatically.</summary>
+		// TODO: Add option to settings dialog for this.
 		[JsonProperty("removecompleted")]
-		public RemoveType RemoveCompleted { get; set; } = RemoveType.Never; // TODO: Add option to settings dialog for this
+		public RemoveType RemoveCompleted { get; set; } = RemoveType.Never;
 
+		/// <summary>Column header text alignment for subitems.</summary>
 		[JsonProperty("subitemheaderalign")]
 		public HorizontalAlignment SubItemHeaderAlign { get; set; } = HorizontalAlignment.Center;
 
+		/// <summary>Sub item text alignment.</summary>
 		[JsonProperty("subitemtextalign")]
 		public HorizontalAlignment SubItemTextAlign { get; set; } = HorizontalAlignment.Left;
 
-
+		/// <summary>Choice of columns to enable in the ListView.</summary>
 		[Flags]
 		public enum Columns
 		{
+			/// <summary>Flag field for the Description column.</summary>
 			Description = 1,
+			/// <summary>Flag field for the Notes column.</summary>
 			Notes = 2,
+			/// <summary>Flag field for the Category column.</summary>
 			Category = 4,
+			/// <summary>Flag field for the Due column.</summary>
 			Due = 8,
+			/// <summary>Flag field for the Time column.</summary>
 			Time = 16,
+			/// <summary>Combination of Description, Notes, and Time columns.</summary>
 			Normal = 19,
+			/// <summary>Combination of Description, Notes, Category, Due, and Time columns.</summary>
 			All = 31
 		}
 
+		/// <summary>Storage/data protocol to use for data retrieval.</summary>
 		public enum Protocols
 		{
-			Tasual,
+			/// <summary>File storage format using JSON.</summary>
 			JSON,
+			/// <summary>File export format using XML. NOTE: CURRENTLY UNUSED.</summary>
 			XML,
-			RTM,
+			/// <summary>File export format using text formatting. NOTE: CURRENTLY UNUSED.</summary>
 			Text
 		}
 
+		/// <summary>When grouping tasks, this settings decides which style of grouping is used.</summary>
 		public enum GroupStyles
 		{
+			/// <summary>Group tasks by the category column.</summary>
 			Category,
+			/// <summary>Group tasks by the due column.</summary>
 			DueTime
 		}
 
+		/// <summary>Setting for removing tasks automatically whenever they are completed.</summary>
 		public enum RemoveType
 		{
+			/// <summary>Never remove completed tasks automatically.</summary>
 			Never,
+			/// <summary>Automatically remove completed tasks immediately.</summary>
 			Immediate,
+			/// <summary>Automatically remove completed tasks after one hour.</summary>
 			OneHour,
+			/// <summary>Automatically remove completed tasks after twelve hours.</summary>
 			TwelveHours,
+			/// <summary>Automatically remove completed tasks after one day.</summary>
 			OneDay,
+			/// <summary>Automatically remove completed tasks after two days.</summary>
 			TwoDays,
+			/// <summary>Automatically remove completed tasks after one week.</summary>
 			OneWeek,
+			/// <summary>Automatically remove completed tasks after two weeks.</summary>
 			TwoWeeks,
+			/// <summary>Automatically remove completed tasks after one month.</summary>
 			OneMonth,
+			/// <summary>Automatically remove completed tasks after three months.</summary>
 			ThreeMonths,
+			/// <summary>Automatically remove completed tasks after six months.</summary>
 			SixMonths,
+			/// <summary>Automatically remove completed tasks after one year.</summary>
 			OneYear
 		}
 
+		/// <summary>
+		/// Used to retrieve the timespan for when a task is completed and should be removed.
+		/// Converts RemoveType to TimeSpan.
+		/// </summary>
+		/// <param name="Type">Removal setting.</param>
+		/// <returns>TimeSpan of how long after a task is completed to remove it.</returns>
 		public static TimeSpan GetRemoveTimeSpan(RemoveType Type)
 		{
 			switch (Type)
@@ -152,6 +216,10 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Save settings to settings.cfg function.
+		/// </summary>
+		/// <param name="Settings">Internal settings object from which to write.</param>
 		public static void Save(ref Setting Settings)
 		{
 			try
@@ -172,6 +240,13 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Load settings from settings.cfg function.
+		/// </summary>
+		/// <remarks>
+		/// TODO: Lay out function into the remarks here and move comments up from the function.
+		/// </remarks>
+		/// <param name="Settings">Internal settings object to load settings into.</param>
 		public static void Load(ref Setting Settings)
 		{
 			try
