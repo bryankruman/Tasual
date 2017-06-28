@@ -1165,10 +1165,10 @@ namespace Tasual
 		}
 
 		/// <summary>
-		/// Event handler for when you 
+		/// Event handler for when you select an item.
 		/// </summary>
-		/// <param name="Sender"></param>
-		/// <param name="Args"></param>
+		/// <param name="Sender">Sender of the SelectedIndexChanged event.</param>
+		/// <param name="Args">Selection change event arguments.</param>
 		private void ListView_SelectedIndexChanged(object Sender, EventArgs Args)
 		{
 			if (ListView.SelectedItem != null)
@@ -1182,7 +1182,10 @@ namespace Tasual
 			}
 		}
 
-		// ListView: Click and input handlers
+		/// <summary>
+		/// Event sub-handler for when you single click a ListView item.
+		/// </summary>
+		/// <param name="Args">Mouse event arguments.</param>
 		private void ListView_SingleClick(MouseEventArgs Args)
 		{
 			if (ListView_PreviouslySelected == true)
@@ -1198,6 +1201,10 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Event sub-handler for when you double click a ListView item.
+		/// </summary>
+		/// <param name="Args">Mouse event arguments.</param>
 		private void ListView_DoubleClick(MouseEventArgs Args)
 		{
 			OlvListViewHitTestInfo SecondClickInfo = ListView.OlvHitTest(Args.X, Args.Y);
@@ -1216,6 +1223,11 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Timer to activate SingleClick sub-handler when the timer expires.
+		/// </summary>
+		/// <param name="Sender">Sender of the Tick event.</param>
+		/// <param name="Args">Tick event arguments.</param>
 		private void Timer_ListViewClick_Tick(object Sender, EventArgs Args)
 		{
 			if ((MouseButtons & MouseButtons.Left) == 0)
@@ -1227,6 +1239,11 @@ namespace Tasual
 			Timer_ListViewClick.Stop();
 		}
 
+		/// <summary>
+		/// MouseDown event handler for the ListView control.
+		/// </summary>
+		/// <param name="Sender">Sender of the MouseDown event.</param>
+		/// <param name="Args">Mouse event arguments.</param>
 		private void ListView_MouseDown(object Sender, MouseEventArgs Args)
 		{
 			OlvListViewHitTestInfo Info = ListView.OlvHitTest(Args.X, Args.Y);
@@ -1314,6 +1331,11 @@ namespace Tasual
 			}*/
 		}
 
+		/// <summary>
+		/// MouseUp event handler for the ListView control.
+		/// </summary>
+		/// <param name="Sender">Sender of the MouseUp event.</param>
+		/// <param name="Args">Mouse event arguments.</param>
 		private void ListView_MouseUp(object Sender, MouseEventArgs Args)
 		{
 			if (CalendarPopout != null)
@@ -1342,6 +1364,11 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// KeyDown event handler for the ListView control.
+		/// </summary>
+		/// <param name="Sender">Sender of the KeyDown event.</param>
+		/// <param name="Args">Key event arguments.</param>
 		private void ListView_KeyDown(object Sender, KeyEventArgs Args)
 		{
 			switch (Args.KeyCode)
