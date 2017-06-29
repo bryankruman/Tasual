@@ -11,70 +11,73 @@ using Newtonsoft.Json;
 
 namespace Tasual
 {
+	/// <summary>
+	/// Definitions and supporting functions for tasks.
+	/// </summary>
 	public class Task
 	{
+		/// <summary>Unique identifier for the task.</summary>
 		[JsonProperty("id")]
 		public string ID { get; set; }
 
+		/// <summary>Whether or not the task is hidden/removed from the list.</summary>
 		[JsonProperty("removed")]
 		public bool Removed { get; set; }
 
+		/// <summary>Checked status for the task.</summary>
 		[JsonProperty("checked")]
 		public bool Checked { get; set; }
 
+		/// <summary>Priority level for the task.</summary>
 		[JsonProperty("priority")]
 		public int Priority { get; set; }
 
+		/// <summary>Group name for the task.</summary>
 		[JsonProperty("group")]
 		public string Group { get; set; }
 
+		/// <summary>Description of the task.</summary>
 		[JsonProperty("description")]
 		public string Description { get; set; }
 
+		/// <summary>Notes field for the task.</summary>
 		[JsonProperty("notes")]
 		public string Notes { get; set; }
 
+		/// <summary>Link field for the task.</summary>
 		[JsonProperty("link")]
 		public string Link { get; set; }
 
+		/// <summary>Location field for the task.</summary>
 		[JsonProperty("location")]
 		public string Location { get; set; }
 
+		/// <summary>Collection of time information for the task.</summary>
 		[JsonProperty("time")]
 		public TimeInfo Time { get; set; }
 
-		// Used only for display/grouping in ObjectListView
+		/// <summary>Internal category group key for the task used by ObjectListView.</summary>
 		[JsonIgnore]
 		public string CategoryGroupKey { get; set; } = "";
 
+		/// <summary>Internal due group key for the task used by ObjectListView.</summary>
 		[JsonIgnore]
 		public string DueGroupKey { get; set; } = "";
 
-		public enum Types
-		{
-			TYPE_USER_SINGLE,
-			TYPE_USER_RECURRING,
-			TYPE_USER_DEBT_OWED,
-			TYPE_USER_DEBT_LENT,
-			TYPE_SYNDICATION_SINGLE,
-			TYPE_SYNDICATION_RECURRING
-		}
-
+		/// <summary>Priority level for the task.</summary>
 		public enum Priorities
 		{
+			/// <summary>Low priority setting.</summary>
 			Low,
+			/// <summary>Normal priority setting.</summary>
 			Normal,
+			/// <summary>High priority setting.</summary>
 			High
 		}
 
-		public enum Statuses
-		{
-			New,
-			Complete,
-			Toggle
-		}
-
-		// Blank Constructor
+		/// <summary>
+		/// Blank constructor for the task class.
+		/// </summary>
 		public Task()
 		{
 			ID = GenerateID();
@@ -84,7 +87,19 @@ namespace Tasual
 			Time = new TimeInfo();
 		}
 
-		// Specific Constructor
+		/// <summary>
+		/// Specific constructor for the task class.
+		/// </summary>
+		/// <param name="ID">Unique identifier for the task.</param>
+		/// <param name="Removed">Whether or not the task is hidden/removed from the list.</param>
+		/// <param name="Checked">Checked status for the task.</param>
+		/// <param name="Priority">Priority level for the task.</param>
+		/// <param name="Group">Group name for the task.</param>
+		/// <param name="Description">Description of the task.</param>
+		/// <param name="Notes">Notes field for the task.</param>
+		/// <param name="Link">Link field for the task.</param>
+		/// <param name="Location">Location field for the task.</param>
+		/// <param name="Time">Collection of time information for the task.</param>
 		public Task(
 			string ID,
 			bool Removed,
@@ -109,12 +124,19 @@ namespace Tasual
 			this.Time = Time;
 		}
 
-		// Supporting Functions
+		/// <summary>
+		/// Generate unique identifier for task.
+		/// </summary>
+		/// <returns>Unique identifier using Guid.NewGuid().</returns>
 		public static string GenerateID()
 		{
 			return Guid.NewGuid().ToString("N");
 		}
 
+		/// <summary>
+		/// Basic/simplified console debug print.
+		/// </summary>
+		/// <param name="Task">Task to print out.</param>
 		public static void PrintToConsoleBasic(Task Task)
 		{
 			Console.WriteLine(
@@ -131,6 +153,10 @@ namespace Tasual
 			);
 		}
 
+		/// <summary>
+		/// Verbose/detailed console debug print.
+		/// </summary>
+		/// <param name="Task">Task to print out.</param>
 		public static void PrintToConsoleDetailed(Task Task)
 		{
 			foreach (PropertyDescriptor Descriptor in TypeDescriptor.GetProperties(Task))
