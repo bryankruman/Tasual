@@ -12,9 +12,14 @@ using Newtonsoft.Json;
 
 namespace Tasual
 {
-	class ArrayHandler
+	/// <summary>
+	/// Dedicated class to handle task arrays and database saving/loading.
+	/// </summary>
+	public class ArrayHandler
 	{
+		/// <summary>Last time we wrote to the locally stored file.</summary>
 		private static DateTime ProgramLastWriteTime { get; set; }
+		/// <summary>Last time we read from the locally stored file.</summary>
 		private static DateTime ProgramLastReadTime { get; set; }
 
 		/// <summary>
@@ -144,6 +149,11 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Save task list from the task array into the tasks.db json file.
+		/// </summary>
+		/// <param name="Array">Task array from which to save tasks.</param>
+		/// <param name="FolderPath">Path to the directory where the tasks.db database is stored.</param>
 		private static void Save_JSON(ref List<Task> Array, string FolderPath)
 		{
 			try
@@ -183,6 +193,11 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Load task list from the tasks.db json file into the task array.
+		/// </summary>
+		/// <param name="Array">Task array to load tasks into.</param>
+		/// <param name="FolderPath">Path to the directory where the tasks.db database is stored.</param>
 		private static void Load_JSON(ref List<Task> Array, string FolderPath)
 		{
 			try
