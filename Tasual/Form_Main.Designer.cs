@@ -10,7 +10,7 @@
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		/// <param name="disposing">True if managed resources should be disposed; otherwise, false.</param>
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing && (components != null))
@@ -735,7 +735,9 @@
 
 		#endregion
 
-		//private System.Windows.Forms.ListView ListView;
+		/// <summary>
+		/// Public ListView object.
+		/// </summary>
 		public BrightIdeasSoftware.ObjectListView ListView;
 		private System.Windows.Forms.MenuStrip MenuStrip;
 		private System.Windows.Forms.ToolStripMenuItem MenuStrip_Create;

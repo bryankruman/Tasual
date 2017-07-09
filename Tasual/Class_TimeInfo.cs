@@ -10,8 +10,14 @@ using Newtonsoft.Json;
 
 namespace Tasual
 {
+	/// <summary>
+	/// Definitions and supporting functions for TimeInfo.
+	/// </summary>
 	public class TimeInfo
 	{
+		/// <summary>
+		/// Complex recurrance filter for months.
+		/// </summary>
 		[Flags]
 		public enum MonthFlag
 		{
@@ -43,6 +49,9 @@ namespace Tasual
 			Everymonth = 4095
 		}
 
+		/// <summary>
+		/// Complex recurrance filter for weeks.
+		/// </summary>
 		[Flags]
 		public enum WeekFlag
 		{
@@ -65,6 +74,9 @@ namespace Tasual
 			Everyweek = 31
 		}
 
+		/// <summary>
+		/// Complex recurrance filter for days.
+		/// </summary>
 		[Flags]
 		public enum DayFlag
 		{
@@ -86,6 +98,9 @@ namespace Tasual
 			Everyday = 127
 		}
 
+		/// <summary>
+		/// Time formatting style.
+		/// </summary>
 		public enum TimeFormat
 		{
 			/// <summary>Time string formatted to show elapsed time.</summary>
@@ -98,6 +113,9 @@ namespace Tasual
 			Long
 		}
 
+		/// <summary>
+		/// Style of repeating task.
+		/// </summary>
 		public enum RepeatType
 		{
 			/// <summary>Task only has one occurence/does not repeat.</summary>
@@ -108,6 +126,9 @@ namespace Tasual
 			ComplexRepeat
 		}
 
+		/// <summary>
+		/// Task dismissal time.
+		/// </summary>
 		public enum DismissType
 		{
 			/// <summary>Never dismiss task.</summary>
@@ -213,7 +234,9 @@ namespace Tasual
 		[JsonProperty("specificday")]
 		public int SpecificDay;
 
-		// blank constructor
+		/// <summary>
+		/// Blank TimeInfo constructor.
+		/// </summary>
 		public TimeInfo()
 		{
 			Summary = null;
@@ -237,7 +260,15 @@ namespace Tasual
 			SpecificDay = 0;
 		}
 
-		// singular constructor
+		/// <summary>
+		/// TimeInfo constructor for singular tasks.
+		/// </summary>
+		/// <param name="_CheckedTime">Date of task being checked/completed.</param>
+		/// <param name="_Created">Date of task creation.</param>
+		/// <param name="_Modified">Date of the last modification to this task.</param>
+		/// <param name="_Start">Date of the first occurence for this task.</param>
+		/// <param name="_Next">Date of the next occurence for this task.</param>
+		/// <param name="_End">Date when task stops recurring.</param>
 		public TimeInfo(
 			DateTime _CheckedTime,
 			DateTime _Created,
@@ -271,93 +302,29 @@ namespace Tasual
 			SpecificDay = 0;
 		}
 
-		// simple repeating constructor
-		public TimeInfo(
-			DateTime _CheckedTime,
-			DateTime _Created,
-			DateTime _Modified,
-			DateTime _Start,
-			DateTime _Next,
-			DateTime _End,
-			DismissType _Dismiss,
-			bool _Expired,
-			int _Iterations,
-			int _Count,
-			int _Yearly,
-			int _Monthly,
-			int _Weekly,
-			int _Daily,
-			TimeSpan _TimeOfDay)
-		{
-			Summary = null;
-			CheckedTime = _CheckedTime;
-			Created = _Created;
-			Modified = _Modified;
-			Start = _Start;
-			Next = _Next;
-			Dismiss = _Dismiss;
-			Expired = _Expired;
-
-			End = _End;
-			Iterations = _Iterations;
-			Count = _Count;
-
-			Yearly = _Yearly;
-			Monthly = _Monthly;
-			Weekly = _Weekly;
-			Daily = _Daily;
-
-			TimeOfDay = _TimeOfDay;
-			MonthFilter = 0;
-			WeekFilter = 0;
-			DayFilter = 0;
-			SpecificDay = 0;
-		}
-
-		// complex repeating constructor
-		public TimeInfo(
-			DateTime _CheckedTime,
-			DateTime _Created,
-			DateTime _Modified,
-			DateTime _Start,
-			DateTime _Next,
-			DateTime _End,
-			DismissType _Dismiss,
-			bool _Expired,
-			int _Iterations,
-			int _Count,
-			TimeSpan _TimeOfDay,
-			MonthFlag _MonthFilter,
-			WeekFlag _WeekFilter,
-			DayFlag _DayFilter,
-			int _SpecificDay)
-		{
-			Summary = null;
-			CheckedTime = _CheckedTime;
-			Created = _Created;
-			Modified = _Modified;
-			Start = _Start;
-			Next = _Next;
-			End = _End;
-			Dismiss = _Dismiss;
-			Expired = _Expired;
-
-			Iterations = _Iterations;
-			Count = _Count;
-
-			Yearly = 0;
-			Monthly = 0;
-			Weekly = 0;
-			Daily = 0;
-
-			TimeOfDay = _TimeOfDay;
-			MonthFilter = _MonthFilter;
-			WeekFilter = _WeekFilter;
-			DayFilter = _DayFilter;
-			SpecificDay = _SpecificDay;
-		}
-
-		// full constructor
+		/// <summary>
+		/// Explicit TimeInfo constructor.
+		/// </summary>
+		/// <param name="_Summary">Description of this tasks schedule and how it repeats.</param>
+		/// <param name="_CheckedTime">Date of task being checked/completed.</param>
+		/// <param name="_Created">Date of task creation.</param>
+		/// <param name="_Modified">Date of the last modification to this task.</param>
+		/// <param name="_Start">Date of the first occurence for this task.</param>
+		/// <param name="_Next">Date of the next occurence for this task.</param>
+		/// <param name="_End">Date when task stops recurring.</param>
+		/// <param name="_Dismiss">DissmissType timespan after due date ("Next") to remove task.</param>
+		/// <param name="_Expired">Boolean for if this task has expired already.</param>
+		/// <param name="_Iterations">Number of total occurences allowed.</param>
+		/// <param name="_Count">Instance count of this task (starts at 1).</param>
+		/// <param name="_Yearly">Number of years to iterate for simple recurrance.</param>
+		/// <param name="_Monthly">Number of months to iterate for simple recurrance.</param>
+		/// <param name="_Weekly">Number of weeks to iterate for simple recurrance.</param>
+		/// <param name="_Daily">Number of days to iterate for simple recurrance.</param>
+		/// <param name="_TimeOfDay">Time of day for complex recurrances.</param>
+		/// <param name="_MonthFilter">Selected months for complex recurrances.</param>
+		/// <param name="_WeekFilter">Selected weeks for complex recurrances.</param>
+		/// <param name="_DayFilter">Selected days for complex recurrances.</param>
+		/// <param name="_SpecificDay">Specific day for complex recurrances.</param>
 		public TimeInfo(
 			string _Summary,
 			DateTime _CheckedTime,
@@ -405,6 +372,11 @@ namespace Tasual
 			SpecificDay = _SpecificDay;
 		}
 
+		/// <summary>
+		/// Determine whether TimeInfo contains valid scheduling information.
+		/// </summary>
+		/// <param name="Time">TimeInfo to check.</param>
+		/// <returns>True if TimeInfo.Next is not DateTime.MinValue, otherwise false.</returns>
 		public static bool Scheduled(TimeInfo Time)
 		{
 			// TODO: Should a removed task be scheduled here?
@@ -418,6 +390,11 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Convert integer into ordinal string.
+		/// </summary>
+		/// <param name="number">Number to convert.</param>
+		/// <returns>String containing number expressed with an ordinal (like 1st, 2nd, 3rd).</returns>
 		public static string Ordinal(int number)
 		{
 			string suffix = String.Empty;
@@ -453,6 +430,11 @@ namespace Tasual
 			return String.Format("{0}{1}", number, suffix);
 		}
 
+		/// <summary>
+		/// Converts integer to MonthFlag selection.
+		/// </summary>
+		/// <param name="Input">Integer as DateTime.Month.</param>
+		/// <returns>MonthFlag corresponding to the month provided in Input.</returns>
 		private static MonthFlag FromMonthToFlag(int Input)
 		{
 			switch (Input)
@@ -473,6 +455,11 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Converts integer to WeekFlag selection.
+		/// </summary>
+		/// <param name="Input">Integer as DateTime.Day.</param>
+		/// <returns>WeekFlag corresponding to the day of the month provided in Input divided by 7.</returns>
 		private static WeekFlag FromWeekToFlag(int Input)
 		{
 			switch (Math.Ceiling((double)Input / 7))
@@ -486,6 +473,11 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Converts DayOfWeek to DayFlag selection.
+		/// </summary>
+		/// <param name="Input">DayOfWeek from DateTime.DayOfWeek.</param>
+		/// <returns>DayFlag corresponding to the day of the week provided in Input.</returns>
 		private static DayFlag FromDayToFlag(DayOfWeek Input)
 		{
 			switch (Input)
@@ -501,6 +493,11 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Converts DismissType into TimeSpan.
+		/// </summary>
+		/// <param name="Type">DismissType to check.</param>
+		/// <returns>TimeSpan based upon DismissType selection.</returns>
 		public static TimeSpan GetDismissTimeSpan(DismissType Type)
 		{
 			switch (Type)
@@ -516,6 +513,11 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Find RepeatType for TimeInfo information.
+		/// </summary>
+		/// <param name="Time">TimeInfo to check.</param>
+		/// <returns>RepeatType corresponding to the TimeInfo provided in Input.</returns>
 		public static RepeatType GetRepeatType(TimeInfo Time)
 		{
 			if ((Time.MonthFilter != 0) || (Time.MonthFilter != 0) || (Time.MonthFilter != 0) || (Time.MonthFilter != 0))
@@ -532,28 +534,53 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Types of special groups.
+		/// </summary>
 		public enum GroupTypes
 		{
+			/// <summary>Group for tasks that are overdue.</summary>
 			Overdue = 1,
+			/// <summary>Group for tasks that are due today.</summary>
 			Today = 2,
+			/// <summary>Group for tasks that don't fit into any forced/special categories.</summary>
 			Standard = 3,
+			/// <summary>Group for tasks that are completed.</summary>
 			Completed = 4
 		}
 
+		/// <summary>
+		/// Due time type.
+		/// </summary>
 		public enum DueTypes
 		{
+			/// <summary>Designation for tasks that are overdue.</summary>
 			Overdue = 1,
+			/// <summary>Designation for tasks that are due today.</summary>
 			Today = 2,
+			/// <summary>Designation for tasks that are due tomorrow.</summary>
 			Tomorrow = 3,
+			/// <summary>Designation for tasks that are due within a week.</summary>
 			Weekday = 4,
-			OneWeek = 5, 
+			/// <summary>Designation for tasks that are due one week from now.</summary>
+			OneWeek = 5,
+			/// <summary>Designation for tasks that are due two weeks from now.</summary>
 			TwoWeeks = 6,
-			ThreeWeeks = 7, 
+			/// <summary>Designation for tasks that are due three weeks from now.</summary>
+			ThreeWeeks = 7,
+			/// <summary>Designation for tasks that are due one month from now.</summary>
 			OneMonth = 8,
-			Future = 9, 
+			/// <summary>Designation for tasks that are due later in the future.</summary>
+			Future = 9,
+			/// <summary>Designation for tasks that are completed.</summary>
 			Completed = 10
 		}
 
+		/// <summary>
+		/// Retrieve due time type from task information.
+		/// </summary>
+		/// <param name="Task">Task to check.</param>
+		/// <returns>DueType for Task based upon when it is due.</returns>
 		public static DueTypes GetDueTypeFromTask(Task Task)
 		{
 			DateTime Time = Task.Time.Next;
@@ -613,6 +640,12 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Retrieve group type from task information.
+		/// </summary>
+		/// <param name="Task">Task to check.</param>
+		/// <param name="Settings">Program settings to determine which group types are enabled.</param>
+		/// <returns>GroupType for task based upon supplied information.</returns>
 		public static GroupTypes GetGroupTypeFromTask(Task Task, Setting Settings)
 		{
 			if (Task.Checked && Settings.AlwaysShowCompletedGroup)
@@ -649,6 +682,13 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Check whether tasks from Source and Target have the same Group String.
+		/// </summary>
+		/// <param name="Source">Primary task object to compare.</param>
+		/// <param name="Target">Secondary task object to compare.</param>
+		/// <param name="Settings">Settings to pass to GetGroupStringFromTask().</param>
+		/// <returns>True if Source and Target have the same Group String, false otherwise.</returns>
 		public static bool CompareGroupFromTasks(Task Source, Task Target, Setting Settings)
 		{
 			if (GetGroupStringFromTask(Source, Settings) == GetGroupStringFromTask(Target, Settings))
@@ -661,6 +701,12 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Create group string based on task information and settings.
+		/// </summary>
+		/// <param name="Task">Task to acquire group information from.</param>
+		/// <param name="Settings">Settings to use when checking for completed, overdue, and today tasks.</param>
+		/// <returns>String formatted with a standardized group name for display in the listview.</returns>
 		public static string GetGroupStringFromTask(Task Task, Setting Settings)
 		{
 			if (Task.Checked && Settings.AlwaysShowCompletedGroup)
@@ -697,6 +743,12 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Check whether tasks from Source and Target have the same Due String.
+		/// </summary>
+		/// <param name="Source">Primary task object to compare.</param>
+		/// <param name="Target">Secondary task object to compare.</param>
+		/// <returns>True if Source and Target have the same Due String, false otherwise.</returns>
 		public static bool CompareDueStringFromTasks(Task Source, Task Target)
 		{
 			if (GetDueStringFromTask(Source) == GetDueStringFromTask(Target))
@@ -709,6 +761,11 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Create due string based on task information.
+		/// </summary>
+		/// <param name="Task">Task to acquire group information from.</param>
+		/// <returns>String formatted with a standardized due name for display in the listview.</returns>
 		public static string GetDueStringFromTask(Task Task)
 		{
 			DateTime Time = Task.Time.Next;
@@ -768,6 +825,12 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Special formatting for datetime strings.
+		/// </summary>
+		/// <param name="Time">DateTime to use as reference.</param>
+		/// <param name="Format">Formatting of time string.</param>
+		/// <returns>String with a time string formatted based upon the selected TimeFormat.</returns>
 		public static string FormatTime(DateTime Time, TimeFormat Format)
 		{
 			switch (Format)
@@ -895,6 +958,11 @@ namespace Tasual
 			}
 		}
 
+		/// <summary>
+		/// Pick a rounded up DateTime.
+		/// </summary>
+		/// <param name="BaseTime">Original time to base rounding up.</param>
+		/// <returns>Rounded up DateTime by always rounding up to the nearest hour (within 45 minutes).</returns>
 		public static DateTime PickRoundedUpTime(DateTime BaseTime)
 		{
 			BaseTime = BaseTime.AddMinutes(15);
@@ -906,11 +974,23 @@ namespace Tasual
 			return RoundedUp;
 		}
 
+		/// <summary>
+		/// Simple version: Find the iteration count of a task based upon its TimeInfo.
+		/// </summary>
+		/// <param name="Rules">TimeInfo to base checking rules upon.</param>
+		/// <returns>Integer for the number of iterations found.</returns>
 		public static int FindIterationCount(TimeInfo Rules)
 		{
 			return FindIterationCount(Rules.Start, DateTime.Now, Rules);
 		}
 
+		/// <summary>
+		/// Detailed version: Find the iteration count within a time span based upon its TimeInfo.
+		/// </summary>
+		/// <param name="From">Starting date from which to begin iteration search.</param>
+		/// <param name="Until">Ending date to which iteration search finishes.</param>
+		/// <param name="Rules">TimeInfo to base checking rules upon.</param>
+		/// <returns>Integer for the number of iterations found.</returns>
 		public static int FindIterationCount(DateTime From, DateTime Until, TimeInfo Rules)
 		{
 			int Count = 0;
@@ -930,11 +1010,22 @@ namespace Tasual
 			return Count;
 		}
 
+		/// <summary>
+		/// Simple version: Find the next iteration of a task based upon its TimeInfo.
+		/// </summary>
+		/// <param name="Rules">TimeInfo to base checking rules upon.</param>
+		/// <returns>DateTime of next iteration.</returns>
 		public static DateTime FindNextIteration(TimeInfo Rules)
 		{
 			return FindNextIteration(DateTime.Now, Rules);
 		}
 
+		/// <summary>
+		/// Detailed version: Find the next iteration of a task starting from BaseTime based upon its TimeInfo.
+		/// </summary>
+		/// <param name="BaseTime">Starting date from which to begin iteration search.</param>
+		/// <param name="Rules">TimeInfo to base checking rules upon.</param>
+		/// <returns>DateTime of next iteration.</returns>
 		public static DateTime FindNextIteration(DateTime BaseTime, TimeInfo Rules)
 		{
 			DateTime NextTime = new DateTime();
