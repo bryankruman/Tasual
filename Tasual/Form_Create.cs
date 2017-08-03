@@ -12,16 +12,30 @@ using System.Windows.Forms;
 
 namespace Tasual
 {
+	/// <summary>
+	/// Create and edit form for the Tasual application.
+	/// </summary>
 	public partial class Form_Create : Form
 	{
+		/// <summary>Passed main form set upon initialization, used to refer to main application form functions.</summary>
 		private readonly Form_Main MainForm;
+
+		/// <summary>Passed task set upon initialization, used to refer to a task from the main application task array.</summary>
 		private readonly Task TaskToEdit;
+
+		/// <summary>Whether or not the form was launched in edit mode. True = Edit dialog, False = Create dialog.</summary>
 		bool EditMode = false;
 
+		/// <summary>Array containing list of selection label objects for the day labels.</summary>
 		public List<Label> SelectionLabels_Days = new List<Label>();
+
+		/// <summary>Array containing list of selection label objects for the day labels.</summary>
 		public List<Label> SelectionLabels_Weeks = new List<Label>();
+
+		/// <summary>Array containing list of selection label objects for the day labels.</summary>
 		public List<Label> SelectionLabels_Months = new List<Label>();
 
+		/// <summary>Local storage of the notes field.</summary>
 		public string Notes = "";
 
 		private void AllNoneSelection(Label AllLabel, List<Label> LabelList)
