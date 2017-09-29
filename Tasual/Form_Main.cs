@@ -229,6 +229,22 @@ namespace Tasual
 		}
 
 		/// <summary>
+		/// Check to see if the selected task is in a collapsed group, and expand that group if so.
+		/// </summary>
+		/// <param name="Task">Task to check to see if it is in a collapsed group.</param>
+		public void CheckCollapsedGroup(Task Task)
+		{
+			foreach (OLVGroup Group in ListView.OLVGroups)
+			{
+				if ((Group.Key.ToString() == Task.CategoryGroupKey) || (Group.Key.ToString() == Task.DueGroupKey))
+				{
+					Group.Collapsed = false;
+					ArrayHandler.Info.Collapsed.Remove(Group.Key.ToString());
+				}
+			}
+		}
+
+		/// <summary>
 		/// Process through task array and check the status of all items.
 		/// </summary>
 		/// <remarks>
@@ -427,6 +443,7 @@ namespace Tasual
 			TaskArray.Add(Task);
 			//ArrayHandler.Save(ref TaskArray, Settings); // Actually, don't save until after we're sure we want to keep this
 			UpdateGroupKeys(Task);
+			CheckCollapsedGroup(Task);
 			ListView.BuildList();
 			UpdateStatusLabel();
 			ListView.PossibleFinishCellEditing();
