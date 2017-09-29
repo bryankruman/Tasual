@@ -456,6 +456,19 @@ namespace Tasual
 			}
 		}
 
+		private void ListView_GroupCollapsing(object Sender, GroupExpandingCollapsingEventArgs Args)
+		{
+			if (Args.IsExpanding)
+			{
+				ArrayHandler.Info.Collapsed.Remove(Args.Group.Key.ToString());
+			}
+			else
+			{
+				ArrayHandler.Info.Collapsed.Add(Args.Group.Key.ToString());
+			}
+			ArrayHandler.Save(ref TaskArray, Settings);
+		}
+
 		/// <summary>
 		/// Handler for ModelCanDrop event when sorted by category.
 		/// </summary>
@@ -943,6 +956,7 @@ namespace Tasual
 			Sink.FeedbackColor = Color.FromArgb(255, 222, 232, 246);
 			ListView.ModelCanDrop += new EventHandler<ModelDropEventArgs>(ListView_ModelCanDrop_ChooseHandler);
 			ListView.ModelDropped += new EventHandler<ModelDropEventArgs>(ListView_ModelDropped_ChooseHandler);
+			ListView.GroupExpandingCollapsing += new EventHandler<GroupExpandingCollapsingEventArgs>(ListView_GroupCollapsing);
 
 			ListView.UseFiltering = true;
 			ListView.ModelFilter = new ModelFilter(delegate (object x)
@@ -1129,6 +1143,12 @@ namespace Tasual
 			foreach (OLVGroup Group in Args.Groups)
 			{
 				Group.Name = Group.Header;
+
+				if (ArrayHandler.Info.Collapsed.Contains(Group.Key))
+				{
+					Group.Collapsed = true;
+				}
+
 				if (Settings.ShowItemCounts)
 				{
 					Group.Header = String.Format(

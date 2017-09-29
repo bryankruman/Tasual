@@ -46,8 +46,8 @@ namespace Tasual
 			[JsonProperty("modified")]
 			public TimeInfo Modified { get; set; }
 
-			[JsonProperty("minimized")]
-			public List<String> Minimized { get; set; } = null;
+			[JsonProperty("collapsed")]
+			public List<String> Collapsed { get; set; } = null;
 		}
 
 		/// <summary>Last time we wrote to the locally stored file.</summary>
