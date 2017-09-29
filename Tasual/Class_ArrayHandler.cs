@@ -158,7 +158,7 @@ namespace Tasual
 		{
 			try
 			{
-				string PathToFile = Path.Combine(FolderPath, "tasks.db");
+				string PathToFile = Path.Combine(FolderPath, "tasks.json");
 
 				if (StorageNewerThanProgram(PathToFile))
 				{
@@ -202,7 +202,7 @@ namespace Tasual
 		{
 			try
 			{
-				string PathToFile = Path.Combine(FolderPath, "tasks.db");
+				string PathToFile = Path.Combine(FolderPath, "tasks.json");
 				using (StreamReader InputFile = File.OpenText(PathToFile))
 				using (JsonReader InputJson = new JsonTextReader(InputFile))
 				{
