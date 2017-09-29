@@ -17,10 +17,47 @@ namespace Tasual
 	/// </summary>
 	public class ArrayHandler
 	{
+		/// <summary>
+		/// Array container class which holds both the array information and list array itself.
+		/// </summary>
+		public class ArrayContainer
+		{
+			[JsonProperty("info")]
+			public ArrayInfo Info { get; set; }
+
+			[JsonProperty("array")]
+			public List<Task> Array { get; set; }
+		}
+
+		/// <summary>
+		/// Array information class which stores basic database information.
+		/// </summary>
+		public class ArrayInfo
+		{
+			[JsonProperty("interface")]
+			public int InterfaceVersion { get; set; } = 1;
+
+			[JsonProperty("hash")]
+			public string Hash { get; set; } = "foobar";
+
+			[JsonProperty("created")]
+			public TimeInfo Created { get; set; }
+
+			[JsonProperty("modified")]
+			public TimeInfo Modified { get; set; }
+
+			[JsonProperty("minimized")]
+			public List<String> Minimized { get; set; } = null;
+		}
+
 		/// <summary>Last time we wrote to the locally stored file.</summary>
 		private static DateTime ProgramLastWriteTime { get; set; }
 		/// <summary>Last time we read from the locally stored file.</summary>
 		private static DateTime ProgramLastReadTime { get; set; }
+
+		//public static ArrayContainer Arif { get; set; }
+
+		public static ArrayInfo Info = new ArrayInfo();
 
 		/// <summary>
 		/// Scan through task array and rename existing groups to a new group.
@@ -180,7 +217,12 @@ namespace Tasual
 				{
 					OutputJson.Formatting = Formatting.Indented;
 					JsonSerializer Serializer = new JsonSerializer();
-					Serializer.Serialize(OutputJson, Array);
+					ArrayContainer Container = new ArrayContainer();
+
+					Container.Array = Array;
+					Container.Info = Info;
+
+					Serializer.Serialize(OutputJson, Container);
 				}
 
 				// Set the last write time 
@@ -206,9 +248,15 @@ namespace Tasual
 				using (StreamReader InputFile = File.OpenText(PathToFile))
 				using (JsonReader InputJson = new JsonTextReader(InputFile))
 				{
-					Array.Clear();
+					ArrayContainer Container = new ArrayContainer();
 					JsonSerializer Serializer = new JsonSerializer();
-					Array = (List<Task>)Serializer.Deserialize(InputJson, typeof(List<Task>));
+					Container = (ArrayContainer)Serializer.Deserialize(InputJson, typeof(ArrayContainer));
+
+					Array.Clear();
+					//Info.Minimized.Clear();
+
+					Array = Container.Array;
+					Info = Container.Info;
 				}
 				
 				// Set the last read time
