@@ -1133,6 +1133,7 @@ namespace Tasual
 			MainForm.TaskArray.Add(Task);
 			MainForm.Array_Save();
 			MainForm.UpdateGroupKeys(Task);
+			MainForm.CheckCollapsedGroup(Task);
 			MainForm.ListView.BuildList();
 			MainForm.ListView.EnsureModelVisible(Task);
 			MainForm.ListView.SelectObject(Task);
