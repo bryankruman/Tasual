@@ -1751,11 +1751,19 @@ namespace Tasual
 			List<string> AlreadySelectedGroups = new List<string>();
 
 			MenuStrip_Group_MoveTasks.DropDownItems.Clear();
+			MenuStrip_Group_MoveTasks.DropDownItems.Add(
+				"Create new group",
+				null,
+				MenuStrip_Group_MoveTasks_NewGroup_ClickHandler
+			);
+			MenuStrip_Group_MoveTasks.DropDownItems.Add(new ToolStripSeparator());
 			MenuStrip_Group_MoveTasks.DropDownItems.Add("(No other groups available)");
-			MenuStrip_Group_MoveTasks.DropDownItems[0].Enabled = false;
+			MenuStrip_Group_MoveTasks.DropDownItems[2].Enabled = false;
 
 			foreach (Task Task in TaskArray)
 			{
+				if (Task.Removed) { continue; }
+
 				if (!AlreadySelectedGroups.Contains(Task.Group) && (Group.Name != Task.Group))
 				{
 					MenuStrip_Group_MoveTasks.DropDownItems.Add(
@@ -1764,9 +1772,22 @@ namespace Tasual
 						MenuStrip_Group_MoveTasks_ClickHandler
 					);
 					AlreadySelectedGroups.Add(Task.Group);
-					MenuStrip_Group_MoveTasks.DropDownItems[0].Visible = false;
+					MenuStrip_Group_MoveTasks.DropDownItems[2].Visible = false;
 				}
 			}
+		}
+
+		/// <summary>
+		/// ContextMenuStrip event handler - Group header: Move Tasks: New Group: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
+		private void MenuStrip_Group_MoveTasks_NewGroup_ClickHandler(object Sender, EventArgs Args)
+		{
+			MessageBox.Show("TODO: Feature not yet available");
+			//Task Task = (Task)MenuStrip_Item.Tag;
+			//Form_Create CreateForm = new Form_Create(this, TaskArray.IndexOf(Task), true);
+			//CreateForm.ShowDialog(this);
 		}
 
 		/// <summary>
