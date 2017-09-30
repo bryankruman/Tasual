@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RestSharp;
 
 namespace Tasual
 {
@@ -34,9 +35,24 @@ namespace Tasual
 		///    4. Boolean: shouldupdate: Should client update (checks whether update is available for client and whether client can auto update)
 		///    5. *String: updateurl: URL for update package
 		/// </remarks>
-		public static void VersionCheck()
+		public static void VersionCheck_Handler(IRestResponse Response)
 		{
+			Console.WriteLine(Response.Content);
+		}
 
+		public static void VersionCheck_Setup()
+		{
+			var Client = new RestClient(ServerAddress);
+			var Request = new RestRequest("api/versioncheck", Method.POST);
+
+			Request.AddParameter("interface", "1");
+			Request.AddParameter("type", "application");
+			Request.AddParameter("platform", "Windows 10"); // TODO: Properly determine platform
+			Request.AddParameter("version", "1.1"); // TODO: Properly acquire version info
+			Request.AddParameter("hash", "asdf"); // TODO: Properly create a unique identifier (pull from arrayinfo)
+			Request.AddParameter("autoupdate", true);
+
+			Client.ExecuteAsync(Request, Response => VersionCheck_Handler(Response));
 		}
 
 		/// <summary>
