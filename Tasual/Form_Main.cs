@@ -403,9 +403,13 @@ namespace Tasual
 		/// <summary>
 		/// Create a new semi-setup empty task and add it to the ListView.
 		/// </summary>
-		private void QuickCreate(string Description = "")
+		private void QuickCreate(bool FromClipboard = false)
 		{
 			string GroupName = "Tasks";
+			string Description = "";
+			string Notes = "";
+			string Link = "";
+
 			// defaults to the first group it finds OR the last selected group
 			if (!string.IsNullOrEmpty(LastSelectedGroup))
 			{
@@ -427,6 +431,23 @@ namespace Tasual
 			NewTime.Created = DateTime.Now;
 			NewTime.Modified = DateTime.Now;
 
+			if (FromClipboard && Clipboard.ContainsText())
+			{
+				string ClipboardText = Clipboard.GetText();
+
+				if (ClipboardText.Length > 30)
+				{
+					Description = String.Format("Paste: {0}...", ClipboardText.Substring(0, 30));
+					Notes = ClipboardText;
+				}
+				else
+				{
+					Description = ClipboardText;
+				}
+
+				Link = URLExtensions.FindURL(ClipboardText);
+			}
+
 			Task Task = new Task(
 				Task.GenerateID(),
 				false,
@@ -434,8 +455,8 @@ namespace Tasual
 				0,
 				GroupName,
 				Description,
-				"",
-				"",
+				Notes,
+				Link,
 				"",
 				NewTime
 			);
@@ -1412,9 +1433,9 @@ namespace Tasual
 			{
 				case Keys.V:
 					{
-						if ((Args.Modifiers == Keys.Control) && Clipboard.ContainsText())
+						if (Args.Modifiers == Keys.Control)
 						{
-							QuickCreate(Clipboard.GetText());
+							QuickCreate(true);
 						}
 						break;
 					}

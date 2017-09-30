@@ -43,6 +43,21 @@ namespace Tasual
 			}
 		}
 
+		public static string FindURL(string Input)
+		{
+			string[] SplitInput = Input.Split(' ');
+
+			foreach (string Token in SplitInput)
+			{
+				if (Valid(Token))
+				{
+					return Token;
+				}
+			}
+
+			return "";
+		}
+
 		public static bool ValidateIPv4(string IPString)
 		{
 			if (IPString.Count(c => c == '.') != 3) { return false; }
