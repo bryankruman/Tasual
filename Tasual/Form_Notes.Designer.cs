@@ -74,6 +74,7 @@
 			// 
 			// CheckBox
 			// 
+			this.CheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.CheckBox.AutoSize = true;
 			this.CheckBox.Location = new System.Drawing.Point(12, 177);
 			this.CheckBox.Name = "CheckBox";
@@ -83,7 +84,7 @@
 			this.CheckBox.UseVisualStyleBackColor = true;
 			this.CheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
 			// 
-			// Tasual_Notes
+			// Form_Notes
 			// 
 			this.AcceptButton = this.Save;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -94,7 +95,7 @@
 			this.Controls.Add(this.Save);
 			this.Controls.Add(this.Cancel);
 			this.Controls.Add(this.TextBox);
-			this.Name = "Tasual_Notes";
+			this.Name = "Form_Notes";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
