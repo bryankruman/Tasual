@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class_ArrayHandler.cs" />
+    <Compile Include="Class_Interface.cs" />
     <Compile Include="Class_URLExtensions.cs" />
     <Compile Include="Class_Setting.cs" />
     <Compile Include="Class_StartupManager.cs" />
