@@ -403,7 +403,7 @@ namespace Tasual
 		/// <summary>
 		/// Create a new semi-setup empty task and add it to the ListView.
 		/// </summary>
-		private void QuickCreate()
+		private void QuickCreate(string Description = "")
 		{
 			string GroupName = "Tasks";
 			// defaults to the first group it finds OR the last selected group
@@ -433,7 +433,7 @@ namespace Tasual
 				false,
 				0,
 				GroupName,
-				"",
+				Description,
 				"",
 				"",
 				"",
@@ -1410,6 +1410,15 @@ namespace Tasual
 		{
 			switch (Args.KeyCode)
 			{
+				case Keys.V:
+					{
+						if ((Args.Modifiers == Keys.Control) && Clipboard.ContainsText())
+						{
+							QuickCreate(Clipboard.GetText());
+						}
+						break;
+					}
+
 				case Keys.Delete:
 					{
 						if (ListView.SelectedItem != null)
