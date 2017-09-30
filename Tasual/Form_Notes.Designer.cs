@@ -68,6 +68,7 @@
 			this.TextBox.Location = new System.Drawing.Point(12, 12);
 			this.TextBox.Multiline = true;
 			this.TextBox.Name = "TextBox";
+			this.TextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.TextBox.Size = new System.Drawing.Size(337, 155);
 			this.TextBox.TabIndex = 0;
 			this.TextBox.Text = "Write notes here";
