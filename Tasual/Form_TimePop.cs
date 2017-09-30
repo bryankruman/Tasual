@@ -132,7 +132,7 @@ namespace Tasual
 
 		private void LinkLabel_LinkClicked(object Sender, LinkLabelLinkClickedEventArgs Args)
 		{
-			Form_Create CreateForm = new Form_Create(MainForm, MainForm.TaskArray.IndexOf(_Task));
+			Form_Create CreateForm = new Form_Create(MainForm, MainForm.TaskArray.IndexOf(_Task), false);
 			CreateForm.ShowDialog(MainForm);
 			Close();
 		}

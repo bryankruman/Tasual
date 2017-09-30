@@ -1619,7 +1619,7 @@ namespace Tasual
 			if (ListView.SelectedItem != null)
 			{
 				Task Task = (Task)ListView.SelectedItem.RowObject;
-				Form_Create CreateForm = new Form_Create(this, TaskArray.IndexOf(Task));
+				Form_Create CreateForm = new Form_Create(this, TaskArray.IndexOf(Task), false);
 				CreateForm.ShowDialog(this);
 			}
 		}
@@ -2124,7 +2124,7 @@ namespace Tasual
 		private void MenuStrip_Item_Edit_Advanced_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Item.Tag;
-			Form_Create CreateForm = new Form_Create(this, TaskArray.IndexOf(Task));
+			Form_Create CreateForm = new Form_Create(this, TaskArray.IndexOf(Task), false);
 			CreateForm.ShowDialog(this);
 		}
 
@@ -2152,6 +2152,7 @@ namespace Tasual
 			Task.Group = Item.Text;
 			UpdateGroupKeys(Task);
 			ListView.BuildList();
+			CheckCollapsedGroup(Task);
 		}
 
 		/// <summary>
@@ -2165,11 +2166,19 @@ namespace Tasual
 			List<string> AlreadySelectedGroups = new List<string>();
 
 			MenuStrip_Item_Move.DropDownItems.Clear();
+			MenuStrip_Item_Move.DropDownItems.Add(
+				"Create new group",
+				null,
+				MenuStrip_Item_Move_NewGroup_ClickHandler
+			);
+			MenuStrip_Item_Move.DropDownItems.Add(new ToolStripSeparator());
 			MenuStrip_Item_Move.DropDownItems.Add("(No other groups available)");
-			MenuStrip_Item_Move.DropDownItems[0].Enabled = false;
+			MenuStrip_Item_Move.DropDownItems[2].Enabled = false;
 
 			foreach (Task Task in TaskArray)
 			{
+				if (Task.Removed) { continue; }
+
 				if (!AlreadySelectedGroups.Contains(Task.Group) && (TaggedTask.Group != Task.Group))
 				{
 					MenuStrip_Item_Move.DropDownItems.Add(
@@ -2178,9 +2187,21 @@ namespace Tasual
 						MenuStrip_Item_Move_ClickHandler
 					);
 					AlreadySelectedGroups.Add(Task.Group);
-					MenuStrip_Item_Move.DropDownItems[0].Visible = false;
+					MenuStrip_Item_Move.DropDownItems[2].Visible = false;
 				}
 			}
+		}
+
+		/// <summary>
+		/// ContextMenuStrip event handler - ListView Item: Move: New Group: Click
+		/// </summary>
+		/// <param name="Sender">Sender of the click event.</param>
+		/// <param name="Args">Click event arguments.</param>
+		private void MenuStrip_Item_Move_NewGroup_ClickHandler(object Sender, EventArgs Args)
+		{
+			Task Task = (Task)MenuStrip_Item.Tag;
+			Form_Create CreateForm = new Form_Create(this, TaskArray.IndexOf(Task), true);
+			CreateForm.ShowDialog(this);
 		}
 
 		// Notify: "Notify"

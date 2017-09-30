@@ -25,6 +25,7 @@ namespace Tasual
 
 		/// <summary>Whether or not the form was launched in edit mode. True = Edit dialog, False = Create dialog.</summary>
 		bool EditMode = false;
+		bool SelectGroupTextBox = false;
 
 		/// <summary>Array containing list of selection label objects for the day labels.</summary>
 		public List<Label> SelectionLabels_Days = new List<Label>();
@@ -430,6 +431,7 @@ namespace Tasual
 			InitializeComponent();
 			MainForm = PassedForm;
 			EditMode = false;
+			SelectGroupTextBox = false;
 
 			// Common setup
 			CommonSetup();
@@ -455,13 +457,14 @@ namespace Tasual
 			ComboBox_Priority.SelectedIndex = 1;
 		}
 
-		public Form_Create(Form_Main PassedForm, int PassedIndex)
+		public Form_Create(Form_Main PassedForm, int PassedIndex, bool PassedSelectGroup)
 		{
 			// Treat as "Edit" dialog
 			InitializeComponent();
 			MainForm = PassedForm;
 			TaskToEdit = MainForm.TaskArray[PassedIndex];
 			EditMode = true;
+			SelectGroupTextBox = PassedSelectGroup;
 			Text = "Edit";
 			Button_Create.Text = "Save";
 
@@ -483,6 +486,7 @@ namespace Tasual
 			// Categories
 			ComboBox_Category.Items.Add(TaskToEdit.Group);
 			PopulateCategories();
+			ComboBox_Category.Select();
 
 			// Priority
 			ComboBox_Priority.SelectedIndex = TaskToEdit.Priority;
