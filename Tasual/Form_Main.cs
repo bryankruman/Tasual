@@ -997,6 +997,7 @@ namespace Tasual
 			ListView.GroupExpandingCollapsing += new EventHandler<GroupExpandingCollapsingEventArgs>(ListView_GroupCollapsing);
 
 			ListView.UseFiltering = true;
+			ListView.ShowFilterMenuOnRightClick = false;
 			ListView.ModelFilter = new ModelFilter(delegate (object x)
 			{
 				return !((Task)x).Removed;
