@@ -36,82 +36,91 @@ namespace Tasual
 		///    4. Boolean: shouldupdate: Should client update (checks whether update is available for client and whether client can auto update)
 		///    5. *String: updateurl: URL for update package
 		/// </remarks>
-		public static void VersionCheck_Handler(IRestResponse Response)
+		public class VersionCheck
 		{
-			Console.WriteLine(Response.Content);
-			var Content = JsonConvert.DeserializeObject<VersionCheckResponse>(Response.Content);
-
-			// TODO: Store the latest version and list it in the about dialog
-			// TODO: Do we really need the server version? 
-
-			if (Content.ShouldUpdate)
+			/// <summary>
+			/// Client-to-Server: Client Information
+			/// </summary>
+			public class RequestObject
 			{
-				// TODO: Mark internal flag in settings to initiate update
-				// TODO: Store update package URL in settings
+				public int Interface { get; set; }
+				public string Type { get; set; }
+				public string Platform { get; set; }
+				public string Version { get; set; }
+				public string Hash { get; set; }
+				public bool AutoUpdate { get; set; }
+
+				public RequestObject(
+					int Interface,
+					string Type,
+					string Platform,
+					string Version,
+					string Hash,
+					bool AutoUpdate)
+				{
+					this.Interface = Interface;
+					this.Type = Type;
+					this.Platform = Platform;
+					this.Version = Version;
+					this.Hash = Hash;
+					this.AutoUpdate = AutoUpdate;
+				}
 			}
-		}
 
-		public class VersionCheckResponse
-		{
-			public int Interface { get; set; }
-			public string ServerVersion { get; set; }
-			public string LatestVersion { get; set; }
-			public bool ShouldUpdate { get; set; }
-			public string UpdateURL { get; set; }
-		}
-
-		public class VersionCheckRequest
-		{
-			public int Interface { get; set; }
-			public string Type { get; set; }
-			public string Platform { get; set; }
-			public string Version { get; set; }
-			public string Hash { get; set; }
-			public bool AutoUpdate { get; set; }
-
-			public VersionCheckRequest(
-				int Interface,
-				string Type, 
-				string Platform,
-				string Version,
-				string Hash,
-				bool AutoUpdate)
+			/// <summary>
+			/// Server-to-Client: Server Information
+			/// </summary>
+			public class ResponseObject
 			{
-				this.Interface = Interface;
-				this.Type = Type;
-				this.Platform = Platform;
-				this.Version = Version;
-				this.Hash = Hash;
-				this.AutoUpdate = AutoUpdate;
+				public int Interface { get; set; }
+				public string ServerVersion { get; set; }
+				public string LatestVersion { get; set; }
+				public bool ShouldUpdate { get; set; }
+				public string UpdateURL { get; set; }
 			}
-		}
 
-		public static void VersionCheck_Setup()
-		{
-			var Client = new RestClient(ServerAddress);
-			var Request = new RestRequest("api/versioncheck", Method.POST);
+			public static void Handler(IRestResponse Response)
+			{
+				Console.WriteLine(Response.Content);
+				var Content = JsonConvert.DeserializeObject<ResponseObject>(Response.Content);
 
-			Request.AddHeader("Content-type", "application/json");
-			Request.RequestFormat = DataFormat.Json;
+				// TODO: Store the latest version and list it in the about dialog
+				// TODO: Do we really need the server version? 
 
-			Request.AddObject(new VersionCheckRequest(
-				1,
-				"Application",
-				"Windows 10",
-				"1.1",
-				"asdf",
-				true
-			));
+				if (Content.ShouldUpdate)
+				{
+					// TODO: Mark internal flag in settings to initiate update
+					// TODO: Store update package URL in settings
+				}
+			}
 
-			//Request.AddJsonBody
-			//Request.AddParameter("interface", "1");
-			//Request.AddParameter("type", "application");
-			//Request.AddParameter("platform", "Windows 10"); // TODO: Properly determine platform
-			//Request.AddParameter("version", "1.1"); // TODO: Properly acquire version info
-			//Request.AddParameter("hash", "asdf"); // TODO: Properly create a unique identifier (pull from arrayinfo)
-			//Request.AddParameter("autoupdate", true);
+			public static void Request()
+			{
+				var Client = new RestClient(ServerAddress);
+				var Request = new RestRequest("api/versioncheck", Method.POST);
 
-			Client.ExecuteAsync(Request, Response => VersionCheck_Handler(Response));
+				Request.AddHeader("Content-type", "application/json");
+				Request.RequestFormat = DataFormat.Json;
+
+				Request.AddObject(new RequestObject(
+					1,
+					"Application",
+					"Windows 10",
+					"1.1",
+					"asdf",
+					true
+				));
+
+				//Request.AddJsonBody
+				//Request.AddParameter("interface", "1");
+				//Request.AddParameter("type", "application");
+				//Request.AddParameter("platform", "Windows 10"); // TODO: Properly determine platform
+				//Request.AddParameter("version", "1.1"); // TODO: Properly acquire version info
+				//Request.AddParameter("hash", "asdf"); // TODO: Properly create a unique identifier (pull from arrayinfo)
+				//Request.AddParameter("autoupdate", true);
+
+				Client.ExecuteAsync(Request, Response => Handler(Response));
+			}
 		}
 
 		/// <summary>
