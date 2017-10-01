@@ -10,22 +10,28 @@ namespace Tasual
 {
 	class Interface
 	{
+		// ==============
+		//  Declarations
+		// ==============
+
 		/// <summary>
 		/// Address used for API communication
 		/// </summary>
 		public static string ServerAddress = "http://tasual.org";
 
+
+		// ============================
+		//  Interface #1: VersionCheck
+		// ============================
+
 		/// <summary>
-		/// Interface #1: Version check and information
+		/// Class for the VersionCheck interface which checks for updates from the server.
 		/// </summary>
-		public class VersionCheck
+		public static class VersionCheck
 		{
 			/// <summary>
-			/// Client-to-Server: Client Information
+			/// Client-to-Server: Request sent to the server when starting up the client.
 			/// </summary>
-			/// <remarks>
-			/// Request sent to the server when starting up the client.
-			/// </remarks>
 			public class RequestObject
 			{
 				/// <summary>Integer: interface: Interface version</summary>
@@ -70,49 +76,48 @@ namespace Tasual
 			}
 
 			/// <summary>
-			/// Server-to-Client: Server Information
+			/// Server-to-Client: Response from server containing compatibility/update information.
 			/// </summary>
-			/// <remarks>
-			/// Response from server containing compatibility/update information.
-			/// </remarks>
 			public class ResponseObject
 			{
 				/// <summary>Integer: interface: Interface version (perhaps redundant?)</summary>
-				[JsonProperty("")]
+				[JsonProperty("interface")]
 				public int Interface { get; set; }
 
 				/// <summary>String: serverversion: Server version (from assembly info, major.minor.patch)</summary>
-				[JsonProperty("")]
+				[JsonProperty("serverversion")]
 				public string ServerVersion { get; set; }
 
 				/// <summary>String: latestversion: Latest release version (from assembly info of client type, major.minor.patch)</summary>
-				[JsonProperty("")]
+				[JsonProperty("latestversion")]
 				public string LatestVersion { get; set; }
 
 				/// <summary>Boolean: shouldupdate: Should client update (checks whether update is available for client)</summary>
-				[JsonProperty("")]
+				[JsonProperty("shouldupdate")]
 				public bool ShouldUpdate { get; set; }
 
 				/// <summary>String: updateurl: URL for update package</summary>
-				[JsonProperty("")]
+				[JsonProperty("updateurl")]
 				public string UpdateURL { get; set; }
-			}
 
-			public static void Handler(IRestResponse Response)
-			{
-				Console.WriteLine(Response.Content);
-				var Content = JsonConvert.DeserializeObject<ResponseObject>(Response.Content);
-
-				// TODO: Store the latest version and list it in the about dialog
-				// TODO: Do we really need the server version? 
-
-				if (Content.ShouldUpdate)
+				public ResponseObject(
+					int Interface,
+					string ServerVersion,
+					string LatestVersion,
+					bool ShouldUpdate,
+					string UpdateURL)
 				{
-					// TODO: Mark internal flag in settings to initiate update
-					// TODO: Store update package URL in settings
+					this.Interface = Interface;
+					this.ServerVersion = ServerVersion;
+					this.LatestVersion = LatestVersion;
+					this.ShouldUpdate = ShouldUpdate;
+					this.UpdateURL = UpdateURL;
 				}
 			}
 
+			/// <summary>
+			/// Generate the request to send to the server for VersionCheck.
+			/// </summary>
 			public static void Request()
 			{
 				var Client = new RestClient(ServerAddress);
@@ -130,41 +135,61 @@ namespace Tasual
 					true
 				));
 
-				//Request.AddJsonBody
-				//Request.AddParameter("interface", "1");
-				//Request.AddParameter("type", "application");
-				//Request.AddParameter("platform", "Windows 10"); // TODO: Properly determine platform
-				//Request.AddParameter("version", "1.1"); // TODO: Properly acquire version info
-				//Request.AddParameter("hash", "asdf"); // TODO: Properly create a unique identifier (pull from arrayinfo)
-				//Request.AddParameter("autoupdate", true);
-
 				Client.ExecuteAsync(Request, Response => Handler(Response));
+			}
+
+			/// <summary>
+			/// Handles response sent from server to the client regarding the VersionCheck request.
+			/// </summary>
+			/// <param name="Response">Response with IRestResponse formatting.</param>
+			public static void Handler(IRestResponse Response)
+			{
+				// Debug
+				Console.WriteLine(Response.Content);
+
+				// Handle response by status 
+				switch (Response.StatusCode)
+				{
+					case System.Net.HttpStatusCode.OK:
+						{
+							var Content = JsonConvert.DeserializeObject<ResponseObject>(Response.Content);
+
+							// TODO: Store the latest version and list it in the about dialog
+							// TODO: Do we really need the server version? 
+
+							if (Content.ShouldUpdate)
+							{
+								// TODO: Mark internal flag in settings to initiate update
+								// TODO: Store update package URL in settings
+							}
+							break;
+						}
+					case System.Net.HttpStatusCode.Forbidden:
+						{
+							break;
+						}
+				}
 			}
 		}
 
+
+		// ============================
+		//  Interface #2: Registration
+		// ============================
+
 		/// <summary>
-		/// Interface #2: Registration
+		/// Class for the Registration interface which registers an account on the server.
 		/// </summary>
 		/// <remarks>
-		/// Incoming (from client): Registration application
-		/// Sent from client when they submit the registration form to create an account.
 		/// We cannot always assume that #1 has already been sent to the server, so lets include identification information.
 		/// TODO: Lay out design to use open authentication instead, this really isn't secure enough for my liking
 		/// TODO: Should we really even use this or just rely upon web registration and provide an auth token?
-		///    1. Integer: interface: Interface version
-		///    2. String: type: Client type (application, service, etc)
-		///    3. String: platform: Client platform
-		///    4: String: version: Client version
-		///    5: String: hash: Client unique hash
-		///    6. String: name: Real name of user to register
-		///    7: String: email: Email address of user to register
-		///    8: String: password: Password of user to register
-		/// 
-		/// Outgoing (from server): Registration response
-		/// Sent from server to inform the client of the registration status
 		/// </remarks>
-		public class Registration
+		public static class Registration
 		{
+			/// <summary>
+			/// Client-to-Server: Sent from client when they submit the registration form to create an account.
+			/// </summary>
 			public class RequestObject
 			{
 				/// <summary>Integer: interface: Interface version</summary>
@@ -220,14 +245,13 @@ namespace Tasual
 				}
 			}
 
-			public static void Handler(IRestResponse Response)
-			{
-				Console.WriteLine(Response.Content);
-
-				// TODO: Read response type/message
-			}
-
-			public static void Request()
+			/// <summary>
+			/// Generate the request to send to the server for Registration.
+			/// </summary>
+			/// <param name="Name">Real name of user to register.</param>
+			/// <param name="Email">Email address of user to register.</param>
+			/// <param name="Password">Password of user to register.</param>
+			public static void Request(string Name, string Email, string Password)
 			{
 				var Client = new RestClient(ServerAddress);
 				var Request = new RestRequest("api/registration", Method.POST);
@@ -241,78 +265,374 @@ namespace Tasual
 					"Windows 10",
 					"1.1",
 					"asdf",
-					"Foobar",
-					"foo@bar.com",
-					"password"
+					Name,
+					Email,
+					Password
 				));
 
 				Client.ExecuteAsync(Request, Response => Handler(Response));
 			}
+
+			/// <summary>
+			/// Handles response sent from server to the client regarding the Registration request.
+			/// </summary>
+			/// <param name="Response">Response with IRestResponse formatting.</param>
+			public static void Handler(IRestResponse Response)
+			{
+				// Debug
+				Console.WriteLine(Response.Content);
+
+				// Handle response by status 
+				switch (Response.StatusCode)
+				{
+					case System.Net.HttpStatusCode.OK:
+						{
+							break;
+						}
+					case System.Net.HttpStatusCode.Forbidden:
+						{
+							break;
+						}
+				}
+			}
 		}
 
+
+		// ======================
+		//  Interface #3: SignIn
+		// ======================
+
 		/// <summary>
-		/// Interface #3: Sign-in
+		/// Class for the SignIn interface which authenticates and starts a session with the server.
 		/// </summary>
-		/// <remarks>
-		/// Incoming (from client): Login information
-		/// If the client has an account registered in its settings, send the following login information
-		///    1. Integer: interface: Interface version
-		///    2: String: hash: Client unique hash
-		///    3: String: email: Email address of user
-		///    4: String: password: Password of user
-		///    5. String: localmodified: Date and time of last modification to the local database
-		/// 
-		/// Outgoing (from server): Login response
-		///    1. Boolean: success: Successful login
-		///    2. *String: error: If login is not successful, error reason is listed here
-		///    3. String: session: Session hash ID generated by server to identify this login instance between the server and the client
-		///    4. String: name: Real name of user (this may have been changed by the user on the website)
-		///    5. Boolean: shouldsync: Whether or not the client should send its data to the server and the server should send its data to the client
-		/// </remarks>
-		public static void SignIn()
+		public static class SignIn
 		{
+			/// <summary>
+			/// Client-to-Server: Request sent to the server with the user information to start a new session.
+			/// </summary>
+			public class RequestObject
+			{
+				/// <summary>Integer: interface: Interface version</summary>
+				[JsonProperty("interface")]
+				public int Interface { get; set; }
 
+				/// <summary>String: hash: Client unique hash</summary>
+				[JsonProperty("hash")]
+				public string Hash { get; set; }
+
+				/// <summary>String: email: Email address of user to register</summary>
+				[JsonProperty("email")]
+				public string Email { get; set; }
+
+				/// <summary>String: password: Password of user to register</summary>
+				[JsonProperty("password")]
+				public string Password { get; set; }
+
+				/// <summary>DateTime: localmodified: Date and time of last modification to the local database</summary>
+				[JsonProperty("localmodified")]
+				public DateTime LocalModified { get; set; }
+
+				public RequestObject(
+					int Interface,
+					string Hash,
+					string Email,
+					string Password,
+					DateTime LocalModified)
+				{
+					this.Interface = Interface;
+					this.Hash = Hash;
+					this.Email = Email;
+					this.Password = Password;
+					this.LocalModified = LocalModified;
+				}
+			}
+
+			/// <summary>
+			/// Server-to-Client: Response from server containing session information.
+			/// </summary>
+			public class ResponseObject
+			{
+				/// <summary>String: session: Session hash ID generated by server to identify this login instance between the server and the client</summary>
+				[JsonProperty("session")]
+				public string Session { get; set; }
+
+				/// <summary>String: name: Real name of user (this may have been changed by the user on the website)</summary>
+				[JsonProperty("name")]
+				public string Name { get; set; }
+
+				/// <summary>Boolean: shouldsync: Whether or not the client should send its data to the server and the server should send its data to the client</summary>
+				[JsonProperty("shouldsync")]
+				public bool ShouldSync { get; set; }
+
+				public ResponseObject(
+					string Session,
+					string Name,
+					bool ShouldSync)
+				{
+					this.Session = Session;
+					this.Name = Name;
+					this.ShouldSync = ShouldSync;
+				}
+			}
+
+			/// <summary>
+			/// Generate the request to send to the server for SignIn.
+			/// </summary>
+			/// <param name="Email">Email address of user to signin.</param>
+			/// <param name="Password">Password of user to signin.</param>
+			public static void Request(string Email, string Password)
+			{
+				var Client = new RestClient(ServerAddress);
+				var Request = new RestRequest("api/signin", Method.POST);
+
+				Request.AddHeader("Content-type", "application/json");
+				Request.RequestFormat = DataFormat.Json;
+
+				Request.AddObject(new RequestObject(
+					1,
+					"asdf",
+					Email,
+					Password,
+					DateTime.Now
+				));
+
+				Client.ExecuteAsync(Request, Response => Handler(Response));
+			}
+
+			/// <summary>
+			/// Handles response sent from server to the client regarding the SignIn request.
+			/// </summary>
+			/// <param name="Response">Response with IRestResponse formatting.</param>
+			public static void Handler(IRestResponse Response)
+			{
+				// Debug
+				Console.WriteLine(Response.Content);
+
+				// Handle response by status 
+				switch (Response.StatusCode)
+				{
+					case System.Net.HttpStatusCode.OK:
+						{
+							break;
+						}
+					case System.Net.HttpStatusCode.Forbidden:
+						{
+							break;
+						}
+				}
+			}
 		}
 
+
+		// =========================
+		//  Interface #4: KeepAlive
+		// =========================
+
 		/// <summary>
-		/// Interface #4: Keepalive
+		/// Class for the KeepAlive interface which keeps the session active and checks whether the database needs to sync.
 		/// </summary>
-		/// <remarks>
-		/// Incoming (from client): Pulse
-		/// NOTE: We can safely assume that the interface will be correct as there would not be an established session if the interfaces mismatched
-		///    1. String: session: Session hash ID retrieved earlier from the server
-		///    2. String: localmodified: Date and time of last modification to the local database
-		/// 
-		/// Outgoing(from server): Pulse response
-		///    1. Boolean: active: Session is still active
-		///    2. *String: error: If not active, error reason is listed here
-		///    3. Boolean: shouldsync: Whether or not the client should send its data to the server and the server should send its data to the client
-		/// </remarks>
-		public static void KeepAlive()
+		public static class KeepAlive
 		{
+			/// <summary>
+			/// Client-to-Server: Request sent to the server when checking session info and whether or not to sync databases.
+			/// </summary>
+			public class RequestObject
+			{
+				/// <summary>String: session: Session hash ID retrieved earlier from the server</summary>
+				[JsonProperty("session")]
+				public string Session { get; set; }
 
+				/// <summary>DateTime: localmodified: Date and time of last modification to the local database</summary>
+				[JsonProperty("localmodified")]
+				public DateTime LocalModified { get; set; }
+
+				public RequestObject(
+					string Session,
+					DateTime LocalModified)
+				{
+					this.Session = Session;
+					this.LocalModified = LocalModified;
+				}
+			}
+
+			/// <summary>
+			/// Generate the request to send to the server for KeepAlive.
+			/// </summary>
+			public static void Request()
+			{
+				var Client = new RestClient(ServerAddress);
+				var Request = new RestRequest("api/keepalive", Method.POST);
+
+				Request.AddHeader("Content-type", "application/json");
+				Request.RequestFormat = DataFormat.Json;
+
+				Request.AddObject(new RequestObject(
+					"asdf",
+					DateTime.Now
+				));
+
+				Client.ExecuteAsync(Request, Response => Handler(Response));
+			}
+
+			/// <summary>
+			/// Handles response sent from server to the client regarding the KeepAlive request.
+			/// </summary>
+			/// <param name="Response">Response with IRestResponse formatting.</param>
+			public static void Handler(IRestResponse Response)
+			{
+				// Debug
+				Console.WriteLine(Response.Content);
+
+				// Handle response by status 
+				switch (Response.StatusCode)
+				{
+					case System.Net.HttpStatusCode.OK:
+						{
+							// "connection still good, no need to sync" response
+							break;
+						}
+					case System.Net.HttpStatusCode.Continue:
+						{
+							// "connection still good, and also we should sync" response
+							break;
+						}
+					case System.Net.HttpStatusCode.Forbidden:
+						{
+							// "connection isn't good anymore, reconnect"
+							break;
+						}
+
+					default:
+					case System.Net.HttpStatusCode.BadRequest:
+						{
+							// "missing content data, retry"
+							// 
+							break;
+						}
+				}
+			}
 		}
 
+
+		// ====================
+		//  Interface #5: Sync
+		// ====================
+
 		/// <summary>
-		/// Interface #5: Sync
+		/// Class for the Sync interface which synchronizes data between the client and the server.
 		/// </summary>
 		/// <remarks>
-		/// Incoming (from client): Local task array
 		/// NOTE: Any additional settings (like rules on how the server should merge the database or such) should get sent from the client here and processed by the server
 		/// NOTE: We can safely assume that the interface will be correct as there would not be an established session if the interfaces mismatched
-		///    1. String: session: Session hash ID retrieved earlier from the server
-		///    2. String: timestamp: Date and time of when this sync was sent from the client
-		///    3. TaskArray: localdatabase: Entire local database of tasks
-		/// 
-		/// Outgoing (from server): Remote task array
-		///    1. String: timestamp: Date and time of when this sync was completed and sent back from the server to the client
-		///    2. Boolean: success: Whether or not the merge of databases was successful
-		///    3. *String: error: If not successful, error reason is listed here
-		///    4. TaskArray: remotedatabase: Updated and merged database from server
 		/// </remarks>
-		public static void Sync()
+		public static class Sync
 		{
+			/// <summary>
+			/// Client-to-Server: Request sent to the server when initiating a database synchronization.
+			/// </summary>
+			public class RequestObject
+			{
+				/// <summary>String: session: Session hash ID retrieved earlier from the server</summary>
+				[JsonProperty("session")]
+				public string Session { get; set; }
 
+				/// <summary>String: timestamp: Date and time of when this sync was sent from the client</summary>
+				[JsonProperty("timestamp")]
+				public DateTime Timestamp { get; set; }
+
+				/// <summary>TaskArray: localdatabase: Entire local database of tasks</summary>
+				[JsonProperty("localdatabase")]
+				public List<Task> LocalDatabase { get; set; }
+
+				public RequestObject(
+					string Session,
+					DateTime Timestamp,
+					List<Task> LocalDatabase)
+				{
+					this.Session = Session;
+					this.Timestamp = Timestamp;
+					this.LocalDatabase = LocalDatabase;
+				}
+			}
+
+			/// <summary>
+			/// Server-to-Client: Response from server containing the newly synchronized database.
+			/// </summary>
+			public class ResponseObject
+			{
+				/// <summary>DateTime: timestamp: Date and time of when this sync was completed and sent back from the server to the client</summary>
+				[JsonProperty("timestamp")]
+				public DateTime Timestamp { get; set; }
+
+				/// <summary>TaskArray: remotedatabase: Updated and merged database from server</summary>
+				[JsonProperty("remotedatabase")]
+				public List<Task> RemoteDatabase { get; set; }
+
+				public ResponseObject(
+					DateTime Timestamp, 
+					List<Task> RemoteDatabase)
+				{
+					this.Timestamp = Timestamp;
+					this.RemoteDatabase = RemoteDatabase;
+				}
+			}
+
+			/// <summary>
+			/// Generate the request to send to the server for synchronization.
+			/// </summary>
+			public static void Request()
+			{
+				var Client = new RestClient(ServerAddress);
+				var Request = new RestRequest("api/keepalive", Method.POST);
+
+				Request.AddHeader("Content-type", "application/json");
+				Request.RequestFormat = DataFormat.Json;
+
+				Request.AddObject(new RequestObject(
+					"asdf",
+					DateTime.Now,
+					new List<Task>()
+				));
+
+				Client.ExecuteAsync(Request, Response => Handler(Response));
+			}
+
+			/// <summary>
+			/// Handles response sent from server to the client regarding the Sync request.
+			/// </summary>
+			/// <param name="Response">Response with IRestResponse formatting.</param>
+			public static void Handler(IRestResponse Response)
+			{
+				// Debug
+				Console.WriteLine(Response.Content);
+
+				// Handle response by status 
+				switch (Response.StatusCode)
+				{
+					case System.Net.HttpStatusCode.OK:
+						{
+							// "connection still good, no need to sync" response
+							break;
+						}
+					case System.Net.HttpStatusCode.Continue:
+						{
+							// "connection still good, and also we should sync" response
+							break;
+						}
+					case System.Net.HttpStatusCode.Forbidden:
+						{
+							// "connection isn't good anymore, reconnect"
+							break;
+						}
+
+					default:
+					case System.Net.HttpStatusCode.BadRequest:
+						{
+							// "missing content data, retry"
+							break;
+						}
+				}
+			}
 		}
 	}
 }
