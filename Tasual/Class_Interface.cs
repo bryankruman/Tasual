@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using RestSharp;
 
 namespace Tasual
@@ -38,6 +39,51 @@ namespace Tasual
 		public static void VersionCheck_Handler(IRestResponse Response)
 		{
 			Console.WriteLine(Response.Content);
+			var Content = JsonConvert.DeserializeObject<VersionCheckResponse>(Response.Content);
+
+			// TODO: Store the latest version and list it in the about dialog
+			// TODO: Do we really need the server version? 
+
+			if (Content.ShouldUpdate)
+			{
+				// TODO: Mark internal flag in settings to initiate update
+				// TODO: Store update package URL in settings
+			}
+		}
+
+		public class VersionCheckResponse
+		{
+			public int Interface { get; set; }
+			public string ServerVersion { get; set; }
+			public string LatestVersion { get; set; }
+			public bool ShouldUpdate { get; set; }
+			public string UpdateURL { get; set; }
+		}
+
+		public class VersionCheckRequest
+		{
+			public int Interface { get; set; }
+			public string Type { get; set; }
+			public string Platform { get; set; }
+			public string Version { get; set; }
+			public string Hash { get; set; }
+			public bool AutoUpdate { get; set; }
+
+			public VersionCheckRequest(
+				int Interface,
+				string Type, 
+				string Platform,
+				string Version,
+				string Hash,
+				bool AutoUpdate)
+			{
+				this.Interface = Interface;
+				this.Type = Type;
+				this.Platform = Platform;
+				this.Version = Version;
+				this.Hash = Hash;
+				this.AutoUpdate = AutoUpdate;
+			}
 		}
 
 		public static void VersionCheck_Setup()
@@ -45,12 +91,25 @@ namespace Tasual
 			var Client = new RestClient(ServerAddress);
 			var Request = new RestRequest("api/versioncheck", Method.POST);
 
-			Request.AddParameter("interface", "1");
-			Request.AddParameter("type", "application");
-			Request.AddParameter("platform", "Windows 10"); // TODO: Properly determine platform
-			Request.AddParameter("version", "1.1"); // TODO: Properly acquire version info
-			Request.AddParameter("hash", "asdf"); // TODO: Properly create a unique identifier (pull from arrayinfo)
-			Request.AddParameter("autoupdate", true);
+			Request.AddHeader("Content-type", "application/json");
+			Request.RequestFormat = DataFormat.Json;
+
+			Request.AddObject(new VersionCheckRequest(
+				1,
+				"Application",
+				"Windows 10",
+				"1.1",
+				"asdf",
+				true
+			));
+
+			//Request.AddJsonBody
+			//Request.AddParameter("interface", "1");
+			//Request.AddParameter("type", "application");
+			//Request.AddParameter("platform", "Windows 10"); // TODO: Properly determine platform
+			//Request.AddParameter("version", "1.1"); // TODO: Properly acquire version info
+			//Request.AddParameter("hash", "asdf"); // TODO: Properly create a unique identifier (pull from arrayinfo)
+			//Request.AddParameter("autoupdate", true);
 
 			Client.ExecuteAsync(Request, Response => VersionCheck_Handler(Response));
 		}
