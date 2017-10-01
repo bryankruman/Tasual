@@ -18,36 +18,38 @@ namespace Tasual
 		/// <summary>
 		/// Interface #1: Version check and information
 		/// </summary>
-		/// <remarks>
-		/// Incoming (from client): Client information
-		/// When starting up the client (be it a Windows application, mobile application, or anything else) send a request to the web server with the following information:
-		///    1. Integer: interface: Interface version
-		///    2. String: type: Client type (application, service, etc)
-		///    3. String: platform: Client platform (Windows version, Linux version, mobile OS, etc)
-		///    4. String: version: Client version (from assembly info, major.minor.patch)
-		///    5. String: hash: Client unique hash (created and stored in the settings.json file) to identify this client
-		///    6. Boolean: autoupdate: Auto-update enabled
-		/// 
-		/// Outgoing (from server): Server information
-		/// In reponse to the incoming request, send information back to the client about the web server and return compatibility/update information:
-		///    1. Integer: interface: Interface version (perhaps redundant?)
-		///    2. String: serverversion: Server version (from assembly info, major.minor.patch)
-		///    3. String: latestversion: Latest release version (from assembly info of client type, major.minor.patch)
-		///    4. Boolean: shouldupdate: Should client update (checks whether update is available for client and whether client can auto update)
-		///    5. *String: updateurl: URL for update package
-		/// </remarks>
 		public class VersionCheck
 		{
 			/// <summary>
 			/// Client-to-Server: Client Information
 			/// </summary>
+			/// <remarks>
+			/// Request sent to the server when starting up the client.
+			/// </remarks>
 			public class RequestObject
 			{
+				/// <summary>Integer: interface: Interface version</summary>
+				[JsonProperty("interface")]
 				public int Interface { get; set; }
+
+				/// <summary>String: type: Client type (application, service, etc)</summary>
+				[JsonProperty("type")]
 				public string Type { get; set; }
+
+				/// <summary>String: platform: Client platform (Windows version, Linux version, mobile OS, etc)</summary>
+				[JsonProperty("platform")]
 				public string Platform { get; set; }
+
+				/// <summary>String: version: Client version (from assembly info, major.minor.patch)</summary>
+				[JsonProperty("version")]
 				public string Version { get; set; }
+
+				/// <summary>String: hash: Client unique hash (created and stored in the settings.json file) to identify this client</summary>
+				[JsonProperty("hash")]
 				public string Hash { get; set; }
+
+				/// <summary>Boolean: autoupdate: Auto-update enabled</summary>
+				[JsonProperty("autoupdate")]
 				public bool AutoUpdate { get; set; }
 
 				public RequestObject(
@@ -70,12 +72,29 @@ namespace Tasual
 			/// <summary>
 			/// Server-to-Client: Server Information
 			/// </summary>
+			/// <remarks>
+			/// Response from server containing compatibility/update information.
+			/// </remarks>
 			public class ResponseObject
 			{
+				/// <summary>Integer: interface: Interface version (perhaps redundant?)</summary>
+				[JsonProperty("")]
 				public int Interface { get; set; }
+
+				/// <summary>String: serverversion: Server version (from assembly info, major.minor.patch)</summary>
+				[JsonProperty("")]
 				public string ServerVersion { get; set; }
+
+				/// <summary>String: latestversion: Latest release version (from assembly info of client type, major.minor.patch)</summary>
+				[JsonProperty("")]
 				public string LatestVersion { get; set; }
+
+				/// <summary>Boolean: shouldupdate: Should client update (checks whether update is available for client)</summary>
+				[JsonProperty("")]
 				public bool ShouldUpdate { get; set; }
+
+				/// <summary>String: updateurl: URL for update package</summary>
+				[JsonProperty("")]
 				public string UpdateURL { get; set; }
 			}
 
@@ -143,12 +162,92 @@ namespace Tasual
 		/// 
 		/// Outgoing (from server): Registration response
 		/// Sent from server to inform the client of the registration status
-		///    1. Boolean: success: Successful registration
-		///    2. *String: error: If not successful, error reason is listed here
 		/// </remarks>
-		public static void Registration()
+		public class Registration
 		{
+			public class RequestObject
+			{
+				/// <summary>Integer: interface: Interface version</summary>
+				[JsonProperty("interface")]
+				public int Interface { get; set; }
 
+				/// <summary>String: type: Client type (application, service, etc)</summary>
+				[JsonProperty("type")]
+				public string Type { get; set; }
+
+				/// <summary>String: platform: Client platform</summary>
+				[JsonProperty("platform")]
+				public string Platform { get; set; }
+
+				/// <summary>String: version: Client version</summary>
+				[JsonProperty("version")]
+				public string Version { get; set; }
+
+				/// <summary>String: hash: Client unique hash</summary>
+				[JsonProperty("hash")]
+				public string Hash { get; set; }
+
+				/// <summary>String: name: Real name of user to register</summary>
+				[JsonProperty("name")]
+				public string Name { get; set; }
+
+				/// <summary>String: email: Email address of user to register</summary>
+				[JsonProperty("email")]
+				public string Email { get; set; }
+
+				/// <summary>String: password: Password of user to register</summary>
+				[JsonProperty("password")]
+				public string Password { get; set; }
+
+				public RequestObject(
+					int Interface,
+					string Type,
+					string Platform,
+					string Version,
+					string Hash,
+					string Name,
+					string Email,
+					string Password)
+				{
+					this.Interface = Interface;
+					this.Type = Type;
+					this.Platform = Platform;
+					this.Version = Version;
+					this.Hash = Hash;
+					this.Name = Name;
+					this.Email = Email;
+					this.Password = Password;
+				}
+			}
+
+			public static void Handler(IRestResponse Response)
+			{
+				Console.WriteLine(Response.Content);
+
+				// TODO: Read response type/message
+			}
+
+			public static void Request()
+			{
+				var Client = new RestClient(ServerAddress);
+				var Request = new RestRequest("api/registration", Method.POST);
+
+				Request.AddHeader("Content-type", "application/json");
+				Request.RequestFormat = DataFormat.Json;
+
+				Request.AddObject(new RequestObject(
+					1,
+					"Application",
+					"Windows 10",
+					"1.1",
+					"asdf",
+					"Foobar",
+					"foo@bar.com",
+					"password"
+				));
+
+				Client.ExecuteAsync(Request, Response => Handler(Response));
+			}
 		}
 
 		/// <summary>
