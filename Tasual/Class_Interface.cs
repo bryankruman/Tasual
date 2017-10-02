@@ -145,7 +145,7 @@ namespace Tasual
 			public static void Handler(IRestResponse Response)
 			{
 				// Debug
-				Console.WriteLine(Response.Content);
+				Console.WriteLine(Response.StatusDescription);
 
 				// Handle response by status 
 				switch (Response.StatusCode)
