@@ -192,7 +192,6 @@
 			this.MenuStrip_Sources.Name = "MenuStrip_Sources";
 			this.MenuStrip_Sources.Size = new System.Drawing.Size(76, 20);
 			this.MenuStrip_Sources.Text = "Sources";
-			this.MenuStrip_Sources.Visible = false;
 			this.MenuStrip_Sources.Click += new System.EventHandler(this.MenuStrip_Sources_Click);
 			// 
 			// ListView
@@ -394,7 +393,7 @@
             this.MenuStrip_Group_MoveTasks,
             this.MenuStrip_Group_Delete});
 			this.MenuStrip_Group.Name = "MenuStrip_Header";
-			this.MenuStrip_Group.Size = new System.Drawing.Size(153, 158);
+			this.MenuStrip_Group.Size = new System.Drawing.Size(139, 136);
 			this.MenuStrip_Group.Opening += new System.ComponentModel.CancelEventHandler(this.MenuStrip_Group_Opening);
 			// 
 			// MenuStrip_Group_Create
@@ -447,14 +446,14 @@
 			this.MenuStrip_Group_MoveTasks.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuStrip_Group_Move_Blank});
 			this.MenuStrip_Group_MoveTasks.Name = "MenuStrip_Group_MoveTasks";
-			this.MenuStrip_Group_MoveTasks.Size = new System.Drawing.Size(152, 22);
+			this.MenuStrip_Group_MoveTasks.Size = new System.Drawing.Size(138, 22);
 			this.MenuStrip_Group_MoveTasks.Text = "Move Tasks";
 			this.MenuStrip_Group_MoveTasks.DropDownOpening += new System.EventHandler(this.MenuStrip_Group_MoveTasks_DropDownOpening);
 			// 
 			// MenuStrip_Group_Move_Blank
 			// 
 			this.MenuStrip_Group_Move_Blank.Name = "MenuStrip_Group_Move_Blank";
-			this.MenuStrip_Group_Move_Blank.Size = new System.Drawing.Size(152, 22);
+			this.MenuStrip_Group_Move_Blank.Size = new System.Drawing.Size(130, 22);
 			this.MenuStrip_Group_Move_Blank.Text = "Blank Item";
 			// 
 			// MenuStrip_Group_Delete
@@ -481,7 +480,7 @@
             this.MenuStrip_Item_Create_Quick,
             this.MenuStrip_Item_Create_Advanced});
 			this.MenuStrip_Item_Create.Name = "MenuStrip_Item_Create";
-			this.MenuStrip_Item_Create.Size = new System.Drawing.Size(152, 22);
+			this.MenuStrip_Item_Create.Size = new System.Drawing.Size(124, 22);
 			this.MenuStrip_Item_Create.Text = "Create";
 			// 
 			// MenuStrip_Item_Create_Quick
@@ -504,7 +503,7 @@
             this.MenuStrip_Item_Edit_Quick,
             this.MenuStrip_Item_Edit_Advanced});
 			this.MenuStrip_Item_Edit.Name = "MenuStrip_Item_Edit";
-			this.MenuStrip_Item_Edit.Size = new System.Drawing.Size(152, 22);
+			this.MenuStrip_Item_Edit.Size = new System.Drawing.Size(124, 22);
 			this.MenuStrip_Item_Edit.Text = "Edit";
 			// 
 			// MenuStrip_Item_Edit_Quick
@@ -524,7 +523,7 @@
 			// MenuStrip_Item_Duplicate
 			// 
 			this.MenuStrip_Item_Duplicate.Name = "MenuStrip_Item_Duplicate";
-			this.MenuStrip_Item_Duplicate.Size = new System.Drawing.Size(152, 22);
+			this.MenuStrip_Item_Duplicate.Size = new System.Drawing.Size(124, 22);
 			this.MenuStrip_Item_Duplicate.Text = "Duplicate";
 			this.MenuStrip_Item_Duplicate.Click += new System.EventHandler(this.MenuStrip_Item_Duplicate_Click);
 			// 
@@ -533,20 +532,20 @@
 			this.MenuStrip_Item_Move.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuStrip_Item_Move_Blank});
 			this.MenuStrip_Item_Move.Name = "MenuStrip_Item_Move";
-			this.MenuStrip_Item_Move.Size = new System.Drawing.Size(152, 22);
+			this.MenuStrip_Item_Move.Size = new System.Drawing.Size(124, 22);
 			this.MenuStrip_Item_Move.Text = "Move";
 			this.MenuStrip_Item_Move.DropDownOpening += new System.EventHandler(this.MenuStrip_Item_Move_DropDownOpening);
 			// 
 			// MenuStrip_Item_Move_Blank
 			// 
 			this.MenuStrip_Item_Move_Blank.Name = "MenuStrip_Item_Move_Blank";
-			this.MenuStrip_Item_Move_Blank.Size = new System.Drawing.Size(152, 22);
+			this.MenuStrip_Item_Move_Blank.Size = new System.Drawing.Size(130, 22);
 			this.MenuStrip_Item_Move_Blank.Text = "Blank Item";
 			// 
 			// MenuStrip_Item_Delete
 			// 
 			this.MenuStrip_Item_Delete.Name = "MenuStrip_Item_Delete";
-			this.MenuStrip_Item_Delete.Size = new System.Drawing.Size(152, 22);
+			this.MenuStrip_Item_Delete.Size = new System.Drawing.Size(124, 22);
 			this.MenuStrip_Item_Delete.Text = "Delete";
 			this.MenuStrip_Item_Delete.Click += new System.EventHandler(this.MenuStrip_Item_Delete_Click);
 			// 
