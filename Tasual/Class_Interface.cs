@@ -34,27 +34,27 @@ namespace Tasual
 			/// </summary>
 			public class RequestObject
 			{
-				/// <summary>Integer: interface: Interface version</summary>
+				/// <summary>interface: Interface version</summary>
 				[JsonProperty("interface")]
 				public int Interface { get; set; }
 
-				/// <summary>String: type: Client type (application, service, etc)</summary>
+				/// <summary>type: Client type (application, service, etc)</summary>
 				[JsonProperty("type")]
 				public string Type { get; set; }
 
-				/// <summary>String: platform: Client platform (Windows version, Linux version, mobile OS, etc)</summary>
+				/// <summary>platform: Client platform (Windows version, Linux version, mobile OS, etc)</summary>
 				[JsonProperty("platform")]
 				public string Platform { get; set; }
 
-				/// <summary>String: version: Client version (from assembly info, major.minor.patch)</summary>
+				/// <summary>version: Client version (from assembly info, major.minor.patch)</summary>
 				[JsonProperty("version")]
 				public string Version { get; set; }
 
-				/// <summary>String: hash: Client unique hash (created and stored in the settings.json file) to identify this client</summary>
+				/// <summary>hash: Client unique hash (created and stored in the settings.json file) to identify this client</summary>
 				[JsonProperty("hash")]
 				public string Hash { get; set; }
 
-				/// <summary>Boolean: autoupdate: Auto-update enabled</summary>
+				/// <summary>autoupdate: Auto-update enabled</summary>
 				[JsonProperty("autoupdate")]
 				public bool AutoUpdate { get; set; }
 
@@ -80,23 +80,23 @@ namespace Tasual
 			/// </summary>
 			public class ResponseObject
 			{
-				/// <summary>Integer: interface: Interface version (perhaps redundant?)</summary>
+				/// <summary>interface: Interface version (perhaps redundant?)</summary>
 				[JsonProperty("interface")]
 				public int Interface { get; set; }
 
-				/// <summary>String: serverversion: Server version (from assembly info, major.minor.patch)</summary>
+				/// <summary>serverversion: Server version (from assembly info, major.minor.patch)</summary>
 				[JsonProperty("serverversion")]
 				public string ServerVersion { get; set; }
 
-				/// <summary>String: latestversion: Latest release version (from assembly info of client type, major.minor.patch)</summary>
+				/// <summary>latestversion: Latest release version (from assembly info of client type, major.minor.patch)</summary>
 				[JsonProperty("latestversion")]
 				public string LatestVersion { get; set; }
 
-				/// <summary>Boolean: shouldupdate: Should client update (checks whether update is available for client)</summary>
+				/// <summary>shouldupdate: Should client update (checks whether update is available for client)</summary>
 				[JsonProperty("shouldupdate")]
 				public bool ShouldUpdate { get; set; }
 
-				/// <summary>String: updateurl: URL for update package</summary>
+				/// <summary>updateurl: URL for update package</summary>
 				[JsonProperty("updateurl")]
 				public string UpdateURL { get; set; }
 
@@ -152,6 +152,9 @@ namespace Tasual
 				{
 					case System.Net.HttpStatusCode.OK:
 						{
+							// Server is telling us that our VersionCheck was successful
+							// Next step: Update stored information, and determine whether we should prompt the user about updating 
+
 							var Content = JsonConvert.DeserializeObject<ResponseObject>(Response.Content);
 
 							// TODO: Store the latest version and list it in the about dialog
@@ -164,8 +167,13 @@ namespace Tasual
 							}
 							break;
 						}
-					case System.Net.HttpStatusCode.Forbidden:
+
+					default:
+					case System.Net.HttpStatusCode.BadRequest:
 						{
+							// Somehow there was an error in how the request was formed, this shouldn't happen normally.
+							// Next step: Retry (up to 5 times, after that throw messagebox with network error warning)
+							// TODO: Throw an error message here.
 							break;
 						}
 				}
@@ -192,35 +200,35 @@ namespace Tasual
 			/// </summary>
 			public class RequestObject
 			{
-				/// <summary>Integer: interface: Interface version</summary>
+				/// <summary>interface: Interface version</summary>
 				[JsonProperty("interface")]
 				public int Interface { get; set; }
 
-				/// <summary>String: type: Client type (application, service, etc)</summary>
+				/// <summary>type: Client type (application, service, etc)</summary>
 				[JsonProperty("type")]
 				public string Type { get; set; }
 
-				/// <summary>String: platform: Client platform</summary>
+				/// <summary>platform: Client platform</summary>
 				[JsonProperty("platform")]
 				public string Platform { get; set; }
 
-				/// <summary>String: version: Client version</summary>
+				/// <summary>version: Client version</summary>
 				[JsonProperty("version")]
 				public string Version { get; set; }
 
-				/// <summary>String: hash: Client unique hash</summary>
+				/// <summary>hash: Client unique hash</summary>
 				[JsonProperty("hash")]
 				public string Hash { get; set; }
 
-				/// <summary>String: name: Real name of user to register</summary>
+				/// <summary>name: Real name of user to register</summary>
 				[JsonProperty("name")]
 				public string Name { get; set; }
 
-				/// <summary>String: email: Email address of user to register</summary>
+				/// <summary>email: Email address of user to register</summary>
 				[JsonProperty("email")]
 				public string Email { get; set; }
 
-				/// <summary>String: password: Password of user to register</summary>
+				/// <summary>password: Password of user to register</summary>
 				[JsonProperty("password")]
 				public string Password { get; set; }
 
@@ -287,10 +295,28 @@ namespace Tasual
 				{
 					case System.Net.HttpStatusCode.OK:
 						{
+							// Server is telling us that our registration went fine.
+							// Next step: Send SignIn request
 							break;
 						}
 					case System.Net.HttpStatusCode.Forbidden:
 						{
+							// Server is telling us that registration was unsuccessful.
+							// Next step: Wait for user to confirm error and fix possible mistake
+							// TODO: Show error message with reason for failure, like one of these:
+							//  - Service currently disabled
+							//  - Invalid email or password requirements (NOTE: Client should filter this ahead of time... shouldn't really happen)
+							//  - Email already registered
+							//  - Banned from service
+							break;
+						}
+
+					default:
+					case System.Net.HttpStatusCode.BadRequest:
+						{
+							// Somehow there was an error in how the request was formed, this shouldn't happen normally.
+							// Next step: Retry (up to 5 times, after that throw messagebox with network error warning)
+							// TODO: Throw an error message here.
 							break;
 						}
 				}
@@ -312,23 +338,23 @@ namespace Tasual
 			/// </summary>
 			public class RequestObject
 			{
-				/// <summary>Integer: interface: Interface version</summary>
+				/// <summary>interface: Interface version</summary>
 				[JsonProperty("interface")]
 				public int Interface { get; set; }
 
-				/// <summary>String: hash: Client unique hash</summary>
+				/// <summary>hash: Client unique hash</summary>
 				[JsonProperty("hash")]
 				public string Hash { get; set; }
 
-				/// <summary>String: email: Email address of user to register</summary>
+				/// <summary>email: Email address of user to register</summary>
 				[JsonProperty("email")]
 				public string Email { get; set; }
 
-				/// <summary>String: password: Password of user to register</summary>
+				/// <summary>password: Password of user to register</summary>
 				[JsonProperty("password")]
 				public string Password { get; set; }
 
-				/// <summary>DateTime: localmodified: Date and time of last modification to the local database</summary>
+				/// <summary>localmodified: Date and time of last modification to the local database</summary>
 				[JsonProperty("localmodified")]
 				public DateTime LocalModified { get; set; }
 
@@ -352,26 +378,20 @@ namespace Tasual
 			/// </summary>
 			public class ResponseObject
 			{
-				/// <summary>String: session: Session hash ID generated by server to identify this login instance between the server and the client</summary>
+				/// <summary>session: Session hash ID generated by server to identify this login instance between the server and the client</summary>
 				[JsonProperty("session")]
 				public string Session { get; set; }
 
-				/// <summary>String: name: Real name of user (this may have been changed by the user on the website)</summary>
+				/// <summary>name: Real name of user (this may have been changed by the user on the website)</summary>
 				[JsonProperty("name")]
 				public string Name { get; set; }
 
-				/// <summary>Boolean: shouldsync: Whether or not the client should send its data to the server and the server should send its data to the client</summary>
-				[JsonProperty("shouldsync")]
-				public bool ShouldSync { get; set; }
-
 				public ResponseObject(
 					string Session,
-					string Name,
-					bool ShouldSync)
+					string Name)
 				{
 					this.Session = Session;
 					this.Name = Name;
-					this.ShouldSync = ShouldSync;
 				}
 			}
 
@@ -413,10 +433,35 @@ namespace Tasual
 				{
 					case System.Net.HttpStatusCode.OK:
 						{
+							// Server is telling us the sign in went fine, no need to sync data.
+							// Next step: Set internal flag saying our session is active
+							break;
+						}
+					case System.Net.HttpStatusCode.Continue:
+						{
+							// Server is telling us the sign in went fine, and we should sync our data.
+							// Next step: Send Sync request
 							break;
 						}
 					case System.Net.HttpStatusCode.Forbidden:
 						{
+							// Server is telling us that our sign in has failed.
+							// Next step: Wait for user to confirm error and fix possible mistake
+							// NOTE: Check "could not sync" flag to see if the SignIn request was sent because of a failure to sync, display error accordingly
+							// TODO: Show error message with reason for failure, like one of these:
+							//  - Service currently disabled
+							//  - Email not registered
+							//  - Invalid password
+							//  - Banned from service
+							break;
+						}
+
+					default:
+					case System.Net.HttpStatusCode.BadRequest:
+						{
+							// Somehow there was an error in how the request was formed, this shouldn't happen normally.
+							// Next step: Retry (up to 5 times, after that throw messagebox with network error warning)
+							// TODO: Throw an error message here.
 							break;
 						}
 				}
@@ -438,11 +483,11 @@ namespace Tasual
 			/// </summary>
 			public class RequestObject
 			{
-				/// <summary>String: session: Session hash ID retrieved earlier from the server</summary>
+				/// <summary>session: Session hash ID retrieved earlier from the server</summary>
 				[JsonProperty("session")]
 				public string Session { get; set; }
 
-				/// <summary>DateTime: localmodified: Date and time of last modification to the local database</summary>
+				/// <summary>localmodified: Date and time of last modification to the local database</summary>
 				[JsonProperty("localmodified")]
 				public DateTime LocalModified { get; set; }
 
@@ -488,25 +533,29 @@ namespace Tasual
 				{
 					case System.Net.HttpStatusCode.OK:
 						{
-							// "connection still good, no need to sync" response
+							// Server is telling us that our session is good and doesn't need to sync.
+							// Next step: Nothing, all is good in the world :)
 							break;
 						}
 					case System.Net.HttpStatusCode.Continue:
 						{
-							// "connection still good, and also we should sync" response
+							// Server is telling us that our session is good and that we should sync databases.
+							// Next step: Send Sync request
 							break;
 						}
 					case System.Net.HttpStatusCode.Forbidden:
 						{
-							// "connection isn't good anymore, reconnect"
+							// Server is telling us that our session is no longer active.
+							// Next step: Send SignIn request
 							break;
 						}
 
 					default:
 					case System.Net.HttpStatusCode.BadRequest:
 						{
-							// "missing content data, retry"
-							// 
+							// Somehow there was an error in how the request was formed, this shouldn't happen normally.
+							// Next step: Retry (up to 5 times, after that throw messagebox with network error warning)
+							// TODO: Throw an error message here.
 							break;
 						}
 				}
@@ -532,15 +581,15 @@ namespace Tasual
 			/// </summary>
 			public class RequestObject
 			{
-				/// <summary>String: session: Session hash ID retrieved earlier from the server</summary>
+				/// <summary>session: Session hash ID retrieved earlier from the server</summary>
 				[JsonProperty("session")]
 				public string Session { get; set; }
 
-				/// <summary>String: timestamp: Date and time of when this sync was sent from the client</summary>
+				/// <summary>timestamp: Date and time of when this sync was sent from the client</summary>
 				[JsonProperty("timestamp")]
 				public DateTime Timestamp { get; set; }
 
-				/// <summary>TaskArray: localdatabase: Entire local database of tasks</summary>
+				/// <summary>localdatabase: Entire local database of tasks</summary>
 				[JsonProperty("localdatabase")]
 				public List<Task> LocalDatabase { get; set; }
 
@@ -560,11 +609,11 @@ namespace Tasual
 			/// </summary>
 			public class ResponseObject
 			{
-				/// <summary>DateTime: timestamp: Date and time of when this sync was completed and sent back from the server to the client</summary>
+				/// <summary>timestamp: Date and time of when this sync was completed and sent back from the server to the client</summary>
 				[JsonProperty("timestamp")]
 				public DateTime Timestamp { get; set; }
 
-				/// <summary>TaskArray: remotedatabase: Updated and merged database from server</summary>
+				/// <summary>remotedatabase: Updated and merged database from server</summary>
 				[JsonProperty("remotedatabase")]
 				public List<Task> RemoteDatabase { get; set; }
 
@@ -611,24 +660,23 @@ namespace Tasual
 				{
 					case System.Net.HttpStatusCode.OK:
 						{
-							// "connection still good, no need to sync" response
-							break;
-						}
-					case System.Net.HttpStatusCode.Continue:
-						{
-							// "connection still good, and also we should sync" response
+							// Server is telling us that the synchronization went fine.
+							// Next step: Copy data from the response into the local database
 							break;
 						}
 					case System.Net.HttpStatusCode.Forbidden:
 						{
-							// "connection isn't good anymore, reconnect"
+							// Server is telling us that our session is not valid and thus the sync did not happen.
+							// Next step: Create "could not sync" flag, send SignIn request
 							break;
 						}
 
 					default:
 					case System.Net.HttpStatusCode.BadRequest:
 						{
-							// "missing content data, retry"
+							// Somehow there was an error in how the request was formed, this shouldn't happen normally.
+							// Next step: Retry (up to 5 times, after that throw messagebox with network error warning)
+							// TODO: Throw an error message here.
 							break;
 						}
 				}
