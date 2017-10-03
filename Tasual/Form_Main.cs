@@ -8,11 +8,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.IO;
 using System.Windows.Forms;
 using BrightIdeasSoftware;
+using System.Net;
+using Syroot.Windows.IO;
 
 namespace Tasual
 {
@@ -133,6 +136,46 @@ namespace Tasual
 			}
 
 			return false;
+		}
+
+		/// <summary>
+		/// Begin downloading the updated installer file for Tasual.
+		/// </summary>
+		public static void DownloadUpdate()
+		{
+			// TODO: Add checks here to see whether the URL is valid
+			// TODO: Also change the file name if the file already exists
+			try
+			{
+				using (WebClient Client = new WebClient())
+				{
+					Client.DownloadFileAsync(new Uri(Settings.Config.UpdateURL), Path.Combine(KnownFolders.Downloads.Path, "TasualSetup.msi"));
+					Client.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadUpdate_Completed);
+				}
+			}
+			catch
+			{
+				Console.WriteLine("Download failed!");
+			}
+		}
+
+		/// <summary>
+		/// Handler for when the update download is finished.
+		/// </summary>
+		/// <param name="Sender">Sender of the AsyncCompleted event.</param>
+		/// <param name="Args">AsyncCompleted event arguments.</param>
+		public static void DownloadUpdate_Completed(object Sender, AsyncCompletedEventArgs Args)
+		{
+			Console.WriteLine("Download completed!");
+			try
+			{
+				string FileLocation = Path.Combine(KnownFolders.Downloads.Path, "TasualSetup.msi");
+
+				if (!File.Exists(FileLocation)) { return; }
+
+				Process.Start("explorer.exe", String.Format("/select, \"{0}\"", FileLocation));
+			}
+			catch { }
 		}
 
 		/// <summary>

@@ -175,6 +175,7 @@ namespace Tasual
 								if (Choice == DialogResult.Yes)
 								{
 									Console.WriteLine("API: VersionCheck (v1): Handler: Triggering download of update...");
+									Form_Main.DownloadUpdate();
 								}
 							}
 							else if (Result < 0)
