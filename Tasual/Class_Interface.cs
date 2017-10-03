@@ -21,8 +21,6 @@ namespace Tasual
 		/// </summary>
 		public static string ServerAddress = "http://localhost:58315/";
 
-		//public static Setting Settings;
-
 
 		// ================================
 		//  Interface #1: v1: VersionCheck
@@ -101,7 +99,7 @@ namespace Tasual
 			public static void Request()
 			{
 				var Client = new RestClient(ServerAddress);
-				Client.Authenticator = new HttpBasicAuthenticator("foo", "bar");
+				//Client.Authenticator = new HttpBasicAuthenticator("foo", "bar"); // VersionCheck doesn't need authentication
 
 				var Request = new RestRequest("api/v1/versioncheck", Method.POST);
 				Request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -115,7 +113,7 @@ namespace Tasual
 				));
 
 				Console.WriteLine(String.Format(
-					"API: VersionCheck: Request: Sending to {0}", 
+					"API: VersionCheck (v1): Request: Sending to {0}", 
 					ServerAddress
 				));
 
@@ -131,7 +129,7 @@ namespace Tasual
 				if (Response.ResponseStatus != ResponseStatus.Completed)
 				{
 					Console.WriteLine(String.Format(
-						"API: VersionCheck: Handler: Response status '{0}'", 
+						"API: VersionCheck (v1): Handler: Response status '{0}'", 
 						Response.ResponseStatus)
 					);
 					return;
@@ -158,7 +156,7 @@ namespace Tasual
 							if (Result > 0)
 							{
 								Console.WriteLine(String.Format(
-									"API: VersionCheck: Handler: Latest ({0}) is newer than current ({1})!",
+									"API: VersionCheck (v1): Handler: Latest ({0}) is newer than current ({1})!",
 									LatestVersion.ToString(3),
 									CurrentVersion.ToString(3)
 								));
@@ -176,13 +174,13 @@ namespace Tasual
 
 								if (Choice == DialogResult.Yes)
 								{
-									Console.WriteLine("API: VersionCheck: Handler: Triggering download of update...");
+									Console.WriteLine("API: VersionCheck (v1): Handler: Triggering download of update...");
 								}
 							}
 							else if (Result < 0)
 							{
 								Console.WriteLine(String.Format(
-									"API: VersionCheck: Handler: Current ({0}) is newer than latest ({1})!",
+									"API: VersionCheck (v1): Handler: Current ({0}) is newer than latest ({1})!",
 									CurrentVersion.ToString(3),
 									LatestVersion.ToString(3)
 								));
@@ -190,7 +188,7 @@ namespace Tasual
 							else
 							{
 								Console.WriteLine(String.Format(
-									"API: VersionCheck: Handler: Current version is up to date! ({0}))",
+									"API: VersionCheck (v1): Handler: Current version is up to date! ({0}))",
 									CurrentVersion.ToString(3)
 								));
 							}
