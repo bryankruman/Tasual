@@ -111,12 +111,12 @@ namespace Tasual
 			public static void Request(Setting Settings)
 			{
 				var Client = new RestClient(ServerAddress);
-				//Client.Authenticator = new HttpBasicAuthenticator("foo", "bar");
-				var Request = new RestRequest("api/v1/versioncheck", Method.POST);
+				Client.Authenticator = new HttpBasicAuthenticator("foo", "bar");
 
+				var Request = new RestRequest("api/v1/versioncheck", Method.POST);
 				Request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
 				Request.RequestFormat = DataFormat.Json;
-
+				
 				Request.AddJsonBody(new RequestObject(
 					AssemblyInfo.Product,
 					Environment.OSVersion.VersionString,
@@ -125,6 +125,10 @@ namespace Tasual
 					Settings.AutoUpdate
 				));
 
+				Console.WriteLine(String.Format(
+					"API: VersionCheck: Request: Sending to {0}", 
+					ServerAddress
+				));
 				Client.ExecuteAsync(Request, Response => Handler(Response));
 			}
 
@@ -134,10 +138,15 @@ namespace Tasual
 			/// <param name="Response">Response with IRestResponse formatting.</param>
 			public static void Handler(IRestResponse Response)
 			{
-				// Debug
-				Console.WriteLine(Response.Content);
+				if (Response.ResponseStatus != ResponseStatus.Completed)
+				{
+					Console.WriteLine(String.Format(
+						"API: VersionCheck: Handler: Response status '{0}'", 
+						Response.ResponseStatus)
+					);
+					return;
+				}
 
-				// Handle response by status 
 				switch (Response.StatusCode)
 				{
 					case System.Net.HttpStatusCode.OK:
@@ -148,14 +157,14 @@ namespace Tasual
 							var Content = JsonConvert.DeserializeObject<ResponseObject>(Response.Content);
 
 							// TODO: Store the latest version and list it in the about dialog
-							// TODO: Do we really need the server version? 
+							
 
 							if (Content.ShouldUpdate)
 							{
 								// TODO: Mark internal flag in settings to initiate update
 								// TODO: Store update package URL in settings
 							}
-							break;
+							return;
 						}
 
 					default:
