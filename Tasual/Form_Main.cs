@@ -1815,7 +1815,7 @@ namespace Tasual
 		private void MenuStrip_Icon_AddLocation_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
-			Form_Location LocationForm = new Form_Location(this, ArrayHandler.Tasks.IndexOf(Task));
+			Form_Location LocationForm = new Form_Location(ArrayHandler.Tasks.IndexOf(Task));
 			LocationForm.ShowDialog(this);
 		}
 
@@ -1898,7 +1898,7 @@ namespace Tasual
 		private void MenuStrip_Icon_Location_Edit_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
-			Form_Location LocationForm = new Form_Location(this, ArrayHandler.Tasks.IndexOf(Task));
+			Form_Location LocationForm = new Form_Location(ArrayHandler.Tasks.IndexOf(Task));
 			LocationForm.ShowDialog(this);
 		}
 
