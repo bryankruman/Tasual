@@ -17,7 +17,7 @@ namespace Tasual
 		/// <summary>
 		/// Address used for API communication
 		/// </summary>
-		public static string ServerAddress = "http://tasual.org";
+		public static string ServerAddress = "http://localhost:58315/";
 
 
 		// ============================
@@ -124,10 +124,10 @@ namespace Tasual
 				var Client = new RestClient(ServerAddress);
 				var Request = new RestRequest("api/versioncheck", Method.POST);
 
-				Request.AddHeader("Content-type", "application/json");
+				Request.AddHeader("Content-Type", "application/json");
 				Request.RequestFormat = DataFormat.Json;
 
-				Request.AddObject(new RequestObject(
+				Request.AddJsonBody(new RequestObject(
 					1,
 					AssemblyInfo.Product,
 					Environment.OSVersion.VersionString,
@@ -146,7 +146,7 @@ namespace Tasual
 			public static void Handler(IRestResponse Response)
 			{
 				// Debug
-				Console.WriteLine(Response.StatusDescription);
+				Console.WriteLine(Response.Content);
 
 				// Handle response by status 
 				switch (Response.StatusCode)
@@ -265,7 +265,7 @@ namespace Tasual
 				var Client = new RestClient(ServerAddress);
 				var Request = new RestRequest("api/registration", Method.POST);
 
-				Request.AddHeader("Content-type", "application/json");
+				Request.AddHeader("Content-Type", "application/json");
 				Request.RequestFormat = DataFormat.Json;
 
 				Request.AddObject(new RequestObject(
@@ -406,7 +406,7 @@ namespace Tasual
 				var Client = new RestClient(ServerAddress);
 				var Request = new RestRequest("api/signin", Method.POST);
 
-				Request.AddHeader("Content-type", "application/json");
+				Request.AddHeader("Content-Type", "application/json");
 				Request.RequestFormat = DataFormat.Json;
 
 				Request.AddObject(new RequestObject(
@@ -509,7 +509,7 @@ namespace Tasual
 				var Client = new RestClient(ServerAddress);
 				var Request = new RestRequest("api/keepalive", Method.POST);
 
-				Request.AddHeader("Content-type", "application/json");
+				Request.AddHeader("Content-Type", "application/json");
 				Request.RequestFormat = DataFormat.Json;
 
 				Request.AddObject(new RequestObject(
@@ -635,7 +635,7 @@ namespace Tasual
 				var Client = new RestClient(ServerAddress);
 				var Request = new RestRequest("api/keepalive", Method.POST);
 
-				Request.AddHeader("Content-type", "application/json");
+				Request.AddHeader("Content-Type", "application/json");
 				Request.RequestFormat = DataFormat.Json;
 
 				Request.AddObject(new RequestObject(
