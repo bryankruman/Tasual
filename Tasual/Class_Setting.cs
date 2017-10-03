@@ -18,6 +18,10 @@ namespace Tasual
 	/// </summary>
 	public class Setting
 	{
+		/// <summary>Unique identifier hash for this instance of the Tasual application.</summary>
+		[JsonProperty("hash")]
+		public string Hash { get; set; }
+
 		/// <summary>Storage/data protocol to use for data retrieval.</summary>
 		[JsonProperty("protocol")]
 		public Protocols Protocol { get; set; } = Protocols.JSON;
@@ -35,6 +39,10 @@ namespace Tasual
 		/// <summary>Setting for whether Tasual is launched on system startup.</summary>
 		[JsonProperty("launchonstartup")]
 		public bool LaunchOnStartup { get; set; } = false;
+
+		/// <summary>Automatically check for updates on application launch.</summary>
+		[JsonProperty("autoupdate")]
+		public bool AutoUpdate { get; set; } = true;
 
 		/// <summary>Setting for whether Tasual gets minimized to tray instead of taskbar.</summary>
 		[JsonProperty("minimizetotray")]
@@ -262,6 +270,7 @@ namespace Tasual
 				string AppDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Tasual");
 
 				string SettingsPath;
+				bool ShouldSave = false;
 
 				if (string.IsNullOrEmpty(Settings.SettingsPath) || !File.Exists(Path.Combine(Settings.SettingsPath, "settings.cfg")))
 				{
@@ -294,6 +303,10 @@ namespace Tasual
 
 						Settings.SettingsPath = AppDataPath;
 
+						// Create identifier hash
+						Settings.Hash = Guid.NewGuid().ToString("N");
+						
+						// Save new settings file
 						Save(ref Settings);
 						return;
 					}
@@ -311,6 +324,13 @@ namespace Tasual
 					Settings.SettingsPath = SettingsPath;
 				}
 
+				// Create identifier hash if necessary
+				if (string.IsNullOrWhiteSpace(Settings.Hash))
+				{
+					Settings.Hash = Guid.NewGuid().ToString("N");
+					ShouldSave = true;
+				}
+
 				// Check if there is a StorageFolder specified and whether it will work for us
 				if (!string.IsNullOrWhiteSpace(Settings.StorageFolder) && Directory.Exists(Settings.StorageFolder))
 				{
@@ -320,18 +340,23 @@ namespace Tasual
 				{
 					// If a tasks database already exists in the Base directory, choose that
 					Settings.StorageFolder = BasePath;
-					Save(ref Settings);
+					ShouldSave = true;
 				}
 				else if (File.Exists(Path.Combine(AppDataPath, "tasks.db")))
 				{
 					// If a tasks database already exists in the Application Data directory, choose that
 					Settings.StorageFolder = AppDataPath;
-					Save(ref Settings);
+					ShouldSave = true;
 				}
 				else
 				{
 					// If no database was found already, just save to the same location as the settings file
 					Settings.StorageFolder = Settings.SettingsPath;
+					ShouldSave = true;
+				}
+
+				if (ShouldSave)
+				{
 					Save(ref Settings);
 				}
 			}

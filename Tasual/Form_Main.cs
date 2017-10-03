@@ -1662,7 +1662,7 @@ namespace Tasual
 		private void MenuStrip_Sources_Click(object Sender, EventArgs Args)
 		{
 			// Currently unused
-			Interface.VersionCheck.Request();
+			Interface.VersionCheck.Request(Settings);
 		}
 
 		// ListView: "Group"

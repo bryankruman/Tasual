@@ -118,7 +118,8 @@ namespace Tasual
 			/// <summary>
 			/// Generate the request to send to the server for VersionCheck.
 			/// </summary>
-			public static void Request()
+			/// <param name="Settings">Settings parameter to get hash and autoupdate setting from.</param>
+			public static void Request(Setting Settings)
 			{
 				var Client = new RestClient(ServerAddress);
 				var Request = new RestRequest("api/versioncheck", Method.POST);
@@ -128,11 +129,11 @@ namespace Tasual
 
 				Request.AddObject(new RequestObject(
 					1,
-					"Application",
-					"Windows 10",
-					"1.1",
-					"asdf",
-					true
+					AssemblyInfo.Product,
+					Environment.OSVersion.VersionString,
+					AssemblyInfo.Version,
+					Settings.Hash,
+					Settings.AutoUpdate
 				));
 
 				Client.ExecuteAsync(Request, Response => Handler(Response));
