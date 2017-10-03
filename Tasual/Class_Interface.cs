@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RestSharp;
+using RestSharp.Authenticators;
 
 namespace Tasual
 {
@@ -110,9 +111,10 @@ namespace Tasual
 			public static void Request(Setting Settings)
 			{
 				var Client = new RestClient(ServerAddress);
+				//Client.Authenticator = new HttpBasicAuthenticator("foo", "bar");
 				var Request = new RestRequest("api/v1/versioncheck", Method.POST);
 
-				Request.AddHeader("Content-Type", "application/json");
+				Request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
 				Request.RequestFormat = DataFormat.Json;
 
 				Request.AddJsonBody(new RequestObject(
