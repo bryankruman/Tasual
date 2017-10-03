@@ -25,9 +25,6 @@ namespace Tasual
 		//  Declarations
 		// ==============
 
-		/// <summary>Primary array containing list of tasks.</summary>
-		public List<Task> ArrayL = ArrayHandler.Tasks;
-
 		/// <summary>Persistent OlvListViewHitTestInfo for the calendar popout window.</summary>
 		private OlvListViewHitTestInfo CalendarPopout = null;
 
