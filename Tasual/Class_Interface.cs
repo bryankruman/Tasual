@@ -20,9 +20,9 @@ namespace Tasual
 		public static string ServerAddress = "http://localhost:58315/";
 
 
-		// ============================
-		//  Interface #1: VersionCheck
-		// ============================
+		// ================================
+		//  Interface #1: v1: VersionCheck
+		// ================================
 
 		/// <summary>
 		/// Class for the VersionCheck interface which checks for updates from the server.
@@ -34,10 +34,6 @@ namespace Tasual
 			/// </summary>
 			public class RequestObject
 			{
-				/// <summary>interface: Interface version</summary>
-				[JsonProperty("interface")]
-				public int Interface { get; set; }
-
 				/// <summary>type: Client type (application, service, etc)</summary>
 				[JsonProperty("type")]
 				public string Type { get; set; }
@@ -59,14 +55,12 @@ namespace Tasual
 				public bool AutoUpdate { get; set; }
 
 				public RequestObject(
-					int Interface,
 					string Type,
 					string Platform,
 					string Version,
 					string Hash,
 					bool AutoUpdate)
 				{
-					this.Interface = Interface;
 					this.Type = Type;
 					this.Platform = Platform;
 					this.Version = Version;
@@ -80,10 +74,6 @@ namespace Tasual
 			/// </summary>
 			public class ResponseObject
 			{
-				/// <summary>interface: Interface version (perhaps redundant?)</summary>
-				[JsonProperty("interface")]
-				public int Interface { get; set; }
-
 				/// <summary>serverversion: Server version (from assembly info, major.minor.patch)</summary>
 				[JsonProperty("serverversion")]
 				public string ServerVersion { get; set; }
@@ -101,13 +91,11 @@ namespace Tasual
 				public string UpdateURL { get; set; }
 
 				public ResponseObject(
-					int Interface,
 					string ServerVersion,
 					string LatestVersion,
 					bool ShouldUpdate,
 					string UpdateURL)
 				{
-					this.Interface = Interface;
 					this.ServerVersion = ServerVersion;
 					this.LatestVersion = LatestVersion;
 					this.ShouldUpdate = ShouldUpdate;
@@ -124,11 +112,11 @@ namespace Tasual
 				var Client = new RestClient(ServerAddress);
 				var Request = new RestRequest("api/versioncheck", Method.POST);
 
+				Request.AddQueryParameter("version", "1");
 				Request.AddHeader("Content-Type", "application/json");
 				Request.RequestFormat = DataFormat.Json;
 
 				Request.AddJsonBody(new RequestObject(
-					1,
 					AssemblyInfo.Product,
 					Environment.OSVersion.VersionString,
 					AssemblyInfo.Version,
@@ -182,9 +170,9 @@ namespace Tasual
 		}
 
 
-		// ============================
-		//  Interface #2: Registration
-		// ============================
+		// ================================
+		//  Interface #2: v1: Registration
+		// ================================
 
 		/// <summary>
 		/// Class for the Registration interface which registers an account on the server.
@@ -201,10 +189,6 @@ namespace Tasual
 			/// </summary>
 			public class RequestObject
 			{
-				/// <summary>interface: Interface version</summary>
-				[JsonProperty("interface")]
-				public int Interface { get; set; }
-
 				/// <summary>type: Client type (application, service, etc)</summary>
 				[JsonProperty("type")]
 				public string Type { get; set; }
@@ -234,7 +218,6 @@ namespace Tasual
 				public string Password { get; set; }
 
 				public RequestObject(
-					int Interface,
 					string Type,
 					string Platform,
 					string Version,
@@ -243,7 +226,6 @@ namespace Tasual
 					string Email,
 					string Password)
 				{
-					this.Interface = Interface;
 					this.Type = Type;
 					this.Platform = Platform;
 					this.Version = Version;
@@ -269,7 +251,6 @@ namespace Tasual
 				Request.RequestFormat = DataFormat.Json;
 
 				Request.AddObject(new RequestObject(
-					1,
 					"Application",
 					"Windows 10",
 					"1.1",
@@ -325,9 +306,9 @@ namespace Tasual
 		}
 
 
-		// ======================
-		//  Interface #3: SignIn
-		// ======================
+		// ==========================
+		//  Interface #3: v1: SignIn
+		// ==========================
 
 		/// <summary>
 		/// Class for the SignIn interface which authenticates and starts a session with the server.
@@ -339,10 +320,6 @@ namespace Tasual
 			/// </summary>
 			public class RequestObject
 			{
-				/// <summary>interface: Interface version</summary>
-				[JsonProperty("interface")]
-				public int Interface { get; set; }
-
 				/// <summary>hash: Client unique hash</summary>
 				[JsonProperty("hash")]
 				public string Hash { get; set; }
@@ -360,13 +337,11 @@ namespace Tasual
 				public DateTime LocalModified { get; set; }
 
 				public RequestObject(
-					int Interface,
 					string Hash,
 					string Email,
 					string Password,
 					DateTime LocalModified)
 				{
-					this.Interface = Interface;
 					this.Hash = Hash;
 					this.Email = Email;
 					this.Password = Password;
@@ -410,7 +385,6 @@ namespace Tasual
 				Request.RequestFormat = DataFormat.Json;
 
 				Request.AddObject(new RequestObject(
-					1,
 					"asdf",
 					Email,
 					Password,
@@ -470,9 +444,9 @@ namespace Tasual
 		}
 
 
-		// =========================
-		//  Interface #4: KeepAlive
-		// =========================
+		// =============================
+		//  Interface #4: v1: KeepAlive
+		// =============================
 
 		/// <summary>
 		/// Class for the KeepAlive interface which keeps the session active and checks whether the database needs to sync.
@@ -564,9 +538,9 @@ namespace Tasual
 		}
 
 
-		// ====================
-		//  Interface #5: Sync
-		// ====================
+		// ========================
+		//  Interface #5: v1: Sync
+		// ========================
 
 		/// <summary>
 		/// Class for the Sync interface which synchronizes data between the client and the server.
