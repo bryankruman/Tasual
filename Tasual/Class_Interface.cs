@@ -159,16 +159,16 @@ namespace Tasual
 							{
 								Console.WriteLine(String.Format(
 									"API: VersionCheck: Handler: Latest ({0}) is newer than current ({1})!",
-									LatestVersion.ToString(),
-									CurrentVersion.ToString()
+									LatestVersion.ToString(3),
+									CurrentVersion.ToString(3)
 								));
 
 								if (!Settings.Config.PromptUpdate) { return; }
 								
 								DialogResult Choice = MessageBox.Show(
 									string.Format(
-										"New update (version {0}) available! Do you want to download the update now?",
-										LatestVersion.ToString()
+										"New update (version {0}) available!\nDo you want to download the update now?",
+										LatestVersion.ToString(3)
 									),
 									"Tasual",
 									MessageBoxButtons.YesNo,
@@ -183,15 +183,15 @@ namespace Tasual
 							{
 								Console.WriteLine(String.Format(
 									"API: VersionCheck: Handler: Current ({0}) is newer than latest ({1})!",
-									CurrentVersion.ToString(),
-									LatestVersion.ToString()
+									CurrentVersion.ToString(3),
+									LatestVersion.ToString(3)
 								));
 							}
 							else
 							{
 								Console.WriteLine(String.Format(
 									"API: VersionCheck: Handler: Current version is up to date! ({0}))",
-									CurrentVersion.ToString()
+									CurrentVersion.ToString(3)
 								));
 							}
 
