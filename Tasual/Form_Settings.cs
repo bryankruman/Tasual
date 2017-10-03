@@ -133,10 +133,10 @@ namespace Tasual
 
 			if (ChangedStorageFolder)
 			{
-				MainForm.Array_Save();
+				ArrayHandler.Save();
 			}
 
-			MainForm.Settings_Save();
+			Settings.Save();
 			MainForm.Settings_Apply();
 			MainForm.ListView_UpdateColumnSettings();
 			MainForm.UpdateGroupKeys();

@@ -969,7 +969,7 @@ namespace Tasual
 
 		private void Button_Notes_Click(object Sender, EventArgs Args)
 		{
-			Form_Notes NotesForm = new Form_Notes(MainForm, this);
+			Form_Notes NotesForm = new Form_Notes(this);
 			NotesForm.ShowDialog(this);
 		}
 
@@ -1135,7 +1135,7 @@ namespace Tasual
 			}
 
 			ArrayHandler.Tasks.Add(Task);
-			MainForm.Array_Save();
+			ArrayHandler.Save();
 			MainForm.UpdateGroupKeys(Task);
 			MainForm.CheckCollapsedGroup(Task);
 			MainForm.ListView.BuildList();

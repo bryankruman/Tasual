@@ -192,7 +192,7 @@ namespace Tasual
 					DateTime.MinValue);
 			}
 
-			MainForm.Array_Save();
+			ArrayHandler.Save();
 			MainForm.UpdateGroupKeys(_Task);
 			MainForm.ListView.BuildList();
 			MainForm.ListView.EnsureModelVisible(_Task);

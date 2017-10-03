@@ -95,22 +95,6 @@ namespace Tasual
 		// =============================
 
 		/// <summary>
-		/// Outside reference wrapper to save the array.
-		/// </summary>
-		/// <remarks>
-		/// This was necessary as simply calling ArrayHandler.Save() from other classes would give a CS1690 warning for
-		/// using a field of a marshal-by-reference class. Additionally, these methods must continue using references 
-		/// otherwise other functions in the program cease to be able to retrieve data from TaskArray.
-		/// 
-		/// TODO: Is this really the right way to handle this? Should we keep the array handling code purely in the 
-		/// main class? or is there another way to handle it...
-		/// </remarks>
-		public void Array_Save()
-		{
-			ArrayHandler.Save();
-		}
-
-		/// <summary>
 		/// Shorthand function to clear the entire task array, delete the local database, and reset the ListView.
 		/// </summary>
 		public void Array_ClearAll()
@@ -172,14 +156,6 @@ namespace Tasual
 				Size = Settings.Config.Size;
 				WindowState = Settings.Config.WindowState;
 			}
-		}
-
-		/// <summary>
-		/// Outside reference wrapper to save settings.
-		/// </summary>
-		public void Settings_Save()
-		{
-			Settings.Save();
 		}
 
 		/// <summary>
@@ -1851,7 +1827,7 @@ namespace Tasual
 		private void MenuStrip_Icon_AddNotes_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
-			Form_Notes NotesForm = new Form_Notes(this, ArrayHandler.Tasks.IndexOf(Task));
+			Form_Notes NotesForm = new Form_Notes(ArrayHandler.Tasks.IndexOf(Task));
 			NotesForm.ShowDialog(this);
 		}
 
@@ -1973,7 +1949,7 @@ namespace Tasual
 		private void MenuStrip_Icon_Notes_Edit_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
-			Form_Notes NotesForm = new Form_Notes(this, ArrayHandler.Tasks.IndexOf(Task));
+			Form_Notes NotesForm = new Form_Notes(ArrayHandler.Tasks.IndexOf(Task));
 			NotesForm.ShowDialog(this);
 		}
 

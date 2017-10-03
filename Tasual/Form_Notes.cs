@@ -13,18 +13,16 @@ namespace Tasual
 	public partial class Form_Notes : Form
 	{
 		private readonly Form_Create CreateForm;
-		private readonly Form_Main MainForm;
 		private readonly Task Task;
 		private readonly int Origination; // 1 = Main, 2 = Create
 
-		public Form_Notes(Form_Main PassedMain, int PassedIndex)
+		public Form_Notes(int PassedIndex)
 		{
 			try
 			{
 				InitializeComponent();
 
 				Origination = 1;
-				MainForm = PassedMain;
 				Task = ArrayHandler.Tasks[PassedIndex];
 
 				TextBox.Text = Task.Notes;
@@ -36,14 +34,13 @@ namespace Tasual
 			}
 		}
 
-		public Form_Notes(Form_Main PassedMain, Form_Create PassedCreate)
+		public Form_Notes(Form_Create PassedCreate)
 		{
 			try
 			{
 				InitializeComponent();
 
 				Origination = 2;
-				MainForm = PassedMain;
 				CreateForm = PassedCreate;
 
 				TextBox.Text = CreateForm.Notes;
@@ -62,9 +59,7 @@ namespace Tasual
 				if (Task != null)
 				{
 					Task.Notes = TextBox.Text;
-					MainForm.Array_Save();
-					//ArrayHandler.Save(ref MainForm.TaskArray, MainForm.Settings);
-					//MainForm.Tasual_Array_Save();
+					ArrayHandler.Save();
 				}
 				else
 				{
@@ -81,7 +76,7 @@ namespace Tasual
 		{
 			TextBox.AcceptsReturn = !CheckBox.Checked;
 			Settings.Config.EnterToSave = CheckBox.Checked;
-			MainForm.Settings_Save();
+			Settings.Save();
 		}
 
 		private void FormLoad(object Sender, EventArgs Args)
