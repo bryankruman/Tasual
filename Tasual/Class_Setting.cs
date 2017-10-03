@@ -16,8 +16,10 @@ namespace Tasual
 	/// <summary>
 	/// Object and supporting functions for handling Tasual settings.
 	/// </summary>
-	public class Setting
+	public class Settings
 	{
+		public static Settings Config = new Settings();
+
 		/// <summary>Unique identifier hash for this instance of the Tasual application.</summary>
 		[JsonProperty("hash")]
 		public string Hash { get; set; }
@@ -228,17 +230,17 @@ namespace Tasual
 		/// Save settings to settings.cfg function.
 		/// </summary>
 		/// <param name="Settings">Internal settings object from which to write.</param>
-		public static void Save(ref Setting Settings)
+		public static void Save()
 		{
 			try
 			{
-				using (FileStream OutputFile = File.Open(Path.Combine(Settings.SettingsPath, "settings.cfg"), FileMode.Create))
+				using (FileStream OutputFile = File.Open(Path.Combine(Config.SettingsPath, "settings.cfg"), FileMode.Create))
 				using (StreamWriter OutputStream = new StreamWriter(OutputFile))
 				using (JsonWriter OutputJson = new JsonTextWriter(OutputStream))
 				{
 					OutputJson.Formatting = Formatting.Indented;
 					JsonSerializer Serializer = new JsonSerializer();
-					Serializer.Serialize(OutputJson, Settings);
+					Serializer.Serialize(OutputJson, Config);
 				}
 
 			}
@@ -254,8 +256,7 @@ namespace Tasual
 		/// <remarks>
 		/// TODO: Lay out function into the remarks here and move comments up from the function.
 		/// </remarks>
-		/// <param name="Settings">Internal settings object to load settings into.</param>
-		public static void Load(ref Setting Settings)
+		public static void Load()
 		{
 			try
 			{
@@ -272,18 +273,18 @@ namespace Tasual
 				string SettingsPath;
 				bool ShouldSave = false;
 
-				if (string.IsNullOrEmpty(Settings.SettingsPath) || !File.Exists(Path.Combine(Settings.SettingsPath, "settings.cfg")))
+				if (string.IsNullOrEmpty(Config.SettingsPath) || !File.Exists(Path.Combine(Config.SettingsPath, "settings.cfg")))
 				{
 					// 1st Priority: Base directory
 					if (File.Exists(Path.Combine(BasePath, "settings.cfg")))
 					{
-						Settings.SettingsPath = BasePath;
+						Config.SettingsPath = BasePath;
 					}
 
 					// 2nd Priority: Application Data directory
 					else if (File.Exists(Path.Combine(AppDataPath, "settings.cfg")))
 					{
-						Settings.SettingsPath = AppDataPath;
+						Config.SettingsPath = AppDataPath;
 					}
 
 					// Both directories don't have settings already
@@ -293,71 +294,71 @@ namespace Tasual
 						if (File.Exists(Path.Combine(BasePath, "tasks.db")))
 						{
 							// If a tasks database already exists in the Base directory, choose that
-							Settings.StorageFolder = BasePath;
+							Config.StorageFolder = BasePath;
 						}
 						else
 						{
 							// Otherwise just pick the Application Data directory
-							Settings.StorageFolder = AppDataPath;
+							Config.StorageFolder = AppDataPath;
 						}
 
-						Settings.SettingsPath = AppDataPath;
+						Config.SettingsPath = AppDataPath;
 
 						// Create identifier hash
-						Settings.Hash = Guid.NewGuid().ToString("N");
+						Config.Hash = Guid.NewGuid().ToString("N");
 						
 						// Save new settings file
-						Save(ref Settings);
+						Save();
 						return;
 					}
 				}
 
 				// Load in the settings from the selected settings.cfg file
-				using (StreamReader InputFile = File.OpenText(Path.Combine(Settings.SettingsPath, "settings.cfg")))
+				using (StreamReader InputFile = File.OpenText(Path.Combine(Config.SettingsPath, "settings.cfg")))
 				using (JsonReader InputJson = new JsonTextReader(InputFile))
 				{
-					SettingsPath = Settings.SettingsPath;
+					SettingsPath = Config.SettingsPath;
 
 					JsonSerializer Serializer = new JsonSerializer();
-					Settings = (Setting)Serializer.Deserialize(InputJson, typeof(Setting));
+					Config = (Settings)Serializer.Deserialize(InputJson, typeof(Settings));
 
-					Settings.SettingsPath = SettingsPath;
+					Config.SettingsPath = SettingsPath;
 				}
 
 				// Create identifier hash if necessary
-				if (string.IsNullOrWhiteSpace(Settings.Hash))
+				if (string.IsNullOrWhiteSpace(Config.Hash))
 				{
-					Settings.Hash = Guid.NewGuid().ToString("N");
+					Config.Hash = Guid.NewGuid().ToString("N");
 					ShouldSave = true;
 				}
 
 				// Check if there is a StorageFolder specified and whether it will work for us
-				if (!string.IsNullOrWhiteSpace(Settings.StorageFolder) && Directory.Exists(Settings.StorageFolder))
+				if (!string.IsNullOrWhiteSpace(Config.StorageFolder) && Directory.Exists(Config.StorageFolder))
 				{
 					// Directory is fine, do nothing
 				}
 				else if (File.Exists(Path.Combine(BasePath, "tasks.db")))
 				{
 					// If a tasks database already exists in the Base directory, choose that
-					Settings.StorageFolder = BasePath;
+					Config.StorageFolder = BasePath;
 					ShouldSave = true;
 				}
 				else if (File.Exists(Path.Combine(AppDataPath, "tasks.db")))
 				{
 					// If a tasks database already exists in the Application Data directory, choose that
-					Settings.StorageFolder = AppDataPath;
+					Config.StorageFolder = AppDataPath;
 					ShouldSave = true;
 				}
 				else
 				{
 					// If no database was found already, just save to the same location as the settings file
-					Settings.StorageFolder = Settings.SettingsPath;
+					Config.StorageFolder = Config.SettingsPath;
 					ShouldSave = true;
 				}
 
 				if (ShouldSave)
 				{
-					Save(ref Settings);
+					Save();
 				}
 			}
 			catch (Exception Args)

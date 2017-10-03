@@ -80,14 +80,14 @@ namespace Tasual
 		private void CheckBox_CheckedChanged(object Sender, EventArgs Args)
 		{
 			TextBox.AcceptsReturn = !CheckBox.Checked;
-			MainForm.Settings.EnterToSave = CheckBox.Checked;
+			Settings.Config.EnterToSave = CheckBox.Checked;
 			MainForm.Settings_Save();
 		}
 
 		private void FormLoad(object Sender, EventArgs Args)
 		{
-			TextBox.AcceptsReturn = !MainForm.Settings.EnterToSave;
-			CheckBox.Checked = MainForm.Settings.EnterToSave;
+			TextBox.AcceptsReturn = !Settings.Config.EnterToSave;
+			CheckBox.Checked = Settings.Config.EnterToSave;
 		}
 	}
 }

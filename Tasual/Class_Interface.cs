@@ -20,6 +20,8 @@ namespace Tasual
 		/// </summary>
 		public static string ServerAddress = "http://localhost:58315/";
 
+		//public static Setting Settings;
+
 
 		// ================================
 		//  Interface #1: v1: VersionCheck
@@ -107,8 +109,7 @@ namespace Tasual
 			/// <summary>
 			/// Generate the request to send to the server for VersionCheck.
 			/// </summary>
-			/// <param name="Settings">Settings parameter to get hash and autoupdate setting from.</param>
-			public static void Request(Setting Settings)
+			public static void Request()
 			{
 				var Client = new RestClient(ServerAddress);
 				Client.Authenticator = new HttpBasicAuthenticator("foo", "bar");
@@ -116,13 +117,15 @@ namespace Tasual
 				var Request = new RestRequest("api/v1/versioncheck", Method.POST);
 				Request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
 				Request.RequestFormat = DataFormat.Json;
-				
+
+				//Interface.Settings = Settings;
+
 				Request.AddJsonBody(new RequestObject(
 					AssemblyInfo.Product,
 					Environment.OSVersion.VersionString,
 					AssemblyInfo.Version,
-					Settings.Hash,
-					Settings.AutoUpdate
+					Settings.Config.Hash,
+					Settings.Config.AutoUpdate
 				));
 
 				Console.WriteLine(String.Format(

@@ -129,13 +129,12 @@ namespace Tasual
 		/// Save task list from the task array into the selected storage file.
 		/// </summary>
 		/// <param name="Array">Task array from which to save.</param>
-		/// <param name="Settings">Settings to follow for protocol and storagefolder.</param>
-		public static void Save(ref List<Task> Array, Setting Settings)
+		public static void Save(ref List<Task> Array)
 		{
-			switch (Settings.Protocol)
+			switch (Settings.Config.Protocol)
 			{
 				default:
-				case Setting.Protocols.JSON: Save_JSON(ref Array, Settings.StorageFolder); break;
+				case Settings.Protocols.JSON: Save_JSON(ref Array, Settings.Config.StorageFolder); break;
 			}
 		}
 
@@ -143,13 +142,12 @@ namespace Tasual
 		/// Load task list from the selected storage file into the task array.
 		/// </summary>
 		/// <param name="Array">Task array to load in to.</param>
-		/// <param name="Settings">Settings to follow for protocol and storagefolder.</param>
-		public static void Load(ref List<Task> Array, Setting Settings)
+		public static void Load(ref List<Task> Array)
 		{
-			switch (Settings.Protocol)
+			switch (Settings.Config.Protocol)
 			{
 				default:
-				case Setting.Protocols.JSON: Load_JSON(ref Array, Settings.StorageFolder); break;
+				case Settings.Protocols.JSON: Load_JSON(ref Array, Settings.Config.StorageFolder); break;
 			}
 		}
 

@@ -30,7 +30,7 @@ namespace Tasual
 				ComboBox_GroupStyle.Enabled = true;
 				CheckBox_ShowItemCounts.Enabled = true;
 
-				if (ComboBox_GroupStyle.SelectedIndex == (int)Setting.GroupStyles.DueTime)
+				if (ComboBox_GroupStyle.SelectedIndex == (int)Settings.GroupStyles.DueTime)
 				{
 					CheckBox_AlwaysShowCompletedGroup.Checked = true;
 					CheckBox_AlwaysShowOverdueGroup.Checked = true;
@@ -58,29 +58,29 @@ namespace Tasual
 
 		private void FormLoad(object Sender, EventArgs Args)
 		{
-			CheckBox_LaunchOnStartup.Checked = MainForm.Settings.LaunchOnStartup;
-			CheckBox_MinimizeToTray.Checked = MainForm.Settings.MinimizeToTray;
-			CheckBox_AlwaysOnTop.Checked = MainForm.Settings.AlwaysOnTop;
-			CheckBox_SaveWindowPos.Checked = MainForm.Settings.SaveWindowPos;
-			CheckBox_PromptClear.Checked = MainForm.Settings.PromptClear;
-			CheckBox_PromptDelete.Checked = MainForm.Settings.PromptDelete;
-			CheckBox_EnterToSave.Checked = MainForm.Settings.EnterToSave;
+			CheckBox_LaunchOnStartup.Checked = Settings.Config.LaunchOnStartup;
+			CheckBox_MinimizeToTray.Checked = Settings.Config.MinimizeToTray;
+			CheckBox_AlwaysOnTop.Checked = Settings.Config.AlwaysOnTop;
+			CheckBox_SaveWindowPos.Checked = Settings.Config.SaveWindowPos;
+			CheckBox_PromptClear.Checked = Settings.Config.PromptClear;
+			CheckBox_PromptDelete.Checked = Settings.Config.PromptDelete;
+			CheckBox_EnterToSave.Checked = Settings.Config.EnterToSave;
 
-			TextBox_Folder.Text = MainForm.Settings.StorageFolder;
+			TextBox_Folder.Text = Settings.Config.StorageFolder;
 
-			CheckBox_GroupTasks.Checked = MainForm.Settings.GroupTasks;
-			ComboBox_GroupStyle.SelectedIndex = (int)MainForm.Settings.GroupStyle;
-			CheckBox_AlwaysShowCompletedGroup.Checked = MainForm.Settings.AlwaysShowCompletedGroup;
-			CheckBox_AlwaysShowOverdueGroup.Checked = MainForm.Settings.AlwaysShowOverdueGroup;
-			CheckBox_AlwaysShowTodayGroup.Checked = MainForm.Settings.AlwaysShowTodayGroup;
-			CheckBox_ShowItemCounts.Checked = MainForm.Settings.ShowItemCounts;
+			CheckBox_GroupTasks.Checked = Settings.Config.GroupTasks;
+			ComboBox_GroupStyle.SelectedIndex = (int)Settings.Config.GroupStyle;
+			CheckBox_AlwaysShowCompletedGroup.Checked = Settings.Config.AlwaysShowCompletedGroup;
+			CheckBox_AlwaysShowOverdueGroup.Checked = Settings.Config.AlwaysShowOverdueGroup;
+			CheckBox_AlwaysShowTodayGroup.Checked = Settings.Config.AlwaysShowTodayGroup;
+			CheckBox_ShowItemCounts.Checked = Settings.Config.ShowItemCounts;
 
 			UpdateGroupTasks();
 
-			ListBox_EnabledColumns.SetSelected(0, ((MainForm.Settings.EnabledColumns & Setting.Columns.Notes) != 0));
-			ListBox_EnabledColumns.SetSelected(1, ((MainForm.Settings.EnabledColumns & Setting.Columns.Category) != 0));
-			ListBox_EnabledColumns.SetSelected(2, ((MainForm.Settings.EnabledColumns & Setting.Columns.Due) != 0));
-			ListBox_EnabledColumns.SetSelected(3, ((MainForm.Settings.EnabledColumns & Setting.Columns.Time) != 0));
+			ListBox_EnabledColumns.SetSelected(0, ((Settings.Config.EnabledColumns & Settings.Columns.Notes) != 0));
+			ListBox_EnabledColumns.SetSelected(1, ((Settings.Config.EnabledColumns & Settings.Columns.Category) != 0));
+			ListBox_EnabledColumns.SetSelected(2, ((Settings.Config.EnabledColumns & Settings.Columns.Due) != 0));
+			ListBox_EnabledColumns.SetSelected(3, ((Settings.Config.EnabledColumns & Settings.Columns.Time) != 0));
 		}
 
 		private void CheckBox_GroupTasks_CheckedChanged(object Sender, EventArgs Args)
@@ -95,40 +95,40 @@ namespace Tasual
 
 		private void Button_Save_Click(object Sender, EventArgs Args)
 		{
-			MainForm.Settings.LaunchOnStartup = CheckBox_LaunchOnStartup.Checked;
-			MainForm.Settings.MinimizeToTray = CheckBox_MinimizeToTray.Checked;
-			MainForm.Settings.AlwaysOnTop = CheckBox_AlwaysOnTop.Checked;
-			MainForm.Settings.SaveWindowPos = CheckBox_SaveWindowPos.Checked;
-			MainForm.Settings.PromptClear = CheckBox_PromptClear.Checked;
-			MainForm.Settings.PromptDelete = CheckBox_PromptDelete.Checked;
-			MainForm.Settings.EnterToSave = CheckBox_EnterToSave.Checked;
+			Settings.Config.LaunchOnStartup = CheckBox_LaunchOnStartup.Checked;
+			Settings.Config.MinimizeToTray = CheckBox_MinimizeToTray.Checked;
+			Settings.Config.AlwaysOnTop = CheckBox_AlwaysOnTop.Checked;
+			Settings.Config.SaveWindowPos = CheckBox_SaveWindowPos.Checked;
+			Settings.Config.PromptClear = CheckBox_PromptClear.Checked;
+			Settings.Config.PromptDelete = CheckBox_PromptDelete.Checked;
+			Settings.Config.EnterToSave = CheckBox_EnterToSave.Checked;
 
-			MainForm.Settings.StorageFolder = TextBox_Folder.Text;
+			Settings.Config.StorageFolder = TextBox_Folder.Text;
 
-			MainForm.Settings.GroupTasks = CheckBox_GroupTasks.Checked;
-			MainForm.Settings.GroupStyle = (Setting.GroupStyles)ComboBox_GroupStyle.SelectedIndex; // WONDER IF THIS WORKS
-			MainForm.Settings.AlwaysShowCompletedGroup = CheckBox_AlwaysShowCompletedGroup.Checked;
-			MainForm.Settings.AlwaysShowOverdueGroup = CheckBox_AlwaysShowOverdueGroup.Checked;
-			MainForm.Settings.AlwaysShowTodayGroup = CheckBox_AlwaysShowTodayGroup.Checked;
-			MainForm.Settings.ShowItemCounts = CheckBox_ShowItemCounts.Checked;
+			Settings.Config.GroupTasks = CheckBox_GroupTasks.Checked;
+			Settings.Config.GroupStyle = (Settings.GroupStyles)ComboBox_GroupStyle.SelectedIndex; // WONDER IF THIS WORKS
+			Settings.Config.AlwaysShowCompletedGroup = CheckBox_AlwaysShowCompletedGroup.Checked;
+			Settings.Config.AlwaysShowOverdueGroup = CheckBox_AlwaysShowOverdueGroup.Checked;
+			Settings.Config.AlwaysShowTodayGroup = CheckBox_AlwaysShowTodayGroup.Checked;
+			Settings.Config.ShowItemCounts = CheckBox_ShowItemCounts.Checked;
 
-			MainForm.Settings.EnabledColumns = Setting.Columns.Description; // always enable the description column
+			Settings.Config.EnabledColumns = Settings.Columns.Description; // always enable the description column
 
 			if (ListBox_EnabledColumns.SelectedIndices.Contains(0))
 			{
-				MainForm.Settings.EnabledColumns |= Setting.Columns.Notes;
+				Settings.Config.EnabledColumns |= Settings.Columns.Notes;
 			}
 			if (ListBox_EnabledColumns.SelectedIndices.Contains(1))
 			{
-				MainForm.Settings.EnabledColumns |= Setting.Columns.Category;
+				Settings.Config.EnabledColumns |= Settings.Columns.Category;
 			}
 			if (ListBox_EnabledColumns.SelectedIndices.Contains(2))
 			{
-				MainForm.Settings.EnabledColumns |= Setting.Columns.Due;
+				Settings.Config.EnabledColumns |= Settings.Columns.Due;
 			}
 			if (ListBox_EnabledColumns.SelectedIndices.Contains(3))
 			{
-				MainForm.Settings.EnabledColumns |= Setting.Columns.Time;
+				Settings.Config.EnabledColumns |= Settings.Columns.Time;
 			}
 
 			if (ChangedStorageFolder)
