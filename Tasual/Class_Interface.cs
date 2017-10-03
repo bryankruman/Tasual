@@ -110,9 +110,8 @@ namespace Tasual
 			public static void Request(Setting Settings)
 			{
 				var Client = new RestClient(ServerAddress);
-				var Request = new RestRequest("api/versioncheck", Method.POST);
+				var Request = new RestRequest("api/v1/versioncheck", Method.POST);
 
-				Request.AddQueryParameter("version", "1");
 				Request.AddHeader("Content-Type", "application/json");
 				Request.RequestFormat = DataFormat.Json;
 
@@ -245,7 +244,7 @@ namespace Tasual
 			public static void Request(string Name, string Email, string Password)
 			{
 				var Client = new RestClient(ServerAddress);
-				var Request = new RestRequest("api/registration", Method.POST);
+				var Request = new RestRequest("api/v1/registration", Method.POST);
 
 				Request.AddHeader("Content-Type", "application/json");
 				Request.RequestFormat = DataFormat.Json;
@@ -379,7 +378,7 @@ namespace Tasual
 			public static void Request(string Email, string Password)
 			{
 				var Client = new RestClient(ServerAddress);
-				var Request = new RestRequest("api/signin", Method.POST);
+				var Request = new RestRequest("api/v1/signin", Method.POST);
 
 				Request.AddHeader("Content-Type", "application/json");
 				Request.RequestFormat = DataFormat.Json;
@@ -481,7 +480,7 @@ namespace Tasual
 			public static void Request()
 			{
 				var Client = new RestClient(ServerAddress);
-				var Request = new RestRequest("api/keepalive", Method.POST);
+				var Request = new RestRequest("api/v1/keepalive", Method.POST);
 
 				Request.AddHeader("Content-Type", "application/json");
 				Request.RequestFormat = DataFormat.Json;
@@ -607,7 +606,7 @@ namespace Tasual
 			public static void Request()
 			{
 				var Client = new RestClient(ServerAddress);
-				var Request = new RestRequest("api/keepalive", Method.POST);
+				var Request = new RestRequest("api/v1/sync", Method.POST);
 
 				Request.AddHeader("Content-Type", "application/json");
 				Request.RequestFormat = DataFormat.Json;
