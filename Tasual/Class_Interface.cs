@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Authenticators;
+using System.Windows.Forms;
 
 namespace Tasual
 {
@@ -53,22 +54,16 @@ namespace Tasual
 				[JsonProperty("hash")]
 				public string Hash { get; set; }
 
-				/// <summary>autoupdate: Auto-update enabled</summary>
-				[JsonProperty("autoupdate")]
-				public bool AutoUpdate { get; set; }
-
 				public RequestObject(
 					string Type,
 					string Platform,
 					string Version,
-					string Hash,
-					bool AutoUpdate)
+					string Hash)
 				{
 					this.Type = Type;
 					this.Platform = Platform;
 					this.Version = Version;
 					this.Hash = Hash;
-					this.AutoUpdate = AutoUpdate;
 				}
 			}
 
@@ -85,10 +80,6 @@ namespace Tasual
 				[JsonProperty("latestversion")]
 				public string LatestVersion { get; set; }
 
-				/// <summary>shouldupdate: Should client update (checks whether update is available for client)</summary>
-				[JsonProperty("shouldupdate")]
-				public bool ShouldUpdate { get; set; }
-
 				/// <summary>updateurl: URL for update package</summary>
 				[JsonProperty("updateurl")]
 				public string UpdateURL { get; set; }
@@ -96,12 +87,10 @@ namespace Tasual
 				public ResponseObject(
 					string ServerVersion,
 					string LatestVersion,
-					bool ShouldUpdate,
 					string UpdateURL)
 				{
 					this.ServerVersion = ServerVersion;
 					this.LatestVersion = LatestVersion;
-					this.ShouldUpdate = ShouldUpdate;
 					this.UpdateURL = UpdateURL;
 				}
 			}
@@ -118,20 +107,18 @@ namespace Tasual
 				Request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
 				Request.RequestFormat = DataFormat.Json;
 
-				//Interface.Settings = Settings;
-
 				Request.AddJsonBody(new RequestObject(
 					AssemblyInfo.Product,
 					Environment.OSVersion.VersionString,
 					AssemblyInfo.Version,
-					Settings.Config.Hash,
-					Settings.Config.AutoUpdate
+					Settings.Config.Hash
 				));
 
 				Console.WriteLine(String.Format(
 					"API: VersionCheck: Request: Sending to {0}", 
 					ServerAddress
 				));
+
 				Client.ExecuteAsync(Request, Response => Handler(Response));
 			}
 
@@ -159,14 +146,55 @@ namespace Tasual
 
 							var Content = JsonConvert.DeserializeObject<ResponseObject>(Response.Content);
 
-							// TODO: Store the latest version and list it in the about dialog
-							
+							Settings.Config.ServerVersion = Content.ServerVersion;
+							Settings.Config.LatestVersion = Content.LatestVersion;
+							Settings.Config.UpdateURL = Content.UpdateURL;
 
-							if (Content.ShouldUpdate)
+							var LatestVersion = new Version(Content.LatestVersion);
+							var CurrentVersion = new Version(AssemblyInfo.Version);
+
+							int Result = LatestVersion.CompareTo(CurrentVersion);
+
+							if (Result > 0)
 							{
-								// TODO: Mark internal flag in settings to initiate update
-								// TODO: Store update package URL in settings
+								Console.WriteLine(String.Format(
+									"API: VersionCheck: Handler: Latest ({0}) is newer than current ({1})!",
+									LatestVersion.ToString(),
+									CurrentVersion.ToString()
+								));
+
+								if (!Settings.Config.PromptUpdate) { return; }
+								
+								DialogResult Choice = MessageBox.Show(
+									string.Format(
+										"New update (version {0}) available! Do you want to download the update now?",
+										LatestVersion.ToString()
+									),
+									"Tasual",
+									MessageBoxButtons.YesNo,
+									MessageBoxIcon.Information);
+
+								if (Choice == DialogResult.Yes)
+								{
+									Console.WriteLine("API: VersionCheck: Handler: Triggering download of update...");
+								}
 							}
+							else if (Result < 0)
+							{
+								Console.WriteLine(String.Format(
+									"API: VersionCheck: Handler: Current ({0}) is newer than latest ({1})!",
+									CurrentVersion.ToString(),
+									LatestVersion.ToString()
+								));
+							}
+							else
+							{
+								Console.WriteLine(String.Format(
+									"API: VersionCheck: Handler: Current version is up to date! ({0}))",
+									CurrentVersion.ToString()
+								));
+							}
+
 							return;
 						}
 

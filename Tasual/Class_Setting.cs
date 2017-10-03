@@ -85,6 +85,10 @@ namespace Tasual
 		[JsonProperty("promptdelete")]
 		public bool PromptDelete { get; set; } = true;
 
+		/// <summary>Prompt user with messagebox whenever a new update is available.</summary>
+		[JsonProperty("promptupdate")]
+		public bool PromptUpdate { get; set; } = true;
+
 		/// <summary>Pressing enter in Notes textboxes causes the dialog to close and save.</summary>
 		[JsonProperty("entertosave")]
 		public bool EnterToSave { get; set; } = true;
@@ -131,6 +135,18 @@ namespace Tasual
 		/// <summary>Sub item text alignment.</summary>
 		[JsonProperty("subitemtextalign")]
 		public HorizontalAlignment SubItemTextAlign { get; set; } = HorizontalAlignment.Left;
+
+		/// <summary>Server version (from assembly info, major.minor.patch.revision).</summary>
+		[JsonProperty("serverversion")]
+		public string ServerVersion { get; set; }
+
+		/// <summary>Latest release version (from assembly info of client type, major.minor.patch.revision).</summary>
+		[JsonProperty("latestversion")]
+		public string LatestVersion { get; set; }
+
+		/// <summary>URL for update package.</summary>
+		[JsonProperty("updateurl")]
+		public string UpdateURL { get; set; }
 
 		/// <summary>Choice of columns to enable in the ListView.</summary>
 		[Flags]
