@@ -18,6 +18,7 @@ namespace Tasual
 	/// </summary>
 	public class Settings
 	{
+		/// <summary>Settings object containing current application settings.</summary>
 		public static Settings Config = new Settings();
 
 		/// <summary>Unique identifier hash for this instance of the Tasual application.</summary>

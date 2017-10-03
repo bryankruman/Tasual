@@ -28,9 +28,6 @@ namespace Tasual
 		/// <summary>Primary array containing list of tasks.</summary>
 		public List<Task> TaskArray = new List<Task>();
 
-		/// <summary>Settings object containing current application settings.</summary>
-		//public static readonly Setting Settings = new Setting();
-
 		/// <summary>Persistent OlvListViewHitTestInfo for the calendar popout window.</summary>
 		private OlvListViewHitTestInfo CalendarPopout = null;
 
