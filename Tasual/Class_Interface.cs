@@ -46,7 +46,7 @@ namespace Tasual
 				[JsonProperty("platform")]
 				public string Platform { get; set; }
 
-				/// <summary>version: Client version (from assembly info, major.minor.patch)</summary>
+				/// <summary>version: Client version (from assembly info, major.minor.build)</summary>
 				[JsonProperty("version")]
 				public string Version { get; set; }
 
@@ -72,11 +72,11 @@ namespace Tasual
 			/// </summary>
 			public class ResponseObject
 			{
-				/// <summary>serverversion: Server version (from assembly info, major.minor.patch)</summary>
+				/// <summary>serverversion: Server version (from assembly info, major.minor.build)</summary>
 				[JsonProperty("serverversion")]
 				public string ServerVersion { get; set; }
 
-				/// <summary>latestversion: Latest release version (from assembly info of client type, major.minor.patch)</summary>
+				/// <summary>latestversion: Latest release version (from assembly info of client type, major.minor.build)</summary>
 				[JsonProperty("latestversion")]
 				public string LatestVersion { get; set; }
 
