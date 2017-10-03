@@ -17,6 +17,9 @@ namespace Tasual
 	/// </summary>
 	public class ArrayHandler
 	{
+		/// <summary>Primary array containing list of tasks.</summary>
+		public static List<Task> Tasks = new List<Task>();
+
 		/// <summary>
 		/// Array container class which holds both the array information and list array itself.
 		/// </summary>
@@ -62,12 +65,11 @@ namespace Tasual
 		/// <summary>
 		/// Scan through task array and rename existing groups to a new group.
 		/// </summary>
-		/// <param name="Array">Task array to sort through.</param>
 		/// <param name="OldTaskGroup">Old task group to be removed/renamed.</param>
 		/// <param name="NewTaskGroup">New task group with which to replace the old group.</param>
-		public static void ReAssignGroup(ref List<Task> Array, string OldTaskGroup, string NewTaskGroup)
+		public static void ReAssignGroup(string OldTaskGroup, string NewTaskGroup)
 		{
-			foreach (Task Task in Array)
+			foreach (Task Task in Tasks)
 			{
 				if (Task == null) { break; }
 				if (Task.Group == OldTaskGroup)
@@ -128,13 +130,12 @@ namespace Tasual
 		/// <summary>
 		/// Save task list from the task array into the selected storage file.
 		/// </summary>
-		/// <param name="Array">Task array from which to save.</param>
-		public static void Save(ref List<Task> Array)
+		public static void Save()
 		{
 			switch (Settings.Config.Protocol)
 			{
 				default:
-				case Settings.Protocols.JSON: Save_JSON(ref Array, Settings.Config.StorageFolder); break;
+				case Settings.Protocols.JSON: Save_JSON(ref Tasks, Settings.Config.StorageFolder); break;
 			}
 		}
 
@@ -149,6 +150,14 @@ namespace Tasual
 				default:
 				case Settings.Protocols.JSON: Load_JSON(ref Array, Settings.Config.StorageFolder); break;
 			}
+		}
+
+		/// <summary>
+		/// Load task list from the selected storage file into the task array.
+		/// </summary>
+		public static void Load()
+		{
+			Load(ref Tasks);
 		}
 
 		/// <summary>

@@ -34,7 +34,7 @@ namespace Tasual
 				InitializeComponent();
 
 				MainForm = PassedForm;
-				Task = MainForm.TaskArray[PassedIndex];
+				Task = ArrayHandler.Tasks[PassedIndex];
 
 				TextBox.Text = Task.Link;
 				Button_Follow_CheckURLValid();

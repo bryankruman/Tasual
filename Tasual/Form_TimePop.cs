@@ -76,7 +76,7 @@ namespace Tasual
 		{
 			InitializeComponent();
 			MainForm = PassedForm;
-			_Task = MainForm.TaskArray[PassedIndex];
+			_Task = ArrayHandler.Tasks[PassedIndex];
 
 			Calendar.MinDate = DateTime.Now;
 
@@ -132,7 +132,7 @@ namespace Tasual
 
 		private void LinkLabel_LinkClicked(object Sender, LinkLabelLinkClickedEventArgs Args)
 		{
-			Form_Create CreateForm = new Form_Create(MainForm, MainForm.TaskArray.IndexOf(_Task), false);
+			Form_Create CreateForm = new Form_Create(MainForm, ArrayHandler.Tasks.IndexOf(_Task), false);
 			CreateForm.ShowDialog(MainForm);
 			Close();
 		}

@@ -25,7 +25,7 @@ namespace Tasual
 
 				Origination = 1;
 				MainForm = PassedMain;
-				Task = MainForm.TaskArray[PassedIndex];
+				Task = ArrayHandler.Tasks[PassedIndex];
 
 				TextBox.Text = Task.Notes;
 			}

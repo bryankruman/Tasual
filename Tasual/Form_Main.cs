@@ -26,7 +26,7 @@ namespace Tasual
 		// ==============
 
 		/// <summary>Primary array containing list of tasks.</summary>
-		public List<Task> TaskArray = new List<Task>();
+		public List<Task> ArrayL = ArrayHandler.Tasks;
 
 		/// <summary>Persistent OlvListViewHitTestInfo for the calendar popout window.</summary>
 		private OlvListViewHitTestInfo CalendarPopout = null;
@@ -77,8 +77,8 @@ namespace Tasual
 			Settings_Apply();
 
 			// Load TaskArray
-			ArrayHandler.Load(ref TaskArray);
-			ListView.SetObjects(TaskArray);
+			ArrayHandler.Load();
+			ListView.SetObjects(ArrayHandler.Tasks);
 
 			// Setup ObjectListView
 			ListView_Setup();
@@ -110,7 +110,7 @@ namespace Tasual
 		/// </remarks>
 		public void Array_Save()
 		{
-			ArrayHandler.Save(ref TaskArray);
+			ArrayHandler.Save();
 		}
 
 		/// <summary>
@@ -118,14 +118,14 @@ namespace Tasual
 		/// </summary>
 		public void Array_ClearAll()
 		{
-			foreach(Task Task in TaskArray)
+			foreach(Task Task in ArrayHandler.Tasks)
 			{
 				Task.Removed = true;
 			}
-			ArrayHandler.Save(ref TaskArray);
-			ArrayHandler.Load(ref TaskArray);
+			ArrayHandler.Save();
+			ArrayHandler.Load();
 			UpdateGroupKeys();
-			ListView.SetObjects(TaskArray);
+			ListView.SetObjects(ArrayHandler.Tasks);
 			ListView.BuildList();
 			UpdateStatusLabel();
 		}
@@ -208,7 +208,7 @@ namespace Tasual
 		/// </summary>
 		public void UpdateGroupKeys()
 		{
-			foreach (Task Task in TaskArray)
+			foreach (Task Task in ArrayHandler.Tasks)
 			{
 				Task.CategoryGroupKey = TimeInfo.GetGroupStringFromTask(Task, Settings.Config);
 				Task.DueGroupKey = TimeInfo.GetDueStringFromTask(Task);
@@ -276,12 +276,12 @@ namespace Tasual
 				List<Task> ChangedArray = new List<Task>();
 
 				ArrayHandler.Load(ref ChangedArray);
-				ArrayHandler.Compare(ref TaskArray, ref ChangedArray);
+				ArrayHandler.Compare(ref ArrayHandler.Tasks, ref ChangedArray);
 
 				UpdateList = true;
 			}
 
-			foreach (Task Task in TaskArray)
+			foreach (Task Task in ArrayHandler.Tasks)
 			{
 				if (Task.Removed) { continue; }
 
@@ -385,12 +385,12 @@ namespace Tasual
 
 			foreach (Task AddTask in AddedList)
 			{
-				TaskArray.Add(AddTask);
+				ArrayHandler.Tasks.Add(AddTask);
 			}
 
 			if (UpdateList)
 			{
-				ArrayHandler.Save(ref TaskArray);
+				ArrayHandler.Save();
 				UpdateGroupKeys();
 				ListView.BuildList();
 				UpdateStatusLabel();
@@ -414,7 +414,7 @@ namespace Tasual
 			}
 			else
 			{
-				foreach (Task Search in TaskArray)
+				foreach (Task Search in ArrayHandler.Tasks)
 				{
 					if (!string.IsNullOrEmpty(Search.Group))
 					{
@@ -458,7 +458,7 @@ namespace Tasual
 				NewTime
 			);
 
-			TaskArray.Add(Task);
+			ArrayHandler.Tasks.Add(Task);
 			//ArrayHandler.Save(ref TaskArray, Settings); // Actually, don't save until after we're sure we want to keep this
 			UpdateGroupKeys(Task);
 			CheckCollapsedGroup(Task);
@@ -501,7 +501,7 @@ namespace Tasual
 			{
 				ArrayHandler.Info.Collapsed.Add(Args.Group.Key.ToString());
 			}
-			ArrayHandler.Save(ref TaskArray);
+			ArrayHandler.Save();
 		}
 
 		/// <summary>
@@ -735,7 +735,7 @@ namespace Tasual
 					}
 			}
 
-			ArrayHandler.Save(ref TaskArray);
+			ArrayHandler.Save();
 			UpdateGroupKeys(); // TODO: Only cycle through the objects that got updated
 			ListView.BuildList();
 		}
@@ -920,7 +920,7 @@ namespace Tasual
 					}
 			}
 
-			ArrayHandler.Save(ref TaskArray);
+			ArrayHandler.Save();
 			UpdateGroupKeys(); // TODO: Only cycle through the objects that got updated
 			ListView.BuildList();
 		}
@@ -1020,7 +1020,7 @@ namespace Tasual
 					Task.Checked = false;
 				}
 
-				ArrayHandler.Save(ref TaskArray);
+				ArrayHandler.Save();
 				UpdateGroupKeys(Task);
 				ListView.BuildList();
 				UpdateStatusLabel();
@@ -1210,10 +1210,10 @@ namespace Tasual
 			if (string.IsNullOrEmpty(Task.Description))
 			{
 				// This one will ACTUALLY remove the task, not just hide it from the list
-				TaskArray.Remove(Task);
+				ArrayHandler.Tasks.Remove(Task);
 			}
 
-			ArrayHandler.Save(ref TaskArray);
+			ArrayHandler.Save();
 			//ListView.UpdateObject(e.RowObject);
 			// TODO: We should be able to do this for just one object, not the whole list...
 			ListView.BuildList();
@@ -1398,7 +1398,7 @@ namespace Tasual
 			{
 				Form_TimePop Calendar = new Form_TimePop(
 					this,
-					TaskArray.IndexOf((Task)ListView.SelectedItem.RowObject)
+					ArrayHandler.Tasks.IndexOf((Task)ListView.SelectedItem.RowObject)
 				);
 
 				Rectangle Bounds = CalendarPopout.SubItem.Bounds;
@@ -1446,7 +1446,7 @@ namespace Tasual
 							{
 								Task Task = (Task)ListView.SelectedItem.RowObject;
 								Task.Removed = true;
-								ArrayHandler.Save(ref TaskArray);
+								ArrayHandler.Save();
 								ListView.BuildList();
 								UpdateStatusLabel();
 							}
@@ -1617,7 +1617,7 @@ namespace Tasual
 			if (ListView.SelectedItem != null)
 			{
 				Task Task = (Task)ListView.SelectedItem.RowObject;
-				Form_Create CreateForm = new Form_Create(this, TaskArray.IndexOf(Task), false);
+				Form_Create CreateForm = new Form_Create(this, ArrayHandler.Tasks.IndexOf(Task), false);
 				CreateForm.ShowDialog(this);
 			}
 		}
@@ -1682,7 +1682,7 @@ namespace Tasual
 		private void MenuStrip_Group_Create_Quick_Click(object Sender, EventArgs Args)
 		{
 			OLVGroup Group = (OLVGroup)MenuStrip_Group.Tag;
-			if (TaskArray.Any(Task => (Task.Group == Group.Name)))
+			if (ArrayHandler.Tasks.Any(Task => (Task.Group == Group.Name)))
 			{
 				LastSelectedGroup = Group.Name;
 			}
@@ -1700,7 +1700,7 @@ namespace Tasual
 
 			OLVGroup Group = (OLVGroup)MenuStrip_Group.Tag;
 
-			foreach (Task Task in TaskArray)
+			foreach (Task Task in ArrayHandler.Tasks)
 			{
 				if (TimeInfo.GetGroupStringFromTask(Task, Settings.Config).Remove(0, 1) == Group.Name)
 				{
@@ -1709,7 +1709,7 @@ namespace Tasual
 				}
 			}
 
-			ArrayHandler.Save(ref TaskArray);
+			ArrayHandler.Save();
 			ListView.BuildList();
 			UpdateStatusLabel();
 		}
@@ -1734,7 +1734,7 @@ namespace Tasual
 		{
 			ToolStripDropDownItem Item = (ToolStripDropDownItem)Sender;
 			OLVGroup Group = (OLVGroup)MenuStrip_Group.Tag;
-			ArrayHandler.ReAssignGroup(ref TaskArray, Group.Name, Item.Text);
+			ArrayHandler.ReAssignGroup(Group.Name, Item.Text);
 			UpdateGroupKeys();
 			ListView.BuildList();
 		}
@@ -1759,7 +1759,7 @@ namespace Tasual
 			MenuStrip_Group_MoveTasks.DropDownItems.Add("(No other groups available)");
 			MenuStrip_Group_MoveTasks.DropDownItems[2].Enabled = false;
 
-			foreach (Task Task in TaskArray)
+			foreach (Task Task in ArrayHandler.Tasks)
 			{
 				if (Task.Removed) { continue; }
 
@@ -1830,7 +1830,7 @@ namespace Tasual
 		private void MenuStrip_Icon_AddLink_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
-			Form_Link LinkForm = new Form_Link(this, TaskArray.IndexOf(Task));
+			Form_Link LinkForm = new Form_Link(this, ArrayHandler.Tasks.IndexOf(Task));
 			LinkForm.ShowDialog(this);
 		}
 
@@ -1842,7 +1842,7 @@ namespace Tasual
 		private void MenuStrip_Icon_AddLocation_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
-			Form_Location LocationForm = new Form_Location(this, TaskArray.IndexOf(Task));
+			Form_Location LocationForm = new Form_Location(this, ArrayHandler.Tasks.IndexOf(Task));
 			LocationForm.ShowDialog(this);
 		}
 
@@ -1854,7 +1854,7 @@ namespace Tasual
 		private void MenuStrip_Icon_AddNotes_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
-			Form_Notes NotesForm = new Form_Notes(this, TaskArray.IndexOf(Task));
+			Form_Notes NotesForm = new Form_Notes(this, ArrayHandler.Tasks.IndexOf(Task));
 			NotesForm.ShowDialog(this);
 		}
 
@@ -1877,7 +1877,7 @@ namespace Tasual
 		private void MenuStrip_Icon_Link_Edit_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
-			Form_Link LinkForm = new Form_Link(this, TaskArray.IndexOf(Task));
+			Form_Link LinkForm = new Form_Link(this, ArrayHandler.Tasks.IndexOf(Task));
 			LinkForm.ShowDialog(this);
 		}
 
@@ -1901,7 +1901,7 @@ namespace Tasual
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 			Task.Link = "";
-			ArrayHandler.Save(ref TaskArray);
+			ArrayHandler.Save();
 			//UpdateGroupKeys(Task);
 			ListView.BuildList();
 		}
@@ -1925,7 +1925,7 @@ namespace Tasual
 		private void MenuStrip_Icon_Location_Edit_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
-			Form_Location LocationForm = new Form_Location(this, TaskArray.IndexOf(Task));
+			Form_Location LocationForm = new Form_Location(this, ArrayHandler.Tasks.IndexOf(Task));
 			LocationForm.ShowDialog(this);
 		}
 
@@ -1952,7 +1952,7 @@ namespace Tasual
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 			Task.Location = "";
-			ArrayHandler.Save(ref TaskArray);
+			ArrayHandler.Save();
 			//UpdateGroupKeys();
 			ListView.BuildList();
 		}
@@ -1976,7 +1976,7 @@ namespace Tasual
 		private void MenuStrip_Icon_Notes_Edit_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
-			Form_Notes NotesForm = new Form_Notes(this, TaskArray.IndexOf(Task));
+			Form_Notes NotesForm = new Form_Notes(this, ArrayHandler.Tasks.IndexOf(Task));
 			NotesForm.ShowDialog(this);
 		}
 
@@ -1989,7 +1989,7 @@ namespace Tasual
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 			Task.Notes = "";
-			ArrayHandler.Save(ref TaskArray);
+			ArrayHandler.Save();
 			// UpdateGroupKeys();
 			ListView.BuildList();
 		}
@@ -2078,7 +2078,7 @@ namespace Tasual
 				Task Task = (Task)MenuStrip_Item.Tag;
 				//TaskArray.Remove(Task);
 				Task.Removed = true;
-				ArrayHandler.Save(ref TaskArray);
+				ArrayHandler.Save();
 				ListView.BuildList();
 				UpdateStatusLabel();
 			}
@@ -2130,7 +2130,7 @@ namespace Tasual
 				NewTime
 			);
 
-			TaskArray.Add(NewTask);
+			ArrayHandler.Tasks.Add(NewTask);
 			UpdateGroupKeys(NewTask);
 			ListView.BuildList();
 			UpdateStatusLabel();
@@ -2144,7 +2144,7 @@ namespace Tasual
 		private void MenuStrip_Item_Edit_Advanced_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Item.Tag;
-			Form_Create CreateForm = new Form_Create(this, TaskArray.IndexOf(Task), false);
+			Form_Create CreateForm = new Form_Create(this, ArrayHandler.Tasks.IndexOf(Task), false);
 			CreateForm.ShowDialog(this);
 		}
 
@@ -2195,7 +2195,7 @@ namespace Tasual
 			MenuStrip_Item_Move.DropDownItems.Add("(No other groups available)");
 			MenuStrip_Item_Move.DropDownItems[2].Enabled = false;
 
-			foreach (Task Task in TaskArray)
+			foreach (Task Task in ArrayHandler.Tasks)
 			{
 				if (Task.Removed) { continue; }
 
@@ -2220,7 +2220,7 @@ namespace Tasual
 		private void MenuStrip_Item_Move_NewGroup_ClickHandler(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Item.Tag;
-			Form_Create CreateForm = new Form_Create(this, TaskArray.IndexOf(Task), true);
+			Form_Create CreateForm = new Form_Create(this, ArrayHandler.Tasks.IndexOf(Task), true);
 			CreateForm.ShowDialog(this);
 		}
 
