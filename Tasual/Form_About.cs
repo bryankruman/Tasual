@@ -12,6 +12,93 @@ namespace Tasual
 {
 	partial class Form_About : Form
 	{
+		private bool UpdateAvailable = false;
+
+		public bool ShouldUpdate()
+		{
+			var LatestVersion = new Version(Settings.Config.LatestVersion);
+			var CurrentVersion = new Version(AssemblyInfo.Version);
+
+			int Result = LatestVersion.CompareTo(CurrentVersion);
+
+			return (Result > 0);
+		}
+
+		private void CheckUpdateButtonStatus()
+		{
+			if (ShouldUpdate())
+			{
+				Button_Update.Text = String.Format("Download latest &update ({0})", Settings.Config.LatestVersion);
+				UpdateAvailable = true;
+			}
+			else
+			{
+				Button_Update.Text = "Check for &updates";
+				UpdateAvailable = false;
+			}
+		}
+
+		public void VersionCheck_Callback(Interface.VersionCheck.RequestResult RequestResult)
+		{
+			// Thread safe invoke handling
+			if (InvokeRequired)
+			{
+				Invoke(new Action<Interface.VersionCheck.RequestResult>(VersionCheck_Callback), RequestResult);
+				return;
+			}
+
+			switch (RequestResult)
+			{
+				case Interface.VersionCheck.RequestResult.UpdateFound:
+					{
+						if (!Settings.Config.PromptUpdate) { return; }
+
+						DialogResult Choice = MessageBox.Show(
+							string.Format(
+								"New update (version {0}) available!\nDo you want to download the update now?",
+								Settings.Config.LatestVersion
+							),
+							"Tasual",
+							MessageBoxButtons.YesNo,
+							MessageBoxIcon.Information);
+
+						if (Choice == DialogResult.Yes)
+						{
+							Close();
+							Form_Main.DownloadUpdate();
+						}
+						else
+						{
+							CheckUpdateButtonStatus();
+						}
+						break;
+					}
+
+				case Interface.VersionCheck.RequestResult.UpToDate:
+					{
+						MessageBox.Show(
+							"Already up to date",
+							"Tasual",
+							MessageBoxButtons.OK,
+							MessageBoxIcon.Information
+						);
+						break;
+					}
+
+				case Interface.VersionCheck.RequestResult.NotCompleted:
+				case Interface.VersionCheck.RequestResult.BadRequest:
+					{
+						MessageBox.Show(
+							"Failed to check for updates (check network connection)",
+							"Tasual",
+							MessageBoxButtons.OK,
+							MessageBoxIcon.Error
+						);
+						break;
+					}
+			}
+		}
+
 		public Form_About()
 		{
 			InitializeComponent();
@@ -20,12 +107,13 @@ namespace Tasual
 			labelVersion.Text = String.Format("Version {0}", AssemblyInfo.Version);
 			labelCopyright.Text = AssemblyInfo.Copyright;
 			LinkLabel.Text = AssemblyInfo.Company;
-			//this.textBoxDescription.Text = AssemblyDescription;
+
+			CheckUpdateButtonStatus();
 		}
 
 		private void Button_Close_Click(object Sender, EventArgs Args)
 		{
-			this.Close();
+			Close();
 		}
 
 		private void Button_Donate_Click(object Sender, EventArgs Args)
@@ -44,6 +132,18 @@ namespace Tasual
 				System.Diagnostics.Process.Start("http://www.bryankruman.com/tasual");
 			}
 			catch { }
+		}
+
+		private void Button_Update_Click(object sender, EventArgs e)
+		{
+			if (UpdateAvailable)
+			{
+				Form_Main.DownloadUpdate();
+			}
+			else
+			{
+				Interface.VersionCheck.Request(VersionCheck_Callback);
+			}
 		}
 	}
 }

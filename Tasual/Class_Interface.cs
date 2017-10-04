@@ -97,9 +97,24 @@ namespace Tasual
 			}
 
 			/// <summary>
+			/// Result given to callback delegates by the handler function.
+			/// </summary>
+			public enum RequestResult
+			{
+				/// <summary>An update was found.</summary>
+				UpdateFound,
+				/// <summary>Already up to date.</summary>
+				UpToDate,
+				/// <summary>For some reason or another, the request/response was not completed.</summary>
+				NotCompleted,
+				/// <summary>For some reason or another, the request was marked as bad.</summary>
+				BadRequest
+			}
+
+			/// <summary>
 			/// Generate the request to send to the server for VersionCheck.
 			/// </summary>
-			public static void Request()
+			public static void Request(Action<RequestResult> Callback)
 			{
 				var Client = new RestClient(ServerAddress);
 				//Client.Authenticator = new HttpBasicAuthenticator("foo", "bar"); // VersionCheck doesn't need authentication
@@ -120,14 +135,15 @@ namespace Tasual
 					ServerAddress
 				));
 
-				Client.ExecuteAsync(Request, Response => Handler(Response));
+				Client.ExecuteAsync(Request, Response => Handler(Callback, Response));
 			}
 
 			/// <summary>
 			/// Handles response sent from server to the client regarding the VersionCheck request.
 			/// </summary>
+			/// <param name="Callback">Callback delegate to call when a result is determined.</param>
 			/// <param name="Response">Response with IRestResponse formatting.</param>
-			public static void Handler(IRestResponse Response)
+			public static void Handler(Action<RequestResult> Callback, IRestResponse Response)
 			{
 				if (Response.ResponseStatus != ResponseStatus.Completed)
 				{
@@ -135,6 +151,8 @@ namespace Tasual
 						"API: VersionCheck (v1): Handler: Response status '{0}'", 
 						Response.ResponseStatus)
 					);
+
+					Callback(RequestResult.NotCompleted);
 					return;
 				}
 
@@ -142,14 +160,12 @@ namespace Tasual
 				{
 					case System.Net.HttpStatusCode.OK:
 						{
-							// Server is telling us that our VersionCheck was successful
-							// Next step: Update stored information, and determine whether we should prompt the user about updating 
-
 							var Content = JsonConvert.DeserializeObject<ResponseObject>(Response.Content);
 
 							Settings.Config.ServerVersion = Content.ServerVersion;
 							Settings.Config.LatestVersion = Content.LatestVersion;
 							Settings.Config.UpdateURL = Content.UpdateURL;
+							Settings.Save();
 
 							var LatestVersion = new Version(Content.LatestVersion);
 							var CurrentVersion = new Version(AssemblyInfo.Version);
@@ -164,22 +180,7 @@ namespace Tasual
 									CurrentVersion.ToString(3)
 								));
 
-								if (!Settings.Config.PromptUpdate) { return; }
-								
-								DialogResult Choice = MessageBox.Show(
-									string.Format(
-										"New update (version {0}) available!\nDo you want to download the update now?",
-										LatestVersion.ToString(3)
-									),
-									"Tasual",
-									MessageBoxButtons.YesNo,
-									MessageBoxIcon.Information);
-
-								if (Choice == DialogResult.Yes)
-								{
-									Console.WriteLine("API: VersionCheck (v1): Handler: Triggering download of update...");
-									Form_Main.DownloadUpdate();
-								}
+								Callback(RequestResult.UpdateFound);
 							}
 							else if (Result < 0)
 							{
@@ -188,6 +189,8 @@ namespace Tasual
 									CurrentVersion.ToString(3),
 									LatestVersion.ToString(3)
 								));
+
+								Callback(RequestResult.UpToDate);
 							}
 							else
 							{
@@ -195,18 +198,22 @@ namespace Tasual
 									"API: VersionCheck (v1): Handler: Current version is up to date! ({0}))",
 									CurrentVersion.ToString(3)
 								));
-							}
 
+								Callback(RequestResult.UpToDate);
+							}
 							return;
 						}
 
 					default:
 					case System.Net.HttpStatusCode.BadRequest:
 						{
-							// Somehow there was an error in how the request was formed, this shouldn't happen normally.
-							// Next step: Retry (up to 5 times, after that throw messagebox with network error warning)
-							// TODO: Throw an error message here.
-							break;
+							Console.WriteLine(String.Format(
+								"API: VersionCheck (v1): Handler: BadRequest '{0}'",
+								Response.StatusDescription)
+							);
+
+							Callback(RequestResult.BadRequest);
+							return;
 						}
 				}
 			}
