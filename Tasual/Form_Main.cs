@@ -90,6 +90,12 @@ namespace Tasual
 
 			// Other initialization
 			Timer_ListViewClick.Interval = SystemInformation.DoubleClickTime;
+
+			// Check for updates
+			if (Settings.Config.AutoUpdate)
+			{
+				Interface.VersionCheck.Request(VersionCheck_Callback_OnLoad);
+			}
 		}
 
 
@@ -176,6 +182,39 @@ namespace Tasual
 				Process.Start("explorer.exe", String.Format("/select, \"{0}\"", FileLocation));
 			}
 			catch { }
+		}
+
+		/// <summary>
+		/// Handler for the "on load" version check request.
+		/// </summary>
+		/// <param name="RequestResult">Result of the request.</param>
+		public void VersionCheck_Callback_OnLoad(Interface.VersionCheck.RequestResult RequestResult)
+		{
+			// Thread safe invoke handling
+			if (InvokeRequired)
+			{
+				Invoke(new Action<Interface.VersionCheck.RequestResult>(VersionCheck_Callback_OnLoad), RequestResult);
+				return;
+			}
+
+			if (RequestResult == Interface.VersionCheck.RequestResult.UpdateFound)
+			{
+				if (!Settings.Config.PromptUpdate) { return; }
+
+				DialogResult Choice = MessageBox.Show(
+					string.Format(
+						"New update (version {0}) available!\nDo you want to download the update now?",
+						Settings.Config.LatestVersion
+					),
+					"Tasual",
+					MessageBoxButtons.YesNo,
+					MessageBoxIcon.Information);
+
+				if (Choice == DialogResult.Yes)
+				{
+					DownloadUpdate();
+				}
+			}
 		}
 
 		/// <summary>

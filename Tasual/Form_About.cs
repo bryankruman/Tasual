@@ -38,12 +38,51 @@ namespace Tasual
 			}
 		}
 
-		public void VersionCheck_Callback(Interface.VersionCheck.RequestResult RequestResult)
+		public void VersionCheck_Callback_OnLoad(Interface.VersionCheck.RequestResult RequestResult)
 		{
 			// Thread safe invoke handling
 			if (InvokeRequired)
 			{
-				Invoke(new Action<Interface.VersionCheck.RequestResult>(VersionCheck_Callback), RequestResult);
+				Invoke(new Action<Interface.VersionCheck.RequestResult>(VersionCheck_Callback_OnLoad), RequestResult);
+				return;
+			}
+
+			if (RequestResult == Interface.VersionCheck.RequestResult.UpdateFound)
+			{
+
+				if (!Settings.Config.PromptUpdate)
+				{
+					CheckUpdateButtonStatus();
+					return;
+				}
+
+				DialogResult Choice = MessageBox.Show(
+					string.Format(
+						"New update (version {0}) available!\nDo you want to download the update now?",
+						Settings.Config.LatestVersion
+					),
+					"Tasual",
+					MessageBoxButtons.YesNo,
+					MessageBoxIcon.Information);
+
+				if (Choice == DialogResult.Yes)
+				{
+					Close();
+					Form_Main.DownloadUpdate();
+				}
+				else
+				{
+					CheckUpdateButtonStatus();
+				}
+			}
+		}
+
+		public void VersionCheck_Callback_FromButton(Interface.VersionCheck.RequestResult RequestResult)
+		{
+			// Thread safe invoke handling
+			if (InvokeRequired)
+			{
+				Invoke(new Action<Interface.VersionCheck.RequestResult>(VersionCheck_Callback_FromButton), RequestResult);
 				return;
 			}
 
@@ -109,6 +148,8 @@ namespace Tasual
 			LinkLabel.Text = AssemblyInfo.Company;
 
 			CheckUpdateButtonStatus();
+
+			Interface.VersionCheck.Request(VersionCheck_Callback_OnLoad);
 		}
 
 		private void Button_Close_Click(object Sender, EventArgs Args)
@@ -142,7 +183,7 @@ namespace Tasual
 			}
 			else
 			{
-				Interface.VersionCheck.Request(VersionCheck_Callback);
+				Interface.VersionCheck.Request(VersionCheck_Callback_FromButton);
 			}
 		}
 	}

@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace Tasual
 {
-	class Interface
+	public class Interface
 	{
 		// ==============
 		//  Declarations
