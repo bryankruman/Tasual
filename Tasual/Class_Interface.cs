@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// ===========================================
+//  Copyright (c) 2017 Bryan Kruman
+//
+//  See LICENSE.rtf file in the project root
+//  for full license information.
+// ===========================================
+
 using Newtonsoft.Json;
 using RestSharp;
-using RestSharp.Authenticators;
+using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Tasual
