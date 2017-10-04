@@ -29,6 +29,7 @@
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_About));
 			this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+			this.Button_Close = new System.Windows.Forms.Button();
 			this.logoPictureBox = new System.Windows.Forms.PictureBox();
 			this.labelProductName = new System.Windows.Forms.Label();
 			this.labelVersion = new System.Windows.Forms.Label();
@@ -37,7 +38,6 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.Button_Donate = new System.Windows.Forms.Button();
 			this.Button_Update = new System.Windows.Forms.Button();
-			this.Button_Close = new System.Windows.Forms.Button();
 			this.tableLayoutPanel.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
 			this.SuspendLayout();
@@ -71,6 +71,19 @@
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel.Size = new System.Drawing.Size(417, 338);
 			this.tableLayoutPanel.TabIndex = 0;
+			// 
+			// Button_Close
+			// 
+			this.Button_Close.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.Button_Close.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.Button_Close.Location = new System.Drawing.Point(288, 313);
+			this.Button_Close.Margin = new System.Windows.Forms.Padding(10, 3, 15, 3);
+			this.Button_Close.Name = "Button_Close";
+			this.Button_Close.Size = new System.Drawing.Size(114, 22);
+			this.Button_Close.TabIndex = 28;
+			this.Button_Close.Text = "&Close";
+			this.Button_Close.Click += new System.EventHandler(this.Button_Close_Click);
 			// 
 			// logoPictureBox
 			// 
@@ -176,19 +189,6 @@
 			this.Button_Update.TabIndex = 24;
 			this.Button_Update.Text = "Check for &Updates";
 			this.Button_Update.Click += new System.EventHandler(this.Button_Update_Click);
-			// 
-			// Button_Close
-			// 
-			this.Button_Close.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.Button_Close.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.Button_Close.Location = new System.Drawing.Point(288, 313);
-			this.Button_Close.Margin = new System.Windows.Forms.Padding(10, 3, 15, 3);
-			this.Button_Close.Name = "Button_Close";
-			this.Button_Close.Size = new System.Drawing.Size(114, 22);
-			this.Button_Close.TabIndex = 28;
-			this.Button_Close.Text = "&Close";
-			this.Button_Close.Click += new System.EventHandler(this.Button_Close_Click);
 			// 
 			// Form_About
 			// 
