@@ -71,6 +71,12 @@
     <Reference Include="ObjectListView, Version=2.9.1.1072, Culture=neutral, PublicKeyToken=b1c5bf581481bcd4, processorArchitecture=MSIL">
       <HintPath>..\packages\ObjectListView.Official.2.9.1\lib\net20\ObjectListView.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net46\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Syroot.Windows.IO.KnownFolders, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syroot.Windows.IO.KnownFolders.1.0.2\lib\net40\Syroot.Windows.IO.KnownFolders.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
@@ -86,6 +92,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class_ArrayHandler.cs" />
+    <Compile Include="Class_AssemblyInfo.cs" />
+    <Compile Include="Class_Interface.cs" />
     <Compile Include="Class_URLExtensions.cs" />
     <Compile Include="Class_Setting.cs" />
     <Compile Include="Class_StartupManager.cs" />

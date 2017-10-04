@@ -57,6 +57,8 @@
 			this.MenuStrip_ChangeFolder_AppData = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuStrip_ChangeFolder_Custom = new System.Windows.Forms.ToolStripMenuItem();
 			this.FolderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+			this.CheckBox_CheckForUpdates = new System.Windows.Forms.CheckBox();
+			this.CheckBox_PromptUpdate = new System.Windows.Forms.CheckBox();
 			this.GroupBox_Application.SuspendLayout();
 			this.GroupBox_Display.SuspendLayout();
 			this.GroupBox_Storage.SuspendLayout();
@@ -140,7 +142,7 @@
 			// CheckBox_PromptClear
 			// 
 			this.CheckBox_PromptClear.AutoSize = true;
-			this.CheckBox_PromptClear.Location = new System.Drawing.Point(12, 123);
+			this.CheckBox_PromptClear.Location = new System.Drawing.Point(12, 177);
 			this.CheckBox_PromptClear.Name = "CheckBox_PromptClear";
 			this.CheckBox_PromptClear.Size = new System.Drawing.Size(169, 17);
 			this.CheckBox_PromptClear.TabIndex = 7;
@@ -150,7 +152,7 @@
 			// CheckBox_PromptDelete
 			// 
 			this.CheckBox_PromptDelete.AutoSize = true;
-			this.CheckBox_PromptDelete.Location = new System.Drawing.Point(12, 146);
+			this.CheckBox_PromptDelete.Location = new System.Drawing.Point(12, 200);
 			this.CheckBox_PromptDelete.Name = "CheckBox_PromptDelete";
 			this.CheckBox_PromptDelete.Size = new System.Drawing.Size(210, 17);
 			this.CheckBox_PromptDelete.TabIndex = 8;
@@ -161,6 +163,7 @@
 			// 
 			this.GroupBox_Application.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.GroupBox_Application.Controls.Add(this.CheckBox_PromptUpdate);
 			this.GroupBox_Application.Controls.Add(this.CheckBox_SaveWindowPos);
 			this.GroupBox_Application.Controls.Add(this.CheckBox_EnterToSave);
 			this.GroupBox_Application.Controls.Add(this.CheckBox_AlwaysOnTop);
@@ -168,9 +171,10 @@
 			this.GroupBox_Application.Controls.Add(this.CheckBox_PromptDelete);
 			this.GroupBox_Application.Controls.Add(this.CheckBox_LaunchOnStartup);
 			this.GroupBox_Application.Controls.Add(this.CheckBox_PromptClear);
+			this.GroupBox_Application.Controls.Add(this.CheckBox_CheckForUpdates);
 			this.GroupBox_Application.Location = new System.Drawing.Point(13, 13);
 			this.GroupBox_Application.Name = "GroupBox_Application";
-			this.GroupBox_Application.Size = new System.Drawing.Size(391, 199);
+			this.GroupBox_Application.Size = new System.Drawing.Size(391, 251);
 			this.GroupBox_Application.TabIndex = 9;
 			this.GroupBox_Application.TabStop = false;
 			this.GroupBox_Application.Text = "Application";
@@ -188,7 +192,7 @@
 			// CheckBox_EnterToSave
 			// 
 			this.CheckBox_EnterToSave.AutoSize = true;
-			this.CheckBox_EnterToSave.Location = new System.Drawing.Point(12, 169);
+			this.CheckBox_EnterToSave.Location = new System.Drawing.Point(12, 223);
 			this.CheckBox_EnterToSave.Name = "CheckBox_EnterToSave";
 			this.CheckBox_EnterToSave.Size = new System.Drawing.Size(208, 17);
 			this.CheckBox_EnterToSave.TabIndex = 9;
@@ -218,9 +222,9 @@
 			this.GroupBox_Display.Controls.Add(this.CheckBox_AlwaysShowCompletedGroup);
 			this.GroupBox_Display.Controls.Add(this.CheckBox_AlwaysShowOverdueGroup);
 			this.GroupBox_Display.Controls.Add(this.CheckBox_AlwaysShowTodayGroup);
-			this.GroupBox_Display.Location = new System.Drawing.Point(13, 305);
+			this.GroupBox_Display.Location = new System.Drawing.Point(13, 357);
 			this.GroupBox_Display.Name = "GroupBox_Display";
-			this.GroupBox_Display.Size = new System.Drawing.Size(391, 162);
+			this.GroupBox_Display.Size = new System.Drawing.Size(391, 157);
 			this.GroupBox_Display.TabIndex = 10;
 			this.GroupBox_Display.TabStop = false;
 			this.GroupBox_Display.Text = "Display";
@@ -262,7 +266,7 @@
 			// 
 			this.Button_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.Button_Save.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.Button_Save.Location = new System.Drawing.Point(248, 473);
+			this.Button_Save.Location = new System.Drawing.Point(248, 520);
 			this.Button_Save.Name = "Button_Save";
 			this.Button_Save.Size = new System.Drawing.Size(75, 23);
 			this.Button_Save.TabIndex = 11;
@@ -274,7 +278,7 @@
 			// 
 			this.Button_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.Button_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.Button_Cancel.Location = new System.Drawing.Point(329, 473);
+			this.Button_Cancel.Location = new System.Drawing.Point(329, 520);
 			this.Button_Cancel.Name = "Button_Cancel";
 			this.Button_Cancel.Size = new System.Drawing.Size(75, 23);
 			this.Button_Cancel.TabIndex = 12;
@@ -286,7 +290,7 @@
 			this.GroupBox_Storage.Controls.Add(this.TextBox_Folder);
 			this.GroupBox_Storage.Controls.Add(this.Button_ChangeFolder);
 			this.GroupBox_Storage.Controls.Add(this.Label_Folder);
-			this.GroupBox_Storage.Location = new System.Drawing.Point(13, 218);
+			this.GroupBox_Storage.Location = new System.Drawing.Point(13, 270);
 			this.GroupBox_Storage.Name = "GroupBox_Storage";
 			this.GroupBox_Storage.Size = new System.Drawing.Size(391, 81);
 			this.GroupBox_Storage.TabIndex = 13;
@@ -355,13 +359,33 @@
 			this.FolderBrowserDialog.Description = "Database and settings folder for Tasual";
 			this.FolderBrowserDialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
 			// 
+			// CheckBox_CheckForUpdates
+			// 
+			this.CheckBox_CheckForUpdates.AutoSize = true;
+			this.CheckBox_CheckForUpdates.Location = new System.Drawing.Point(12, 123);
+			this.CheckBox_CheckForUpdates.Name = "CheckBox_CheckForUpdates";
+			this.CheckBox_CheckForUpdates.Size = new System.Drawing.Size(177, 17);
+			this.CheckBox_CheckForUpdates.TabIndex = 11;
+			this.CheckBox_CheckForUpdates.Text = "Automatically check for updates";
+			this.CheckBox_CheckForUpdates.UseVisualStyleBackColor = true;
+			// 
+			// CheckBox_PromptUpdate
+			// 
+			this.CheckBox_PromptUpdate.AutoSize = true;
+			this.CheckBox_PromptUpdate.Location = new System.Drawing.Point(12, 146);
+			this.CheckBox_PromptUpdate.Name = "CheckBox_PromptUpdate";
+			this.CheckBox_PromptUpdate.Size = new System.Drawing.Size(184, 17);
+			this.CheckBox_PromptUpdate.TabIndex = 12;
+			this.CheckBox_PromptUpdate.Text = "Prompt to download new updates";
+			this.CheckBox_PromptUpdate.UseVisualStyleBackColor = true;
+			// 
 			// Form_Settings
 			// 
 			this.AcceptButton = this.Button_Save;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.Button_Cancel;
-			this.ClientSize = new System.Drawing.Size(416, 508);
+			this.ClientSize = new System.Drawing.Size(416, 555);
 			this.Controls.Add(this.GroupBox_Storage);
 			this.Controls.Add(this.Button_Cancel);
 			this.Controls.Add(this.Button_Save);
@@ -417,5 +441,7 @@
 		private System.Windows.Forms.ToolStripMenuItem MenuStrip_ChangeFolder_AppData;
 		private System.Windows.Forms.ToolStripMenuItem MenuStrip_ChangeFolder_Custom;
 		private System.Windows.Forms.FolderBrowserDialog FolderBrowserDialog;
+		private System.Windows.Forms.CheckBox CheckBox_PromptUpdate;
+		private System.Windows.Forms.CheckBox CheckBox_CheckForUpdates;
 	}
 }

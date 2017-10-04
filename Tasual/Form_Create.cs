@@ -128,7 +128,7 @@ namespace Tasual
 
 		public void PopulateCategories()
 		{
-			foreach (Task Task in MainForm.TaskArray)
+			foreach (Task Task in ArrayHandler.Tasks)
 			{
 				if (!string.IsNullOrEmpty(Task.Group))
 				{
@@ -462,7 +462,7 @@ namespace Tasual
 			// Treat as "Edit" dialog
 			InitializeComponent();
 			MainForm = PassedForm;
-			TaskToEdit = MainForm.TaskArray[PassedIndex];
+			TaskToEdit = ArrayHandler.Tasks[PassedIndex];
 			EditMode = true;
 			SelectGroupTextBox = PassedSelectGroup;
 			Text = "Edit";
@@ -969,7 +969,7 @@ namespace Tasual
 
 		private void Button_Notes_Click(object Sender, EventArgs Args)
 		{
-			Form_Notes NotesForm = new Form_Notes(MainForm, this);
+			Form_Notes NotesForm = new Form_Notes(this);
 			NotesForm.ShowDialog(this);
 		}
 
@@ -1131,11 +1131,11 @@ namespace Tasual
 
 			if (EditMode)
 			{
-				MainForm.TaskArray.Remove(TaskToEdit);
+				ArrayHandler.Tasks.Remove(TaskToEdit);
 			}
 
-			MainForm.TaskArray.Add(Task);
-			MainForm.Array_Save();
+			ArrayHandler.Tasks.Add(Task);
+			ArrayHandler.Save();
 			MainForm.UpdateGroupKeys(Task);
 			MainForm.CheckCollapsedGroup(Task);
 			MainForm.ListView.BuildList();

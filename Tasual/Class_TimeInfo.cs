@@ -646,7 +646,7 @@ namespace Tasual
 		/// <param name="Task">Task to check.</param>
 		/// <param name="Settings">Program settings to determine which group types are enabled.</param>
 		/// <returns>GroupType for task based upon supplied information.</returns>
-		public static GroupTypes GetGroupTypeFromTask(Task Task, Setting Settings)
+		public static GroupTypes GetGroupTypeFromTask(Task Task, Settings Settings)
 		{
 			if (Task.Checked && Settings.AlwaysShowCompletedGroup)
 			{
@@ -689,7 +689,7 @@ namespace Tasual
 		/// <param name="Target">Secondary task object to compare.</param>
 		/// <param name="Settings">Settings to pass to GetGroupStringFromTask().</param>
 		/// <returns>True if Source and Target have the same Group String, false otherwise.</returns>
-		public static bool CompareGroupFromTasks(Task Source, Task Target, Setting Settings)
+		public static bool CompareGroupFromTasks(Task Source, Task Target, Settings Settings)
 		{
 			if (GetGroupStringFromTask(Source, Settings) == GetGroupStringFromTask(Target, Settings))
 			{
@@ -707,7 +707,7 @@ namespace Tasual
 		/// <param name="Task">Task to acquire group information from.</param>
 		/// <param name="Settings">Settings to use when checking for completed, overdue, and today tasks.</param>
 		/// <returns>String formatted with a standardized group name for display in the listview.</returns>
-		public static string GetGroupStringFromTask(Task Task, Setting Settings)
+		public static string GetGroupStringFromTask(Task Task, Settings Settings)
 		{
 			if (Task.Checked && Settings.AlwaysShowCompletedGroup)
 			{

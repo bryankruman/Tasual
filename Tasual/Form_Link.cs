@@ -12,7 +12,6 @@ namespace Tasual
 {
 	public partial class Form_Link : Form
 	{
-		private readonly Form_Main MainForm;
 		private readonly Task Task;
 
 		private void Button_Follow_CheckURLValid()
@@ -33,8 +32,7 @@ namespace Tasual
 			{
 				InitializeComponent();
 
-				MainForm = PassedForm;
-				Task = MainForm.TaskArray[PassedIndex];
+				Task = ArrayHandler.Tasks[PassedIndex];
 
 				TextBox.Text = Task.Link;
 				Button_Follow_CheckURLValid();
@@ -51,7 +49,7 @@ namespace Tasual
 			if (Task != null)
 			{
 				Task.Link = TextBox.Text;
-				MainForm.Array_Save();
+				ArrayHandler.Save();
 			}
 			else
 			{

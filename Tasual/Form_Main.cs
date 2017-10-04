@@ -5,14 +5,17 @@
 //  for full license information.
 // ===========================================
 
+using BrightIdeasSoftware;
+using Syroot.Windows.IO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.IO;
+using System.Linq;
+using System.Net;
 using System.Windows.Forms;
-using BrightIdeasSoftware;
 
 namespace Tasual
 {
@@ -24,12 +27,6 @@ namespace Tasual
 		// ==============
 		//  Declarations
 		// ==============
-
-		/// <summary>Primary array containing list of tasks.</summary>
-		public List<Task> TaskArray = new List<Task>();
-
-		/// <summary>Settings object containing current application settings.</summary>
-		public Setting Settings = new Setting();
 
 		/// <summary>Persistent OlvListViewHitTestInfo for the calendar popout window.</summary>
 		private OlvListViewHitTestInfo CalendarPopout = null;
@@ -75,13 +72,13 @@ namespace Tasual
 			InitializeComponent();
 
 			// Load Settings
-			Setting.Load(ref Settings);
+			Settings.Load();
 			Relocate();
 			Settings_Apply();
 
 			// Load TaskArray
-			ArrayHandler.Load(ref TaskArray, Settings);
-			ListView.SetObjects(TaskArray);
+			ArrayHandler.Load();
+			ListView.SetObjects(ArrayHandler.Tasks);
 
 			// Setup ObjectListView
 			ListView_Setup();
@@ -93,6 +90,12 @@ namespace Tasual
 
 			// Other initialization
 			Timer_ListViewClick.Interval = SystemInformation.DoubleClickTime;
+
+			// Check for updates
+			if (Settings.Config.AutoUpdate)
+			{
+				Interface.VersionCheck.Request(VersionCheck_Callback_OnLoad);
+			}
 		}
 
 
@@ -101,34 +104,18 @@ namespace Tasual
 		// =============================
 
 		/// <summary>
-		/// Outside reference wrapper to save the array.
-		/// </summary>
-		/// <remarks>
-		/// This was necessary as simply calling ArrayHandler.Save() from other classes would give a CS1690 warning for
-		/// using a field of a marshal-by-reference class. Additionally, these methods must continue using references 
-		/// otherwise other functions in the program cease to be able to retrieve data from TaskArray.
-		/// 
-		/// TODO: Is this really the right way to handle this? Should we keep the array handling code purely in the 
-		/// main class? or is there another way to handle it...
-		/// </remarks>
-		public void Array_Save()
-		{
-			ArrayHandler.Save(ref TaskArray, Settings);
-		}
-
-		/// <summary>
 		/// Shorthand function to clear the entire task array, delete the local database, and reset the ListView.
 		/// </summary>
 		public void Array_ClearAll()
 		{
-			foreach(Task Task in TaskArray)
+			foreach(Task Task in ArrayHandler.Tasks)
 			{
 				Task.Removed = true;
 			}
-			ArrayHandler.Save(ref TaskArray, Settings);
-			ArrayHandler.Load(ref TaskArray, Settings);
+			ArrayHandler.Save();
+			ArrayHandler.Load();
 			UpdateGroupKeys();
-			ListView.SetObjects(TaskArray);
+			ListView.SetObjects(ArrayHandler.Tasks);
 			ListView.BuildList();
 			UpdateStatusLabel();
 		}
@@ -158,12 +145,85 @@ namespace Tasual
 		}
 
 		/// <summary>
+		/// Begin downloading the updated installer file for Tasual.
+		/// </summary>
+		public static void DownloadUpdate()
+		{
+			// TODO: Add checks here to see whether the URL is valid
+			// TODO: Also change the file name if the file already exists
+			try
+			{
+				using (WebClient Client = new WebClient())
+				{
+					Client.DownloadFileAsync(new Uri(Settings.Config.UpdateURL), Path.Combine(KnownFolders.Downloads.Path, "TasualSetup.msi"));
+					Client.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadUpdate_Completed);
+				}
+			}
+			catch
+			{
+				Console.WriteLine("Download failed!");
+			}
+		}
+
+		/// <summary>
+		/// Handler for when the update download is finished.
+		/// </summary>
+		/// <param name="Sender">Sender of the AsyncCompleted event.</param>
+		/// <param name="Args">AsyncCompleted event arguments.</param>
+		public static void DownloadUpdate_Completed(object Sender, AsyncCompletedEventArgs Args)
+		{
+			Console.WriteLine("Download completed!");
+			try
+			{
+				string FileLocation = Path.Combine(KnownFolders.Downloads.Path, "TasualSetup.msi");
+
+				if (!File.Exists(FileLocation)) { return; }
+
+				Process.Start("explorer.exe", String.Format("/select, \"{0}\"", FileLocation));
+			}
+			catch { }
+		}
+
+		/// <summary>
+		/// Handler for the "on load" version check request.
+		/// </summary>
+		/// <param name="RequestResult">Result of the request.</param>
+		public void VersionCheck_Callback_OnLoad(Interface.VersionCheck.RequestResult RequestResult)
+		{
+			// Thread safe invoke handling
+			if (InvokeRequired)
+			{
+				Invoke(new Action<Interface.VersionCheck.RequestResult>(VersionCheck_Callback_OnLoad), RequestResult);
+				return;
+			}
+
+			if (RequestResult == Interface.VersionCheck.RequestResult.UpdateFound)
+			{
+				if (!Settings.Config.PromptUpdate) { return; }
+
+				DialogResult Choice = MessageBox.Show(
+					string.Format(
+						"New update (version {0}) available!\nDo you want to download the update now?",
+						Settings.Config.LatestVersion
+					),
+					"Tasual",
+					MessageBoxButtons.YesNo,
+					MessageBoxIcon.Information);
+
+				if (Choice == DialogResult.Yes)
+				{
+					DownloadUpdate();
+				}
+			}
+		}
+
+		/// <summary>
 		/// Apply application properties that are changeable in settings.
 		/// </summary>
 		public void Settings_Apply()
 		{
-			TopMost = Settings.AlwaysOnTop;
-			StartupManager.SetStartupStatus(Settings.LaunchOnStartup);
+			TopMost = Settings.Config.AlwaysOnTop;
+			StartupManager.SetStartupStatus(Settings.Config.LaunchOnStartup);
 		}
 
 		/// <summary>
@@ -171,21 +231,13 @@ namespace Tasual
 		/// </summary>
 		private void Relocate()
 		{
-			if (Settings.SaveWindowPos)
+			if (Settings.Config.SaveWindowPos)
 			{
 				StartPosition = FormStartPosition.Manual;
-				Location = Settings.Location;
-				Size = Settings.Size;
-				WindowState = Settings.WindowState;
+				Location = Settings.Config.Location;
+				Size = Settings.Config.Size;
+				WindowState = Settings.Config.WindowState;
 			}
-		}
-
-		/// <summary>
-		/// Outside reference wrapper to save settings.
-		/// </summary>
-		public void Settings_Save()
-		{
-			Setting.Save(ref Settings);
 		}
 
 		/// <summary>
@@ -211,9 +263,9 @@ namespace Tasual
 		/// </summary>
 		public void UpdateGroupKeys()
 		{
-			foreach (Task Task in TaskArray)
+			foreach (Task Task in ArrayHandler.Tasks)
 			{
-				Task.CategoryGroupKey = TimeInfo.GetGroupStringFromTask(Task, Settings);
+				Task.CategoryGroupKey = TimeInfo.GetGroupStringFromTask(Task, Settings.Config);
 				Task.DueGroupKey = TimeInfo.GetDueStringFromTask(Task);
 			}
 		}
@@ -224,7 +276,7 @@ namespace Tasual
 		/// <param name="Task">Task for which to generate a new group key.</param>
 		public void UpdateGroupKeys(Task Task)
 		{
-			Task.CategoryGroupKey = TimeInfo.GetGroupStringFromTask(Task, Settings);
+			Task.CategoryGroupKey = TimeInfo.GetGroupStringFromTask(Task, Settings.Config);
 			Task.DueGroupKey = TimeInfo.GetDueStringFromTask(Task);
 		}
 
@@ -268,7 +320,7 @@ namespace Tasual
 		/// </remarks>
 		private void CheckTaskStatus()
 		{
-			string PathToFile = Path.Combine(Settings.StorageFolder, "tasks.db");
+			string PathToFile = Path.Combine(Settings.Config.StorageFolder, "tasks.db");
 			bool UpdateList = false;
 			List<Task> AddedList = new List<Task>();
 
@@ -278,21 +330,21 @@ namespace Tasual
 				// Lets compare the changed array and the internal array before saving just to be safe
 				List<Task> ChangedArray = new List<Task>();
 
-				ArrayHandler.Load(ref ChangedArray, Settings);
-				ArrayHandler.Compare(ref TaskArray, ref ChangedArray);
+				ArrayHandler.Load(ref ChangedArray);
+				ArrayHandler.Compare(ref ArrayHandler.Tasks, ref ChangedArray);
 
 				UpdateList = true;
 			}
 
-			foreach (Task Task in TaskArray)
+			foreach (Task Task in ArrayHandler.Tasks)
 			{
 				if (Task.Removed) { continue; }
 
 				if (Task.Checked)
 				{
-					if (Settings.RemoveCompleted != Setting.RemoveType.Never)
+					if (Settings.Config.RemoveCompleted != Settings.RemoveType.Never)
 					{
-						if (DateTime.Now > (Task.Time.CheckedTime + Setting.GetRemoveTimeSpan(Settings.RemoveCompleted)))
+						if (DateTime.Now > (Task.Time.CheckedTime + Settings.GetRemoveTimeSpan(Settings.Config.RemoveCompleted)))
 						{
 							// Delete task
 							Task.Removed = true;
@@ -388,12 +440,12 @@ namespace Tasual
 
 			foreach (Task AddTask in AddedList)
 			{
-				TaskArray.Add(AddTask);
+				ArrayHandler.Tasks.Add(AddTask);
 			}
 
 			if (UpdateList)
 			{
-				ArrayHandler.Save(ref TaskArray, Settings);
+				ArrayHandler.Save();
 				UpdateGroupKeys();
 				ListView.BuildList();
 				UpdateStatusLabel();
@@ -417,7 +469,7 @@ namespace Tasual
 			}
 			else
 			{
-				foreach (Task Search in TaskArray)
+				foreach (Task Search in ArrayHandler.Tasks)
 				{
 					if (!string.IsNullOrEmpty(Search.Group))
 					{
@@ -461,7 +513,7 @@ namespace Tasual
 				NewTime
 			);
 
-			TaskArray.Add(Task);
+			ArrayHandler.Tasks.Add(Task);
 			//ArrayHandler.Save(ref TaskArray, Settings); // Actually, don't save until after we're sure we want to keep this
 			UpdateGroupKeys(Task);
 			CheckCollapsedGroup(Task);
@@ -504,7 +556,7 @@ namespace Tasual
 			{
 				ArrayHandler.Info.Collapsed.Add(Args.Group.Key.ToString());
 			}
-			ArrayHandler.Save(ref TaskArray, Settings);
+			ArrayHandler.Save();
 		}
 
 		/// <summary>
@@ -520,7 +572,7 @@ namespace Tasual
 			if (Target == null) { return; }
 
 			var SourceTasks = Args.SourceModels.Cast<Task>();
-			if (SourceTasks.Any(Source => (TimeInfo.CompareGroupFromTasks(Source, Target, Settings))))
+			if (SourceTasks.Any(Source => (TimeInfo.CompareGroupFromTasks(Source, Target, Settings.Config))))
 			{
 				Args.InfoMessage = "Cannot drop to same category";
 			}
@@ -562,13 +614,13 @@ namespace Tasual
 		/// <param name="Args">Model drop event arguments.</param>
 		private void ListView_ModelCanDrop_ChooseHandler(object Sender, ModelDropEventArgs Args)
 		{
-			if (Settings.GroupTasks)
+			if (Settings.Config.GroupTasks)
 			{
-				if (Settings.GroupStyle == Setting.GroupStyles.Category)
+				if (Settings.Config.GroupStyle == Settings.GroupStyles.Category)
 				{
 					ListView_ModelCanDrop_Category(Sender, Args);
 				}
-				else if (Settings.GroupStyle == Setting.GroupStyles.DueTime)
+				else if (Settings.Config.GroupStyle == Settings.GroupStyles.DueTime)
 				{
 					ListView_ModelCanDrop_DueTime(Sender, Args);
 				}
@@ -585,14 +637,14 @@ namespace Tasual
 			Task Target = (Task)Args.TargetModel;
 			if (Target == null) { return; }
 
-			switch (TimeInfo.GetGroupTypeFromTask(Target, Settings))
+			switch (TimeInfo.GetGroupTypeFromTask(Target, Settings.Config))
 			{
 				// OVERDUE TARGET TASK
 				case TimeInfo.GroupTypes.Overdue:
 					{
 						foreach (Task Task in Args.SourceModels)
 						{
-							switch (TimeInfo.GetGroupTypeFromTask(Task, Settings))
+							switch (TimeInfo.GetGroupTypeFromTask(Task, Settings.Config))
 							{
 								case TimeInfo.GroupTypes.Standard:
 								case TimeInfo.GroupTypes.Today:
@@ -632,7 +684,7 @@ namespace Tasual
 					{
 						foreach (Task Task in Args.SourceModels)
 						{
-							switch (TimeInfo.GetGroupTypeFromTask(Task, Settings))
+							switch (TimeInfo.GetGroupTypeFromTask(Task, Settings.Config))
 							{
 								case TimeInfo.GroupTypes.Standard:
 								case TimeInfo.GroupTypes.Overdue:
@@ -676,7 +728,7 @@ namespace Tasual
 					{
 						foreach (Task Task in Args.SourceModels)
 						{
-							switch (TimeInfo.GetGroupTypeFromTask(Task, Settings))
+							switch (TimeInfo.GetGroupTypeFromTask(Task, Settings.Config))
 							{
 								case TimeInfo.GroupTypes.Overdue:
 								case TimeInfo.GroupTypes.Today:
@@ -719,7 +771,7 @@ namespace Tasual
 					{
 						foreach (Task Task in Args.SourceModels)
 						{
-							switch (TimeInfo.GetGroupTypeFromTask(Task, Settings))
+							switch (TimeInfo.GetGroupTypeFromTask(Task, Settings.Config))
 							{
 								case TimeInfo.GroupTypes.Overdue:
 								case TimeInfo.GroupTypes.Today:
@@ -738,7 +790,7 @@ namespace Tasual
 					}
 			}
 
-			ArrayHandler.Save(ref TaskArray, Settings);
+			ArrayHandler.Save();
 			UpdateGroupKeys(); // TODO: Only cycle through the objects that got updated
 			ListView.BuildList();
 		}
@@ -923,7 +975,7 @@ namespace Tasual
 					}
 			}
 
-			ArrayHandler.Save(ref TaskArray, Settings);
+			ArrayHandler.Save();
 			UpdateGroupKeys(); // TODO: Only cycle through the objects that got updated
 			ListView.BuildList();
 		}
@@ -935,13 +987,13 @@ namespace Tasual
 		/// <param name="Args">Model drop event arguments.</param>
 		private void ListView_ModelDropped_ChooseHandler(object Sender, ModelDropEventArgs Args)
 		{
-			if (Settings.GroupTasks)
+			if (Settings.Config.GroupTasks)
 			{
-				if (Settings.GroupStyle == Setting.GroupStyles.Category)
+				if (Settings.Config.GroupStyle == Settings.GroupStyles.Category)
 				{
 					ListView_ModelDropped_Category(Sender, Args);
 				}
-				else if (Settings.GroupStyle == Setting.GroupStyles.DueTime)
+				else if (Settings.Config.GroupStyle == Settings.GroupStyles.DueTime)
 				{
 					ListView_ModelDropped_DueTime(Sender, Args);
 				}
@@ -1023,7 +1075,7 @@ namespace Tasual
 					Task.Checked = false;
 				}
 
-				ArrayHandler.Save(ref TaskArray, Settings);
+				ArrayHandler.Save();
 				UpdateGroupKeys(Task);
 				ListView.BuildList();
 				UpdateStatusLabel();
@@ -1036,14 +1088,14 @@ namespace Tasual
 		/// </summary>
 		public void ListView_UpdateColumnSettings()
 		{
-			ListView.ShowGroups = Settings.GroupTasks;
-			IconColumn.IsVisible = ((Settings.EnabledColumns & Setting.Columns.Notes) != 0);
-			CategoryColumn.IsVisible = ((Settings.EnabledColumns & Setting.Columns.Category) != 0);
-			DueColumn.IsVisible = ((Settings.EnabledColumns & Setting.Columns.Due) != 0);
-			TimeColumn.IsVisible = ((Settings.EnabledColumns & Setting.Columns.Time) != 0);
+			ListView.ShowGroups = Settings.Config.GroupTasks;
+			IconColumn.IsVisible = ((Settings.Config.EnabledColumns & Settings.Columns.Notes) != 0);
+			CategoryColumn.IsVisible = ((Settings.Config.EnabledColumns & Settings.Columns.Category) != 0);
+			DueColumn.IsVisible = ((Settings.Config.EnabledColumns & Settings.Columns.Due) != 0);
+			TimeColumn.IsVisible = ((Settings.Config.EnabledColumns & Settings.Columns.Time) != 0);
 
 			OLVColumn SelectedColumn = null;
-			if (Settings.GroupStyle == Setting.GroupStyles.Category)
+			if (Settings.Config.GroupStyle == Settings.GroupStyles.Category)
 			{
 				SelectedColumn = CategoryColumn;
 			}
@@ -1117,8 +1169,8 @@ namespace Tasual
 			{
 				return (Input as string).Remove(0, Math.Min(1, (Input as string).Length));
 			};
-			CategoryColumn.TextAlign = Settings.SubItemTextAlign;
-			CategoryColumn.HeaderTextAlign = Settings.SubItemHeaderAlign;
+			CategoryColumn.TextAlign = Settings.Config.SubItemTextAlign;
+			CategoryColumn.HeaderTextAlign = Settings.Config.SubItemHeaderAlign;
 			ListView.AllColumns.Add(CategoryColumn);
 			ListView.Columns.AddRange(new ColumnHeader[] { CategoryColumn });
 
@@ -1129,8 +1181,8 @@ namespace Tasual
 			DueColumn.Sortable = true;
 			DueColumn.DisplayIndex = 4;
 			DueColumn.LastDisplayIndex = 4;
-			DueColumn.TextAlign = Settings.SubItemTextAlign;
-			DueColumn.HeaderTextAlign = Settings.SubItemHeaderAlign;
+			DueColumn.TextAlign = Settings.Config.SubItemTextAlign;
+			DueColumn.HeaderTextAlign = Settings.Config.SubItemHeaderAlign;
 			DueColumn.AspectToStringConverter = delegate (object Input)
 			{
 				return (Input as string).Remove(0, Math.Min(2, (Input as string).Length));
@@ -1149,8 +1201,8 @@ namespace Tasual
 			TimeColumn.Sortable = false; // TODO: Allow sorting by this
 			TimeColumn.DisplayIndex = 5;
 			TimeColumn.LastDisplayIndex = 5;
-			TimeColumn.TextAlign = Settings.SubItemTextAlign;
-			TimeColumn.HeaderTextAlign = Settings.SubItemHeaderAlign;
+			TimeColumn.TextAlign = Settings.Config.SubItemTextAlign;
+			TimeColumn.HeaderTextAlign = Settings.Config.SubItemHeaderAlign;
 			TimeColumn.AspectToStringConverter = delegate (object Input)
 			{
 				TimeInfo Time = (TimeInfo)Input;
@@ -1188,7 +1240,7 @@ namespace Tasual
 					Group.Collapsed = true;
 				}
 
-				if (Settings.ShowItemCounts)
+				if (Settings.Config.ShowItemCounts)
 				{
 					Group.Header = String.Format(
 						"{0} ({1} {2})",
@@ -1213,10 +1265,10 @@ namespace Tasual
 			if (string.IsNullOrEmpty(Task.Description))
 			{
 				// This one will ACTUALLY remove the task, not just hide it from the list
-				TaskArray.Remove(Task);
+				ArrayHandler.Tasks.Remove(Task);
 			}
 
-			ArrayHandler.Save(ref TaskArray, Settings);
+			ArrayHandler.Save();
 			//ListView.UpdateObject(e.RowObject);
 			// TODO: We should be able to do this for just one object, not the whole list...
 			ListView.BuildList();
@@ -1401,7 +1453,7 @@ namespace Tasual
 			{
 				Form_TimePop Calendar = new Form_TimePop(
 					this,
-					TaskArray.IndexOf((Task)ListView.SelectedItem.RowObject)
+					ArrayHandler.Tasks.IndexOf((Task)ListView.SelectedItem.RowObject)
 				);
 
 				Rectangle Bounds = CalendarPopout.SubItem.Bounds;
@@ -1445,11 +1497,11 @@ namespace Tasual
 					{
 						if (ListView.SelectedItem != null)
 						{
-							if (ConfirmAction(Settings.PromptDelete, "delete this task"))
+							if (ConfirmAction(Settings.Config.PromptDelete, "delete this task"))
 							{
 								Task Task = (Task)ListView.SelectedItem.RowObject;
 								Task.Removed = true;
-								ArrayHandler.Save(ref TaskArray, Settings);
+								ArrayHandler.Save();
 								ListView.BuildList();
 								UpdateStatusLabel();
 							}
@@ -1477,30 +1529,30 @@ namespace Tasual
 		/// <param name="Args">Form closing event arguments.</param>
 		private void Main_FormClosing(object Sender, FormClosingEventArgs Args)
 		{
-			if (Settings.SaveWindowPos)
+			if (Settings.Config.SaveWindowPos)
 			{
 				if (WindowState != FormWindowState.Normal)
 				{
 					if (WindowState == FormWindowState.Minimized)
 					{
 						// Always load back up with a normal window state when previously minimized
-						Settings.WindowState = FormWindowState.Normal;
+						Settings.Config.WindowState = FormWindowState.Normal;
 					}
 					else
 					{
-						Settings.WindowState = FormWindowState.Maximized;
+						Settings.Config.WindowState = FormWindowState.Maximized;
 					}
-					Settings.Location = RestoreBounds.Location;
-					Settings.Size = RestoreBounds.Size;
+					Settings.Config.Location = RestoreBounds.Location;
+					Settings.Config.Size = RestoreBounds.Size;
 				}
 				else
 				{
-					Settings.WindowState = FormWindowState.Normal;
-					Settings.Location = Location;
-					Settings.Size = Size;
+					Settings.Config.WindowState = FormWindowState.Normal;
+					Settings.Config.Location = Location;
+					Settings.Config.Size = Size;
 				}
 
-				Setting.Save(ref Settings);
+				Settings.Save();
 			}
 
 			Notify.Dispose();
@@ -1513,7 +1565,7 @@ namespace Tasual
 		/// <param name="Args">Resize event arguments.</param>
 		private void Main_Resize(object Sender, EventArgs Args)
 		{
-			if (Settings.MinimizeToTray)
+			if (Settings.Config.MinimizeToTray)
 			{
 				if (WindowState == FormWindowState.Minimized)
 				{
@@ -1620,7 +1672,7 @@ namespace Tasual
 			if (ListView.SelectedItem != null)
 			{
 				Task Task = (Task)ListView.SelectedItem.RowObject;
-				Form_Create CreateForm = new Form_Create(this, TaskArray.IndexOf(Task), false);
+				Form_Create CreateForm = new Form_Create(this, ArrayHandler.Tasks.IndexOf(Task), false);
 				CreateForm.ShowDialog(this);
 			}
 		}
@@ -1662,6 +1714,7 @@ namespace Tasual
 		private void MenuStrip_Sources_Click(object Sender, EventArgs Args)
 		{
 			// Currently unused
+			//Interface.VersionCheck.Request();
 		}
 
 		// ListView: "Group"
@@ -1684,7 +1737,7 @@ namespace Tasual
 		private void MenuStrip_Group_Create_Quick_Click(object Sender, EventArgs Args)
 		{
 			OLVGroup Group = (OLVGroup)MenuStrip_Group.Tag;
-			if (TaskArray.Any(Task => (Task.Group == Group.Name)))
+			if (ArrayHandler.Tasks.Any(Task => (Task.Group == Group.Name)))
 			{
 				LastSelectedGroup = Group.Name;
 			}
@@ -1698,20 +1751,20 @@ namespace Tasual
 		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Group_Delete_Click(object Sender, EventArgs Args)
 		{
-			if (!ConfirmAction(Settings.PromptDelete, "delete this group")) { return; }
+			if (!ConfirmAction(Settings.Config.PromptDelete, "delete this group")) { return; }
 
 			OLVGroup Group = (OLVGroup)MenuStrip_Group.Tag;
 
-			foreach (Task Task in TaskArray)
+			foreach (Task Task in ArrayHandler.Tasks)
 			{
-				if (TimeInfo.GetGroupStringFromTask(Task, Settings).Remove(0, 1) == Group.Name)
+				if (TimeInfo.GetGroupStringFromTask(Task, Settings.Config).Remove(0, 1) == Group.Name)
 				{
 					//RemovalList.Add(Task);
 					Task.Removed = true;
 				}
 			}
 
-			ArrayHandler.Save(ref TaskArray, Settings);
+			ArrayHandler.Save();
 			ListView.BuildList();
 			UpdateStatusLabel();
 		}
@@ -1736,7 +1789,7 @@ namespace Tasual
 		{
 			ToolStripDropDownItem Item = (ToolStripDropDownItem)Sender;
 			OLVGroup Group = (OLVGroup)MenuStrip_Group.Tag;
-			ArrayHandler.ReAssignGroup(ref TaskArray, Group.Name, Item.Text);
+			ArrayHandler.ReAssignGroup(Group.Name, Item.Text);
 			UpdateGroupKeys();
 			ListView.BuildList();
 		}
@@ -1761,7 +1814,7 @@ namespace Tasual
 			MenuStrip_Group_MoveTasks.DropDownItems.Add("(No other groups available)");
 			MenuStrip_Group_MoveTasks.DropDownItems[2].Enabled = false;
 
-			foreach (Task Task in TaskArray)
+			foreach (Task Task in ArrayHandler.Tasks)
 			{
 				if (Task.Removed) { continue; }
 
@@ -1832,7 +1885,7 @@ namespace Tasual
 		private void MenuStrip_Icon_AddLink_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
-			Form_Link LinkForm = new Form_Link(this, TaskArray.IndexOf(Task));
+			Form_Link LinkForm = new Form_Link(this, ArrayHandler.Tasks.IndexOf(Task));
 			LinkForm.ShowDialog(this);
 		}
 
@@ -1844,7 +1897,7 @@ namespace Tasual
 		private void MenuStrip_Icon_AddLocation_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
-			Form_Location LocationForm = new Form_Location(this, TaskArray.IndexOf(Task));
+			Form_Location LocationForm = new Form_Location(ArrayHandler.Tasks.IndexOf(Task));
 			LocationForm.ShowDialog(this);
 		}
 
@@ -1856,7 +1909,7 @@ namespace Tasual
 		private void MenuStrip_Icon_AddNotes_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
-			Form_Notes NotesForm = new Form_Notes(this, TaskArray.IndexOf(Task));
+			Form_Notes NotesForm = new Form_Notes(ArrayHandler.Tasks.IndexOf(Task));
 			NotesForm.ShowDialog(this);
 		}
 
@@ -1879,7 +1932,7 @@ namespace Tasual
 		private void MenuStrip_Icon_Link_Edit_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
-			Form_Link LinkForm = new Form_Link(this, TaskArray.IndexOf(Task));
+			Form_Link LinkForm = new Form_Link(this, ArrayHandler.Tasks.IndexOf(Task));
 			LinkForm.ShowDialog(this);
 		}
 
@@ -1903,7 +1956,7 @@ namespace Tasual
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 			Task.Link = "";
-			ArrayHandler.Save(ref TaskArray, Settings);
+			ArrayHandler.Save();
 			//UpdateGroupKeys(Task);
 			ListView.BuildList();
 		}
@@ -1927,7 +1980,7 @@ namespace Tasual
 		private void MenuStrip_Icon_Location_Edit_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
-			Form_Location LocationForm = new Form_Location(this, TaskArray.IndexOf(Task));
+			Form_Location LocationForm = new Form_Location(ArrayHandler.Tasks.IndexOf(Task));
 			LocationForm.ShowDialog(this);
 		}
 
@@ -1954,7 +2007,7 @@ namespace Tasual
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 			Task.Location = "";
-			ArrayHandler.Save(ref TaskArray, Settings);
+			ArrayHandler.Save();
 			//UpdateGroupKeys();
 			ListView.BuildList();
 		}
@@ -1978,7 +2031,7 @@ namespace Tasual
 		private void MenuStrip_Icon_Notes_Edit_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
-			Form_Notes NotesForm = new Form_Notes(this, TaskArray.IndexOf(Task));
+			Form_Notes NotesForm = new Form_Notes(ArrayHandler.Tasks.IndexOf(Task));
 			NotesForm.ShowDialog(this);
 		}
 
@@ -1991,7 +2044,7 @@ namespace Tasual
 		{
 			Task Task = (Task)MenuStrip_Icon.Tag;
 			Task.Notes = "";
-			ArrayHandler.Save(ref TaskArray, Settings);
+			ArrayHandler.Save();
 			// UpdateGroupKeys();
 			ListView.BuildList();
 		}
@@ -2075,12 +2128,12 @@ namespace Tasual
 		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Item_Delete_Click(object Sender, EventArgs Args)
 		{
-			if (ConfirmAction(Settings.PromptDelete, "delete this task"))
+			if (ConfirmAction(Settings.Config.PromptDelete, "delete this task"))
 			{
 				Task Task = (Task)MenuStrip_Item.Tag;
 				//TaskArray.Remove(Task);
 				Task.Removed = true;
-				ArrayHandler.Save(ref TaskArray, Settings);
+				ArrayHandler.Save();
 				ListView.BuildList();
 				UpdateStatusLabel();
 			}
@@ -2132,7 +2185,7 @@ namespace Tasual
 				NewTime
 			);
 
-			TaskArray.Add(NewTask);
+			ArrayHandler.Tasks.Add(NewTask);
 			UpdateGroupKeys(NewTask);
 			ListView.BuildList();
 			UpdateStatusLabel();
@@ -2146,7 +2199,7 @@ namespace Tasual
 		private void MenuStrip_Item_Edit_Advanced_Click(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Item.Tag;
-			Form_Create CreateForm = new Form_Create(this, TaskArray.IndexOf(Task), false);
+			Form_Create CreateForm = new Form_Create(this, ArrayHandler.Tasks.IndexOf(Task), false);
 			CreateForm.ShowDialog(this);
 		}
 
@@ -2197,7 +2250,7 @@ namespace Tasual
 			MenuStrip_Item_Move.DropDownItems.Add("(No other groups available)");
 			MenuStrip_Item_Move.DropDownItems[2].Enabled = false;
 
-			foreach (Task Task in TaskArray)
+			foreach (Task Task in ArrayHandler.Tasks)
 			{
 				if (Task.Removed) { continue; }
 
@@ -2222,7 +2275,7 @@ namespace Tasual
 		private void MenuStrip_Item_Move_NewGroup_ClickHandler(object Sender, EventArgs Args)
 		{
 			Task Task = (Task)MenuStrip_Item.Tag;
-			Form_Create CreateForm = new Form_Create(this, TaskArray.IndexOf(Task), true);
+			Form_Create CreateForm = new Form_Create(this, ArrayHandler.Tasks.IndexOf(Task), true);
 			CreateForm.ShowDialog(this);
 		}
 
@@ -2270,7 +2323,7 @@ namespace Tasual
 		/// <param name="Args">Click event arguments.</param>
 		private void MenuStrip_Status_Clear_Click(object Sender, EventArgs Args)
 		{
-			if (ConfirmAction(Settings.PromptClear, "clear all tasks"))
+			if (ConfirmAction(Settings.Config.PromptClear, "clear all tasks"))
 			{
 				Array_ClearAll();
 			}
