@@ -62,6 +62,10 @@ namespace Tasual
 			CheckBox_MinimizeToTray.Checked = Settings.Config.MinimizeToTray;
 			CheckBox_AlwaysOnTop.Checked = Settings.Config.AlwaysOnTop;
 			CheckBox_SaveWindowPos.Checked = Settings.Config.SaveWindowPos;
+
+			CheckBox_CheckForUpdates.Checked = Settings.Config.AutoUpdate;
+			CheckBox_PromptUpdate.Checked = Settings.Config.PromptUpdate;
+
 			CheckBox_PromptClear.Checked = Settings.Config.PromptClear;
 			CheckBox_PromptDelete.Checked = Settings.Config.PromptDelete;
 			CheckBox_EnterToSave.Checked = Settings.Config.EnterToSave;
@@ -99,6 +103,10 @@ namespace Tasual
 			Settings.Config.MinimizeToTray = CheckBox_MinimizeToTray.Checked;
 			Settings.Config.AlwaysOnTop = CheckBox_AlwaysOnTop.Checked;
 			Settings.Config.SaveWindowPos = CheckBox_SaveWindowPos.Checked;
+
+			Settings.Config.AutoUpdate = CheckBox_CheckForUpdates.Checked;
+			Settings.Config.PromptUpdate = CheckBox_PromptUpdate.Checked;
+
 			Settings.Config.PromptClear = CheckBox_PromptClear.Checked;
 			Settings.Config.PromptDelete = CheckBox_PromptDelete.Checked;
 			Settings.Config.EnterToSave = CheckBox_EnterToSave.Checked;
